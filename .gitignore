@@ -1,0 +1,62 @@
+# Compiled class files
+*.class
+
+# Bytecode files
+*.jar
+
+# Compiled source directories
+/target/
+/bin/
+/out/
+
+# IDE files and directories
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# NetBeans project files
+nbproject/private/
+build/
+
+# Visual Studio Code workspace folder
+.vscode/
+
+# Logs and logs directories
+logs/
+*.log
+
+# Package files
+*.war
+*.ear
+*.zip
+
+# Maven specific files
+log/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Gradle specific files
+.gradle/
+build/
+
+# Temporary files
+*~
+.DS_Store
+
+# Operating System files
+Thumbs.db
+.desktop.ini
+
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
