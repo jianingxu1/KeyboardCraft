@@ -1,4 +1,6 @@
-import presentation.CtrlPresentacion;
+package edu.upc.prop.cluster23;
+
+import edu.upc.prop.cluster23.presentation.CtrlPresentacion;
 
 public class Main {
 	public static void main(String[] args) {

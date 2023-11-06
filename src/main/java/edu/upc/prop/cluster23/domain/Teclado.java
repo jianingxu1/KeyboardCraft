@@ -1,4 +1,4 @@
-package domain;
+package edu.upc.prop.cluster23.domain;
 
 import java.util.Collection;
 import java.util.HashMap;

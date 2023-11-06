@@ -1,4 +1,4 @@
-package domaincontrollers;
+package edu.upc.prop.cluster23.domaincontrollers;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,14 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import domain.Teclado;
+import edu.upc.prop.cluster23.domain.Teclado;
 
 /** Ejemplo de Controlador de Dominio. **/
 public class CtrlDominio {
 
 	/** Atributos **/
 	
-	private CtrlAsignaturaFichero controladorAsignaturaFichero;
 	private Map<String, Teclado> teclados;
 	private String tecladoSeleccionado;
 
