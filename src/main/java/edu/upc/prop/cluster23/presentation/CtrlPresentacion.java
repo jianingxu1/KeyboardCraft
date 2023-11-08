@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import edu.upc.prop.cluster23.domaincontrollers.CtrlDominio;
 
-/** Ejemplo de Controlador de Presentación. **/
 public class CtrlPresentacion {
 
 	/** Atributos **/

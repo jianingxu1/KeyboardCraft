@@ -11,7 +11,6 @@ import java.util.Map;
 
 import edu.upc.prop.cluster23.domain.Teclado;
 
-/** Ejemplo de Controlador de Dominio. **/
 public class CtrlDominio {
 
 	/** Atributos **/
@@ -39,6 +38,10 @@ public class CtrlDominio {
 	public String getTecladoSeleccionado() {
 		return tecladoSeleccionado;
 	}
+
+	public char[][] getTeclado() {};
+
+
 
 	public void setTecladoSeleccionado(String teclado) {
 		tecladoSeleccionado = teclado;
