@@ -1,10 +1,5 @@
 package edu.upc.prop.cluster23.domain;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-
 // clase creada por Rubén Catalán Rua
 public class Teclado {
 	
@@ -13,25 +8,32 @@ public class Teclado {
 	private String nombre;
 
 	private char[][] distribucion;
-	private Alfabeto alfabeto;
-	private ListaPalabras listaPalabras;
-	private Texto texto;
-	static QAP QAPalg = new QAP();
-	static ALG2 alg2 = new ALG2();
+
 
 	/** Constructora **/
-	public Teclado(String nombre, Alfabeto alfabeto, ListaPalabras listaPalabras, Texto texto) {
+	public Teclado(String nombre, char[][] dist) {
 		this.nombre = nombre;
-		this.alfabeto = alfabeto;
-		this.listaPalabras = listaPalabras;
-		this.texto = texto;
+		this.distribucion = dist;
 	}
 	
 	/** Métodos públicos **/
 
+	/**
+	 * Devuelve la matriz con la distribución del teclado
+	 * @return distribucion
+	 */
+
 	public char [][] getTeclado() {
 		return distribucion;
 	}
+
+	/**
+	 * Gira la posición (i,j) de dos teclas del teclado
+	 * @param i1 fila tecla 1
+	 * @param j1 columna tecla 1
+	 * @param i2 fila tecla 2
+	 * @param j2 columna tecla 2
+	 */
 
 	public void swap_teclas(int i1, int j1, int i2, int j2) {
 		char temp = distribucion[i2][j2];
@@ -40,20 +42,8 @@ public class Teclado {
 		distribucion[i1][j1] = temp;
 	}
 
-	public void generarDistribucion(int algo) {
-		if (algo > 2 || algo < 1) System.out.println("Valor inválido.");
-		else if (algo == 1) distribucion = QAPalg.generarDistribucion(alfabeto, listaPalabras, texto);
-		else distribucion = alg2.generarDistribucion(alfabeto, listaPalabras, texto);
-	}
-
-	public String getAlfabetoId() {
-		return alfabeto.getId();
-	}
-	public String getListaId() {
-		return listaPalabras.getId();
-	}
-	public String getTextoId() {
-		return texto.getId();
+	public void actualizarDist(char[][] dist) {
+		this.distribucion = dist;
 	}
 	
 	/** Métodos redefinidos **/

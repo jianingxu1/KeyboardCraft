@@ -7,12 +7,13 @@ import java.util.HashMap;
 public class Cjt_teclados {
     private HashMap<String, Teclado> conjunto;
 
+
     public Cjt_teclados() {
         conjunto = new HashMap<String, Teclado>();
     }
 
-    public void crearTeclado(String nombre, Alfabeto alf, ListaPalabras LP, Texto T) {
-        conjunto.put(nombre, new Teclado(nombre, alf, LP, T));
+    public void crearTeclado(String nombre, char[][] mat) {
+        conjunto.put(nombre, new Teclado(nombre, mat));
     }
 
     public void borrarTeclado(String nombre) {
@@ -31,18 +32,8 @@ public class Cjt_teclados {
         conjunto.get(nombre).swap_teclas(i1,j1,i2,j2);
     }
 
-    public String getAlfabetoId(String nombre) {
-        return conjunto.get(nombre).getAlfabetoId();
-    }
-    public String getListaId(String nombre) {
-        return conjunto.get(nombre).getListaId();
-    }
-    public String getTextoId(String nombre) {
-        return conjunto.get(nombre).getTextoId();
-    }
-
-    public void generarDist(String nombre, int alg) {
-        conjunto.get(nombre).generarDistribucion(alg);
+    public void actualizarDist(String nombre, char[][] dist) {
+        conjunto.get(nombre).actualizarDist(dist);
     }
 }
 
