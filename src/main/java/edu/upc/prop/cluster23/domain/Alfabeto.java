@@ -1,5 +1,9 @@
 package edu.upc.prop.cluster23.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 /** Clase PalabrasConFrecuencia
  *  Representa un alfabeto en concreto con sus caracteres y teclados asociados.
  *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
@@ -13,17 +17,19 @@ public class Alfabeto {
     /** Los caracteres que contiene el alfabeto */
 	private ArrayList<String> caracteres;
     /** Los teclados que usan este alfabeto */
-    private Map<String,Teclado> teclados; 
+    private HashMap<String, Teclado> utilizadoPorTeclados;
 	
-    /** ----- Constructora ----- **/
+    /** ----- Constructoras ----- **/
 
     /**
      * Crea un alfabeto.
      *
      * @param nombre El nombre del alfabeto.
      */
-    public Alfabeto (String nombre) {
+    public Alfabeto(String nombre) {
         this.nombre = nombre;
+        this.caracteres = new ArrayList<String>();
+        utilizadoPorTeclados = new HashMap<String, Teclado>();
     }
 	
     /**
@@ -32,31 +38,36 @@ public class Alfabeto {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public Alfabeto (String nombre, ArrayList<String> caracteres) {
+    public Alfabeto(String nombre, ArrayList<String> caracteres) {
         this.nombre = nombre;
         this.caracteres = caracteres;
+        utilizadoPorTeclados = new HashMap<String, Teclado>();
     }
 
 	/** ----- Métodos públicos ----- **/
 
-    /** ----- Setters ----- **/
+    /** ----- Modificadoras ----- **/
+
+    public void cambiarNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     /**
-     * Cambia el alfabeto del alfabeto.
+     * Cambia los caracteres del alfabeto.
      *
-     * @param caracteres El nuevo alfabeto del alfabeto.
+     * @param caracteres Los nuevos caracteres del alfabeto.
      */
-    public void setCaracteres(ArrayList<String> caracteres) {
+    public void cambiarCaracteres(ArrayList<String> caracteres) {
         this.caracteres = caracteres;
     }
 
     /**
-     * Añade un nuevo teclado el cual usará el alfabeto.
+     * Anade un nuevo teclado el cual usará el alfabeto.
      *
      * @param teclado El teclado que usará el alfabeto.
      */
-    public void addTeclado(Teclado teclado) {
-        teclados.put(teclado.getNombre(),teclado);
+    public void anadirTeclado(Teclado teclado) {
+        utilizadoPorTeclados.put(teclado.getNombre(), teclado);
     }
 
     /**
@@ -64,16 +75,18 @@ public class Alfabeto {
      *
      * @param nombre El nombre del teclado que usaba el alfabeto.
      */
-    public void removeTeclado(String nombre) {
-        teclados.remove(nombre);
+    public void eliminarTeclado(String nombre) {
+        utilizadoPorTeclados.remove(nombre);
     }
 
     /**
      * Elimina todos los teclados que usaban el alfabeto.
      */
-    public void removeAllTeclados() {
-        teclados.clear();
+    public void eliminarTeclados() {
+        utilizadoPorTeclados.clear();
     }
+
+    /** ----- Getters ----- **/
 
     /**
      * Retorna el teclado con el nombre especificado.
@@ -81,10 +94,8 @@ public class Alfabeto {
      * @param nombre El nombre del teclado.
      */
     public Teclado getTeclado(String nombre) {
-        return teclados.get(nombre);
+        return utilizadoPorTeclados.get(nombre);
     }
-
-    /** ----- Getters ----- **/
 
     //Retorna los teclados los cuales usan este alfabeto
     /**
@@ -92,26 +103,8 @@ public class Alfabeto {
      *
      * @return Los teclados que usan este alfabeto.
      */
-    public Set<Teclados> getTeclados() {
-        return teclados.keySet();
-    }
-
-    /**
-     * Devuelve los caracteres del alfabeto, en una estructura de datos.
-     *
-     * @return Los caracteres del alfabeto.
-     */
-    public ArrayList<String> getAlfabetoEstructura() {
-        return caracteres;
-    }
-
-    /**
-     * Devuelve la instancia del alfabeto.
-     *
-     * @return La instancia del alfabeto.
-     */
-    public Alfabeto getAlfabetoInstancia() {
-        return this;
+    public Set<String> getUtilizadoPorTecladosNombre() {
+        return utilizadoPorTeclados.keySet();
     }
 
     /**
@@ -124,10 +117,18 @@ public class Alfabeto {
     }
 
     /**
-     * Verifica si un teclado con el nombre especificado usa el alfabeto.
+     * Devuelve los caracteres del alfabeto, en una estructura de datos.
+     *
+     * @return Los caracteres del alfabeto.
      */
-    public boolean containsTeclado(String nombre) {
-        return teclados.containsKey(nombre);
+    public ArrayList<String> getCaracteres() {
+        return caracteres;
     }
 
+    /**
+     * Verifica si un teclado con el nombre especificado usa el alfabeto.
+     */
+    public boolean contieneTeclado(String nombre) {
+        return utilizadoPorTeclados.containsKey(nombre);
+    }
 }
