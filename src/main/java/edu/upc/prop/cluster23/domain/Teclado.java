@@ -1,8 +1,8 @@
 package edu.upc.prop.cluster23.domain;
 
-/**
- * Clase creada por Rubén Catalán Rua.
+/** Clase Teclado
  * Representa un teclado con su nombre y distribución de teclas.
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public class Teclado {
 

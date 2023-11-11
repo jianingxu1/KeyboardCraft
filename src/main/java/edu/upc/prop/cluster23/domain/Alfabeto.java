@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-/** Clase PalabrasConFrecuencia
+/** Clase Alfabeto
  *  Representa un alfabeto en concreto con sus caracteres y teclados asociados.
  *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
