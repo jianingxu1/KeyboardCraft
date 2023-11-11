@@ -39,7 +39,7 @@ public class CtrlDominio {
 		return tecladoSeleccionado;
 	}
 
-	public char[][] getTeclado() {};
+	//public char[][] getTeclado() {};
 
 
 

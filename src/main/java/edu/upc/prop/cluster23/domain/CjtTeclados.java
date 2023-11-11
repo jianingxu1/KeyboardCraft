@@ -12,11 +12,16 @@ public class CjtTeclados {
     }
 
     public void crearTeclado(String nombre, char[][] mat) {
-        conjunto.put(nombre, new Teclado(nombre, mat));
+
+        if (!conjunto.containsKey(nombre)) conjunto.put(nombre, new Teclado(nombre, mat));
     }
 
     public void eliminarTeclado(String nombre) {
         conjunto.remove(nombre);
+    }
+
+    public int size() {
+        return conjunto.size();
     }
 
     public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) {
