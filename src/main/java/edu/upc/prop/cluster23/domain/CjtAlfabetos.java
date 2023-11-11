@@ -2,23 +2,22 @@ package edu.upc.prop.cluster23.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import Alfabeto;
 
 /** Clase PalabrasConFrecuencia
  *  Representa una colección de alfabetos que tiene el sistema.
  *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
-public class Cjt_Alfabetos {
+public class CjtAlfabetos {
 
     /** ----- Atributos ----- **/
     /** El conjunto de alfabetos y sus respectos identificadores UNICOS */
-    private HashMap<String,Alfabeto> alfabetos; 
+    private HashMap<String, Alfabeto> alfabetos; 
     
     /** ----- Constructora ----- **/
 
     /** Construye una nueva instancia de CjtAlfabeto sin ningun alfabeto. */
-    public CjtAlfabetos () {
-        alfabetos = new HashMap<String,Alfabeto>();
+    public CjtAlfabetos() {
+        alfabetos = new HashMap<String, Alfabeto>();
     }
 
     /** ----- Métodos públicos ----- **/
@@ -31,9 +30,9 @@ public class Cjt_Alfabetos {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public void addAlfabeto (String nombre, ArrayList<String> caracteres) {
-        Alfabeto alfabeto = new Alfabeto(nombre,caracteres);
-        alfabetos.put(nombre,alfabeto);
+    public void anadirAlfabeto(String nombre, ArrayList<String> caracteres) {
+        Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
+        alfabetos.put(nombre, alfabeto);
     }
 
     /**
@@ -41,7 +40,7 @@ public class Cjt_Alfabetos {
      *
      * @param nombre El identificador unico del alfabeto.
      */
-    public void removeAlfabeto (int nombre) {
+    public void eliminarAlfabeto(String nombre) {
         alfabetos.remove(nombre);
     }
 
@@ -50,8 +49,8 @@ public class Cjt_Alfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public void changeCaracteres (String nombre, ArrayList<String> caracteres) {
-        alfabetos.get(nombre).setCaracteres(caracteres);
+    public void cambiarCaracteres (String nombre, ArrayList<String> caracteres) {
+        alfabetos.get(nombre).cambiarCaracteres(caracteres);
     }
 
     /** ----- Getters ----- **/
@@ -61,7 +60,7 @@ public class Cjt_Alfabetos {
      *
      * @param nombre El identificador unico del alfabeto.
      */
-    public Alfabeto getAlfabetoInstancia (int nombre) {
+    public Alfabeto getAlfabeto(String nombre) {
         return alfabetos.get(nombre);
     }
 
@@ -70,26 +69,19 @@ public class Cjt_Alfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public ArrayList<String> getAlfabetoEstructura (String nombre) {
-        return alfabetos.get(nombre).getAlfabeto();
+    public ArrayList<String> getAlfabetoCaracteres(String nombre) {
+        return alfabetos.get(nombre).getCaracteres();
     }
 
     /**
      * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos del conjunto.
      */    
-    public ArrayList<ArrayList<String>> getAlfabetos () {
+    public ArrayList<ArrayList<String>> getAlfabetos() {
         ArrayList<ArrayList<String>> estructuras = new ArrayList<ArrayList<String>>();
         for (Alfabeto alfabeto : alfabetos.values()) {
-            estructuras.add(alfabeto.getAlfabeto());
+            estructuras.add(alfabeto.getCaracteres());
         }
         return estructuras;
-    }
-
-    /**
-     * Retorna una instancia de todos los alfabetos del conjunto.
-     */    
-    public Set<Alfabeto> getAlfabetosInstancia () {
-        return alfabetos.values();
     }
 
     /**
@@ -97,7 +89,7 @@ public class Cjt_Alfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public bool existAlfabeto (String nombre) {
+    public Boolean existeAlfabeto(String nombre) {
         return alfabetos.containsKey(nombre);
     }
 

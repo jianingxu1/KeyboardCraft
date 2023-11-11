@@ -1,47 +1,42 @@
 package edu.upc.prop.cluster23.domain;
 
-import java.util.TreeMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 /** Clase PalabrasConFrecuencia
  *  Representa una colección de palabras y sus frecuencias.
  *  @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class PalabrasConFrecuencia {
-    /** El texto de entrada en el que se basa. */
-    private String texto;
-
-    /** Mapa de Palabra a frecuencias */
-    private TreeMap<String, Integer> map;
+    /** Mapa que contiene una coleccion de palabras y sus frecuencias */
+    private Map<String, Integer> map;
 
     // ----- Constructoras -----
 
     /** Construye una nueva instancia de PalabrasConFrecuencia con texto vacío y un mapa de frecuencias vacío. */
     public PalabrasConFrecuencia() {
-        this.texto = new String();
-        this.map = new TreeMap<String, Integer>();
+        this.map = new LinkedHashMap<String, Integer>();
     }
 
     /**
      * Construye una nueva instancia de PalabrasConFrecuencia utilizando el texto proporcionado.
      *
-     * @param texto El texto de entrada en el formato "<palabra> <frecuencia>\n"
+     * @param input El texto de entrada en el formato "<palabra> <frecuencia>\n"
      * que se repite.
      */
-    public PalabrasConFrecuencia(String texto) {
-        this.texto = texto;
-        this.map = convertStringToTreeMap(texto);
+    public PalabrasConFrecuencia(String input) {
+        this.map = convertStringToMap(input);
     }
 
     // ----- Modificadoras -----
 
     /**
-     * Cambia el texto de entrada y actualiza el mapa de frecuencias en consecuencia.
+     * Cambia el mapa de frecuencias.
      *
-     * @param texto El nuevo texto de entrada.
+     * @param input El nuevo texto de entrada.
      */
-    public void cambiarTexto(String texto) {
-        this.texto = texto;
-        this.map = convertStringToTreeMap(texto);
+    public void cambiarMap(String input) {
+        this.map = convertStringToMap(input);
     }
 
     // ----- Getters -----
@@ -51,29 +46,34 @@ public class PalabrasConFrecuencia {
      *
      * @return El mapa de frecuencias.
      */
-    public TreeMap<String, Integer> getMap() {
+    public Map<String, Integer> getMap() {
         return this.map;
     }
 
     /**
-     * Devuelve el texto de entrada.
+     * Devuelve el texto en el que se basa.
      *
-     * @return El texto de entrada.
+     * @return El texto en el que se basa.
      */
-    public String getTexto() {
-        return this.texto;
-    }
-
+	@Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : this.map.entrySet()) {
+            result.append(entry.getKey()).append(" ").append(entry.getValue()).append("\n");
+        }
+        return result.toString();
+    }    
+    
     // ----- Utilidades -----
-
+    
     /**
      * Convierte una cadena en el formato "<palabra> <frecuencia>\n" en un TreeMap de pares palabra-frecuencia.
      *
      * @param input La cadena de entrada que se va a convertir en el formato "<palabra> <frecuencia>\n".
      * @return Un TreeMap que contiene pares de palabra y frecuencia.
      */
-    private static TreeMap<String, Integer> convertStringToTreeMap(String input) {
-        TreeMap<String, Integer> resultMap = new TreeMap<>();
+    private static Map<String, Integer> convertStringToMap(String input) {
+        Map<String, Integer> resultMap = new LinkedHashMap<String, Integer>();
         String[] lines = input.split("\n");
         for (String line : lines) {
             String[] parts = line.split(" ");
