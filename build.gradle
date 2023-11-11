@@ -31,3 +31,18 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     testImplementation('junit:junit:4.13.1')
 }
+
+test {
+    useJUnit {
+        String ANSI_RESET = "\u001B[0m"
+        String ANSI_RED = "\u001B[31m"
+        String ANSI_GREEN = "\u001B[32m"
+        afterTest { descriptor, result ->
+            def status = result.resultType == TestResult.ResultType.FAILURE ? ANSI_RED+"FAILED"+ANSI_RESET : ANSI_GREEN+"PASSED"+ANSI_RESET
+
+            def className = descriptor.parent.displayName.split("\\.").last()
+            
+            println "Test ${descriptor.name} in class ${className} $status"
+        }
+    }
+}
