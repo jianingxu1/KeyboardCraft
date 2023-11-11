@@ -35,7 +35,7 @@ public class Teclado {
 	 * @param j2 columna tecla 2
 	 */
 
-	public void swap_teclas(int i1, int j1, int i2, int j2) {
+	public void swapTeclas(int i1, int j1, int i2, int j2) {
 		char temp = distribucion[i2][j2];
 
 		distribucion[i2][j2] = distribucion[i1][j1];

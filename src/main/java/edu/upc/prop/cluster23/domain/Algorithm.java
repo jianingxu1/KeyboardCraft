@@ -1,5 +1,6 @@
 package edu.upc.prop.cluster23.domain;
+import java.util.HashMap;
 
 public interface Algorithm {
-    char[][] generarDistribucion(Alfabeto alf, ListaPalabras lista, Texto txt);
+    char[][] generarDistribucion(HashMap<String,Integer> freqs, int total);
 }

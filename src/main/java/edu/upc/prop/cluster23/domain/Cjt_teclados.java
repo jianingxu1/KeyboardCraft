@@ -28,8 +28,8 @@ public class Cjt_teclados {
         return conjunto.get(nombre).getTeclado();
     }
 
-    public void swap_teclas(String nombre, int i1, int j1, int i2, int j2) {
-        conjunto.get(nombre).swap_teclas(i1,j1,i2,j2);
+    public void swapTeclas(String nombre, int i1, int j1, int i2, int j2) {
+        conjunto.get(nombre).swapTeclas(i1,j1,i2,j2);
     }
 
     public void actualizarDist(String nombre, char[][] dist) {
