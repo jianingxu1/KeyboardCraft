@@ -16,9 +16,7 @@ public class Alfabeto {
 	private String nombre;
     /** Los caracteres que contiene el alfabeto */
 	private ArrayList<Character> caracteres;
-    /** Los teclados que usan este alfabeto */
-    private HashMap<String, Teclado> utilizadoPorTeclados;
-	
+
     /** ----- Constructoras ----- **/
 
     /**
@@ -29,7 +27,6 @@ public class Alfabeto {
     public Alfabeto(String nombre) {
         this.nombre = nombre;
         this.caracteres = new ArrayList<Character>();
-        utilizadoPorTeclados = new HashMap<String, Teclado>();
     }
 	
     /**
@@ -41,7 +38,6 @@ public class Alfabeto {
     public Alfabeto(String nombre, ArrayList<Character> caracteres) {
         this.nombre = nombre;
         this.caracteres = caracteres;
-        utilizadoPorTeclados = new HashMap<String, Teclado>();
     }
 
 	/** ----- Métodos públicos ----- **/
@@ -61,51 +57,7 @@ public class Alfabeto {
         this.caracteres = caracteres;
     }
 
-    /**
-     * Anade un nuevo teclado el cual usará el alfabeto.
-     *
-     * @param teclado El teclado que usará el alfabeto.
-     */
-    public void anadirTeclado(Teclado teclado) {
-        utilizadoPorTeclados.put(teclado.getNombre(), teclado);
-    }
-
-    /**
-     * Elimina un teclado que usaba el alfabeto.
-     *
-     * @param nombre El nombre del teclado que usaba el alfabeto.
-     */
-    public void eliminarTeclado(String nombre) {
-        utilizadoPorTeclados.remove(nombre);
-    }
-
-    /**
-     * Elimina todos los teclados que usaban el alfabeto.
-     */
-    public void eliminarTeclados() {
-        utilizadoPorTeclados.clear();
-    }
-
     /** ----- Getters ----- **/
-
-    /**
-     * Retorna el teclado con el nombre especificado.
-     *
-     * @param nombre El nombre del teclado.
-     */
-    public Teclado getTeclado(String nombre) {
-        return utilizadoPorTeclados.get(nombre);
-    }
-
-    //Retorna los teclados los cuales usan este alfabeto
-    /**
-     * Devuelve los teclados que usan este alfabeto.
-     *
-     * @return Los teclados que usan este alfabeto.
-     */
-    public Set<String> getUtilizadoPorTecladosNombre() {
-        return utilizadoPorTeclados.keySet();
-    }
 
     /**
      * Devuelve el nombre del alfabeto.
@@ -123,12 +75,5 @@ public class Alfabeto {
      */
     public ArrayList<Character> getCaracteres() {
         return caracteres;
-    }
-
-    /**
-     * Verifica si un teclado con el nombre especificado usa el alfabeto.
-     */
-    public boolean contieneTeclado(String nombre) {
-        return utilizadoPorTeclados.containsKey(nombre);
     }
 }

@@ -3,6 +3,7 @@ package edu.upc.prop.cluster23.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /** Clase PalabrasConFrecuencia
  *  Representa una colección de alfabetos que tiene el sistema.
  *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
@@ -51,6 +52,20 @@ public class CjtAlfabetos {
      */
     public void cambiarCaracteres (String nombre, ArrayList<Character> caracteres) {
         alfabetos.get(nombre).cambiarCaracteres(caracteres);
+    }
+
+    /**
+     * Cambia el nombre de un alfabeto.
+     *
+     * @param nombre El nombre del alfabeto.
+     * @param nuevoNombre El nuevo nombre del alfabeto.
+     */
+    public void cambiarNombre (String nombre, String nuevoNombre) {
+        alfabetos.get(nombre).cambiarNombre(nuevoNombre);
+        //actualiza la hashmap
+        Alfabeto alfabeto = alfabetos.get(nombre);
+        alfabetos.remove(nombre);
+        alfabetos.put(nuevoNombre, alfabeto);
     }
 
     /** ----- Getters ----- **/
