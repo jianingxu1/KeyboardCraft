@@ -30,7 +30,7 @@ public class CjtAlfabetos {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public void anadirAlfabeto(String nombre, ArrayList<String> caracteres) {
+    public void anadirAlfabeto(String nombre, ArrayList<Character> caracteres) {
         Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
         alfabetos.put(nombre, alfabeto);
     }
@@ -49,7 +49,7 @@ public class CjtAlfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public void cambiarCaracteres (String nombre, ArrayList<String> caracteres) {
+    public void cambiarCaracteres (String nombre, ArrayList<Character> caracteres) {
         alfabetos.get(nombre).cambiarCaracteres(caracteres);
     }
 
@@ -69,15 +69,15 @@ public class CjtAlfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public ArrayList<String> getAlfabetoCaracteres(String nombre) {
+    public ArrayList<Character> getAlfabetoCaracteres(String nombre) {
         return alfabetos.get(nombre).getCaracteres();
     }
 
     /**
      * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos del conjunto.
      */    
-    public ArrayList<ArrayList<String>> getAlfabetos() {
-        ArrayList<ArrayList<String>> estructuras = new ArrayList<ArrayList<String>>();
+    public ArrayList<ArrayList<Character>> getAlfabetos() {
+        ArrayList<ArrayList<Character>> estructuras = new ArrayList<ArrayList<Character>>();
         for (Alfabeto alfabeto : alfabetos.values()) {
             estructuras.add(alfabeto.getCaracteres());
         }

@@ -15,7 +15,7 @@ public class Alfabeto {
     /** Nombre e Identificador del alfabeto en cuestion*/
 	private String nombre;
     /** Los caracteres que contiene el alfabeto */
-	private ArrayList<String> caracteres;
+	private ArrayList<Character> caracteres;
     /** Los teclados que usan este alfabeto */
     private HashMap<String, Teclado> utilizadoPorTeclados;
 	
@@ -28,7 +28,7 @@ public class Alfabeto {
      */
     public Alfabeto(String nombre) {
         this.nombre = nombre;
-        this.caracteres = new ArrayList<String>();
+        this.caracteres = new ArrayList<Character>();
         utilizadoPorTeclados = new HashMap<String, Teclado>();
     }
 	
@@ -38,7 +38,7 @@ public class Alfabeto {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public Alfabeto(String nombre, ArrayList<String> caracteres) {
+    public Alfabeto(String nombre, ArrayList<Character> caracteres) {
         this.nombre = nombre;
         this.caracteres = caracteres;
         utilizadoPorTeclados = new HashMap<String, Teclado>();
@@ -57,7 +57,7 @@ public class Alfabeto {
      *
      * @param caracteres Los nuevos caracteres del alfabeto.
      */
-    public void cambiarCaracteres(ArrayList<String> caracteres) {
+    public void cambiarCaracteres(ArrayList<Character> caracteres) {
         this.caracteres = caracteres;
     }
 
@@ -121,7 +121,7 @@ public class Alfabeto {
      *
      * @return Los caracteres del alfabeto.
      */
-    public ArrayList<String> getCaracteres() {
+    public ArrayList<Character> getCaracteres() {
         return caracteres;
     }
 
