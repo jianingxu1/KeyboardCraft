@@ -1,5 +1,5 @@
 package edu.upc.prop.cluster23.domain;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -82,6 +82,18 @@ public class CjtTeclados {
 
     public char[][] getTeclado(String nombre) {
         return conjunto.get(nombre).getTeclado();
+    }
+    
+    /**
+     * Devuele  un vector de Strings con los nombres de todos los teclados del conjunto.
+     * @return vector de Strings.
+     */
+    public ArrayList<String> getNombreTeclados() {
+        ArrayList<String> nombres = new ArrayList<String>();
+        for (String s : conjunto.keySet()) {
+            nombres.add(s);
+        }
+        return nombres;
     }
 }
 
