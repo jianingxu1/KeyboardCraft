@@ -2,6 +2,7 @@ package edu.upc.prop.cluster23.domain;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestCjtTeclados {
@@ -70,5 +71,28 @@ public class TestCjtTeclados {
         tecs.setDistribucionTeclado("Name", mat2);
 
         assertArrayEquals(mat1, tecs.getTeclado("Name"));
+    }
+    
+    @Test
+    public void getNombreTeclados(){
+        CjtTeclados tecs = new CjtTeclados();
+
+        assertEquals(0, tecs.getNombreTeclados().size());
+
+        tecs.crearTeclado("Name", new char[1][1]);
+        tecs.crearTeclado("Name2", new char[1][1]);        
+        tecs.crearTeclado("Name3", new char[1][1]);
+        tecs.crearTeclado("Name4", new char[1][1]);
+
+        ArrayList<String> nombres = new ArrayList<String>();
+        nombres.add("Name");
+        nombres.add("Name2");
+        nombres.add("Name3");
+        nombres.add("Name4");
+
+        ArrayList<String> nombres2 = tecs.getNombreTeclados();
+        for (int i = 0; i < nombres.size(); i++) {
+            assertTrue(nombres.contains(nombres2.get(i)));
+        }
     }
 }
