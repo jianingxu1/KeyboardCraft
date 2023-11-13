@@ -89,9 +89,11 @@ public class CjtTeclados {
      * @return vector de Strings.
      */
     public ArrayList<String> getNombreTeclados() {
+        if(conjunto.isEmpty()) return new ArrayList<String>();
+        
         ArrayList<String> nombres = new ArrayList<String>();
-        for (String s : conjunto.keySet()) {
-            nombres.add(s);
+        for (String nombre : conjunto.keySet()) {
+            nombres.add(nombre);
         }
         return nombres;
     }
