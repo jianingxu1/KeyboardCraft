@@ -32,6 +32,10 @@ dependencies {
     testImplementation('junit:junit:4.13.1')
 }
 
+run {
+    standardInput = System.in
+}
+
 test {
     useJUnit {
         String ANSI_RESET = "\u001B[0m"

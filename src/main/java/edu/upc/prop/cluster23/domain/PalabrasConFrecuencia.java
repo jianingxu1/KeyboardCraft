@@ -21,7 +21,7 @@ public class PalabrasConFrecuencia {
     /**
      * Construye una nueva instancia de PalabrasConFrecuencia utilizando el texto proporcionado.
      *
-     * @param input El texto de entrada en el formato "<palabra> <frecuencia>\n"
+     * @param input El texto de entrada en el formato "palabra frecuencia\n"
      * que se repite.
      */
     public PalabrasConFrecuencia(String input) {

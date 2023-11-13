@@ -11,6 +11,8 @@ public class CtrlPresentacion {
 
 	private CtrlDominio controladorDominio;
 
+	private Tview viewTerminal;
+
 	/** Constructor y metodos de inicializacion **/
 
 	public CtrlPresentacion() {
@@ -18,7 +20,14 @@ public class CtrlPresentacion {
 	}
 
 	public void inicializarPresentacion() {
-		controladorDominio.inicializarCtrlDominio();
+
+		int n;
+
+		System.out.println("Durante esta primera entrega, solo tendrás la opción de la vista de terminal");
+
+		viewTerminal = new Tview();
+
+		viewTerminal.run();
 	}
 
 	/** Métodos de sincronizacion entre vistas **/

@@ -35,6 +35,10 @@ public class CtrlDominio {
 	 * capas.
 	 **/
 
+	/**
+	 *
+	 * @return nombre del teclado
+	 */
 	public String getTecladoSeleccionado() {
 		return tecladoSeleccionado;
 	}
