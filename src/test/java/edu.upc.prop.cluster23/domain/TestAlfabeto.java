@@ -63,5 +63,24 @@ public class TestAlfabeto {
         assertEquals(caracteres2,alfabeto.getCaracteres());
         assertFalse(caracteres == alfabeto.getCaracteres());   
     }
+    @Test 
+    public void testToString(){
+        String name = "alf";
+        ArrayList<Character> vectorCaracteres = new ArrayList<Character>();
+        vectorCaracteres.add('a');
+        vectorCaracteres.add('b');
+        vectorCaracteres.add('c');
+
+        Alfabeto alfabeto = new Alfabeto(name);
+
+        String s = "a\nb\nc\n";
+        assertEquals(s,alfabeto.toString(vectorCaracteres));
+
+        vectorCaracteres = new ArrayList<Character>();
+        alfabeto = new Alfabeto(name);
+        
+        s = "";
+        assertEquals(s,alfabeto.toString(vectorCaracteres));
+    }
 
 }
