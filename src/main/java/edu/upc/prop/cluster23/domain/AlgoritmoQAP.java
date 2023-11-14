@@ -8,9 +8,12 @@ public class AlgoritmoQAP implements Algoritmo {
     private double[][] distancias;
     private char[] caracteres;
     int n;
+    int rows;
+    int cols;
     private Map<Character, Integer> simbolosEmplazados;
     private double mejorCosteTotal;
     private Map<Character, Integer> mejorDistribucion;
+    char[][] distribucion;
 
     private class Posicion {
         int fila;
@@ -33,11 +36,20 @@ public class AlgoritmoQAP implements Algoritmo {
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         procesarInput(alf, palabras, texto);
-        char[][] chars = new char[3][10];
-        Arrays.fill(chars[0],'-');
-        Arrays.fill(chars[1],'-');
-        Arrays.fill(chars[2],'-');
-        return chars;
+        // branchAndBound(0, 0.0);
+        
+        // distribucion = new char[rows][cols];
+        // for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
+        //     char c = entry.getKey();
+        //     Posicion p = posiciones[entry.getValue()];
+        //     distribucion[p.fila][p.col] = c;
+        // }
+
+        char[][] distribucion = new char[3][10];
+        Arrays.fill(distribucion[0],'-');
+        Arrays.fill(distribucion[1],'-');
+        Arrays.fill(distribucion[2],'-');
+        return distribucion;
     }
 
 
@@ -105,7 +117,6 @@ public class AlgoritmoQAP implements Algoritmo {
 
     public void inicializarPosiciones() {
         posiciones = new Posicion[n];
-        int rows, cols;
         if (n <= 2) {
             rows = 1;
             cols = n;
@@ -147,5 +158,53 @@ public class AlgoritmoQAP implements Algoritmo {
         for (int i = 0; i < n; ++i) {
             caracteres[i] =  car.get(i);
         }
+    }
+    
+    private void branchAndBound(int posIndex, double costeActual) {
+        // Lazy implementation
+        if (posIndex == n) {
+            if (costeActual < mejorCosteTotal) {
+                mejorDistribucion = new HashMap<>(simbolosEmplazados);
+                mejorCosteTotal = costeActual;
+            } 
+        }
+
+        for (int i = 0; i < n; ++i) {
+            char c = caracteres[i];
+            if (simbolosEmplazados.containsKey(c)) continue;
+
+            // calcular coste actual poniendo el simbolo c en p
+            double newCosteACtual = costeActual + calcularCosteRealDeEmplazar(c, posIndex);
+            // importante poner despues de calcularCosteRealDeEmplazar
+            simbolosEmplazados.put(c, posIndex);
+
+            // actualizar posicion y hacer branch
+            branchAndBound(posIndex + 1, newCosteACtual);
+
+            simbolosEmplazados.remove(c);
+        }
+    }
+
+    // Calcula el coste de poner una simbolo c en la posicion respecto a
+    // todos los simbolos ya emplazados
+    private double calcularCosteRealDeEmplazar(char c, int posIndex) {
+        double sum = 0.0;
+        for (Map.Entry<Character, Integer> entry : simbolosEmplazados.entrySet()) {
+            char c1 = entry.getKey();
+            int posIndex1 = entry.getValue();
+
+            double distancia = distancias[posIndex][posIndex1];
+            
+            String key = calcularKey(c, c1);
+            double frec = (double)frecuenciasCjts.get(key);
+
+            sum += frec*distancia;
+        }
+        return sum;
+    }
+
+    private String calcularKey(char c1, char c2) {
+        if (c1 < c2) return "" + c1 + c2;
+        return "" + c2 + c1;
     }
 }
