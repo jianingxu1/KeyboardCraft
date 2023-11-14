@@ -37,7 +37,6 @@ public class Alfabeto {
      */
     public Alfabeto(String nombre, String chars) {
         this.nombre = nombre;
-
         this.caracteres = toArray(chars);
     }
 
@@ -74,6 +73,16 @@ public class Alfabeto {
      *
      * @return Los caracteres del alfabeto.
      */
+    public ArrayList<Character> getCaracteres() {
+        return caracteres;
+    }
+
+    /**
+     * Convertir string en vector de chars
+     * 
+     * @param charsS String que contiene los caracteres.
+     * @return ArrayList<Character> que contiene los caracteres.
+     */
 
     public ArrayList<Character> toArray(String charsS) {
         ArrayList<Character> caracteres = new ArrayList<Character>();
@@ -89,7 +98,18 @@ public class Alfabeto {
         return caracteres;
     }
 
-    public ArrayList<Character> getCaracteres() {
-        return caracteres;
+    /**
+     * Convertir vector de chars en String
+     * 
+     * @param chars vector que contiene los characteres.
+     * @return String que representa la cadena de chars.
+     */
+    public String toString(ArrayList<Character> chars){
+        String s="";
+        for(int i = 0; i < chars.size(); ++i){
+            s+=chars.get(i);
+            s+="\n";
+        }
+        return s;
     }
 }
