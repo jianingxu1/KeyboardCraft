@@ -17,6 +17,8 @@ public class InformacionTeclados {
 
   private HashMap<String,Info> informacionTeclado;
 
+	private CjtAlfabetos cjtAlfabetos;
+
 	private static InformacionTeclados singletonObject;
 
 	public static InformacionTeclados getInstance() {
@@ -27,13 +29,13 @@ public class InformacionTeclados {
 	}
 
 	private class Info {	
-		private Alfabeto alfabeto;
+		private String idAlfabeto;
 		private Texto texto;
 		private PalabrasConFrecuencia pcF;
 		private String tipoAlgoritmo;
 
-		private Info(Alfabeto a , Texto t, PalabrasConFrecuencia pc, String algoritmo) {
-				this.alfabeto = a;
+		private Info(String a , Texto t, PalabrasConFrecuencia pc, String algoritmo) {
+				this.idAlfabeto = a;
 				this.texto = t;
 				this.pcF = pc;
 				this.tipoAlgoritmo = algoritmo;
@@ -42,6 +44,7 @@ public class InformacionTeclados {
 
 	public InformacionTeclados() {
 		informacionTeclado = new HashMap<String,Info>();
+		cjtAlfabetos = new CjtAlfabetos();
 	}
 
 	// ----- Modificadores -----
@@ -59,14 +62,14 @@ public class InformacionTeclados {
 	 * Añade un teclado con nombre nombreTeclado y su respectiva información.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de añadir.
-	 * @param alfabeto Instancia de la clase Alfabeto.
+	 * @param idAlfabeto Identifica el alfabeto que se va a utilizar del conjunto de alfabetos.
 	 * @param texto Instancia de la clase Texto.
 	 * @param pcF Instancia de la clase PalabrasConFrecuencia.
-	 * @param algoritmo String que representa el tipo de algoritmo que se va a aplicar.
+	 * @param algoritmo El tipo de algoritmo que se va a aplicar.
 	 */
-	public void añadirTeclado(String nombreTeclado, Alfabeto alfabeto, Texto texto, PalabrasConFrecuencia pcF, String algoritmo) {
+	public void añadirTeclado(String nombreTeclado, String idAlfabeto, Texto texto, PalabrasConFrecuencia pcF, String algoritmo) {
 		Info i;
-		i = new Info(alfabeto,texto,pcF,algoritmo);
+		i = new Info(idAlfabeto,texto,pcF,algoritmo);
 		informacionTeclado.put(nombreTeclado,i);
 	}
 
@@ -81,17 +84,17 @@ public class InformacionTeclados {
 	}
 
 	/**
-	 * Modifica los alfabetos del teclado.
+	 * Assigna nuevo alfabeto a un teclado existente.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de modificar.
-	 * @param alfabeto ArrayList de con caracteres modificados.
+	 * @param idAlfabeto ID del nuevo alfabeto que se va a utilizar.
 	 */
-	public void modificarAlfabetoDeTeclado(String nombreTeclado, String alfabeto) {
-		informacionTeclado.get(nombreTeclado).alfabeto.cambiarCaracteres(alfabeto);
+	public void assignaNuevoAlfabetoDeTeclado(String nombreTeclado, String idAlfabeto) {
+		informacionTeclado.get(nombreTeclado).idAlfabeto = idAlfabeto;
 	}
 
 	/**
-	 * Modifica la lista de palabras del teclado con nombre nombreTeclado.
+	 * Modifica la lista de palabras del teclado.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de modificar.
 	 * @param listaPalabras String con la nueva lista de palabras.
@@ -110,6 +113,35 @@ public class InformacionTeclados {
 		informacionTeclado.get(nombreTeclado).tipoAlgoritmo = algoritmo;
 	}
 
+		/**
+	 * Añadir alfabeto al conjunto de alfabetos
+	 * 
+	 * @param idAlfabeto ID del alfabeto que se va a añadir.
+	 * @param alfabeto String que representa los nuevos caracteres.
+	 */
+	public void añadirAlfabeto(String idAlfabeto, String alfabeto) {
+		cjtAlfabetos.anadirAlfabeto(idAlfabeto,alfabeto);
+	}
+
+	/**
+	 * Modificar alfabeto del conjunto de alfabetos
+	 * 
+	 * @param idAlfabeto ID del alfabeto que se va a modificar.
+	 * @param alfabeto String que representa los nuevos caracteres.
+	 */
+	public void modificarAlfabeto(String idAlfabeto, String alfabeto) {
+		cjtAlfabetos.cambiarCaracteres(idAlfabeto,alfabeto);
+	}
+
+	/**
+	 * Eliminar alfabeto del conjunto alfabetos.
+	 * 
+	 * @param idAlfabeto ID del alfabeto a eliminar.
+	 */
+	public void eliminarAlfabeto(String idAlfabeto){
+		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
+	}
+
 	// ----- Getters -----
 
 	/**
@@ -119,7 +151,7 @@ public class InformacionTeclados {
 	 * @return String del nombre del alfabeto.
 	 */
 	public String getNombreAlfabeto(String nombreTeclado) {
-		return informacionTeclado.get(nombreTeclado).alfabeto.getNombre();
+		return informacionTeclado.get(nombreTeclado).idAlfabeto;
 	}
 
 	/**
@@ -129,7 +161,8 @@ public class InformacionTeclados {
 	 * @return Alfabeto que se utiliza para el teclado.
 	 */
 	public Alfabeto getCaracteresAlfabetoDeTeclado(String nombreTeclado) {
-		return informacionTeclado.get(nombreTeclado).alfabeto;
+
+		return cjtAlfabetos.getAlfabeto(informacionTeclado.get(nombreTeclado).idAlfabeto);
 	}
 
 	/**
@@ -190,5 +223,15 @@ public class InformacionTeclados {
 	 */
 	public boolean existeListaPalabrasDeTeclado(String nombreTeclado) {
 		return informacionTeclado.get(nombreTeclado).pcF != null;
+	}
+	
+	/**
+	 * Comprueba si existe un alfabeto con nombre idAlfabeto en el conjunto de alfabetos.
+	 *
+	 * @param idAlfabeto El nombre del alfabeto que quiere consultar.
+	 * @return True si existe un alfabeto, false en caso contrario. 
+	 */
+	public boolean existeAlfabeto(String idAlfabeto) {
+		return cjtAlfabetos.existeAlfabeto(idAlfabeto);
 	}
 }

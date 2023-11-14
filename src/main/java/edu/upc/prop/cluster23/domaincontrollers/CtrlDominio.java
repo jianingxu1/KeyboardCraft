@@ -18,10 +18,7 @@ public class CtrlDominio {
 
 	/** Atributos */
 	private CjtTeclados cjtTeclados;
-	private InformacionTeclados informacionTeclados;
-
-	private CjtAlfabetos cjtAlfabetos;
-	
+	private InformacionTeclados informacionTeclados;	
 
 	// ----- Constructora -----
 	
@@ -39,7 +36,6 @@ public class CtrlDominio {
 	public void inicializarCtrlDominio() {
 		 cjtTeclados = CjtTeclados.getInstance();
 		 informacionTeclados = InformacionTeclados.getInstance();
-		 cjtAlfabetos = CjtAlfabetos.getInstance();
 	}
 
 	/**
@@ -58,10 +54,9 @@ public class CtrlDominio {
 			return;
 		}
 
-		Alfabeto a = cjtAlfabetos.getAlfabeto(idAlfabeto);
 		PalabrasConFrecuencia pc = new PalabrasConFrecuencia(listaPalabras);
 		Texto t = new Texto(texto); 
-		informacionTeclados.añadirTeclado(nombreTeclado, a, t, pc, algor);
+		informacionTeclados.añadirTeclado(nombreTeclado, idAlfabeto, t, pc, algor);
 		
 		char[][] distribucion = new char[0][0];
 		if(algor == "QAP"){
@@ -80,13 +75,12 @@ public class CtrlDominio {
 	 */
 
 	public void borrarTeclado(String nombreTeclado) {
-		if(cjtTeclados.existeTeclado(nombreTeclado)){
-			cjtTeclados.eliminarTeclado(nombreTeclado);
-			informacionTeclados.borrarTeclado(nombreTeclado);
-		}
-		else{
+		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
+			return;
 		}
+		cjtTeclados.eliminarTeclado(nombreTeclado);
+		informacionTeclados.borrarTeclado(nombreTeclado);
 	}
 
 	/**
@@ -116,10 +110,7 @@ public class CtrlDominio {
 	public void cambiarAlgoritmoDeTeclado(String nombreTeclado, String algoritmo){
 		if(cjtTeclados.existeTeclado(nombreTeclado)){
 			informacionTeclados.modificarAlgoritmoDeTeclado(nombreTeclado,algoritmo);	
-			if(algoritmo == "QAP"){
-				actualizarDistribucion(nombreTeclado, informacionTeclados);
-			}
-			actualizarDistribucion(nombreTeclado, informacionTeclados);
+			actualizarDistribucion(nombreTeclado);
 		}
 		else{
 			System.out.println("El teclado no existe");
@@ -133,13 +124,12 @@ public class CtrlDominio {
 	 * @param texto Nuevo texto modificado.
 	 */	
 	public void modificarTextoDeTeclado(String nombreTeclado, String texto){
-		if(cjtTeclados.existeTeclado(nombreTeclado)){
-			informacionTeclados.modificarTextoDeTeclado(nombreTeclado, texto);
-			actualizarDistribucion(nombreTeclado, informacionTeclados);
-		}
-		else{
+		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
+			return;
 		}
+		informacionTeclados.modificarTextoDeTeclado(nombreTeclado, texto);
+		actualizarDistribucion(nombreTeclado);
 	}
 
 	/**
@@ -149,29 +139,67 @@ public class CtrlDominio {
 	 * @param listaPalabras Nueva lista de palabras.
 	 */
 	public void modificarListaPalabrasDeTeclado(String nombreTeclado, String listaPalabras){
-		if(cjtTeclados.existeTeclado(nombreTeclado)){
-			informacionTeclados.modificarListaPalabrasDeTeclado(nombreTeclado, listaPalabras);
-			actualizarDistribucion(nombreTeclado, informacionTeclados);
-		}
-		else{
+		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
+			return;
 		}
+		informacionTeclados.modificarListaPalabrasDeTeclado(nombreTeclado, listaPalabras);
+		actualizarDistribucion(nombreTeclado);
 	}
 
 	/**
-	 * Modificar alfabetos de un teclado.
-	 *
-	 * @param nombreTeclado El nombre del teclado en el que se realizará el cambio.
-	 * @param alfabeto ArrayList con los caracteres modificados.
+	 * Añadir nuevo alfabeto
+	 * @param idAlfabeto ID del alfabeto que se va a añadir.
+	 * @param alfabeto String que representa caracteres.
 	 */
-	public void modificarAlfabeto(String nombreTeclado, String alfabeto){
-		if(cjtTeclados.existeTeclado(nombreTeclado)){
-			informacionTeclados.modificarAlfabetoDeTeclado(nombreTeclado, alfabeto);
-			actualizarDistribucion(nombreTeclado, informacionTeclados);
+	public void añadirAlfabeto(String idAlfabeto, String caracateres){
+		if(informacionTeclados.existeAlfabeto(idAlfabeto)){
+			System.out.println("El alfabeto ya existe");
+			return;
 		}
-		else{
-			System.out.println("El teclado no existe");
+		informacionTeclados.añadirAlfabeto(idAlfabeto,caracateres);
+	}
+
+	/**
+	 * Modificar alfabeto del conjunto de alfabetos.
+	 *
+	 * @param alfabeto String que representa los caracteres modificados.
+	 */
+	public void modificarAlfabeto(String idAlfabeto,String alfabeto){
+		if(!informacionTeclados.existeAlfabeto(idAlfabeto)){
+			System.out.println("El alfabeto con id:"+idAlfabeto+" no existe.");
+			return;
 		}
+		//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
+		informacionTeclados.modificarAlfabeto(idAlfabeto,alfabeto);
+	}
+
+	/**
+	 * Eliminar alfabeto
+	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
+	 */
+	public void eliminarAlfabeto(String idAlfabeto){
+		if(!informacionTeclados.existeAlfabeto(idAlfabeto)){
+			System.out.println("El alfabeto no existe");
+			return;
+		}
+		/***Caso NO implementado, eliminar un alfabet que es utilizado por uno o varios teclados***/
+
+		//System.out.println("Se procederá a eliminar todos los teclados que utilizan ese alfabeto.");
+		informacionTeclados.eliminarAlfabeto(idAlfabeto);
+	}
+	/**
+	 * Assigna nuevo alfabeto a un teclado existente.
+	 * 
+	 * @param nombreTeclado El nombre del teclado que se ha de modificar.
+	 * @param idAlfabeto ID del nuevo alfabeto a assignar el teclado.
+	 */
+	public void assignaNuevoAlfabetoDeTeclado(String nombreTeclado,String idAlfabeto) {
+		if(!informacionTeclados.existeTeclado(nombreTeclado) || !informacionTeclados.existeAlfabeto(idAlfabeto)){
+			System.out.println("Los parametros son incorrectos o no existen.");
+			return;	
+		}
+		informacionTeclados.assignaNuevoAlfabetoDeTeclado(nombreTeclado,idAlfabeto);
 	}
 
 	// ----- Getters -----
@@ -180,85 +208,77 @@ public class CtrlDominio {
 	 * Printea la distribución de un teclado.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de mostrar.
+	 * @return La distribución del teclado en forma de String.
 	 */
-	public void consultarDistribucionDeTeclado(String nombreTeclado) {
+	public String consultarDistribucionDeTeclado(String nombreTeclado) {
 		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
-			return;
+			return "";
 		}
-		char[][] distribucion = cjtTeclados.getTeclado(nombreTeclado);
-		System.out.println("Teclado: " + nombreTeclado);
-		for(int i = 0; i < distribucion.length; ++i) {
-			for(int j = 0; j < distribucion[0].length; ++j) {
-				System.out.print(distribucion[i][j]);
-			}
-			System.out.println();
-		}
+		Teclado t = cjtTeclados.getTecladoObjeto(nombreTeclado);
+		return t.toString();
 	}
 
 	/**
-	 * Printea el nombre de todos los teclados del conjunto de teclados.
+	 * Devuelve el nombre de todos los teclados del conjunto de teclados.
 	 */
-	public void consultarNombreTeclados() {
-		ArrayList<String> nombreTeclados = cjtTeclados.getNombreTeclados();
-		for(int i = 0; i < nombreTeclados.size(); ++i) {
-			System.out.println(nombreTeclados.get(i));
-		}
+	public String consultarNombreTeclados() {
+		return ArrayToString(cjtTeclados.getNombreTeclados());
 	}
 
 	/**
-	 * Printea todos los alfabetos de un teclado.
+	 * Devuelve todos los alfabetos de un teclado.
 	 * 
 	 * @param nombreTeclado  El nombre del teclado que se ha de consultar.
+	 * @return Los alfabetos del teclado en forma de String.
 	 */
-	public void consultarAlfabetosDeTeclado(String nombreTeclado) {
+	public String consultarAlfabetosDeTeclado(String nombreTeclado) {
 		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
-			return;
+			return "";
 		}
 		ArrayList<Character> alfabeto = informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado).getCaracteres();
-		for(int i = 0; i < alfabeto.size(); ++i) {
-			System.out.print(alfabeto.get(i));
-		}
-		System.out.println();
+		//alfabeto tiene una función toString() que devuelve un String con todos los caracteres
+		return alfabeto.toString();
 	}
 
 	/**
 	 * Printea el texto de un teclado.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	 * @return El texto del teclado en forma de String.
 	 */
-	public void consultarTextoDeTeclado(String nombreTeclado) {
+	public String consultarTextoDeTeclado(String nombreTeclado) {
 		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
-			return;
+			return "";
 		}
 		else if(informacionTeclados.existeTextoDeTeclado(nombreTeclado)){
 			System.out.println("El teclado no tiene texto");
-			return;
+			return "";
 		}
-		System.out.println(informacionTeclados.getTextoDeTeclado(nombreTeclado).getTexto());
+		Texto t = informacionTeclados.getTextoDeTeclado(nombreTeclado);
+		return t.getTexto();
 	}
 
 	/**
 	 * Printea la lista de palabras de un teclado.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	 * @return La lista de palabras del teclado en forma de String.
 	 */
-	public void consultarListaPalabrasDeTeclado(String nombreTeclado) {
+	public String consultarListaPalabrasDeTeclado(String nombreTeclado) {
 		if(!cjtTeclados.existeTeclado(nombreTeclado)){
 			System.out.println("El teclado no existe");
-			return;
+			return "";
 		}
 		else if(informacionTeclados.existeListaPalabrasDeTeclado(nombreTeclado)){
 			System.out.println("El teclado no tiene lista de palabras");
-			return;
+			return "";
 		}
 
 		Map<String, Integer> listaPalabras = informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado).getMap();
-		for (Map.Entry<String, Integer> entry : listaPalabras.entrySet()) {
-			System.out.println(entry.getKey() + " frec:" + entry.getValue());
-		}
+		return listaPalabras.toString();
 	}
 
 	/**
@@ -284,8 +304,13 @@ public class CtrlDominio {
 		return cjtTeclados.existeTeclado(nombreTeclado);
 	}
 
+/**
+ * Comprueba si existe un alfabeto en el conjunto de alfabetos.
+ * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
+ * @return True si existe el alfabeto, false en caso contrario.
+ */
 	public boolean existeAlfabeto(String nombreAlfabeto) {
-		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
+		return informacionTeclados.existeAlfabeto(nombreAlfabeto);
 	}
 
 	// ----- Utilidades -----
@@ -294,15 +319,29 @@ public class CtrlDominio {
 	 * Actualiza la distribución de un teclado.
 	 *
 	 * @param nombreTeclado El nombre del teclado cuya distribución se actualizará.
-	 * @param informacionTeclados La información del teclado que se requiere para regenerar la distribución.
 	 */
-	private void actualizarDistribucion(String nombreTeclado,InformacionTeclados informacionTeclados) {
+	private void actualizarDistribucion(String nombreTeclado) {
 		char[][] distribucion = new char[0][0];
 		if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "QAP"){
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
 			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
 		}
 		cjtTeclados.setDistribucionTeclado(nombreTeclado, distribucion);
+	}
+
+	/**
+	 * Convierte un ArrayList de Strings en un String.
+	 * 
+	 * @param array ArrayList de Strings.
+	 * @return String de los elementos del ArrayList.
+	 */
+	private String ArrayToString(ArrayList<String> array){
+		String s = "";
+		for(int i = 0; i < array.size(); ++i) {
+			s += array.get(i);
+			s += "\n";
+		}
+		return s;
 	}
 
 }
