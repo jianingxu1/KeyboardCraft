@@ -9,15 +9,11 @@ public class CtrlPresentacion {
 
 	/** Atributos **/
 
-	private CtrlDominio controladorDominio;
-
 	private Tview viewTerminal;
 
 	/** Constructor y metodos de inicializacion **/
 
-	public CtrlPresentacion() {
-		controladorDominio = new CtrlDominio();
-	}
+	public CtrlPresentacion() {}
 
 	public void inicializarPresentacion() {
 
@@ -27,7 +23,7 @@ public class CtrlPresentacion {
 
 		viewTerminal = new Tview();
 
-		viewTerminal.run();
+		viewTerminal.init();
 	}
 
 	/** Métodos de sincronizacion entre vistas **/
