@@ -4,6 +4,25 @@ import java.util.*;
 
 public class AlgoritmoQAP implements Algoritmo {
     private Map<String, Integer> frecuenciasCjts;
+    private Posicion[] posiciones;
+
+    private class Posicion {
+        int fila;
+        int col;
+        Posicion(int fila, int col) {
+            this.fila = fila;
+            this.col = col;
+        }
+        Posicion(Posicion p) {
+            this.fila = p.fila;
+            this.col = p.col;
+        }
+        public double euclidianDistanceTo(Posicion p) {
+            double deltaX = (double)(this.fila - p.fila);
+            double deltaY = (double)(this.col - p.col);
+            return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        }
+    }
 
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
@@ -68,6 +87,32 @@ public class AlgoritmoQAP implements Algoritmo {
                 }
             }
             total += (pal.length() - 1) * num;
+        }
+    }
+
+    public void inicializarPosiciones(int n) {
+        posiciones = new Posicion[n];
+        int rows, cols;
+        if (n <= 2) {
+            rows = 1;
+            cols = n;
+        }
+        else if (n <= 6) {
+            rows = 2;
+            cols = (int) Math.ceil((double) n / (double)rows);
+        }
+        else {
+            rows = 3;
+            cols = (int) Math.ceil((double) n / (double)rows);
+        }
+        Posicion p = new Posicion(0, 0);
+        for (int i = 0; i < n; ++i) {
+            posiciones[i] = new Posicion(p);
+            if (p.col < cols - 1) ++p.col;
+            else {
+                ++p.fila;
+                p.col = 0;
+            }
         }
     }
 }
