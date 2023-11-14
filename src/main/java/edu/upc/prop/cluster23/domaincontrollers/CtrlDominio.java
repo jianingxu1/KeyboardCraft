@@ -5,17 +5,8 @@ import java.util.Map;
 
 import javax.print.DocFlavor.STRING;
 
+import edu.upc.prop.cluster23.domain.*;
 import org.w3c.dom.Text;
-
-import edu.upc.prop.cluster23.domain.Alfabeto;
-import edu.upc.prop.cluster23.domain.Algoritmo;
-import edu.upc.prop.cluster23.domain.AlgoritmoQAP;
-import edu.upc.prop.cluster23.domain.CjtTeclados;
-import edu.upc.prop.cluster23.domain.GeneradorDistribucionTeclado;
-import edu.upc.prop.cluster23.domain.InformacionTeclados;
-import edu.upc.prop.cluster23.domain.PalabrasConFrecuencia;
-import edu.upc.prop.cluster23.domain.Teclado;
-import edu.upc.prop.cluster23.domain.Texto;
 
 /** Clase CtrlDominio
  *  Representa Controlador de Dominio. Se encarga de gestionar teclados y todas sus características.
@@ -28,6 +19,8 @@ public class CtrlDominio {
 	/** Atributos */
 	private CjtTeclados cjtTeclados;
 	private InformacionTeclados informacionTeclados;
+
+	private CjtAlfabetos cjtAlfabetos;
 	
 
 	// ----- Constructora -----
@@ -44,8 +37,9 @@ public class CtrlDominio {
 	 * Se crean instancias nuevas de CjtTeclados, InformacionTeclados
 	 */
 	public void inicializarCtrlDominio() {
-		 cjtTeclados = new CjtTeclados();
-		 informacionTeclados = new InformacionTeclados();
+		 cjtTeclados = CjtTeclados.getInstance();
+		 informacionTeclados = InformacionTeclados.getInstance();
+		 cjtAlfabetos = CjtAlfabetos.getInstance();
 	}
 
 	/**
@@ -53,19 +47,18 @@ public class CtrlDominio {
 	 *
 	 * @param nombreTeclado Nombre del teclado.
 	 * @param idAlfabeto El ID del alfabeto asociado con el teclado.
-	 * @param caracteres Un ArrayList de caracteres que representan las teclas del teclado.
 	 * @param texto Información adicional para la generación de la distribución del teclado.
 	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en la distribución del teclado.
-	 * @param algoritmo Un string que representa el algoritmo utilizado para la creación del teclado.
+	 * @param algor Un string que representa el algoritmo utilizado para la creación del teclado.
 	 */
-	public void creaTeclado(String nombreTeclado, String idAlfabeto, ArrayList<Character> caracteres, String texto, String listaPalabras, String algor) {
+	public void creaTeclado(String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algor) {
 
 		if(informacionTeclados.existeTeclado(nombreTeclado)) {
 			System.out.println("El teclado ya existe");
 			return;
 		}
 
-		Alfabeto a = new Alfabeto(idAlfabeto, caracteres);
+		Alfabeto a = cjtAlfabetos.getAlfabeto(idAlfabeto);
 		PalabrasConFrecuencia pc = new PalabrasConFrecuencia(listaPalabras);
 		Texto t = new Texto(texto); 
 		informacionTeclados.añadirTeclado(nombreTeclado, a, t, pc, algor);
@@ -171,7 +164,7 @@ public class CtrlDominio {
 	 * @param nombreTeclado El nombre del teclado en el que se realizará el cambio.
 	 * @param alfabeto ArrayList con los caracteres modificados.
 	 */
-	public void modificarAlfabeto(String nombreTeclado, ArrayList<Character> alfabeto){
+	public void modificarAlfabeto(String nombreTeclado, String alfabeto){
 		if(cjtTeclados.existeTeclado(nombreTeclado)){
 			informacionTeclados.modificarAlfabetoDeTeclado(nombreTeclado, alfabeto);
 			actualizarDistribucion(nombreTeclado, informacionTeclados);
@@ -289,6 +282,10 @@ public class CtrlDominio {
 	 */
 	public boolean existeTeclado(String nombreTeclado) {
 		return cjtTeclados.existeTeclado(nombreTeclado);
+	}
+
+	public boolean existeAlfabeto(String nombreAlfabeto) {
+		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
 	}
 
 	// ----- Utilidades -----
