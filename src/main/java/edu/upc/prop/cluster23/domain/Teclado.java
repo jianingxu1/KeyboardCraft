@@ -62,6 +62,13 @@ public class Teclado {
     /** Métodos redefinidos **/
     @Override
     public String toString() {
-        return nombre;
+        String s = "";
+        for (int i = 0; i < distribucion.length; ++i) {
+            for (int j = 0; j < distribucion[i].length; ++j) {
+                s += distribucion[i][j];
+            }
+            s += "\n";
+        }
+        return s;
     }
 }

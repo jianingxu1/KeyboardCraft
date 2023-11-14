@@ -61,4 +61,24 @@ public class TestTeclado {
 
         assertArrayEquals(matrix2, tec.getTeclado());
     }
+
+    @Test
+    public void testToString() {
+        String a = "name";
+        char[][] matrix = new char[2][2];
+        matrix[0][0] = 'a';
+        matrix[0][1] = 'b';
+        matrix[1][0] = 'c';
+        matrix[1][1] = 'd';
+
+        Teclado tec = new Teclado(a, matrix);
+        String s = "ab\ncd\n";
+        assertEquals(s, tec.toString());
+
+        char[][] matrix2 = new char[2][2];
+
+        Teclado tec2 = new Teclado(a, matrix2);
+        String s2 = "";
+        assertEquals(s2.trim(), tec2.toString().trim());
+    }
 }
