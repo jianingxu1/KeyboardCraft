@@ -95,4 +95,18 @@ public class TestCjtTeclados {
             assertTrue(nombres.contains(nombres2.get(i)));
         }
     }
+    
+    @Test
+    public void testgetTecladoObjeto() {
+        String name="Name";
+        char[][] mat1 = new char[1][1];
+        mat1[0][0] = 'a';
+
+        CjtTeclados tecs = new CjtTeclados();
+        tecs.crearTeclado(name, mat1);
+
+        Teclado aux = tecs.getTecladoObjeto(name);
+        assertEquals(aux.getNombre(),name);
+        assertArrayEquals(aux.getTeclado(),mat1);
+    }
 }

@@ -106,5 +106,15 @@ public class CjtTeclados {
         }
         return nombres;
     }
+
+    /**
+     * Devuelve el objeto Teclado del conjunto de teclados.
+     * 
+     * @param nombre El nombre del teclado que se ha de consultar.
+     * @return Teclado del conjunto de teclados.
+     */
+    public Teclado getTecladoObjeto(String nombre) {
+        return conjunto.get(nombre);
+    }
 }
 
