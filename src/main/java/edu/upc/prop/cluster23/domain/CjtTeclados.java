@@ -14,6 +14,15 @@ public class CjtTeclados {
         conjunto = new HashMap<String, Teclado>();
     }
 
+    private static CjtTeclados singletonObject;
+
+    public static CjtTeclados getInstance() {
+        if (singletonObject == null)
+            singletonObject = new CjtTeclados() {
+            };
+        return singletonObject;
+    }
+
     /**
      * Crea un teclado nuevo y lo guarda en el conjunto
      * @param nombre el nombre del nuevo teclado

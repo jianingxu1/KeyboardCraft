@@ -17,6 +17,15 @@ public class InformacionTeclados {
 
   private HashMap<String,Info> informacionTeclado;
 
+	private static InformacionTeclados singletonObject;
+
+	public static InformacionTeclados getInstance() {
+		if (singletonObject == null)
+			singletonObject = new InformacionTeclados() {
+			};
+		return singletonObject;
+	}
+
 	private class Info {	
 		private Alfabeto alfabeto;
 		private Texto texto;
@@ -77,7 +86,7 @@ public class InformacionTeclados {
 	 * @param nombreTeclado El nombre del teclado que se ha de modificar.
 	 * @param alfabeto ArrayList de con caracteres modificados.
 	 */
-	public void modificarAlfabetoDeTeclado(String nombreTeclado, ArrayList<Character> alfabeto) {
+	public void modificarAlfabetoDeTeclado(String nombreTeclado, String alfabeto) {
 		informacionTeclado.get(nombreTeclado).alfabeto.cambiarCaracteres(alfabeto);
 	}
 
@@ -166,7 +175,7 @@ public class InformacionTeclados {
 	/**
 	 * Comprueba si el teclado tiene asociado un texto
 	 * 
-	 * @param nombreAlfabeto El nombre del teclado que se ha de consultar.
+	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
 	 * @return True si existe un texto, false en caso contrario.
 	 */
 	public boolean existeTextoDeTeclado(String nombreTeclado) {

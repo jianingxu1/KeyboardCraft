@@ -33,11 +33,12 @@ public class Alfabeto {
      * Crea un alfabeto.
      *
      * @param nombre El nombre del alfabeto.
-     * @param caracteres Los caracteres del alfabeto.
+     * @param chars Los caracteres del alfabeto.
      */
-    public Alfabeto(String nombre, ArrayList<Character> caracteres) {
+    public Alfabeto(String nombre, String chars) {
         this.nombre = nombre;
-        this.caracteres = caracteres;
+
+        this.caracteres = toArray(chars);
     }
 
 	/** ----- Métodos públicos ----- **/
@@ -53,8 +54,8 @@ public class Alfabeto {
      *
      * @param caracteres Los nuevos caracteres del alfabeto.
      */
-    public void cambiarCaracteres(ArrayList<Character> caracteres) {
-        this.caracteres = caracteres;
+    public void cambiarCaracteres(String chars) {
+        this.caracteres = toArray(chars);
     }
 
     /** ----- Getters ----- **/
@@ -73,6 +74,21 @@ public class Alfabeto {
      *
      * @return Los caracteres del alfabeto.
      */
+
+    public ArrayList<Character> toArray(String charsS) {
+        ArrayList<Character> caracteres = new ArrayList<Character>();
+
+        String chars = charsS.replaceAll("\\s","");
+
+        for (int i = 0; i < chars.length(); ++i) {
+            if (!caracteres.contains(chars.charAt(i))) {
+                caracteres.add(chars.charAt(i));
+            }
+        }
+
+        return caracteres;
+    }
+
     public ArrayList<Character> getCaracteres() {
         return caracteres;
     }

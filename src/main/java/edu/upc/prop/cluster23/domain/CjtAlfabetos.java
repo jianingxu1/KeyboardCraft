@@ -21,6 +21,16 @@ public class CjtAlfabetos {
         alfabetos = new HashMap<String, Alfabeto>();
     }
 
+    private static CjtAlfabetos singletonObject;
+
+    public static CjtAlfabetos getInstance() {
+        if (singletonObject == null)
+            singletonObject = new CjtAlfabetos() {
+            };
+        return singletonObject;
+    }
+
+
     /** ----- Métodos públicos ----- **/
 
     /** ----- Setters ----- **/
@@ -31,7 +41,7 @@ public class CjtAlfabetos {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public void anadirAlfabeto(String nombre, ArrayList<Character> caracteres) {
+    public void anadirAlfabeto(String nombre, String caracteres) {
         Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
         alfabetos.put(nombre, alfabeto);
     }
@@ -50,7 +60,7 @@ public class CjtAlfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public void cambiarCaracteres (String nombre, ArrayList<Character> caracteres) {
+    public void cambiarCaracteres (String nombre, String caracteres) {
         alfabetos.get(nombre).cambiarCaracteres(caracteres);
     }
 
