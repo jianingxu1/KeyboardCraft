@@ -20,7 +20,10 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
         assertEquals("Ingles",cjtAlfabetos.getAlfabeto("Ingles").getNombre());
         assertEquals(caracteres,cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
@@ -30,11 +33,12 @@ public class TestCjtAlfabeto {
     public void testEliminarAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
-        ArrayList<Character> caracteres = new ArrayList<Character>();
-        caracteres.add('a');
-        caracteres.add('b');
-        caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         cjtAlfabetos.eliminarAlfabeto("Ingles");
         assertTrue(cjtAlfabetos.getAlfabetos().isEmpty());
     }
@@ -47,12 +51,18 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         ArrayList<Character> caracteres2 = new ArrayList<Character>();
         caracteres2.add('R');
         caracteres2.add('G');
         caracteres2.add('B');
-        cjtAlfabetos.cambiarCaracteres("Ingles",caracteres2);
+
+        String alf2 = "RGB";
+
+        cjtAlfabetos.cambiarCaracteres("Ingles",alf2);
         assertEquals(caracteres2,cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
         assertFalse(caracteres == cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());   
     }
@@ -61,11 +71,9 @@ public class TestCjtAlfabeto {
     public void testCambiarNombre() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
-        ArrayList<Character> caracteres = new ArrayList<Character>();
-        caracteres.add('a');
-        caracteres.add('b');
-        caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         cjtAlfabetos.cambiarNombre("Ingles","Español");
         assertEquals("Español",cjtAlfabetos.getAlfabeto("Español").getNombre());
         assertFalse("Ingles" == cjtAlfabetos.getAlfabeto("Español").getNombre());
@@ -79,7 +87,10 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         assertEquals("Ingles",cjtAlfabetos.getAlfabeto("Ingles").getNombre());
         assertEquals(caracteres,cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
     }
@@ -92,7 +103,10 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         assertEquals(caracteres,cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
     }
 
@@ -104,12 +118,17 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         ArrayList<Character> caracteres2 = new ArrayList<Character>();
         caracteres2.add('R');
         caracteres2.add('G');
         caracteres2.add('B');
-        cjtAlfabetos.anadirAlfabeto("RGB",caracteres2);
+
+        String alf2 = "RGB";
+        cjtAlfabetos.anadirAlfabeto("RGB",alf2);
 
         assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
         assertEquals("Ingles",cjtAlfabetos.getAlfabeto("Ingles").getNombre());
@@ -127,12 +146,17 @@ public class TestCjtAlfabeto {
         caracteres.add('a');
         caracteres.add('b');
         caracteres.add('c');
-        cjtAlfabetos.anadirAlfabeto("Ingles",caracteres);
+
+        String alf = "abc";
+
+        cjtAlfabetos.anadirAlfabeto("Ingles",alf);
         ArrayList<Character> caracteres2 = new ArrayList<Character>();
         caracteres2.add('R');
         caracteres2.add('G');
         caracteres2.add('B');
-        cjtAlfabetos.anadirAlfabeto("RGB",caracteres2);
+
+        String alf2 = "RGB";
+        cjtAlfabetos.anadirAlfabeto("RGB",alf2);
     
         assertTrue(cjtAlfabetos.existeAlfabeto("RGB"));
         assertTrue(cjtAlfabetos.existeAlfabeto("Ingles"));

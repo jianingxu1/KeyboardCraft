@@ -21,7 +21,10 @@ public class TestAlfabeto {
        caracteres.add('b');
        caracteres.add('c');
        Alfabeto alfabeto;
-       alfabeto = new Alfabeto(a,caracteres);
+
+       String alf = "abc";
+
+       alfabeto = new Alfabeto(a,alf);
        assertEquals("Ingles", alfabeto.getNombre());
        assertEquals(caracteres,alfabeto.getCaracteres());
     }
@@ -45,12 +48,18 @@ public class TestAlfabeto {
         caracteres.add('b');
         caracteres.add('c');
         Alfabeto alfabeto;
-        alfabeto = new Alfabeto(a,caracteres);
+
+        String alf = "abc";
+
+        alfabeto = new Alfabeto(a,alf);
         ArrayList<Character> caracteres2 = new ArrayList<Character>();
         caracteres2.add('R');
         caracteres2.add('G');
         caracteres2.add('B');
-        alfabeto.cambiarCaracteres(caracteres2);
+
+        String alf2 = "RGB";
+
+        alfabeto.cambiarCaracteres(alf2);
         assertEquals(caracteres2,alfabeto.getCaracteres());
         assertFalse(caracteres == alfabeto.getCaracteres());   
     }
