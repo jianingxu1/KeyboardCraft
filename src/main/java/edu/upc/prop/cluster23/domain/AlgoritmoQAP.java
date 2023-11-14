@@ -5,6 +5,12 @@ import java.util.*;
 public class AlgoritmoQAP implements Algoritmo {
     private Map<String, Integer> frecuenciasCjts;
     private Posicion[] posiciones;
+    private double[][] distancias;
+    private char[] caracteres;
+    int n;
+    private Map<Character, Integer> simbolosEmplazados;
+    private double mejorCosteTotal;
+    private Map<Character, Integer> mejorDistribucion;
 
     private class Posicion {
         int fila;
@@ -36,7 +42,14 @@ public class AlgoritmoQAP implements Algoritmo {
 
 
     private void procesarInput(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
+        n = alf.getCaracteres().size();
         inicializarFrecuenciasCjts(alf, palabras, texto);
+        inicializarPosiciones();
+        inicializarDistancias();
+        inicializarCaracteres(alf);
+        simbolosEmplazados = new HashMap<>();
+        mejorCosteTotal = Double.MAX_VALUE;
+        mejorDistribucion = new HashMap<>();
     }
 
     private void inicializarFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
@@ -90,7 +103,7 @@ public class AlgoritmoQAP implements Algoritmo {
         }
     }
 
-    public void inicializarPosiciones(int n) {
+    public void inicializarPosiciones() {
         posiciones = new Posicion[n];
         int rows, cols;
         if (n <= 2) {
@@ -113,6 +126,26 @@ public class AlgoritmoQAP implements Algoritmo {
                 ++p.fila;
                 p.col = 0;
             }
+        }
+    }
+
+    private void inicializarDistancias() {
+        int n = posiciones.length;
+        distancias = new double[n][n];
+        for (int i = 0; i < n; ++i) {
+            Posicion p1 = posiciones[i];
+            for (int j = 0; j < n; ++j) {
+                Posicion p2 = posiciones[j];
+                distancias[i][j] = p1.euclidianDistanceTo(p2);
+            }
+        }
+    }
+
+    private void inicializarCaracteres(Alfabeto alf) {
+        caracteres = new char[n];
+        ArrayList<Character> car = alf.getCaracteres();
+        for (int i = 0; i < n; ++i) {
+            caracteres[i] =  car.get(i);
         }
     }
 }
