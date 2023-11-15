@@ -167,6 +167,13 @@ public class AlgoritmoQAP implements Algoritmo {
         }
     }
 
+    private double calcularCosteEntreDosCaracteres(char c1, int posIndex1, char c2, int posIndex2) {
+        double distancia = distancias[posIndex1][posIndex2];
+        String key = calcularKey(c1, c2);
+        double frec = (double) frecuenciasCjts.get(key);
+        return frec*distancia;
+    }
+    
     // Calcula el coste de poner una simbolo c en la posicion respecto a
     // todos los simbolos ya emplazados
     private double calcularCosteRealDeEmplazar(char c, int posIndex) {
@@ -174,13 +181,7 @@ public class AlgoritmoQAP implements Algoritmo {
         for (Map.Entry<Character, Integer> entry : simbolosEmplazados.entrySet()) {
             char c1 = entry.getKey();
             int posIndex1 = entry.getValue();
-
-            double distancia = distancias[posIndex][posIndex1];
-            
-            String key = calcularKey(c, c1);
-            double frec = (double)frecuenciasCjts.get(key);
-
-            sum += frec*distancia;
+            sum += calcularCosteEntreDosCaracteres(c, posIndex, c1, posIndex1);
         }
         return sum;
     }
