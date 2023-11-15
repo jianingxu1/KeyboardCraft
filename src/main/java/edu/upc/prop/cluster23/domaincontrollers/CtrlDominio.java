@@ -58,8 +58,8 @@ public class CtrlDominio {
 		Texto t = new Texto(texto); 
 		informacionTeclados.añadirTeclado(nombreTeclado, idAlfabeto, t, pc, algor);
 		
-		char[][] distribucion = new char[0][0];
-		if(algor == "QAP"){
+		char[][] distribucion = new char[3][10];
+		if (algor.equals("QAP")){
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
 			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
 		}
@@ -150,14 +150,14 @@ public class CtrlDominio {
 	/**
 	 * Añadir nuevo alfabeto
 	 * @param idAlfabeto ID del alfabeto que se va a añadir.
-	 * @param alfabeto String que representa caracteres.
+	 * @param caracteres String que representa caracteres.
 	 */
-	public void añadirAlfabeto(String idAlfabeto, String caracateres){
+	public void añadirAlfabeto(String idAlfabeto, String caracteres){
 		if(informacionTeclados.existeAlfabeto(idAlfabeto)){
 			System.out.println("El alfabeto ya existe");
 			return;
 		}
-		informacionTeclados.añadirAlfabeto(idAlfabeto,caracateres);
+		informacionTeclados.añadirAlfabeto(idAlfabeto,caracteres);
 	}
 
 	/**
@@ -187,6 +187,15 @@ public class CtrlDominio {
 
 		//System.out.println("Se procederá a eliminar todos los teclados que utilizan ese alfabeto.");
 		informacionTeclados.eliminarAlfabeto(idAlfabeto);
+
+		System.out.println("Alfabeto borrado");
+	}
+
+	/**
+	 * Retorna todos los alfabetos del conjunto de alfabetos.
+	 */
+	public String consultarAlfabetos(){
+		return informacionTeclados.consultarAlfabetos();
 	}
 	/**
 	 * Assigna nuevo alfabeto a un teclado existente.
@@ -215,8 +224,7 @@ public class CtrlDominio {
 			System.out.println("El teclado no existe");
 			return "";
 		}
-		Teclado t = cjtTeclados.getTecladoObjeto(nombreTeclado);
-		return t.toString();
+		return cjtTeclados.getDist(nombreTeclado);
 	}
 
 	/**
@@ -320,6 +328,8 @@ public class CtrlDominio {
 	 *
 	 * @param nombreTeclado El nombre del teclado cuya distribución se actualizará.
 	 */
+
+
 	private void actualizarDistribucion(String nombreTeclado) {
 		char[][] distribucion = new char[0][0];
 		if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "QAP"){
