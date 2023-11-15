@@ -18,7 +18,6 @@ public class TestPalabrasConFrecuencia {
         String input = "phone 1 keyboard 2 home 10";
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
 
-        System.out.println("hifdsafsf");
         assertEquals(3, palabras.getMap().size());
 
         assertTrue(palabras.getMap().containsKey("phone"));
@@ -62,7 +61,6 @@ public class TestPalabrasConFrecuencia {
 
     @Test
     public void testToString() {
-        System.out.println("FKJSDLJFKDSJLKFLSDKLFKJSD");
         String input = "phone 1 keyboard 2 home 10";
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
         assertEquals(input, palabras.toString());
