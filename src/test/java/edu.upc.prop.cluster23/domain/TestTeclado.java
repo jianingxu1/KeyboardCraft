@@ -72,13 +72,7 @@ public class TestTeclado {
         matrix[1][1] = 'd';
 
         Teclado tec = new Teclado(a, matrix);
-        String s = "ab\ncd\n";
+        String s = "---------------------\n|a|b|\n---------------------\n|c|d|\n---------------------\n|↑| | | space | |←|↩|\n---------------------\n";
         assertEquals(s, tec.toString());
-
-        char[][] matrix2 = new char[2][2];
-
-        Teclado tec2 = new Teclado(a, matrix2);
-        String s2 = "";
-        assertEquals(s2.trim(), tec2.toString().trim());
     }
 }

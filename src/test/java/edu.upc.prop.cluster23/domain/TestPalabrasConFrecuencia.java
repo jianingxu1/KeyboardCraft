@@ -15,7 +15,7 @@ public class TestPalabrasConFrecuencia {
 
     @Test
     public void testParametrizedConstructor() {
-        String input = "phone 1\nkeyboard 2\nhome 10";
+        String input = "phone 1 keyboard 2 home 10";
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
 
         System.out.println("hifdsafsf");
@@ -43,7 +43,7 @@ public class TestPalabrasConFrecuencia {
     @Test
     public void testCambiarMap() {
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia();
-        String input = "phone 1\nkeyboard 2\nhome 10";
+        String input = "phone 1 keyboard 2 home 10";
 
         palabras.cambiarMap(input);
 
@@ -63,11 +63,11 @@ public class TestPalabrasConFrecuencia {
     @Test
     public void testToString() {
         System.out.println("FKJSDLJFKDSJLKFLSDKLFKJSD");
-        String input = "phone 1\nkeyboard 2\nhome 10\n";
+        String input = "phone 1 keyboard 2 home 10";
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
         assertEquals(input, palabras.toString());
 
-        String input2 = "";
+        String input2 = " 0";
         PalabrasConFrecuencia palabras2 = new PalabrasConFrecuencia(input2);
         assertEquals(input2, palabras2.toString());
     }
