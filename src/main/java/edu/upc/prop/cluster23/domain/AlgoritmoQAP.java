@@ -8,6 +8,12 @@ public class AlgoritmoQAP implements Algoritmo {
         Map<String, Integer> frecuenciasCjts = procesarInput(alf, palabras, texto);
 
         char[][] chars = new char[3][10];
+
+        Arrays.fill(chars[0],'-');
+        Arrays.fill(chars[1],'-');
+        Arrays.fill(chars[2],'-');
+
+        /*
         // Implement the QAP algorithm using frecuenciasCjts
 
         // We should start off by creating a greedy solution to the problem
@@ -43,6 +49,8 @@ public class AlgoritmoQAP implements Algoritmo {
         while (it.hasNext()) {
 
         }
+
+        */
 
         return chars;
     }
