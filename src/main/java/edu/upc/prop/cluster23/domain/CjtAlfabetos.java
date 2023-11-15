@@ -60,6 +60,8 @@ public class CjtAlfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
+
+
     public void cambiarCaracteres (String nombre, String caracteres) {
         alfabetos.get(nombre).cambiarCaracteres(caracteres);
     }
@@ -118,4 +120,15 @@ public class CjtAlfabetos {
         return alfabetos.containsKey(nombre);
     }
 
-}
+    /**
+     * Retorna los nombres de los alfabetos
+     */
+    public String consultarAlfabetos() {
+        String s = "";
+        for (Alfabeto alfabeto : alfabetos.values()) {
+            s += alfabeto.getNombre() + "\n";
+        }
+        return s;
+    }
+
+    }

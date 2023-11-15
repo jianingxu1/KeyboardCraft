@@ -154,6 +154,10 @@ public class InformacionTeclados {
 		return informacionTeclado.get(nombreTeclado).idAlfabeto;
 	}
 
+	public String consultarAlfabetos(){
+		return cjtAlfabetos.consultarAlfabetos();
+	}
+
 	/**
 	 * Devuelve el objeto Alfabeto que se ha utilizado para la construcción del teclado.
 	 * 

@@ -116,5 +116,7 @@ public class CjtTeclados {
     public Teclado getTecladoObjeto(String nombre) {
         return conjunto.get(nombre);
     }
+
+    public String getDist(String nombre) {return conjunto.get(nombre).toString();}
 }
 

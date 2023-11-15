@@ -59,9 +59,10 @@ public class PalabrasConFrecuencia {
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<String, Integer> entry : this.map.entrySet()) {
-            result.append(entry.getKey()).append(" ").append(entry.getValue()).append("\n");
+            result.append(entry.getKey()).append(" ").append(entry.getValue()).append(" ");
         }
-        return result.toString();
+        String res = result.substring(0,result.length() - 1);
+        return res;
     }    
     
     // ----- Utilidades -----
@@ -74,15 +75,17 @@ public class PalabrasConFrecuencia {
      */
     private static Map<String, Integer> convertStringToMap(String input) {
         Map<String, Integer> resultMap = new LinkedHashMap<String, Integer>();
-        String[] lines = input.split("\n");
-        for (String line : lines) {
-            String[] parts = line.split(" ");
-            if (parts.length == 2) {
-                String key = parts[0];
-                int value = Integer.parseInt(parts[1]);
+
+        String[] lines = input.split(" ");
+
+        if (lines.length > 1) {
+            for (int i = 0; i < lines.length; i += 2) {
+                String key = lines[i];
+                int value = Integer.parseInt(lines[i+1]);
                 resultMap.put(key, value);
             }
         }
+
         return resultMap;
     }
 }

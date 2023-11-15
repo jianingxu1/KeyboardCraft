@@ -60,15 +60,28 @@ public class Teclado {
     }
 
     /** Métodos redefinidos **/
+
+
+    /**
+     * Devuelve la distribución del teclado en formato de string para mostrar por pantalla
+     * @return String que representa la distribución
+     */
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < distribucion.length; ++i) {
+            s.append("---------------------\n");
             for (int j = 0; j < distribucion[i].length; ++j) {
-                s += distribucion[i][j];
+                s.append("|");
+                s.append(distribucion[i][j]);
             }
-            s += "\n";
+            s.append("|\n");
         }
-        return s;
+
+        s.append("---------------------\n");
+        s.append("|↑| | | space | |←|↩|\n");
+        s.append("---------------------\n");
+
+        return s.toString();
     }
 }
