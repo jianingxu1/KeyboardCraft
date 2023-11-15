@@ -1,6 +1,7 @@
 package edu.upc.prop.cluster23.domain;
 
 import java.util.*;
+import edu.upc.prop.cluster23.domain.HungarianAlgoritmo;
 
 public class AlgoritmoQAP implements Algoritmo {
     private Map<String, Integer> frecuenciasCjts;
@@ -160,6 +161,10 @@ public class AlgoritmoQAP implements Algoritmo {
             // importante poner despues de calcularCosteRealDeEmplazar
             simbolosEmplazados.put(c, posIndex);
 
+            // calcular el bound para decidir si hacer branch
+            double costeTotalAproximado = newCosteACtual + calcularCosteNoEmplazados(posIndex + 1);
+            if (costeTotalAproximado >= mejorCosteTotal) continue;
+
             // actualizar posicion y hacer branch
             branchAndBound(posIndex + 1, newCosteACtual);
 
@@ -173,7 +178,7 @@ public class AlgoritmoQAP implements Algoritmo {
         double frec = (double) frecuenciasCjts.get(key);
         return frec*distancia;
     }
-    
+
     // Calcula el coste de poner una simbolo c en la posicion respecto a
     // todos los simbolos ya emplazados
     private double calcularCosteRealDeEmplazar(char c, int posIndex) {
@@ -189,5 +194,72 @@ public class AlgoritmoQAP implements Algoritmo {
     private String calcularKey(char c1, char c2) {
         if (c1 < c2) return "" + c1 + c2;
         return "" + c2 + c1;
+    }
+
+    private double calcularCosteNoEmplazados(int k) {
+        int m = simbolosEmplazados.size();
+        
+        // Initialize simbolosNoEmplazados
+        char[] simbolosNoEmplazados = new char[n-m];
+        for (int i = 0, index = 0; i < n; ++i) {
+            char c = caracteres[i];
+            if (simbolosEmplazados.containsKey(c)) continue;
+            simbolosNoEmplazados[index] = c;
+            ++index;
+        }
+
+        // Calcula C1
+        double[][] C1 = new double[n-m][n-m];
+        for (int i = 0; i < n-m; ++i) {
+            char c = simbolosNoEmplazados[i];
+            for (int j = 0; j < n-m; ++j) {
+                int posicionIndex = k + j;
+                C1[i][j] = calcularCosteRealDeEmplazar(c, posicionIndex);
+            }
+        }
+
+        double[][] C2 = new double[n-m][n-m];
+        Double[] T = new Double[n-m-1]; // -1 para no contar a si mismo
+        Double[] D = new Double[n-m-1];
+        for (int i = 0; i < n-m; ++i) {
+            char c1 = simbolosNoEmplazados[i];
+            for (int j = 0; j < n-m; ++j) {
+                int posIndex1 = k + j;
+                for (int l = 0, indexT = 0, indexD = 0; l < n-m; ++l) {
+                    if (l != i) {
+                        char c2 = simbolosNoEmplazados[l];
+                        T[indexT] = (double)frecuenciasCjts.get(calcularKey(c1, c2));
+                        ++indexT;
+                    }
+                    if (l != j) {
+                        int posIndex2 = k + l;
+                        D[indexD] = distancias[posIndex1][posIndex2];
+                        ++indexD;
+                    }
+                }
+                Arrays.sort(T);
+                Arrays.sort(D, Collections.reverseOrder());
+                C2[i][j] = productoEscalar(T, D);
+            }
+        }
+
+        double[][] C1C2 = new double[n-m][n-m];
+        for (int i = 0; i < n-m; ++i) {
+            for (int j = 0; j < n-m; ++j) {
+                C1C2[i][j] = C1[i][j] + C2[i][j];
+            }
+        }
+        // Hungarian algoritmo
+        double coste = 0.0;
+        return coste;
+    }
+
+    private double productoEscalar(Double[] X, Double[] Y) {
+        double res = 0;
+        int n = X.length;
+        for (int i = 0; i < n; ++i) {
+            res += X[i]*Y[i];
+        }
+        return res;
     }
 }
