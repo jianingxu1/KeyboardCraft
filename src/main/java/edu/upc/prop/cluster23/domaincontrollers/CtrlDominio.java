@@ -63,6 +63,10 @@ public class CtrlDominio {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
 			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
 		}
+		else if (algor.equals("SA")) {
+			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSA());
+			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
+		}
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}
 

@@ -122,10 +122,11 @@ public class Tview {
         if (!controladorDominio.existeAlfabeto(idAlf)) {
             System.out.println("El alfabeto no existe");
         }
-        else if (!Objects.equals(alg, "QAP")) {
-            System.out.println("Nombre de algoritmo inválido");
+        else if (Objects.equals(alg, "QAP") || Objects.equals(alg, "SA")) {
+            controladorDominio.creaTeclado(name,idAlf,text,list,alg);
         }
-        else controladorDominio.creaTeclado(name,idAlf,text,list,alg);
+        else System.out.println("Nombre de algoritmo inválido");
+
     }
     void FuncBorrarTeclado() {
         System.out.println("Introduce el nombre del teclado a borrar:");

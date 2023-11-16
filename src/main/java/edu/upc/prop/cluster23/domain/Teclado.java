@@ -75,6 +75,9 @@ public class Teclado {
                 s.append("|");
                 s.append(distribucion[i][j]);
             }
+            for (int j = distribucion[i].length; j < 10; ++j) {
+                s.append("| ");
+            }
             s.append("|\n");
         }
 

@@ -49,4 +49,7 @@ test {
             println "Test ${descriptor.name} in class ${className} $status"
         }
     }
+    testLogging {
+        showStandardStreams = true
+    }
 }
