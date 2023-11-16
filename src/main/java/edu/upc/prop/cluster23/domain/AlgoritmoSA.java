@@ -111,11 +111,12 @@ public class AlgoritmoSA implements Algoritmo {
                 }
             }
 
-            T -= 1.0;
+            T *= 0.9;
         }
         for (int i = 0; i < n; ++i) {
             mejorDistribucion.put(caracteres[i], mejorActual[i]);
         }
+        System.out.println(mejorCosteTotal);
     }
 
     private double calculoCoste(int[] valActual) {

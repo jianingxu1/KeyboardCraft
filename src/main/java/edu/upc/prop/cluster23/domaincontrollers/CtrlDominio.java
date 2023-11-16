@@ -3,10 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.DocFlavor.STRING;
-
 import edu.upc.prop.cluster23.domain.*;
-import org.w3c.dom.Text;
 
 /** Clase CtrlDominio
  *  Representa Controlador de Dominio. Se encarga de gestionar teclados y todas sus características.
