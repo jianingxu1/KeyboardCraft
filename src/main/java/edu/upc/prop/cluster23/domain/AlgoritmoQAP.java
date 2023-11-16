@@ -1,7 +1,7 @@
 package edu.upc.prop.cluster23.domain;
 
 import java.util.*;
-import edu.upc.prop.cluster23.domain.HungarianAlgoritmo;
+import edu.upc.prop.cluster23.domain.AlgoritmoHungarian;
 
 public class AlgoritmoQAP implements Algoritmo {
     private Map<String, Integer> frecuenciasCjts;
@@ -14,24 +14,12 @@ public class AlgoritmoQAP implements Algoritmo {
     private Map<Character, Integer> simbolosEmplazados;
     private double mejorCosteTotal;
     private Map<Character, Integer> mejorDistribucion;
-    char[][] distribucion;
 
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         procesarInput(alf, palabras, texto);
-        // branchAndBound(0, 0.0);
-        
-        // distribucion = new char[rows][cols];
-        // for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
-        //     char c = entry.getKey();
-        //     Posicion p = posiciones[entry.getValue()];
-        //     distribucion[p.fila][p.col] = c;
-        // }
-
-        char[][] distribucion = new char[3][10];
-        Arrays.fill(distribucion[0],'-');
-        Arrays.fill(distribucion[1],'-');
-        Arrays.fill(distribucion[2],'-');
+        branchAndBound(0, 0.0);
+        char[][] distribucion = convertirMejorDistribucion();
         return distribucion;
     }
 
@@ -144,28 +132,28 @@ public class AlgoritmoQAP implements Algoritmo {
     }
     
     private void branchAndBound(int posIndex, double costeActual) {
-        // Lazy implementation
         if (posIndex == n) {
             if (costeActual < mejorCosteTotal) {
                 mejorDistribucion = new HashMap<>(simbolosEmplazados);
                 mejorCosteTotal = costeActual;
-            } 
+            }
+            return;
         }
-
         for (int i = 0; i < n; ++i) {
             char c = caracteres[i];
             if (simbolosEmplazados.containsKey(c)) continue;
-
-            // calcular coste actual poniendo el simbolo c en p
+            // Calcular coste actual poniendo el simbolo c en p
             double newCosteACtual = costeActual + calcularCosteRealDeEmplazar(c, posIndex);
-            // importante poner despues de calcularCosteRealDeEmplazar
+            // Importante poner despues de calcularCosteRealDeEmplazar
             simbolosEmplazados.put(c, posIndex);
 
-            // calcular el bound para decidir si hacer branch
+            // Calcular el bound para decidir si hacer branch
             double costeTotalAproximado = newCosteACtual + calcularCosteNoEmplazados(posIndex + 1);
-            if (costeTotalAproximado >= mejorCosteTotal) continue;
-
-            // actualizar posicion y hacer branch
+            if (costeTotalAproximado >= mejorCosteTotal) {
+                simbolosEmplazados.remove(c);
+                continue;
+            }
+            // Actualizar posicion y hacer branch
             branchAndBound(posIndex + 1, newCosteACtual);
 
             simbolosEmplazados.remove(c);
@@ -192,7 +180,7 @@ public class AlgoritmoQAP implements Algoritmo {
     }
 
     private String calcularKey(char c1, char c2) {
-        if (c1 < c2) return "" + c1 + c2;
+        if (frecuenciasCjts.containsKey("" + c1 + c2)) return "" + c1 + c2;
         return "" + c2 + c1;
     }
 
@@ -218,40 +206,55 @@ public class AlgoritmoQAP implements Algoritmo {
             }
         }
 
+        // Calcula C2
         double[][] C2 = new double[n-m][n-m];
-        Double[] T = new Double[n-m-1]; // -1 para no contar a si mismo
-        Double[] D = new Double[n-m-1];
         for (int i = 0; i < n-m; ++i) {
             char c1 = simbolosNoEmplazados[i];
             for (int j = 0; j < n-m; ++j) {
                 int posIndex1 = k + j;
-                for (int l = 0, indexT = 0, indexD = 0; l < n-m; ++l) {
-                    if (l != i) {
-                        char c2 = simbolosNoEmplazados[l];
-                        T[indexT] = (double)frecuenciasCjts.get(calcularKey(c1, c2));
-                        ++indexT;
-                    }
-                    if (l != j) {
-                        int posIndex2 = k + l;
-                        D[indexD] = distancias[posIndex1][posIndex2];
-                        ++indexD;
-                    }
+                Double[] T = new Double[n-m];
+                // Calcula vector de traficos
+                for (int t = 0; t < n-m; ++t) {
+                    char c2 = simbolosNoEmplazados[t];
+                    if (c1 == c2) T[t] = 0.0;
+                    else T[t] = (double)frecuenciasCjts.get(calcularKey(c1, c2));
                 }
+                
+                // Calcula vector de distancias
+                Double[] D = new Double[n-m];
+                for (int d = 0; d < n-m; ++d) {
+                    int posIndex2 = k + d;
+                    D[d] = distancias[posIndex1][posIndex2];
+                }
+
                 Arrays.sort(T);
                 Arrays.sort(D, Collections.reverseOrder());
                 C2[i][j] = productoEscalar(T, D);
             }
         }
 
+        // Calcula C1+C2
         double[][] C1C2 = new double[n-m][n-m];
         for (int i = 0; i < n-m; ++i) {
             for (int j = 0; j < n-m; ++j) {
                 C1C2[i][j] = C1[i][j] + C2[i][j];
             }
         }
-        // Hungarian algoritmo
-        double coste = 0.0;
+
+        // Algoritmo Hungarian
+        AlgoritmoHungarian alg = new AlgoritmoHungarian();
+        double coste = alg.ejecutar(C1C2);
         return coste;
+    }
+
+    private char[][] convertirMejorDistribucion() {
+        char[][] distribucion = new char[rows][cols];
+        for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
+            char c = entry.getKey();
+            Posicion p = posiciones[entry.getValue()];
+            distribucion[p.fila][p.col] = c;
+        }
+        return distribucion;
     }
 
     private double productoEscalar(Double[] X, Double[] Y) {
