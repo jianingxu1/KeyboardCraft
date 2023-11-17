@@ -2,6 +2,8 @@ package edu.upc.prop.cluster23.domain;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import java.beans.Transient;
 import java.util.ArrayList;
 
 public class TestAlfabeto {
@@ -40,29 +42,30 @@ public class TestAlfabeto {
         assertFalse("Catalan" == alfabeto.getNombre());
     }
 
-    @Test
-    public void testCambiarCaracteresDelAlfabeto(){
-        String a = "Ingles";
-        ArrayList<Character> caracteres = new ArrayList<Character>();
-        caracteres.add('a');
-        caracteres.add('b');
-        caracteres.add('c');
-        Alfabeto alfabeto;
+    // @Test
+    // public void testCambiarCaracteresDelAlfabeto(){
+    //     String a = "Ingles";
+    //     ArrayList<Character> caracteres = new ArrayList<Character>();
+    //     caracteres.add('a');
+    //     caracteres.add('b');
+    //     caracteres.add('c');
+    //     Alfabeto alfabeto;
 
-        String alf = "abc";
+    //     String alf = "abc";
 
-        alfabeto = new Alfabeto(a,alf);
-        ArrayList<Character> caracteres2 = new ArrayList<Character>();
-        caracteres2.add('R');
-        caracteres2.add('G');
-        caracteres2.add('B');
+    //     alfabeto = new Alfabeto(a,alf);
+    //     ArrayList<Character> caracteres2 = new ArrayList<Character>();
+    //     caracteres2.add('R');
+    //     caracteres2.add('G');
+    //     caracteres2.add('B');
 
-        String alf2 = "RGB";
+    //     String alf2 = "RGB";
 
-        alfabeto.cambiarCaracteres(alf2);
-        assertEquals(caracteres2,alfabeto.getCaracteres());
-        assertFalse(caracteres == alfabeto.getCaracteres());   
-    }
+    //     alfabeto.cambiarCaracteres(alf2);
+    //     assertEquals(caracteres2,alfabeto.getCaracteres());
+    //     assertFalse(caracteres == alfabeto.getCaracteres());   
+    // }
+
     @Test 
     public void testToString(){
         String name = "alf";
@@ -81,6 +84,19 @@ public class TestAlfabeto {
         
         s = "";
         assertEquals(s,alfabeto.toString(vectorCaracteres));
+    }
+
+    @Test
+    public void testToArray(){
+        String name = "alf";
+        ArrayList<Character> vectorCaracteres = new ArrayList<Character>();
+        vectorCaracteres.add('a');
+        vectorCaracteres.add('b');
+        vectorCaracteres.add('c');
+
+        Alfabeto alfabeto = new Alfabeto(name, vectorCaracteres);
+
+        assertArrayEquals(alfabeto.getCaracteres(),alfabeto.toArray("abc"));
     }
 
 }

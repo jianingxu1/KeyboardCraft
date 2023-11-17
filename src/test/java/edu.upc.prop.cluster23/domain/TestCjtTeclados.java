@@ -11,7 +11,7 @@ public class TestCjtTeclados {
     public void testConstructionInsertionDeletion() {
         CjtTeclados tecs = new CjtTeclados();
 
-        assertEquals(0, tecs.size());
+        assertEquals(0, tecs.totalTeclados());
 
         char[][] mat1 = new char[1][1];
         mat1[0][0] = 'a';
@@ -21,14 +21,14 @@ public class TestCjtTeclados {
         tecs.crearTeclado("Name", mat1);
         tecs.crearTeclado("Name2", mat2);
 
-        assertEquals(2, tecs.size());
+        assertEquals(2, tecs.totalTeclados());
 
         assertTrue(tecs.existeTeclado("Name"));
         assertTrue(tecs.existeTeclado("Name2"));
 
         tecs.eliminarTeclado("Name2");
 
-        assertEquals(1, tecs.size());
+        assertEquals(1, tecs.totalTeclados());
 
         assertFalse(tecs.existeTeclado("Name2"));
 
@@ -77,7 +77,7 @@ public class TestCjtTeclados {
     public void getNombreTeclados(){
         CjtTeclados tecs = new CjtTeclados();
 
-        assertEquals(0, tecs.getNombreTeclados().size());
+        assertEquals(0, tecs.getNombreTeclados().totalTeclados());
 
         tecs.crearTeclado("Name", new char[1][1]);
         tecs.crearTeclado("Name2", new char[1][1]);        
@@ -91,7 +91,7 @@ public class TestCjtTeclados {
         nombres.add("Name4");
 
         ArrayList<String> nombres2 = tecs.getNombreTeclados();
-        for (int i = 0; i < nombres.size(); i++) {
+        for (int i = 0; i < nombres.totalTeclados(); i++) {
             assertTrue(nombres.contains(nombres2.get(i)));
         }
     }
