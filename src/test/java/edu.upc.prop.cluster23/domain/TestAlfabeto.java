@@ -89,14 +89,8 @@ public class TestAlfabeto {
     @Test
     public void testToArray(){
         String name = "alf";
-        ArrayList<Character> vectorCaracteres = new ArrayList<Character>();
-        vectorCaracteres.add('a');
-        vectorCaracteres.add('b');
-        vectorCaracteres.add('c');
-
-        Alfabeto alfabeto = new Alfabeto(name, vectorCaracteres);
-
-        assertArrayEquals(alfabeto.getCaracteres(),alfabeto.toArray("abc"));
+        Alfabeto alfabeto = new Alfabeto(name, "abc");
+        assertEquals(alfabeto.getCaracteres(),alfabeto.toArray("abc"));
     }
 
 }

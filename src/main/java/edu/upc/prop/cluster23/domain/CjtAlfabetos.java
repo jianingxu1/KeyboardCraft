@@ -40,9 +40,9 @@ public class CjtAlfabetos {
      * @param nombre El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public static void añadirAlfabeto (String nombre, String caracteres) {
+    public  void añadirAlfabeto (String nombre, String caracteres) {
         Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
-        alfabeto.put(nombre, alfabeto);
+        alfabetos.put(nombre, alfabeto);
     }
 
     /**
@@ -140,7 +140,7 @@ public class CjtAlfabetos {
 
     // FUNCIONES ELIMINADAS 
 
-    
+
     // /**************************************************************************
     //  * Cambia el alfabeto de un alfabeto.
     //  *

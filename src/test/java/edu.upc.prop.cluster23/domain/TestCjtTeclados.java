@@ -77,7 +77,7 @@ public class TestCjtTeclados {
     public void getNombreTeclados(){
         CjtTeclados tecs = new CjtTeclados();
 
-        assertEquals(0, tecs.getNombreTeclados().totalTeclados());
+        assertEquals(0, tecs.getNombreTeclados().size());
 
         tecs.crearTeclado("Name", new char[1][1]);
         tecs.crearTeclado("Name2", new char[1][1]);        
@@ -91,7 +91,7 @@ public class TestCjtTeclados {
         nombres.add("Name4");
 
         ArrayList<String> nombres2 = tecs.getNombreTeclados();
-        for (int i = 0; i < nombres.totalTeclados(); i++) {
+        for (int i = 0; i < nombres.size(); i++) {
             assertTrue(nombres.contains(nombres2.get(i)));
         }
     }

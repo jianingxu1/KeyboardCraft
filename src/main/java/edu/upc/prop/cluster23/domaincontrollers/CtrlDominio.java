@@ -15,7 +15,7 @@ public class CtrlDominio {
 
 	/** Atributos */
 	private CjtTeclados cjtTeclados;
-	private InformacionTeclados informacionTeclados;	
+	private CjtAlfabetos cjtAlfabetos;	
 
 	// ----- Constructora -----
 	
@@ -32,11 +32,15 @@ public class CtrlDominio {
 	 */
 	public void inicializarCtrlDominio() {
 		 cjtTeclados = CjtTeclados.getInstance();
-		 informacionTeclados = InformacionTeclados.getInstance();
+		 cjtAlfabetos = CjtAlfabetos.getInstance();
 	}
 
+	// ----- Métodos públicos -----
+
+	// ----- Modificadoras -----
+
 	/**
-	 * Crea un teclado 
+	 * Crea un teclado, con un texto y una lista de palabras que nos proporciona el usuario. El alfabeto ya existe.
 	 *
 	 * @param nombreTeclado Nombre del teclado.
 	 * @param idAlfabeto El ID del alfabeto asociado con el teclado.
@@ -44,25 +48,28 @@ public class CtrlDominio {
 	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en la distribución del teclado.
 	 * @param algor Un string que representa el algoritmo utilizado para la creación del teclado.
 	 */
-	public void creaTeclado(String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algor) {
+	public void creaTeclado (String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo) {
+		//Informacion necesaria para poder crear el teclado
+		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
+		Texto text = new Texto(texto); 
+		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
 
-		PalabrasConFrecuencia pc = new PalabrasConFrecuencia(listaPalabras);
-		Texto t = new Texto(texto); 
-		informacionTeclados.añadirTeclado(nombreTeclado, idAlfabeto, t, pc, algor);
-		
 		char[][] distribucion = new char[3][10];
-		if (algor.equals("QAP")){
+
+		//El algoritmo genera una distribucion dependiendo del algoritmo elejido
+		if (algoritmo.equals("QAP")){
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
-			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
+			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
 		}
-		else if (algor.equals("SA")) {
+		else if (algoritmo.equals("SA")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSA());
-			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
+			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
+
 		}
+		//Se añade el teclado con la distribucion generada
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}
 
-	// ----- Modificadoras -----
 
 	/**
 	 * Elimina el teclado del conjunto de teclados y su respectiva información.
@@ -72,7 +79,6 @@ public class CtrlDominio {
 
 	public void borrarTeclado(String nombreTeclado) {
 		cjtTeclados.eliminarTeclado(nombreTeclado);
-		informacionTeclados.borrarTeclado(nombreTeclado);
 	}
 
 	/**
@@ -89,55 +95,12 @@ public class CtrlDominio {
 	}
 
 	/**
-	 * Cambiar el algoritmo de un teclado.
-	 *
-	 * @param nombreTeclado El nombre del teclado en el que se realizará el cambio.
-	 * @param algoritmo Nuevo algoritmo que se desea utilizar.
-	 */
-	public void cambiarAlgoritmoDeTeclado(String nombreTeclado, String algoritmo){
-		informacionTeclados.modificarAlgoritmoDeTeclado(nombreTeclado,algoritmo);	
-		actualizarDistribucion(nombreTeclado);
-	}
-
-	/**
-	 * Modificar el texto de un teclado.
-	 *
-	 * @param nombreTeclado El nombre del teclado en el que se realizará el cambio.
-	 * @param texto Nuevo texto modificado.
-	 */	
-	public void modificarTextoDeTeclado(String nombreTeclado, String texto){
-		informacionTeclados.modificarTextoDeTeclado(nombreTeclado, texto);
-		actualizarDistribucion(nombreTeclado);
-	}
-
-	/**
-	 * Modificar la lista de palabras de un teclado.
-	 *
-	 * @param nombreTeclado El nombre del teclado en el que se realizará el cambio.
-	 * @param listaPalabras Nueva lista de palabras.
-	 */
-	public void modificarListaPalabrasDeTeclado(String nombreTeclado, String listaPalabras){
-		informacionTeclados.modificarListaPalabrasDeTeclado(nombreTeclado, listaPalabras);
-		actualizarDistribucion(nombreTeclado);
-	}
-
-	/**
 	 * Añadir nuevo alfabeto
 	 * @param idAlfabeto ID del alfabeto que se va a añadir.
 	 * @param caracteres String que representa caracteres.
 	 */
 	public void añadirAlfabeto(String idAlfabeto, String caracteres){
-		informacionTeclados.añadirAlfabeto(idAlfabeto,caracteres);
-	}
-
-	/**
-	 * Modificar alfabeto del conjunto de alfabetos.
-	 *
-	 * @param alfabeto String que representa los caracteres modificados.
-	 */
-	public void modificarAlfabeto(String idAlfabeto,String alfabeto){
-		//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
-		informacionTeclados.modificarAlfabeto(idAlfabeto,alfabeto);
+		cjtAlfabetos.añadirAlfabeto(idAlfabeto,caracteres);
 	}
 
 	/**
@@ -145,29 +108,21 @@ public class CtrlDominio {
 	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
 	 */
 	public void eliminarAlfabeto(String idAlfabeto){
-		/***Caso NO implementado, eliminar un alfabet que es utilizado por uno o varios teclados***/
-
-		//System.out.println("Se procederá a eliminar todos los teclados que utilizan ese alfabeto.");
-		informacionTeclados.eliminarAlfabeto(idAlfabeto);
+	
+		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
 	}
 
-	/**
-	 * Retorna todos los alfabetos del conjunto de alfabetos.
-	 */
-	public String consultarAlfabetos(){
-		return informacionTeclados.consultarAlfabetos();
-	}
-	/**
-	 * Assigna nuevo alfabeto a un teclado existente.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de modificar.
-	 * @param idAlfabeto ID del nuevo alfabeto a assignar el teclado.
-	 */
-	public void assignaNuevoAlfabetoDeTeclado(String nombreTeclado,String idAlfabeto) {
-		informacionTeclados.assignaNuevoAlfabetoDeTeclado(nombreTeclado,idAlfabeto);
-	}
+
 
 	// ----- Getters -----
+
+
+	/**
+	 * Retorna todos los nombres del conjunto de alfabetos.
+	 */
+	public String consultarAlfabetos(){
+		return cjtAlfabetos.getAlfabetosEnString();
+	}
 
 	/**
 	 * Printea la distribución de un teclado.
@@ -176,7 +131,7 @@ public class CtrlDominio {
 	 * @return La distribución del teclado en forma de String.
 	 */
 	public String consultarDistribucionDeTeclado(String nombreTeclado) {
-		return cjtTeclados.getDist(nombreTeclado);
+		return cjtTeclados.getDistribucioString(nombreTeclado);
 	}
 
 	/**
@@ -184,53 +139,6 @@ public class CtrlDominio {
 	 */
 	public String consultarNombreTeclados() {
 		return ArrayToString(cjtTeclados.getNombreTeclados());
-	}
-
-	/**
-	 * Devuelve todos los alfabetos de un teclado.
-	 * 
-	 * @param nombreTeclado  El nombre del teclado que se ha de consultar.
-	 * @return Los alfabetos del teclado en forma de String.
-	 */
-	public String consultarAlfabetosDeTeclado(String nombreTeclado) {
-		if(!cjtTeclados.existeTeclado(nombreTeclado)){
-			return "";
-		}
-		ArrayList<Character> alfabeto = informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado).getCaracteres();
-		//alfabeto tiene una función toString() que devuelve un String con todos los caracteres
-		return alfabeto.toString();
-	}
-
-	/**
-	 * Printea el texto de un teclado.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
-	 * @return El texto del teclado en forma de String.
-	 */
-	public String consultarTextoDeTeclado(String nombreTeclado) {
-		Texto t = informacionTeclados.getTextoDeTeclado(nombreTeclado);
-		return t.getTexto();
-	}
-
-	/**
-	 * Printea la lista de palabras de un teclado.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
-	 * @return La lista de palabras del teclado en forma de String.
-	 */
-	public String consultarListaPalabrasDeTeclado(String nombreTeclado) {
-		Map<String, Integer> listaPalabras = informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado).getMap();
-		return listaPalabras.toString();
-	}
-
-	/**
-	 * Consulta el algoritmo de un teclado.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
-	 * @return El algoritmo que se ha utilizado para la distribucion del teclado en forma de String.
-	 */
-	public String consultarAlgoritmoDeTeclado(String nombreTeclado) {
-		return informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado);
 	}
 
 	/**
@@ -243,36 +151,16 @@ public class CtrlDominio {
 		return cjtTeclados.existeTeclado(nombreTeclado);
 	}
 
-/**
- * Comprueba si existe un alfabeto en el conjunto de alfabetos.
- * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
- * @return True si existe el alfabeto, false en caso contrario.
- */
+	/**
+	 * Comprueba si existe un alfabeto en el conjunto de alfabetos.
+	 * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
+	 * @return True si existe el alfabeto, false en caso contrario.
+	 */
 	public boolean existeAlfabeto(String nombreAlfabeto) {
-		return informacionTeclados.existeAlfabeto(nombreAlfabeto);
+		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
 	}
 
 	// ----- Utilidades -----
-
-	/**
-	 * Actualiza la distribución de un teclado.
-	 *
-	 * @param nombreTeclado El nombre del teclado cuya distribución se actualizará.
-	 */
-
-
-	private void actualizarDistribucion(String nombreTeclado) {
-		char[][] distribucion = new char[0][0];
-		if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "QAP"){
-			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
-			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
-		}
-		else if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "SA"){
-			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSA());
-			distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
-		}
-		cjtTeclados.setDistribucionTeclado(nombreTeclado, distribucion);
-	}
 
 	/**
 	 * Convierte un ArrayList de Strings en un String.
@@ -288,5 +176,100 @@ public class CtrlDominio {
 		}
 		return s;
 	}
+
+
+
+
+
+	//FUNCIONES ELIMINADAS
+
+	// /**************************************************************************************************
+	//  * Modificar alfabeto del conjunto de alfabetos.
+	//  *
+	//  * @param alfabeto String que representa los caracteres modificados.
+	//  */
+	// public void modificarAlfabeto(String idAlfabeto,String alfabeto){
+	// 	//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
+	// 	cjtAlfabetos.modificarAlfabeto(idAlfabeto,alfabeto);
+	// }****************************************************************************************************
+	
+	// /*******************************************************************************************************************
+	//  * Devuelve todos los alfabetos de un teclado.
+	//  * 
+	//  * @param nombreTeclado  El nombre del teclado que se ha de consultar.
+	//  * @return Los alfabetos del teclado en forma de String.
+	//  */
+	// public String consultarAlfabetosDeTeclado(String nombreTeclado) {
+	// 	if(!cjtTeclados.existeTeclado(nombreTeclado)){
+	// 		return "";
+	// 	}
+	// 	ArrayList<Character> alfabeto = informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado).getCaracteres();
+	// 	//alfabeto tiene una función toString() que devuelve un String con todos los caracteres
+	// 	return alfabeto.toString();
+	// }*******************************************************************************************************************
+
+	// /********************************************************************************************************************
+	//  * Printea el texto de un teclado.
+	//  * 
+	//  * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	//  * @return El texto del teclado en forma de String.
+	//  */
+	// public String consultarTextoDeTeclado(String nombreTeclado) {
+	// 	Texto t = informacionTeclados.getTextoDeTeclado(nombreTeclado);
+	// 	return t.getTexto();
+	// }*********************************************************************************************************************
+
+	// /*********************************************************************************************************************
+	//  * Printea la lista de palabras de un teclado.
+	//  * 
+	//  * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	//  * @return La lista de palabras del teclado en forma de String.
+	//  */
+	// public String consultarListaPalabrasDeTeclado(String nombreTeclado) {
+	// 	Map<String, Integer> listaPalabras = informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado).getMap();
+	// 	return listaPalabras.toString();
+	// }*********************************************************************************************************************
+
+	// /*********************************************************************************************************************
+	//  * Consulta el algoritmo de un teclado.
+	//  * 
+	//  * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	//  * @return El algoritmo que se ha utilizado para la distribucion del teclado en forma de String.
+	//  */
+	// public String consultarAlgoritmoDeTeclado(String nombreTeclado) {
+	// 	return informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado);
+	// }*********************************************************************************************************************
+
+
+	// /*********************************************************************************************************************************
+	//  * Actualiza la distribución de un teclado.
+	//  *
+	//  * @param nombreTeclado El nombre del teclado cuya distribución se actualizará.
+	//  */
+
+
+	// private void actualizarDistribucion(String nombreTeclado) {
+	// 	char[][] distribucion = new char[0][0];
+	// 	if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "QAP"){
+	// 		GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
+	// 		distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
+	// 	}
+	// 	else if(informacionTeclados.getTipoAlgoritmoDeTeclado(nombreTeclado) == "SA"){
+	// 		GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSA());
+	// 		distribucion = gdt.generarDistribucion(informacionTeclados.getCaracteresAlfabetoDeTeclado(nombreTeclado),informacionTeclados.getListaPalabrasDeTeclado(nombreTeclado), informacionTeclados.getTextoDeTeclado(nombreTeclado));
+	// 	}
+	// 	cjtTeclados.setDistribucionTeclado(nombreTeclado, distribucion);
+	// }************************************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
 
 }

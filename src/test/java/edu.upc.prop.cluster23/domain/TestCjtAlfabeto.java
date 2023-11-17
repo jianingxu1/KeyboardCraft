@@ -107,7 +107,6 @@ public class TestCjtAlfabeto {
 
         cjtAlfabetos.añadirAlfabeto("Ingles",alf);
         assertEquals(caracteres,cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
-        assertEquals(caracteres.toString(),cjtAlfabetos.getAlfabetos("Ingles").getAlfabetoCaracteresEnString());
 
     }
 
@@ -137,7 +136,6 @@ public class TestCjtAlfabeto {
         assertEquals("RGB",cjtAlfabetos.getAlfabeto("RGB").getNombre());
         assertEquals(caracteres2,cjtAlfabetos.getAlfabeto("RGB").getCaracteres());
         assertTrue(cjtAlfabetos.getAlfabetos().size() == 2);
-        assertEquals(caracteres2.toString(),cjtAlfabetos.getAlfabetos("RGB").getAlfabetoCaracteresEnString());
     }
 
     @Test

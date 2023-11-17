@@ -121,7 +121,7 @@ public class Tview {
                             break;
 
                         case 2:
-                            FuncModificarAlfabeto();
+                            // FuncModificarAlfabeto();
                             break;
 
                         case 3:
@@ -222,17 +222,17 @@ public class Tview {
         controladorDominio.añadirAlfabeto(name,idAlf);
     }
 
-    void FuncModificarAlfabeto() {
+    // void FuncModificarAlfabeto() {
 
-        System.out.println("Escribe el nombre y los caractéres del alfabeto a modificar");
+    //     System.out.println("Escribe el nombre y los caractéres del alfabeto a modificar");
 
-        input.nextLine();
+    //     input.nextLine();
 
-        String name = input.nextLine();
-        String idAlf = input.nextLine();
+    //     String name = input.nextLine();
+    //     String idAlf = input.nextLine();
 
-        controladorDominio.modificarAlfabeto(name,idAlf);
-    }
+    //     //controladorDominio.modificarAlfabeto(name,idAlf);
+    // }
 
     void FuncBorrarAlfabeto() {
         System.out.println("Escribe el nombre del alfabeto a borrar");
