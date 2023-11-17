@@ -13,7 +13,7 @@ public class CjtTeclados {
     private HashMap<String, Teclado> conjunto;
 
     /** Constructora **/
-    public CjtTeclados() {
+    public CjtTeclados () {
         conjunto = new HashMap<String, Teclado>();
     }
 
@@ -23,7 +23,7 @@ public class CjtTeclados {
      * Devuelve la instancia de CjtTeclados
      * @return instancia de CjtTeclados
      */
-    public static CjtTeclados getInstance() {
+    public static CjtTeclados getInstance () {
         if (singletonObject == null)
             singletonObject = new CjtTeclados() {
             };
@@ -39,7 +39,7 @@ public class CjtTeclados {
      * @param nombre el nombre del nuevo teclado
      * @param mat su matriz de caractéres que representa la distribución de su teclado
      */
-    public void crearTeclado(String nombre, char[][] mat) {
+    public void crearTeclado (String nombre, char[][] mat) {
         Teclado teclado = new Teclado(nombre, mat);
         conjunto.put(nombre, teclado);
     }
@@ -49,7 +49,7 @@ public class CjtTeclados {
      * @param nombre el nombre del teclado a borrar
      */
 
-    public void eliminarTeclado(String nombre) {
+    public void eliminarTeclado (String nombre) {
         conjunto.remove(nombre);
     }
 
@@ -62,7 +62,7 @@ public class CjtTeclados {
      * @param j2 col. tecla 2
      */
 
-    public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) {
+    public void intercambiarTeclasTeclado (String nombre, int i1, int j1, int i2, int j2) {
         conjunto.get(nombre).intercambiarTeclas(i1, j1, i2, j2);
     }
 
@@ -71,7 +71,7 @@ public class CjtTeclados {
      * @param nombre nombre del teclado
      * @param dist matriz de caractéres a asignar
      */
-    public void setDistribucionTeclado(String nombre, char[][] dist) {
+    public void setDistribucionTeclado (String nombre, char[][] dist) {
         conjunto.get(nombre).setDistribucion(dist);
     }
 
@@ -83,7 +83,7 @@ public class CjtTeclados {
      * @return true si existe en el conjunto, false en cualquier otro caso
      */
 
-    public boolean existeTeclado(String nombre) {
+    public boolean existeTeclado (String nombre) {
         return conjunto.containsKey(nombre);
     }
 
@@ -93,7 +93,7 @@ public class CjtTeclados {
      * @return matriz de caractéres (char[][]) que representa la distribución
      */
 
-    public char[][] getTeclado(String nombre) {
+    public char[][] getTeclado (String nombre) {
         return conjunto.get(nombre).getTeclado();
     }
     
@@ -101,7 +101,7 @@ public class CjtTeclados {
      * Devuele  un vector de Strings con los nombres de todos los teclados del conjunto.
      * @return vector de Strings.
      */
-    public ArrayList<String> getNombreTeclados() {
+    public ArrayList<String> getNombreTeclados () {
         if(conjunto.isEmpty()) return new ArrayList<String>();
         
         ArrayList<String> nombres = new ArrayList<String>();
@@ -117,7 +117,7 @@ public class CjtTeclados {
      * @param nombre El nombre del teclado que se ha de consultar.
      * @return Teclado del conjunto de teclados.
      */
-    public Teclado getTecladoObjeto(String nombre) {
+    public Teclado getTecladoObjeto (String nombre) {
         return conjunto.get(nombre);
     }
 
@@ -127,7 +127,7 @@ public class CjtTeclados {
      * @param nombre nombre del teclado
      * @return String que representa la distribución
      */
-    public String getDistribucioString(String nombre) {
+    public String getDistribucioString (String nombre) {
         return conjunto.get(nombre).toString();
     }
 
@@ -135,7 +135,7 @@ public class CjtTeclados {
     * Devuelve el número de teclados en el conjunto
     * @return entero con el tamaño
     */
-    public int totalTeclados() {
+    public int totalTeclados () {
         return conjunto.size();
     }
 }

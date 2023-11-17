@@ -11,7 +11,7 @@ public class Teclado {
     private char[][] distribucion;
 
     /** Constructora **/
-    public Teclado(String nombre, char[][] distribucion) {
+    public Teclado (String nombre, char[][] distribucion) {
         this.nombre = nombre;
         this.distribucion = distribucion;
     }
@@ -26,7 +26,7 @@ public class Teclado {
      * @param i2 fila tecla 2
      * @param j2 columna tecla 2
      */
-    public void intercambiarTeclas(int i1, int j1, int i2, int j2) {
+    public void intercambiarTeclas (int i1, int j1, int i2, int j2) {
         char temp = distribucion[i2][j2];
         distribucion[i2][j2] = distribucion[i1][j1];
         distribucion[i1][j1] = temp;
@@ -37,7 +37,7 @@ public class Teclado {
      *
      * @return nombre del teclado
      */
-    public String getNombre() {
+    public String getNombre () {
         return this.nombre;
     }
 
@@ -46,7 +46,7 @@ public class Teclado {
      *
      * @return distribucion
      */
-    public char[][] getTeclado() {
+    public char[][] getTeclado () {
         return distribucion;
     }
 
@@ -55,7 +55,7 @@ public class Teclado {
      *
      * @param distribucion nueva distribución
      */
-    public void setDistribucion(char[][] distribucion) {
+    public void setDistribucion (char[][] distribucion) {
         this.distribucion = distribucion;
     }
 
@@ -67,7 +67,7 @@ public class Teclado {
      * @return String que representa la distribución
      */
     @Override
-    public String toString() {
+    public String toString () {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < distribucion.length; ++i) {
             s.append("---------------------\n");

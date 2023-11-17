@@ -48,15 +48,6 @@ public class Alfabeto {
         this.nombre = nombre;
     }
 
-    // /**************************************************************
-    //  * Cambia los caracteres del alfabeto.
-    //  *
-    //  * @param caracteres Los nuevos caracteres del alfabeto.
-    //  */
-    // public void cambiarCaracteres(String chars) {
-    //     this.caracteres = toArray(chars);
-    // }***************************************************************
-
     /** ----- Getters ----- **/
 
     /**
@@ -122,4 +113,16 @@ public class Alfabeto {
         }
         return s;
     }
+
+    //Funcion eliminada 
+
+    // /**************************************************************
+    //  * Cambia los caracteres del alfabeto.
+    //  *
+    //  * @param caracteres Los nuevos caracteres del alfabeto.
+    //  */
+    // public void cambiarCaracteres(String chars) {
+    //     this.caracteres = toArray(chars);
+    // }***************************************************************
+
 }
