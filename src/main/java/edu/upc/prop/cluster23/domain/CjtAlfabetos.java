@@ -30,7 +30,6 @@ public class CjtAlfabetos {
         return singletonObject;
     }
 
-
     /** ----- Métodos públicos ----- **/
 
     /** ----- Setters ----- **/
@@ -55,16 +54,16 @@ public class CjtAlfabetos {
         alfabetos.remove(nombre);
     }
 
-    /**
-     * Cambia el alfabeto de un alfabeto.
-     *
-     * @param nombre El nombre del alfabeto.
-     */
+    // /**************************************************************************
+    //  * Cambia el alfabeto de un alfabeto.
+    //  *
+    //  * @param nombre El nombre del alfabeto.
+    //  */
 
 
-    public void cambiarCaracteres (String nombre, String caracteres) {
-        alfabetos.get(nombre).cambiarCaracteres(caracteres);
-    }
+    // public void cambiarCaracteres (String nombre, String caracteres) {
+    //     alfabetos.get(nombre).cambiarCaracteres(caracteres);
+    // }**************************************************************************
 
     /**
      * Cambia el nombre de un alfabeto.
@@ -74,7 +73,6 @@ public class CjtAlfabetos {
      */
     public void cambiarNombre (String nombre, String nuevoNombre) {
         alfabetos.get(nombre).cambiarNombre(nuevoNombre);
-        //actualiza la hashmap
         Alfabeto alfabeto = alfabetos.get(nombre);
         alfabetos.remove(nombre);
         alfabetos.put(nuevoNombre, alfabeto);
@@ -101,6 +99,16 @@ public class CjtAlfabetos {
     }
 
     /**
+     * Retorna los caracteres del alfabeto en formato String
+     *
+     * @param nombre El nombre del alfabeto.
+     */
+    public String getAlfabetoCaracteresEnString(String nombre) {
+        return alfabetos.get(nombre).getCaracteresStringFormat();
+    }
+
+    
+    /**
      * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos del conjunto.
      */    
     public ArrayList<ArrayList<Character>> getAlfabetos() {
@@ -109,6 +117,14 @@ public class CjtAlfabetos {
             estructuras.add(alfabeto.getCaracteres());
         }
         return estructuras;
+    }
+
+    public String getAlfabetosEnString() {
+        String s = "";
+        for (Alfabeto alfabeto : alfabetos.values()) {
+            s += alfabeto.getNombre() + " | " + alfabeto.getCaracteresStringFormat() + "\n";
+        }
+        return s;
     }
 
     /**

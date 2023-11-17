@@ -48,14 +48,14 @@ public class Alfabeto {
         this.nombre = nombre;
     }
 
-    /**
-     * Cambia los caracteres del alfabeto.
-     *
-     * @param caracteres Los nuevos caracteres del alfabeto.
-     */
-    public void cambiarCaracteres(String chars) {
-        this.caracteres = toArray(chars);
-    }
+    // /**************************************************************
+    //  * Cambia los caracteres del alfabeto.
+    //  *
+    //  * @param caracteres Los nuevos caracteres del alfabeto.
+    //  */
+    // public void cambiarCaracteres(String chars) {
+    //     this.caracteres = toArray(chars);
+    // }***************************************************************
 
     /** ----- Getters ----- **/
 
@@ -78,6 +78,17 @@ public class Alfabeto {
     }
 
     /**
+     * Devuelve los caracteres del alfabeto, en formato String.
+     *
+     * @return Los caracteres del alfabeto.
+     */
+    public String getCaracteresStringFormat() {
+        return toString(this.caracteres);   
+    }
+
+    /** ----- Métodos Para Conversion De Formatos ----- **/
+
+    /**
      * Convertir string en vector de chars
      * 
      * @param charsS String que contiene los caracteres.
@@ -94,7 +105,6 @@ public class Alfabeto {
                 caracteres.add(chars.charAt(i));
             }
         }
-
         return caracteres;
     }
 

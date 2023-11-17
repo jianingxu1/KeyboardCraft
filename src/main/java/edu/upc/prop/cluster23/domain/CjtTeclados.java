@@ -8,14 +8,21 @@ import java.util.HashMap;
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public class CjtTeclados {
+
+    /** Atributos **/
     private HashMap<String, Teclado> conjunto;
 
+    /** Constructora **/
     public CjtTeclados() {
         conjunto = new HashMap<String, Teclado>();
     }
 
     private static CjtTeclados singletonObject;
 
+    /**
+     * Devuelve la instancia de CjtTeclados
+     * @return instancia de CjtTeclados
+     */
     public static CjtTeclados getInstance() {
         if (singletonObject == null)
             singletonObject = new CjtTeclados() {
@@ -23,14 +30,18 @@ public class CjtTeclados {
         return singletonObject;
     }
 
+    /** Métodos públicos **/
+
+    /** ----- Setters ----- **/
+    
     /**
      * Crea un teclado nuevo y lo guarda en el conjunto
      * @param nombre el nombre del nuevo teclado
      * @param mat su matriz de caractéres que representa la distribución de su teclado
      */
     public void crearTeclado(String nombre, char[][] mat) {
-
-        if (!conjunto.containsKey(nombre)) conjunto.put(nombre, new Teclado(nombre, mat));
+        Teclado teclado = new Teclado(nombre, mat);
+        conjunto.put(nombre, teclado);
     }
 
     /**
@@ -40,15 +51,6 @@ public class CjtTeclados {
 
     public void eliminarTeclado(String nombre) {
         conjunto.remove(nombre);
-    }
-
-    /**
-     * Devuelve el número de teclados en el conjunto
-     * @return entero con el tamaño
-     */
-
-    public int size() {
-        return conjunto.size();
     }
 
     /**
@@ -72,6 +74,8 @@ public class CjtTeclados {
     public void setDistribucionTeclado(String nombre, char[][] dist) {
         conjunto.get(nombre).setDistribucion(dist);
     }
+
+    //** ----- Getters ----- **/
 
     /**
      * Indica si un teclado existe o no en el conjunto
@@ -117,6 +121,22 @@ public class CjtTeclados {
         return conjunto.get(nombre);
     }
 
-    public String getDist(String nombre) {return conjunto.get(nombre).toString();}
+
+    /**
+     * Devuelve la distribución de un teclado en formato String
+     * @param nombre nombre del teclado
+     * @return String que representa la distribución
+     */
+    public String getDistribucioString(String nombre) {
+        return conjunto.get(nombre).toString();
+    }
+
+    /**
+    * Devuelve el número de teclados en el conjunto
+    * @return entero con el tamaño
+    */
+    public int totalTeclados() {
+        return conjunto.size();
+    }
 }
 
