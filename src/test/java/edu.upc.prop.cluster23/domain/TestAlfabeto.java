@@ -42,29 +42,29 @@ public class TestAlfabeto {
         assertFalse("Catalan" == alfabeto.getNombre());
     }
 
-    // @Test
-    // public void testCambiarCaracteresDelAlfabeto(){
-    //     String a = "Ingles";
-    //     ArrayList<Character> caracteres = new ArrayList<Character>();
-    //     caracteres.add('a');
-    //     caracteres.add('b');
-    //     caracteres.add('c');
-    //     Alfabeto alfabeto;
+    @Test
+    public void testModificarAlfabeto(){
+        String a = "Ingles";
+        ArrayList<Character> caracteres = new ArrayList<Character>();
+        caracteres.add('a');
+        caracteres.add('b');
+        caracteres.add('c');
+        Alfabeto alfabeto;
 
-    //     String alf = "abc";
+        String alf = "abc";
 
-    //     alfabeto = new Alfabeto(a,alf);
-    //     ArrayList<Character> caracteres2 = new ArrayList<Character>();
-    //     caracteres2.add('R');
-    //     caracteres2.add('G');
-    //     caracteres2.add('B');
+        alfabeto = new Alfabeto(a,alf);
+        ArrayList<Character> caracteres2 = new ArrayList<Character>();
+        caracteres2.add('R');
+        caracteres2.add('G');
+        caracteres2.add('B');
 
-    //     String alf2 = "RGB";
+        String alf2 = "RGB";
 
-    //     alfabeto.cambiarCaracteres(alf2);
-    //     assertEquals(caracteres2,alfabeto.getCaracteres());
-    //     assertFalse(caracteres == alfabeto.getCaracteres());   
-    // }
+        alfabeto.modificarAlfabeto(alf2);
+        assertEquals(caracteres2,alfabeto.getCaracteres());
+        assertFalse(caracteres == alfabeto.getCaracteres());   
+    }
 
     @Test 
     public void testToString(){

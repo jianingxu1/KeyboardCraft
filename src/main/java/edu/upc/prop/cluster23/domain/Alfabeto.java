@@ -44,8 +44,22 @@ public class Alfabeto {
 
     /** ----- Modificadoras ----- **/
 
+    /**
+     * Cambia el nombre del alfabeto.
+     *
+     * @param nombre El nombre del alfabeto.
+     */
     public void cambiarNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * Modifica los caracteres del alfabeto.
+     *
+     * @param chars Los nuevos caracteres del alfabeto.
+     */
+    public void modificarAlfabeto(String chars) {
+        this.caracteres = toArray(chars);
     }
 
     /** ----- Getters ----- **/

@@ -1,9 +1,10 @@
 package edu.upc.prop.cluster23.domaincontrollers;
+import edu.upc.prop.cluster23.exceptions.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import edu.upc.prop.cluster23.domain.*;
+
 
 /** Clase CtrlDominio
  *  Representa Controlador de Dominio. Se encarga de gestionar teclados y todas sus características.
@@ -48,9 +49,14 @@ public class CtrlDominio {
 	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en la distribución del teclado.
 	 * @param algor Un string que representa el algoritmo utilizado para la creación del teclado.
 	 */
-	public void creaTeclado (String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo) {
+	public void creaTeclado (String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo)  throws NombreAlfabetoNoExisteExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,FrecuenciaIncorrectaExcepcion {
 		//Informacion necesaria para poder crear el teclado
-		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
+		PalabrasConFrecuencia palabras;
+        try {
+            palabras = new PalabrasConFrecuencia(listaPalabras);
+        } catch (NumberFormatException e) {
+            throw new FrecuenciaIncorrectaExcepcion();
+        }
 		Texto text = new Texto(texto); 
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
 
@@ -77,7 +83,8 @@ public class CtrlDominio {
 	 * @param nombreTeclado El nombre del teclado que se procederá a eliminar.
 	 */
 
-	public void borrarTeclado(String nombreTeclado) {
+	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoExisteExcepcion{
+		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
 		cjtTeclados.eliminarTeclado(nombreTeclado);
 	}
 
@@ -90,7 +97,26 @@ public class CtrlDominio {
 	 * @param i2 La fila de la segunda tecla.
 	 * @param j2 La columna de la segunda tecla.
 	 */
-	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2){
+	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)throws NombreTecladoNoExisteExcepcion, IndiceTeclaFueraDeRangoExcepcion {
+		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
+		
+		char[][] distribucion = cjtTeclados.getTeclado(nombreTeclado);
+		String mensaje = "";
+
+		if(i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length){
+			if(i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length){
+				mensaje += "La posicion de la primera tecla "+ i1 + " " + j1 + " no es correcta";
+			}
+			if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length){
+				if(mensaje.isEmpty()) mensaje += "La posicion de la segunda tecla "+ i2 + " " + j2 + " no es correcta";
+				else {
+					mensaje += " y la posicion de la segunda tecla "+ i2 + " " + j2 + " no es correcta";
+				}
+			}
+
+			throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
+		}
+
 		cjtTeclados.intercambiarTeclasTeclado(nombreTeclado,i1, j1, i2, j2);
 	}
 
@@ -99,7 +125,8 @@ public class CtrlDominio {
 	 * @param idAlfabeto ID del alfabeto que se va a añadir.
 	 * @param caracteres String que representa caracteres.
 	 */
-	public void añadirAlfabeto(String idAlfabeto, String caracteres){
+	public void añadirAlfabeto(String idAlfabeto, String caracteres) throws NombreAlfabetoDuplicadoExcepcion{
+		if(cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
 		cjtAlfabetos.añadirAlfabeto(idAlfabeto,caracteres);
 	}
 
@@ -107,15 +134,25 @@ public class CtrlDominio {
 	 * Eliminar alfabeto
 	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
 	 */
-	public void eliminarAlfabeto(String idAlfabeto){
+	public void eliminarAlfabeto(String idAlfabeto)throws NombreAlfabetoNoExisteExcepcion {
+		if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
 	
 		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
 	}
 
+	/**
+	 * Modificar alfabeto del conjunto de alfabetos.
+	 *
+	 * @param alfabeto String que representa los caracteres modificados.
+	 */
+	public void modificarAlfabeto(String idAlfabeto,String alfabeto) throws NombreAlfabetoNoExisteExcepcion{
+		//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
+		if(cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
+		cjtAlfabetos.modificarAlfabeto(idAlfabeto,alfabeto);
+	}
 
 
 	// ----- Getters -----
-
 
 	/**
 	 * Retorna todos los nombres del conjunto de alfabetos.
@@ -124,20 +161,26 @@ public class CtrlDominio {
 		return cjtAlfabetos.getAlfabetosEnString();
 	}
 
+	public String consultarNombresYCaracteresDeAlfabetos(){
+		return cjtAlfabetos.getNombresYCaracteresDeAlfabetos();
+	
+	}
+
 	/**
 	 * Printea la distribución de un teclado.
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de mostrar.
 	 * @return La distribución del teclado en forma de String.
 	 */
-	public String consultarDistribucionDeTeclado(String nombreTeclado) {
+	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoExisteExcepcion {
+		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
 		return cjtTeclados.getDistribucioString(nombreTeclado);
 	}
 
 	/**
 	 * Devuelve el nombre de todos los teclados del conjunto de teclados.
 	 */
-	public String consultarNombreTeclados() {
+	public String consultarNombresTeclados() {
 		return ArrayToString(cjtTeclados.getNombreTeclados());
 	}
 
