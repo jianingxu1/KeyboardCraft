@@ -44,7 +44,15 @@ public class Tview {
 
             System.out.println("Selecciona una opción: | 1. Teclados | 2. Alfabetos | 3. Salir |");
 
-            value = input.nextInt();
+            try {
+                value = input.nextInt();
+                input.nextLine();
+            }
+            catch (InputMismatchException ime) {
+                System.out.println("El valor introducido no es un entero.");
+                input.nextLine();
+                continue;
+            }
 
             if (value != 3) System.out.println("¿Qué deseas hacer?");
             switch (value) {
@@ -53,7 +61,17 @@ public class Tview {
                     System.out.println("----- TECLADO ----- ");
                     System.out.println("1. Crear\n2. Modificar\n3. Borrar\n4. Mostrar\n5. Ver todos\n6. Atrás");
 
-                    int opt = input.nextInt();
+                    int opt = -1;
+
+                    try {
+                        opt = input.nextInt();
+                        input.nextLine();
+                    }
+                    catch (InputMismatchException ime) {
+                        System.out.println("El valor introducido no es un entero.");
+                        input.nextLine();
+                        continue;
+                    }
 
                     switch (opt) {
                         //CASO CREAR TECLADO
@@ -64,8 +82,17 @@ public class Tview {
                         case 2:
                             
                             System.out.println("1. Swap de teclas\n2. Atrás");
+                            int modOpt = -1;
 
-                            int modOpt = input.nextInt();
+                            try {
+                                modOpt = input.nextInt();
+                                input.nextLine();
+                            }
+                            catch (InputMismatchException ime) {
+                                System.out.println("El valor introducido no es un entero.");
+                                input.nextLine();
+                                continue;
+                            }
 
                             switch (modOpt) {
                                 case 1:
@@ -106,8 +133,16 @@ public class Tview {
                 case 2:
                     System.out.println("ALFABETO:");
                     System.out.println("1. Crear\n2. Modificar\n3. Borrar\n4. Mostrar\n5.Atrás");
-
-                    int optTec = input.nextInt();
+                    int optTec = -1;
+                    try {
+                        optTec = input.nextInt();
+                        input.nextLine();
+                    }
+                    catch (InputMismatchException ime) {
+                        System.out.println("El valor introducido no es un entero.");
+                        input.nextLine();
+                        continue;
+                    }
 
                     switch (optTec) {
                         case 1:
