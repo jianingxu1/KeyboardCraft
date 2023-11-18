@@ -3,6 +3,11 @@ package edu.upc.prop.cluster23.domain;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Clase TestAlgoritmoSA
+ * Representa los test de un algoritmo SA en concreto con sus caracteres.
+ * @author ruben.catalan(ruben.catalan@estudiantat.upc.edu)
+ */
 public class TestAlgoritmoSA {
 
     @Test

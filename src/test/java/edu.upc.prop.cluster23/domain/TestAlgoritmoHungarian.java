@@ -6,6 +6,12 @@ import java.util.ArrayList;
 
 import edu.upc.prop.cluster23.domain.AlgoritmoHungarian;
 
+/**
+ * Clase TestAlgoritmoHungarian
+ * Representa los tests de un algoritmo hungarian en concreto con sus matrices.
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
+ */
+
 public class TestAlgoritmoHungarian {
     @Test
     public void testEjecutar() {

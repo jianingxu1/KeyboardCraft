@@ -9,7 +9,7 @@ import java.util.InputMismatchException;
  * Clase Tview
  * Vista por terminal del programa
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
- * @co-authors Yasin  & Momin
+ * @co-authors Muhammad Yasin Khokar  & Momin Miah Begum
  */
 
 public class Tview {
@@ -128,7 +128,7 @@ public class Tview {
                             System.out.println("Valor inválido");
                     }
                     break;
-
+                //CASO SALIR DEL PROGRAMA
                 case 3:
                     System.out.println("Cerrando programa...");
                     break;

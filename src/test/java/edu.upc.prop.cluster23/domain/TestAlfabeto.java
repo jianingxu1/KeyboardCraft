@@ -6,6 +6,11 @@ import org.junit.Test;
 import java.beans.Transient;
 import java.util.ArrayList;
 
+/** Clase TestAlfabeto
+ *  Representa los Test de un alfabeto en concreto con sus caracteres.
+ *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
+ */
+
 public class TestAlfabeto {
    @Test
     public void testDefaultConstructor1() {

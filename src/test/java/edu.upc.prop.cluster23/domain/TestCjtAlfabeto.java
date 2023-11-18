@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.ArrayList;
 
+
+/** Clase estCjtTAlfabeto
+ *  Representan los test unitarios al cjtalfabetos.
+ *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
+ */
 public class TestCjtAlfabeto {
    @Test
     public void testDefaultConstructor1() {

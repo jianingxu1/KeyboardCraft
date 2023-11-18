@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /** Clase Alfabeto
- *  Representa un alfabeto en concreto con sus caracteres y teclados asociados.
+ *  Representa un alfabeto en concreto con sus caracteres.
  *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
 public class Alfabeto {

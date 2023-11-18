@@ -1,5 +1,11 @@
 package edu.upc.prop.cluster23.domain;
 
+/**
+ * Clase Posicion
+ * Representa una posición en una matriz
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ */
+
 public class Posicion {
     int fila;
     int col;

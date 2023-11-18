@@ -147,7 +147,7 @@ public class CjtAlfabetos {
     public String getNombresYCaracteresDeAlfabetos(){
         String s = "";
         for (Alfabeto alfabeto : alfabetos.values()) {
-            s += alfabeto.getNombre() + " | " + alfabeto.getCaracteresStringFormat() + "\n";
+            s += alfabeto.getNombre()+ "\n";
         }
         return s;
     }
@@ -172,8 +172,6 @@ public class CjtAlfabetos {
     //  *
     //  * @param nombre El nombre del alfabeto.
     //  */
-
-
     // public void cambiarCaracteres (String nombre, String caracteres) {
     //     alfabetos.get(nombre).cambiarCaracteres(caracteres);
     // }**************************************************************************

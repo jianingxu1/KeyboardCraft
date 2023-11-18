@@ -5,6 +5,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/** Clase TestCjtTeclados
+ * Representa los tests de un conjunto de teclados. 
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ */
+
 public class TestCjtTeclados {
 
     @Test

@@ -147,7 +147,7 @@ public class CtrlDominio {
 	 */
 	public void modificarAlfabeto(String idAlfabeto,String alfabeto) throws NombreAlfabetoNoExisteExcepcion{
 		//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
-		if(cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
+		if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto,alfabeto);
 	}
 

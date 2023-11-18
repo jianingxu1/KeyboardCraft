@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.Arrays;
 
+/** Clase TesTeclados
+ * Representa los tests de un teclados. 
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ */
+
 public class TestTeclado {
 
     @Test

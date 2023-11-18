@@ -5,6 +5,11 @@ import org.junit.Test;
 
 import edu.upc.prop.cluster23.domain.PalabrasConFrecuencia;
 
+
+/** Clase TestPalabrasConFrecuencia
+ *  Representa los test a una colección de palabras y sus frecuencias.
+ *  @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
+ */
 public class TestPalabrasConFrecuencia {
 
     @Test

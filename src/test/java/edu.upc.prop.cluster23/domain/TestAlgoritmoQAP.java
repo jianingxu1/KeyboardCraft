@@ -8,6 +8,13 @@ import java.util.*;
 
 import edu.upc.prop.cluster23.domain.*;
 
+
+/**
+ * Clase TestAlgoritmoQAP
+ * Representa los tests de un algoritmo QAP en concreto con sus caracteres.
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
+ */
+
 public class TestAlgoritmoQAP {
     @Test
     public void testGenerarDistribucion() {

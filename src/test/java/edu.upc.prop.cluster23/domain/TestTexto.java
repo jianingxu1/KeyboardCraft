@@ -5,6 +5,11 @@ import org.junit.Test;
 
 import edu.upc.prop.cluster23.domain.Texto;
 
+/** Clase TestTexto
+ *  Representan los test unitarios a la clase Texto.
+ *  @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
+ */
+
 public class TestTexto{
   
   @Test
