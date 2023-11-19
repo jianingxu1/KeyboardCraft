@@ -48,6 +48,11 @@ public class Tview {
         menuPrincipal();
     }
 
+    /**
+     * Menú desde el cual se puede acceder a las zonas de gestión de teclados y alfabetos
+     * así como las diferentes funciones que proporcionan estas
+     */
+
     public void menuPrincipal() {
 
         int value = -1;
@@ -189,20 +194,37 @@ public class Tview {
         }
     }
 
+    /**
+     * Función que mediante unos parámetros recibidos como input, genera y guarda un teclado
+     */
+
     void FuncCreacionTeclado() {
-        String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. La creación de teclado requiere de un alfabeto.");
             return;
         }
-        System.out.println("Introduce los siguientes parámetros del nuevo teclado:\n" +
-                "Nombre del teclado y alfabeto a usar, texto y lista de palabras, " +
-                "algoritmo a usar puede ser SA o QAP.\n" +
-                "NOTA: cada uno de estos parámetros debe ir en una línea distinta");
+
+        System.out.println("Teclados actuales:\n" +
+                        controladorDominio.consultarNombresTeclados());
+        System.out.println("Introduce el nombre del nuevo teclado:");
         String name = input.nextLine();
+
+        System.out.println("Alfabetos actuales:\n" +
+                        controladorDominio.consultarNombresDeAlfabetos());
+
+        System.out.println("Introduce el nombre del alfabeto a utilizar:");
         String idAlf = input.nextLine();
+
+        System.out.println("Introduce el texto para calcular frecuencias (ej: 'hola buenas tardes'):");
         String text = input.nextLine();
+
+        System.out.println("Introduce la lista de palabras con frecuencias (ej: 'coche 20 perro 15 teclado 200'):");
         String list = input.nextLine();
+
+        System.out.println("Introduce el nombre del algoritmo a utilizar (QAP o SA):\n" +
+                "NOTA: Los alfabetos con más de 12 caractéres pueden tardar +10 minutos con QAP.\n" +
+                "Se recomienda SA en estos casos.");
         String alg = input.nextLine();
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
@@ -210,6 +232,9 @@ public class Tview {
                 controladorDominio.creaTeclado(name, idAlf, text, list, alg);
                 cancelarOperacion = true;
                 System.out.println("¡Se ha creado el teclado \"" + name + "\" con éxito!");
+
+                controladorDominio.consultarDistribucionDeTeclado(name);
+
             } catch (NombreAlfabetoNoValidoExcepcion e) {
                 System.out.println(e.getMessage());
                 System.out.println(
@@ -271,7 +296,15 @@ public class Tview {
         }
     }
 
+    /**
+     * Función modificadora que gira la posición de dos teclas existentes de un teclado
+     */
+
     void FuncSwapTeclas() {
+
+        System.out.println("Teclados actuales:\n" +
+                controladorDominio.consultarNombresTeclados());
+
         System.out.println("Indica el nombre del teclado:");
         int f1, c1, f2, c2;
         boolean cancelarOperacion = false;
@@ -353,11 +386,19 @@ public class Tview {
         }
     }
 
+    /**
+     * Borra un teclado de los existentes en el sistema
+     */
+
     void FuncBorrarTeclado() {
         if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado. Para poder borrar, crea uno antes.");
             return;
         }
+
+        System.out.println("Teclados actuales:\n" +
+                controladorDominio.consultarNombresTeclados());
+
         System.out.println("Introduce el nombre del teclado a borrar:");
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
@@ -380,11 +421,18 @@ public class Tview {
         }
     }
 
+    /**
+     * Se muestra por pantalla la distribución del teclado, del cual se pasa su nombre por input
+     */
     void FuncMostrarTeclado() {
         if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado. Para poder mostrar, crea uno antes.");
             return;
         }
+
+        System.out.println("Teclados actuales:\n" +
+                controladorDominio.consultarNombresTeclados());
+
         System.out.println("Introduce el nombre del teclado a mostrar:");
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
@@ -406,8 +454,12 @@ public class Tview {
         }
     }
 
+    /**
+     * Muestra el nombre de todos los alfabetos creados hasta el momento
+     */
+
     void FuncMostrarAlfabetos() {
-        String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
         if (alfabetos.isEmpty())
             System.out.println("No tienes ningún alfabeto creado.\n");
         else {
@@ -416,6 +468,10 @@ public class Tview {
         }
     }
 
+    /**
+     * Muestra el nombre de todos los teclados creados hasta el momento
+     */
+
     void FuncMostrarNombresTeclados() {
         if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado.");
@@ -423,6 +479,10 @@ public class Tview {
         }
         System.out.println(controladorDominio.consultarNombresTeclados());
     }
+
+    /**
+     * Crea un nuevo alfabeto mediante un nombre y los caracteres que contendrá pasados por input
+     */
 
     void FuncCreacionAlfabeto() {
         System.out.println("Introduce el nombre que deseas asignar al alfabeto (ej: inglés):");
@@ -473,8 +533,12 @@ public class Tview {
         }
     }
 
+    /**
+     * Modifica la lista de símbolos de uno de los alfabetos creados
+     */
+
     void FuncModificarAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder modificar, crea uno antes.");
             return;
@@ -520,8 +584,12 @@ public class Tview {
         }
     }
 
+    /**
+     * Borra uno de los alfabetos especificados por el input
+     */
+
     void FuncBorrarAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder borrar, crea uno antes.");
             return;
@@ -551,8 +619,12 @@ public class Tview {
         }
     }
 
+    /**
+     * Muestra los caracteres de los que se compone uno de los alfabetos
+     */
+
     void FuncMostrarCaracteresAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado.");
             return;

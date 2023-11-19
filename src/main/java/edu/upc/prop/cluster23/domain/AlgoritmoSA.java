@@ -11,17 +11,65 @@ import java.util.*;
  */
 
 public class AlgoritmoSA implements Algoritmo {
+
+    /**
+     * Mapa que guarda la frecuencia de los bigramas
+     */
     private Map<String, Integer> frecuenciasCjts;
+
+    /**
+     * Array de las posiciones del teclado
+     */
     private Posicion[] posiciones;
+
+    /**
+     * Matriz que contiene la distancia entre posiciones
+     */
     private double[][] distancias;
+
+    /**
+     * Array que guarda los caractéres a utilizar
+     */
     private char[] caracteres;
+
+    /**
+     * Número de caractéres
+     */
     int n;
+
+    /**
+     * Número de filas de la distribución
+     */
     int rows;
+
+    /**
+     * Número de columnas de la distribución
+     */
     int cols;
+
+    /**
+     * Coste de la mejor distribución hasta el momento
+     */
     private double mejorCosteTotal;
-    private Map<Character, Integer> mejorDistribucion;
+
+    /**
+     * Matriz con la mejor distribución del teclado
+     */
     private char[][] distribucion;
 
+    /**
+     * Mapa que guarda la distribución para luego convertirla en la matriz a retornar
+     */
+    private Map<Character, Integer> mejorDistribucion;
+
+
+    /**
+     * Función que llama a los métodos necesarios para generar una distribución del teclado
+     * @param alf Alfabeto del que se extraen los caractéres
+     * @param palabras lista de palabras con frecuencia para el cálculo de frecuencia de bigramas
+     * @param texto contiene un String utilizado en el cálculo de frecuencias de bigramas
+     * @return Matriz de caractéres con la distribución optimizada (no necesariamente la mejor) del teclado
+     */
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
 
@@ -43,6 +91,13 @@ public class AlgoritmoSA implements Algoritmo {
         return distribucion;
     }
 
+    /**
+     * Procesa los diferentes parámetros de la entrada y llama a la función que genera la distribución
+     * @param alf Alfabeto del que se extraen los caractéres
+     * @param palabras lista de palabras con frecuencia para el cálculo de frecuencia de bigramas
+     * @param texto contiene un String utilizado en el cálculo de frecuencias de bigramas
+     */
+
     private void procesarInput(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         n = alf.getCaracteres().size();
         inicializarFrecuenciasCjts(alf, palabras, texto);
@@ -54,6 +109,11 @@ public class AlgoritmoSA implements Algoritmo {
 
         SimulatedAnnealing();
     }
+
+    /**
+     * Calcula una distribución bastante optimizada (pero no necesariamente la mejor)
+     * para el teclado usando el algoritmo de búsqueda local "Simulated Annealing"
+     */
 
     private void SimulatedAnnealing() {
 
@@ -127,6 +187,13 @@ public class AlgoritmoSA implements Algoritmo {
         }
     }
 
+    /**
+     * Calcula el coste de la distribución actual
+     * @param valActual Matriz de enteros donde cada una guarda la posición en la que se encontraría
+     *                  su respectivo carácter
+     * @return El coste de la distribución
+     */
+
     private double calculoCoste(int[] valActual) {
         double costeActual = 0.0;
         for (int i = 0; i < n; ++i) {
@@ -137,6 +204,14 @@ public class AlgoritmoSA implements Algoritmo {
         }
         return costeActual;
     }
+
+    /**
+     * Obtiene las frecuencias de los bigramas en el texto.
+     *
+     * @param alf      Alfabeto a utilizar.
+     * @param palabras Palabras con sus frecuencias.
+     * @param texto    Texto para analizar.
+     */
 
     private void inicializarFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         // Process the input parameters (alf, palabras, texto) and generate
@@ -194,6 +269,10 @@ public class AlgoritmoSA implements Algoritmo {
         }
     }
 
+    /**
+     * Inicializa el array de posiciones y calcula cuantas filas y columans requerirá la distribución
+     */
+
     public void inicializarPosiciones() {
         posiciones = new Posicion[n];
         if (n <= 2) {
@@ -218,6 +297,11 @@ public class AlgoritmoSA implements Algoritmo {
         }
     }
 
+    /**
+     * Inicializa la matriz de distancias entre posiciones.
+     *
+     */
+
     private void inicializarDistancias() {
         int n = posiciones.length;
         distancias = new double[n][n];
@@ -230,6 +314,11 @@ public class AlgoritmoSA implements Algoritmo {
         }
     }
 
+    /**
+     * Inicializa el array de caractéres
+     * @param alf Alfabeto del cual se extraen los caractéres
+     */
+
     private void inicializarCaracteres(Alfabeto alf) {
         caracteres = new char[n];
         ArrayList<Character> car = alf.getCaracteres();
@@ -238,12 +327,28 @@ public class AlgoritmoSA implements Algoritmo {
         }
     }
 
+    /**
+     * Calcula el coste entre dos posiciones, con símbolos distintos
+     * @param c1 Símbolo 1
+     * @param posIndex1 Posición símbolo 1
+     * @param c2 Símbolo 2
+     * @param posIndex2 Posición símbolo 2
+     * @return Coste entre las posiciones
+     */
+
     private double calcularCosteEntreDosCaracteres(char c1, int posIndex1, char c2, int posIndex2) {
         double distancia = distancias[posIndex1][posIndex2];
         String key = calcularKey(c1, c2);
         double frec = (double) frecuenciasCjts.get(key);
         return frec * distancia;
     }
+
+    /**
+     * Calcula la clave para la frecuencia de bigramas.
+     *@param c1              Caracter 1.
+     * @param c2              Caracter 2.
+     * @return Clave para la frecuencia de bigramas.
+     */
 
     private String calcularKey(char c1, char c2) {
         if (frecuenciasCjts.containsKey("" + c1 + c2))

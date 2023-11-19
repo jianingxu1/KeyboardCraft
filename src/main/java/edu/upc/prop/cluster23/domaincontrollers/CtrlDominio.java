@@ -239,7 +239,12 @@ public class CtrlDominio {
 		return res;
 	}
 
-	public String consultarNombresYCaracteresDeAlfabetos() {
+	/**
+	 * Muestra los nombres de los alfabetos creados hasta el momento
+	 * @return String con los nombres de todos los alfabetos
+	 */
+
+	public String consultarNombresDeAlfabetos() {
 		return cjtAlfabetos.getNombresYCaracteresDeAlfabetos();
 
 	}
