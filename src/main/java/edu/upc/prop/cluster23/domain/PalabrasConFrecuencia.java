@@ -81,6 +81,7 @@ public class PalabrasConFrecuencia {
         if (lines.length > 1) {
             for (int i = 0; i < lines.length; i += 2) {
                 String key = lines[i];
+                if(key.trim().isEmpty()) throw new IllegalArgumentException("Una palabra no puede ser vacia.");
                 int value = Integer.parseInt(lines[i+1]);
                 resultMap.put(key, value);
             }
