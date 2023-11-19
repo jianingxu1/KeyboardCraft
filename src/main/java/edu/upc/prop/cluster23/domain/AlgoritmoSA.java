@@ -20,19 +20,26 @@ public class AlgoritmoSA implements Algoritmo {
     int cols;
     private double mejorCosteTotal;
     private Map<Character, Integer> mejorDistribucion;
-    char[][] distribucion;
+    private char[][] distribucion;
 
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        procesarInput(alf, palabras, texto);
-        // branchAndBound(0, 0.0);
 
-        distribucion = new char[rows][cols];
-        for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
-            char c = entry.getKey();
-            Posicion p = posiciones[entry.getValue()];
-            distribucion[p.fila][p.col] = c;
+        if (alf.getCaracteres().size() > 1) {
+            procesarInput(alf, palabras, texto);
+            distribucion = new char[rows][cols];
+            for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
+                char c = entry.getKey();
+                Posicion p = posiciones[entry.getValue()];
+                distribucion[p.fila][p.col] = c;
+            }
         }
+
+        else {
+            distribucion = new char[1][10];
+            distribucion[0][0] = alf.getCaracteres().get(0);
+        }
+
         return distribucion;
     }
 
@@ -118,7 +125,6 @@ public class AlgoritmoSA implements Algoritmo {
         for (int i = 0; i < n; ++i) {
             mejorDistribucion.put(caracteres[i], mejorActual[i]);
         }
-        System.out.println(mejorCosteTotal);
     }
 
     private double calculoCoste(int[] valActual) {

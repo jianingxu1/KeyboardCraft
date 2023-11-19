@@ -37,6 +37,8 @@ public class AlgoritmoQAP implements Algoritmo {
      */
     private HashMap<Integer, Integer> mapMejorAsignacion;
 
+    private char[][] distribucion;
+
     /**
      * Genera la distribucion optima para el teclado dada una entrada.
      * 
@@ -48,19 +50,28 @@ public class AlgoritmoQAP implements Algoritmo {
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         this.n = alf.getCaracteres().size();
-        // Procesar input
-        HashMap<String, Integer> frecuenciasCjts = obtenerFrecuenciasCjts(alf, palabras, texto);
-        char[] caracteres = obtenerCaracteres(alf);
-        inicializarFrecuencias(frecuenciasCjts, caracteres);
 
-        int[] filas = new int[1];
-        int[] cols = new int[1];
-        Posicion[] posiciones = obtenerPosiciones(filas, cols);
-        inicializarDistancias(posiciones);
+        if (n > 1) {
 
-        calcularAsignacionOptima(this.frecuencias, this.distancias);
+            HashMap<String, Integer> frecuenciasCjts = obtenerFrecuenciasCjts(alf, palabras, texto);
+            char[] caracteres = obtenerCaracteres(alf);
+            inicializarFrecuencias(frecuenciasCjts, caracteres);
 
-        char[][] distribucion = convertirMejorDistribucion(caracteres, posiciones, filas, cols);
+            int[] filas = new int[1];
+            int[] cols = new int[1];
+            Posicion[] posiciones = obtenerPosiciones(filas, cols);
+            inicializarDistancias(posiciones);
+
+            calcularAsignacionOptima(this.frecuencias, this.distancias);
+
+            distribucion = convertirMejorDistribucion(caracteres, posiciones, filas, cols);
+        }
+
+        else {
+            distribucion = new char[1][10];
+            distribucion[0][0] = alf.getCaracteres().get(0);
+        }
+
         return distribucion;
     }
 

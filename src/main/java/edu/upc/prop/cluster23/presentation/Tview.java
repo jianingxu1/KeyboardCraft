@@ -87,17 +87,22 @@ public class Tview {
                                 break;
                             // CASO MODIFICAR TECLADOS (SWAP unicamente)
                             case 2:
-                                System.out.println("1. Swap de teclas\n2. Atrás\n");
-                                int modOpt = -1;
-                                try {
-                                    modOpt = input.nextInt();
-                                    input.nextLine();
-                                } catch (InputMismatchException ime) {
-                                    System.out.println("El valor introducido no es un entero.\n");
-                                    input.nextLine();
-                                    continue;
+                                if (controladorDominio.consultarNombresTeclados().isEmpty()) {
+                                    System.out.println(
+                                            "No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
                                 }
-                                switch (modOpt) {
+                                else {
+                                    System.out.println("1. Swap de teclas\n2. Atrás\n");
+                                    int modOpt = -1;
+                                    try {
+                                        modOpt = input.nextInt();
+                                        input.nextLine();
+                                    } catch (InputMismatchException ime) {
+                                        System.out.println("El valor introducido no es un entero.\n");
+                                        input.nextLine();
+                                        continue;
+                                    }
+                                    switch (modOpt) {
                                     case 1:
                                         FuncSwapTeclas();
                                         break;
@@ -107,9 +112,11 @@ public class Tview {
 
                                     default:
                                         System.out.println("Valor inválido.");
+                                    }
                                 }
                                 break;
-                            // CASO BORRAR TECLADOS
+
+                        // CASO BORRAR TECLADOS
                             case 3:
                                 FuncBorrarTeclado();
                                 break;
@@ -190,7 +197,8 @@ public class Tview {
         }
         System.out.println("Introduce los siguientes parámetros del nuevo teclado:\n" +
                 "Nombre del teclado y alfabeto a usar, texto y lista de palabras, " +
-                "algoritmo a usar puede ser SA o QAP (auto: QAP)");
+                "algoritmo a usar puede ser SA o QAP.\n" +
+                "NOTA: cada uno de estos parámetros debe ir en una línea distinta");
         String name = input.nextLine();
         String idAlf = input.nextLine();
         String text = input.nextLine();
@@ -264,18 +272,40 @@ public class Tview {
     }
 
     void FuncSwapTeclas() {
-        if (controladorDominio.consultarNombresTeclados().isEmpty()) {
-            System.out.println(
-                    "No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
-            return;
-        }
-        System.out.println("Indica el teclado y introduce la fila y columna del primer " +
-                "carácter y fila y columna del segundo carácter:");
-        input.nextLine();
-        String name = input.nextLine();
+        System.out.println("Indica el nombre del teclado:");
         int f1, c1, f2, c2;
         boolean cancelarOperacion = false;
+        boolean cancelarOperacion2 = false;
+
+        String name = input.nextLine();
+
         while (!cancelarOperacion) {
+            try {
+                String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
+                System.out.println(keyboard);
+                cancelarOperacion = true;
+            } catch (NombreTecladoNoValidoExcepcion ntv) {
+                System.out.println("El teclado introducido no existe.");
+                System.out.println("¿Quieres intentar de nuevo y escoger una teclado válido? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    System.out.println("No se ha modificado ningún teclado\n");
+                    cancelarOperacion = true;
+                    cancelarOperacion2 = true;
+                } else if (response.equals("s")) {
+                    System.out.println("Introduce nuevamente el nombre del teclado:");
+                    name = input.nextLine();
+                }
+            }
+        }
+
+        if (!cancelarOperacion2) {
+            System.out.println("Introduce el número de la fila y columna del primer elemento, y la fila y columna " +
+                    "del segundo elemento.\n" +
+                    "NOTA: Las filas y columnas se numeran desde 0");
+        }
+
+        while (!cancelarOperacion2) {
             try {
                 f1 = input.nextInt();
                 c1 = input.nextInt();
@@ -283,7 +313,9 @@ public class Tview {
                 c2 = input.nextInt();
                 input.nextLine();
                 controladorDominio.intercambiarTeclasTeclado(name, f1, c1, f2, c2);
-                cancelarOperacion = true;
+                String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
+                System.out.println(keyboard);
+                cancelarOperacion2 = true;
                 System.out.println("¡Se ha intercambiado las teclas con éxito!");
             } catch (InputMismatchException ime) {
                 System.out.println("El valor introducido no es un entero.");
@@ -291,20 +323,9 @@ public class Tview {
                 String response = input.nextLine();
                 if (response.equals("n")) {
                     System.out.println("El teclado \"" + name + "\" no ha sido modificado.\n");
-                    cancelarOperacion = true;
+                    cancelarOperacion2 = true;
                 } else if (response.equals("s")) {
                     System.out.println("Introduce nuevamente las posiciones de las teclas:");
-                }
-            } catch (NombreTecladoNoValidoExcepcion ntd) {
-                System.out.println(ntd.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido modificado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado.\n");
-                    name = input.nextLine();
                 }
             } catch (IndiceTeclaFueraDeRangoExcepcion itf) {
                 System.out.println(itf.getMessage());
@@ -312,9 +333,21 @@ public class Tview {
                 String response = input.nextLine();
                 if (response.equals("n")) {
                     System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
+                    cancelarOperacion2 = true;
                 } else if (response.equals("s")) {
                     System.out.println("Introduce nuevamente las posiciones de las teclas.\n");
+                }
+            } catch (NombreTecladoNoValidoExcepcion ntd) {
+                System.out.println("El teclado introducido no existe.");
+                System.out.println("¿Quieres intentar de nuevo y escoger una teclado válido? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    System.out.println("No se ha modificado ningún teclado\n");
+                    cancelarOperacion = true;
+                    cancelarOperacion2 = true;
+                } else if (response.equals("s")) {
+                    System.out.println("Introduce nuevamente el nombre del teclado:");
+                    name = input.nextLine();
                 }
             }
         }
@@ -326,7 +359,6 @@ public class Tview {
             return;
         }
         System.out.println("Introduce el nombre del teclado a borrar:");
-        input.nextLine();
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
             try {
@@ -354,7 +386,6 @@ public class Tview {
             return;
         }
         System.out.println("Introduce el nombre del teclado a mostrar:");
-        input.nextLine();
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
             try {
