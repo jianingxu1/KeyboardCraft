@@ -1,7 +1,6 @@
 package edu.upc.prop.cluster23.domaincontrollers;
 import edu.upc.prop.cluster23.exceptions.*;
 import java.util.ArrayList;
-import java.util.Map;
 
 import edu.upc.prop.cluster23.domain.*;
 
@@ -47,16 +46,34 @@ public class CtrlDominio {
 	 * @param idAlfabeto El ID del alfabeto asociado con el teclado.
 	 * @param texto Información adicional para la generación de la distribución del teclado.
 	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en la distribución del teclado.
-	 * @param algor Un string que representa el algoritmo utilizado para la creación del teclado.
+	 * @param algoritmo Un string que representa el algoritmo utilizado para la creación del teclado.
 	 */
-	public void creaTeclado (String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo)  throws NombreAlfabetoNoExisteExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,FrecuenciaIncorrectaExcepcion {
+	public void creaTeclado (String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo)  throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
 		//Informacion necesaria para poder crear el teclado
+
+		if (nombreTeclado.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if (cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoDuplicadoExcepcion(nombreTeclado);
+		
 		PalabrasConFrecuencia palabras;
-        try {
-            palabras = new PalabrasConFrecuencia(listaPalabras);
-        } catch (NumberFormatException e) {
-            throw new FrecuenciaIncorrectaExcepcion();
-        }
+		String [] palabrasSeparadas = listaPalabras.split(" ");
+		int words = palabrasSeparadas.length;
+		if (words % 2 == 1 && !listaPalabras.isEmpty()) throw new FrecuenciaIncorrectaExcepcion("El formato de palabras con frecuncia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+		
+		try {
+				palabras = new PalabrasConFrecuencia(listaPalabras);
+		} catch (NumberFormatException e) {
+				throw new FrecuenciaIncorrectaExcepcion("El formato de palabras con frecuncia no es correcto, debe ser palabras seguida de un espacio y su número de frecuencia.");
+		}
+		catch (IllegalArgumentException i) {
+				throw new FrecuenciaIncorrectaExcepcion(i.getMessage());
+		}
+		if (idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+
+		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+
+		if (algoritmo.trim().isEmpty()) throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
+    else if (!algoritmo.equals("QAP") && !algoritmo.equals("SA")) throw new TipoAlgoritmoIncorrectoExcepcion("El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser QAP o SA.");
+
 		Texto text = new Texto(texto); 
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
 
@@ -83,8 +100,9 @@ public class CtrlDominio {
 	 * @param nombreTeclado El nombre del teclado que se procederá a eliminar.
 	 */
 
-	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoExisteExcepcion{
-		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
+	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion{
+		if(nombreTeclado.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
 		cjtTeclados.eliminarTeclado(nombreTeclado);
 	}
 
@@ -97,8 +115,9 @@ public class CtrlDominio {
 	 * @param i2 La fila de la segunda tecla.
 	 * @param j2 La columna de la segunda tecla.
 	 */
-	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)throws NombreTecladoNoExisteExcepcion, IndiceTeclaFueraDeRangoExcepcion {
-		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
+	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
+		if(nombreTeclado.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
 		
 		char[][] distribucion = cjtTeclados.getTeclado(nombreTeclado);
 		String mensaje = "";
@@ -125,8 +144,13 @@ public class CtrlDominio {
 	 * @param idAlfabeto ID del alfabeto que se va a añadir.
 	 * @param caracteres String que representa caracteres.
 	 */
-	public void añadirAlfabeto(String idAlfabeto, String caracteres) throws NombreAlfabetoDuplicadoExcepcion{
+	public void añadirAlfabeto(String idAlfabeto, String caracteres) throws NombreAlfabetoDuplicadoExcepcion,NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion{
+		if(idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+
 		if(cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
+		
+		if(caracteres.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
+		
 		cjtAlfabetos.añadirAlfabeto(idAlfabeto,caracteres);
 	}
 
@@ -134,8 +158,9 @@ public class CtrlDominio {
 	 * Eliminar alfabeto
 	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
 	 */
-	public void eliminarAlfabeto(String idAlfabeto)throws NombreAlfabetoNoExisteExcepcion {
-		if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
+	public void eliminarAlfabeto(String idAlfabeto)throws NombreAlfabetoNoValidoExcepcion {
+		if (idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+		else if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
 	
 		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
 	}
@@ -145,9 +170,10 @@ public class CtrlDominio {
 	 *
 	 * @param alfabeto String que representa los caracteres modificados.
 	 */
-	public void modificarAlfabeto(String idAlfabeto,String alfabeto) throws NombreAlfabetoNoExisteExcepcion{
-		//System.out.println("Se procederá actualizar todos los teclados que compartan ese alfabeto.");
-		if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoExisteExcepcion(idAlfabeto);
+	public void modificarAlfabeto(String idAlfabeto,String alfabeto) throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+		if(idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+		else if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+		if(alfabeto.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto,alfabeto);
 	}
 
@@ -157,8 +183,23 @@ public class CtrlDominio {
 	/**
 	 * Retorna todos los nombres del conjunto de alfabetos.
 	 */
-	public String consultarAlfabetos(){
-		return cjtAlfabetos.getAlfabetosEnString();
+	public String consultarCaracteresAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
+		if(idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
+		if(!cjtAlfabetos.existeAlfabeto(idAlfabeto)) throw new NombreAlfabetoNoValidoExcepcion(idAlfabeto);
+		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto);
+		String res = "";
+		res += "{";
+		for (int i = 0; i < s.length(); ++i) {
+				if(s.charAt(i) == '\n'){
+					if(i != s.length()-1) res += ", ";
+					else res += "";
+				}
+				else{
+				res += s.charAt(i);
+				}
+		}
+		res += "}";
+		return res;
 	}
 
 	public String consultarNombresYCaracteresDeAlfabetos(){
@@ -172,8 +213,9 @@ public class CtrlDominio {
 	 * @param nombreTeclado El nombre del teclado que se ha de mostrar.
 	 * @return La distribución del teclado en forma de String.
 	 */
-	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoExisteExcepcion {
-		if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoExisteExcepcion(nombreTeclado);
+	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+		if(nombreTeclado.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if(!cjtTeclados.existeTeclado(nombreTeclado)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
 		return cjtTeclados.getDistribucioString(nombreTeclado);
 	}
 
