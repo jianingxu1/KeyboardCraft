@@ -146,8 +146,11 @@ public class CjtAlfabetos {
      */
     public String getNombresYCaracteresDeAlfabetos(){
         String s = "";
+        int mapSize = alfabetos.size();
+        int count = 0;
         for (Alfabeto alfabeto : alfabetos.values()) {
-            s += alfabeto.getNombre()+ "\n";
+            s += alfabeto.getNombre();
+            if(++count < mapSize) s += "\n";
         }
         return s;
     }
