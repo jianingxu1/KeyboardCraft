@@ -7,7 +7,7 @@ package edu.upc.prop.cluster23.exceptions;
  *  @co-author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
 public class FrecuenciaIncorrectaExcepcion extends Exception {
-    public FrecuenciaIncorrectaExcepcion() {
-        super("El formato de palabras con frecuncia no es correcto, debe ser palabras seguida de un espacio y su numero de frecuencia.");
+    public FrecuenciaIncorrectaExcepcion(String errorMessage) {
+        super(errorMessage);
     }
 }
