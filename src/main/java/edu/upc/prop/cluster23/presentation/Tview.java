@@ -97,7 +97,9 @@ public class Tview {
                                             "No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
                                 }
                                 else {
-                                    System.out.println("1. Swap de teclas\n2. Atrás\n");
+                                    System.out.println("----- Modificación de teclado -----");
+                                    System.out.println("1. Swap de teclas\n\n0. Volver a la gestión de teclados");
+                                    System.out.println("-----------------------------------");
                                     int modOpt = -1;
                                     try {
                                         modOpt = input.nextInt();
@@ -112,7 +114,7 @@ public class Tview {
                                         FuncSwapTeclas();
                                         break;
 
-                                    case 2:
+                                    case 0:
                                         break;
 
                                     default:
@@ -349,7 +351,9 @@ public class Tview {
                 String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
                 cancelarOperacion2 = true;
-                System.out.println("¡Se ha intercambiado las teclas con éxito!");
+                System.out.println("¡Se ha intercambiado las teclas del teclado \"" + name + "\" con éxito!\n Esta es la nueva distribución:");
+                keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
+                System.out.println(keyboard);
             } catch (InputMismatchException ime) {
                 System.out.println("El valor introducido no es un entero.");
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
@@ -477,6 +481,7 @@ public class Tview {
             System.out.println("No tienes ningún teclado creado.");
             return;
         }
+        System.out.println("Estos son los teclados que existen:");
         System.out.println(controladorDominio.consultarNombresTeclados());
     }
 
@@ -488,7 +493,7 @@ public class Tview {
         System.out.println("Introduce el nombre que deseas asignar al alfabeto (ej: inglés):");
         String name = input.nextLine();
         System.out.println(
-                "Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+                "Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
         String idAlf = input.nextLine();
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
@@ -550,13 +555,14 @@ public class Tview {
         System.out.println("Introduce el nombre del alfabeto a modificar:");
         String name = input.nextLine();
         System.out.println(
-                "Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+                "Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
         String idAlf = input.nextLine();
         while (!cancelarOperacion) {
             try {
                 controladorDominio.modificarAlfabeto(name, idAlf);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha modificado el alfabeto \"" + name + "\" con éxito!");
+                System.out.println("¡Se ha modificado el alfabeto \"" + name + "\" con éxito!\nEstos son los nuevos caracteres que contiene:");
+                System.out.println(controladorDominio.consultarCaracteresAlfabeto(name));
             } catch (NombreAlfabetoNoValidoExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
@@ -577,7 +583,7 @@ public class Tview {
                     cancelarOperacion = true;
                 } else if (response.equals("s")) {
                     System.out.println(
-                            "Introduce nuevamente los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+                            "Introduce nuevamente los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
                     idAlf = input.nextLine();
                 }
             }
