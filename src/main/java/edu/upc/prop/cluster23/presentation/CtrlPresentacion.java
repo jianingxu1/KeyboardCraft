@@ -3,6 +3,7 @@ package edu.upc.prop.cluster23.presentation;
 /**
  * Clase CtrlPresentacion
  * Representa el controlador de presentacion del programa
+ * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public class CtrlPresentacion {
@@ -13,7 +14,8 @@ public class CtrlPresentacion {
 
 	/** Constructor y metodos de inicializacion **/
 
-	public CtrlPresentacion() {}
+	public CtrlPresentacion() {
+	}
 
 	public void inicializarPresentacion() {
 

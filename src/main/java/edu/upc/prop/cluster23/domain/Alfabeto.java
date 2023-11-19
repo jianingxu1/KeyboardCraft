@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-/** Clase Alfabeto
- *  Representa un alfabeto en concreto con sus caracteres.
- *  @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
+/**
+ * Clase Alfabeto
+ * Representa un alfabeto en concreto con sus caracteres.
+ * 
+ * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
 public class Alfabeto {
 
-	/** ----- Atributos ----- **/
-	
-    /** Nombre e Identificador del alfabeto en cuestion*/
-	private String nombre;
+    /** ----- Atributos ----- **/
+
+    /** Nombre e Identificador del alfabeto en cuestion */
+    private String nombre;
     /** Los caracteres que contiene el alfabeto */
-	private ArrayList<Character> caracteres;
+    private ArrayList<Character> caracteres;
 
     /** ----- Constructoras ----- **/
 
@@ -28,19 +30,19 @@ public class Alfabeto {
         this.nombre = nombre;
         this.caracteres = new ArrayList<Character>();
     }
-	
+
     /**
      * Crea un alfabeto.
      *
      * @param nombre El nombre del alfabeto.
-     * @param chars Los caracteres del alfabeto.
+     * @param chars  Los caracteres del alfabeto.
      */
     public Alfabeto(String nombre, String chars) {
         this.nombre = nombre;
         this.caracteres = toArray(chars);
     }
 
-	/** ----- Métodos públicos ----- **/
+    /** ----- Métodos públicos ----- **/
 
     /** ----- Modificadoras ----- **/
 
@@ -88,7 +90,7 @@ public class Alfabeto {
      * @return Los caracteres del alfabeto.
      */
     public String getCaracteresStringFormat() {
-        return toString(this.caracteres);   
+        return toString(this.caracteres);
     }
 
     /** ----- Métodos Para Conversion De Formatos ----- **/
@@ -103,7 +105,7 @@ public class Alfabeto {
     public ArrayList<Character> toArray(String charsS) {
         ArrayList<Character> caracteres = new ArrayList<Character>();
 
-        String chars = charsS.replaceAll("\\s","");
+        String chars = charsS.replaceAll("\\s", "");
 
         for (int i = 0; i < chars.length(); ++i) {
             if (!caracteres.contains(chars.charAt(i))) {
@@ -119,24 +121,24 @@ public class Alfabeto {
      * @param chars vector que contiene los characteres.
      * @return String que representa la cadena de chars.
      */
-    public String toString(ArrayList<Character> chars){
-        String s="";
-        for(int i = 0; i < chars.size(); ++i){
-            s+=chars.get(i);
-            s+="\n";
+    public String toString(ArrayList<Character> chars) {
+        String s = "";
+        for (int i = 0; i < chars.size(); ++i) {
+            s += chars.get(i);
+            s += "\n";
         }
         return s;
     }
 
-    //Funcion eliminada 
+    // Funcion eliminada
 
     // /**************************************************************
-    //  * Cambia los caracteres del alfabeto.
-    //  *
-    //  * @param caracteres Los nuevos caracteres del alfabeto.
-    //  */
+    // * Cambia los caracteres del alfabeto.
+    // *
+    // * @param caracteres Los nuevos caracteres del alfabeto.
+    // */
     // public void cambiarCaracteres(String chars) {
-    //     this.caracteres = toArray(chars);
+    // this.caracteres = toArray(chars);
     // }***************************************************************
 
 }

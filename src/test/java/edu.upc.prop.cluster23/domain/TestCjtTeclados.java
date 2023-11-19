@@ -5,9 +5,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
-/** Clase TestCjtTeclados
- * Representa los tests de un conjunto de teclados. 
+/**
+ * Clase TestCjtTeclados
+ * Representa los tests de un conjunto de teclados.
+ * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 
@@ -67,7 +68,7 @@ public class TestCjtTeclados {
 
         tecs.crearTeclado("Name", mat1);
 
-        tecs.intercambiarTeclasTeclado("Name", 0,0,1,1);
+        tecs.intercambiarTeclasTeclado("Name", 0, 0, 1, 1);
 
         assertNotSame(mat2, tecs.getTeclado("Name"));
 
@@ -78,15 +79,15 @@ public class TestCjtTeclados {
 
         assertArrayEquals(mat1, tecs.getTeclado("Name"));
     }
-    
+
     @Test
-    public void getNombreTeclados(){
+    public void getNombreTeclados() {
         CjtTeclados tecs = new CjtTeclados();
 
         assertEquals(0, tecs.getNombreTeclados().size());
 
         tecs.crearTeclado("Name", new char[1][1]);
-        tecs.crearTeclado("Name2", new char[1][1]);        
+        tecs.crearTeclado("Name2", new char[1][1]);
         tecs.crearTeclado("Name3", new char[1][1]);
         tecs.crearTeclado("Name4", new char[1][1]);
 
@@ -101,10 +102,10 @@ public class TestCjtTeclados {
             assertTrue(nombres.contains(nombres2.get(i)));
         }
     }
-    
+
     @Test
     public void testgetTecladoObjeto() {
-        String name="Name";
+        String name = "Name";
         char[][] mat1 = new char[1][1];
         mat1[0][0] = 'a';
 
@@ -112,7 +113,7 @@ public class TestCjtTeclados {
         tecs.crearTeclado(name, mat1);
 
         Teclado aux = tecs.getTecladoObjeto(name);
-        assertEquals(aux.getNombre(),name);
-        assertArrayEquals(aux.getTeclado(),mat1);
+        assertEquals(aux.getNombre(), name);
+        assertArrayEquals(aux.getTeclado(), mat1);
     }
 }

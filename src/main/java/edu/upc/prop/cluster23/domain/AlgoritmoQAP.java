@@ -40,10 +40,10 @@ public class AlgoritmoQAP implements Algoritmo {
     /**
      * Genera la distribucion optima para el teclado dada una entrada.
      * 
-     * @param alf     Alfabeto a utilizar.
+     * @param alf      Alfabeto a utilizar.
      * @param palabras Palabras con sus frecuencias.
-     * @param texto   Texto para analizar.
-     * @return        Matriz de caracteres que representa la distribucion optima.
+     * @param texto    Texto para analizar.
+     * @return Matriz de caracteres que representa la distribucion optima.
      */
     @Override
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
@@ -64,20 +64,22 @@ public class AlgoritmoQAP implements Algoritmo {
         return distribucion;
     }
 
-    /** Retorna el coste total de la asignacion optima.
+    /**
+     * Retorna el coste total de la asignacion optima.
+     * 
      * @return El coste total de la asignacion optima.
      */
     public double getMejorCosteTotal() {
         return this.mejorCosteTotal;
     }
-    
+
     /**
      * Obtiene las frecuencias de los bigramas en el texto.
      * 
-     * @param alf     Alfabeto a utilizar.
+     * @param alf      Alfabeto a utilizar.
      * @param palabras Palabras con sus frecuencias.
-     * @param texto   Texto para analizar.
-     * @return        Mapa con las frecuencias de los bigramas.
+     * @param texto    Texto para analizar.
+     * @return Mapa con las frecuencias de los bigramas.
      */
     private HashMap<String, Integer> obtenerFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         HashMap<String, Integer> frecuenciasCjts = new HashMap<>();
@@ -93,22 +95,24 @@ public class AlgoritmoQAP implements Algoritmo {
             }
         }
         String Texto = texto.getTexto();
-        String TextoN = Texto.replaceAll("\\s","");
+        String TextoN = Texto.replaceAll("\\s", "");
 
         for (int i = 0; i < Texto.length() - 1; ++i) {
-            String a = "" + Texto.charAt(i) + Texto.charAt(i+1);
-            if (frecuenciasCjts.containsKey(a)) frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
+            String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
+            if (frecuenciasCjts.containsKey(a))
+                frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
             else {
                 StringBuffer b = new StringBuffer(a);
                 b.reverse();
                 String c = b.toString();
-                if (frecuenciasCjts.containsKey(c)) frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
+                if (frecuenciasCjts.containsKey(c))
+                    frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
             }
         }
 
         total = TextoN.length() - 1 - (Texto.length() - TextoN.length());
 
-        Map<String,Integer> ListaPal = new LinkedHashMap<String, Integer>();
+        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
 
         ListaPal = palabras.getMap();
 
@@ -117,12 +121,14 @@ public class AlgoritmoQAP implements Algoritmo {
             Integer num = entry.getValue();
             for (int j = 0; j < pal.length() - 1; ++j) {
                 String a = "" + pal.charAt(j) + pal.charAt(j + 1);
-                if (frecuenciasCjts.containsKey(a)) frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
+                if (frecuenciasCjts.containsKey(a))
+                    frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
                 else {
                     StringBuffer b = new StringBuffer(a);
                     b.reverse();
                     String c = b.toString();
-                    if (frecuenciasCjts.containsKey(c)) frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
+                    if (frecuenciasCjts.containsKey(c))
+                        frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
                 }
             }
             total += (pal.length() - 1) * num;
@@ -134,7 +140,7 @@ public class AlgoritmoQAP implements Algoritmo {
      * Obtiene los caracteres del alfabeto.
      * 
      * @param alf Alfabeto a utilizar.
-     * @return    Array de caracteres del alfabeto.
+     * @return Array de caracteres del alfabeto.
      */
     private char[] obtenerCaracteres(Alfabeto alf) {
         char[] caracteres = new char[n];
@@ -151,10 +157,11 @@ public class AlgoritmoQAP implements Algoritmo {
      * @param frecuenciasCjts Mapa de frecuencias de bigramas.
      * @param c1              Caracter 1.
      * @param c2              Caracter 2.
-     * @return                Clave para la frecuencia de bigramas.
+     * @return Clave para la frecuencia de bigramas.
      */
     private String calcularKey(Map<String, Integer> frecuenciasCjts, char c1, char c2) {
-        if (frecuenciasCjts.containsKey("" + c1 + c2)) return "" + c1 + c2;
+        if (frecuenciasCjts.containsKey("" + c1 + c2))
+            return "" + c1 + c2;
         return "" + c2 + c1;
     }
 
@@ -170,7 +177,8 @@ public class AlgoritmoQAP implements Algoritmo {
             char c1 = caracteres[i];
             for (int j = 0; j < n; ++j) {
                 char c2 = caracteres[j];
-                if (i == j) this.frecuencias[i][j] = 0;
+                if (i == j)
+                    this.frecuencias[i][j] = 0;
                 else {
                     String key = calcularKey(frecuenciasCjts, c1, c2);
                     this.frecuencias[i][j] = frecuenciasCjts.get(key);
@@ -184,26 +192,25 @@ public class AlgoritmoQAP implements Algoritmo {
      * 
      * @param filas Arreglo de filas.
      * @param cols  Arreglo de columnas.
-     * @return      Arreglo de posiciones.
+     * @return Arreglo de posiciones.
      */
     public Posicion[] obtenerPosiciones(int[] filas, int[] cols) {
         Posicion[] posiciones = new Posicion[n];
         if (n <= 2) {
             filas[0] = 1;
             cols[0] = n;
-        }
-        else if (n <= 6) {
+        } else if (n <= 6) {
             filas[0] = 2;
-            cols[0] = (int) Math.ceil((double) n / (double)filas[0]);
-        }
-        else {
+            cols[0] = (int) Math.ceil((double) n / (double) filas[0]);
+        } else {
             filas[0] = 3;
-            cols[0] = (int) Math.ceil((double) n / (double)filas[0]);
+            cols[0] = (int) Math.ceil((double) n / (double) filas[0]);
         }
         Posicion p = new Posicion(0, 0);
         for (int i = 0; i < n; ++i) {
             posiciones[i] = new Posicion(p);
-            if (p.col < cols[0] - 1) ++p.col;
+            if (p.col < cols[0] - 1)
+                ++p.col;
             else {
                 ++p.fila;
                 p.col = 0;
@@ -227,8 +234,9 @@ public class AlgoritmoQAP implements Algoritmo {
             }
         }
     }
-    
-    private void calcularAsignacionOptimaRecursivo(HashMap<Integer, Integer> mapAsignacionActual, double costeActual, int ubicacionActual) {
+
+    private void calcularAsignacionOptimaRecursivo(HashMap<Integer, Integer> mapAsignacionActual, double costeActual,
+            int ubicacionActual) {
         if (ubicacionActual == this.n) {
             if (costeActual < this.mejorCosteTotal) {
                 this.mapMejorAsignacion = new HashMap<Integer, Integer>(mapAsignacionActual);
@@ -237,16 +245,17 @@ public class AlgoritmoQAP implements Algoritmo {
             return;
         }
         for (int instalacion = 0; instalacion < this.n; ++instalacion) {
-            if (mapAsignacionActual.containsKey(instalacion)) continue;
+            if (mapAsignacionActual.containsKey(instalacion))
+                continue;
 
             // Calcular coste actual poniendo la instalacion en la ubicacionActual
-            double newCosteActual = (costeActual + calcularCosteDeAsignar(mapAsignacionActual, instalacion, ubicacionActual));
+            double newCosteActual = (costeActual
+                    + calcularCosteDeAsignar(mapAsignacionActual, instalacion, ubicacionActual));
             mapAsignacionActual.put(instalacion, ubicacionActual);
 
             // Calcular el bound para decidir si hacer branch
-            double costeTotalAproximado =
-            newCosteActual +
-            calcularCosteNoEmplazados(mapAsignacionActual, ubicacionActual + 1);
+            double costeTotalAproximado = newCosteActual +
+                    calcularCosteNoEmplazados(mapAsignacionActual, ubicacionActual + 1);
             if (costeTotalAproximado >= this.mejorCosteTotal) {
                 mapAsignacionActual.remove(instalacion);
                 continue;
@@ -263,7 +272,7 @@ public class AlgoritmoQAP implements Algoritmo {
      * 
      * @param frecuencias Matriz de frecuencias entre caracteres.
      * @param distancias  Matriz de distancias entre posiciones.
-     * @return            El coste total de la asignacion optima.
+     * @return El coste total de la asignacion optima.
      */
     public double calcularAsignacionOptima(int[][] frecuencias, double[][] distancias) {
         this.n = frecuencias.length;
@@ -286,33 +295,34 @@ public class AlgoritmoQAP implements Algoritmo {
      * @param ubicacion1   Ubicación 1.
      * @param instalacion2 Instalación 2.
      * @param ubicacion2   Ubicación 2.
-     * @return             El coste entre dos asignaciones.
+     * @return El coste entre dos asignaciones.
      */
     private double calcularCosteEntreDosAsignaciones(int instalacion1, int ubicacion1,
-    int instalacion2, int ubicacion2) {
+            int instalacion2, int ubicacion2) {
         double distancia = this.distancias[ubicacion1][ubicacion2];
-        double frecuencia = (double)this.frecuencias[instalacion1][instalacion2];
-        return distancia*frecuencia;
+        double frecuencia = (double) this.frecuencias[instalacion1][instalacion2];
+        return distancia * frecuencia;
     }
 
     /**
-     * Calcula el coste de asignar un simbolo en una posicion respecto a los simbolos ya emplazados.
+     * Calcula el coste de asignar un simbolo en una posicion respecto a los
+     * simbolos ya emplazados.
      * 
      * @param mapAsignacionActual Mapa con la asignacion actual.
-     * @param instalacion          Instalacion a asignar.
-     * @param ubicacion            Ubicacion para asignar la instalacion.
-     * @return                     El coste de asignar un simbolo en una posicion.
+     * @param instalacion         Instalacion a asignar.
+     * @param ubicacion           Ubicacion para asignar la instalacion.
+     * @return El coste de asignar un simbolo en una posicion.
      */
     private double calcularCosteDeAsignar(HashMap<Integer, Integer> mapAsignacionActual,
-    int instalacion, int ubicacion) {
+            int instalacion, int ubicacion) {
         double coste = 0.0;
         for (HashMap.Entry<Integer, Integer> entry : mapAsignacionActual.entrySet()) {
             int instalacion1 = entry.getKey();
             int ubicacion1 = entry.getValue();
             coste += calcularCosteEntreDosAsignaciones(instalacion, ubicacion,
-                instalacion1, ubicacion1);
+                    instalacion1, ubicacion1);
         }
-        return coste*2.0;
+        return coste * 2.0;
     }
 
     /**
@@ -320,18 +330,19 @@ public class AlgoritmoQAP implements Algoritmo {
      * 
      * @param mapAsignacionActual Mapa con la asignacion actual.
      * @param k                   La primera ubicacion no asignada. De 0 a k-1
-     * estan asignadas.
-     * @return                    El coste de las instalaciones no asignadas.
+     *                            estan asignadas.
+     * @return El coste de las instalaciones no asignadas.
      */
     private double calcularCosteNoEmplazados(HashMap<Integer, Integer> mapAsignacionActual,
-    int k) {
+            int k) {
         int m = mapAsignacionActual.size();
         int numNoAsignados = n - m;
-        
+
         // Inicializar instalacionesNoAsignadas
         int[] instalacionesNoAsignadas = new int[numNoAsignados];
         for (int instalacion = 0, i = 0; instalacion < n; ++instalacion) {
-            if (mapAsignacionActual.containsKey(instalacion)) continue;
+            if (mapAsignacionActual.containsKey(instalacion))
+                continue;
             instalacionesNoAsignadas[i] = instalacion;
             ++i;
         }
@@ -352,21 +363,23 @@ public class AlgoritmoQAP implements Algoritmo {
             int instalacion1 = instalacionesNoAsignadas[i];
             for (int j = 0; j < numNoAsignados; ++j) {
                 int ubicacion1 = k + j;
-                Double[] T = new Double[numNoAsignados-1];
+                Double[] T = new Double[numNoAsignados - 1];
 
                 // Calcula vector de traficos
                 for (int t = 0, index = 0; t < numNoAsignados; ++t) {
                     int instalacion2 = instalacionesNoAsignadas[t];
-                    if (instalacion1 == instalacion2) continue;
-                    T[index] = (double)this.frecuencias[instalacion1][instalacion2];
+                    if (instalacion1 == instalacion2)
+                        continue;
+                    T[index] = (double) this.frecuencias[instalacion1][instalacion2];
                     ++index;
                 }
-                
+
                 // Calcula vector de distancias
-                Double[] D = new Double[numNoAsignados-1];
+                Double[] D = new Double[numNoAsignados - 1];
                 for (int d = 0, index = 0; d < numNoAsignados; ++d) {
                     int ubicacion2 = k + d;
-                    if (ubicacion1 == ubicacion2) continue;
+                    if (ubicacion1 == ubicacion2)
+                        continue;
                     D[index] = this.distancias[ubicacion1][ubicacion2];
                     ++index;
                 }
@@ -393,11 +406,11 @@ public class AlgoritmoQAP implements Algoritmo {
     /**
      * Convierte la mejor distribucion en una matriz de caracteres.
      * 
-     * @param caracteres  Arreglo de caracteres del alfabeto.
-     * @param posiciones  Arreglo de posiciones.
-     * @param filas       Arreglo de filas.
-     * @param cols        Arreglo de columnas.
-     * @return            Matriz de caracteres que representa la mejor distribucion.
+     * @param caracteres Arreglo de caracteres del alfabeto.
+     * @param posiciones Arreglo de posiciones.
+     * @param filas      Arreglo de filas.
+     * @param cols       Arreglo de columnas.
+     * @return Matriz de caracteres que representa la mejor distribucion.
      */
     private char[][] convertirMejorDistribucion(char[] caracteres, Posicion[] posiciones, int[] filas, int[] cols) {
         char[][] distribucion = new char[filas[0]][cols[0]];
@@ -416,13 +429,13 @@ public class AlgoritmoQAP implements Algoritmo {
      * 
      * @param X Vector X.
      * @param Y Vector Y.
-     * @return  El producto escalar entre los vectores X e Y.
+     * @return El producto escalar entre los vectores X e Y.
      */
     private double productoEscalar(Double[] X, Double[] Y) {
         double res = 0;
         int n = X.length;
         for (int i = 0; i < n; ++i) {
-            res += X[i]*Y[i];
+            res += X[i] * Y[i];
         }
         return res;
     }

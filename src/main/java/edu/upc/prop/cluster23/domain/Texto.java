@@ -1,8 +1,10 @@
 package edu.upc.prop.cluster23.domain;
 
-/** Clase Texto
- *  Representa el texto que se podrá utilizar para gestionar el teclado.
- *  @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
+/**
+ * Clase Texto
+ * Representa el texto que se podrá utilizar para gestionar el teclado.
+ * 
+ * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
  */
 
 public class Texto {
@@ -11,7 +13,6 @@ public class Texto {
      * Texto en que se basa el objeto de la clase.
      */
     String texto;
-
 
     // ----- Constructoras -----
     /**
@@ -22,7 +23,7 @@ public class Texto {
     public Texto(String texto) {
         this.texto = texto;
     }
-    
+
     /**
      * Construye un objeto Texto con un texto vacío.
      */
@@ -35,12 +36,13 @@ public class Texto {
     /**
      * Modifica el texto que contiene el objeto Texto.
      *
-     * @param texto El nuevo texto con el que se reemplazará el texto actual del objeto.
+     * @param texto El nuevo texto con el que se reemplazará el texto actual del
+     *              objeto.
      */
     public void modificarTexto(String texto) {
         this.texto = texto;
     }
-    
+
     // ----- Getters -----
     /**
      * Retorna el texto contenido en el objeto Texto.

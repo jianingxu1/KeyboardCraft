@@ -1,4 +1,5 @@
 package edu.upc.prop.cluster23.presentation;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,8 +16,9 @@ import edu.upc.prop.cluster23.exceptions.TipoAlgoritmoIncorrectoExcepcion;
 /**
  * Clase Tview
  * Vista por terminal del programa
+ * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
- * @co-authors Muhammad Yasin Khokar  & Momin Miah Begum
+ * @co-authors Muhammad Yasin Khokar & Momin Miah Begum
  */
 
 public class Tview {
@@ -28,19 +30,21 @@ public class Tview {
      * Constructora
      */
 
-    public Tview(){
+    public Tview() {
         controladorDominio = new CtrlDominio();
         input = new Scanner(System.in);
     }
 
     /**
-     * Inicializa el controlador de dominio y llama a la función que ejecuta los comandos
+     * Inicializa el controlador de dominio y llama a la función que ejecuta los
+     * comandos
      */
 
     public void init() {
         controladorDominio.inicializarCtrlDominio();
         System.out.println("\n*--------* Bienvenido al generador de teclados *--------*");
-        System.out.println("Para navegar a través del programa, introduce el número de la\nopción que desees en cada momento.\n");
+        System.out.println(
+                "Para navegar a través del programa, introduce el número de la\nopción que desees en cada momento.\n");
         menuPrincipal();
     }
 
@@ -54,43 +58,41 @@ public class Tview {
             System.out.println("--------------------------------");
             try {
                 value = input.nextInt();
-            }
-            catch (InputMismatchException ime) {
+            } catch (InputMismatchException ime) {
                 System.out.println("El valor introducido no es un entero.");
                 input.nextLine();
                 continue;
             }
             switch (value) {
                 case 1:
-                    //FUNCIONES DE LOS TECLADOS
+                    // FUNCIONES DE LOS TECLADOS
                     int opt = -1;
                     while (opt != 0) {
                         System.out.println("----- Gestión de Teclados -----");
-                        System.out.println("1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
+                        System.out.println(
+                                "1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
                         System.out.println("-------------------------------");
                         try {
                             opt = input.nextInt();
                             input.nextLine();
-                        }
-                        catch (InputMismatchException ime) {
+                        } catch (InputMismatchException ime) {
                             System.out.println("El valor introducido no es un entero.\n");
                             input.nextLine();
                             continue;
                         }
                         switch (opt) {
-                            //CASO CREAR TECLADO
+                            // CASO CREAR TECLADO
                             case 1:
                                 FuncCreacionTeclado();
                                 break;
-                            //CASO MODIFICAR TECLADOS (SWAP unicamente)
+                            // CASO MODIFICAR TECLADOS (SWAP unicamente)
                             case 2:
                                 System.out.println("1. Swap de teclas\n2. Atrás\n");
                                 int modOpt = -1;
                                 try {
                                     modOpt = input.nextInt();
                                     input.nextLine();
-                                }
-                                catch (InputMismatchException ime) {
+                                } catch (InputMismatchException ime) {
                                     System.out.println("El valor introducido no es un entero.\n");
                                     input.nextLine();
                                     continue;
@@ -99,28 +101,28 @@ public class Tview {
                                     case 1:
                                         FuncSwapTeclas();
                                         break;
-    
+
                                     case 2:
                                         break;
-    
+
                                     default:
                                         System.out.println("Valor inválido.");
                                 }
                                 break;
-                            //CASO BORRAR TECLADOS
+                            // CASO BORRAR TECLADOS
                             case 3:
                                 FuncBorrarTeclado();
                                 break;
-    
-                            //CASO MOSTRAR UN TECLADO
+
+                            // CASO MOSTRAR UN TECLADO
                             case 4:
                                 FuncMostrarTeclado();
                                 break;
-                            //CASO MOSTRAR TODOS LOS TECLADOS
+                            // CASO MOSTRAR TODOS LOS TECLADOS
                             case 5:
                                 FuncMostrarNombresTeclados();
                                 break;
-                            //CASO VOLVER ATRAS
+                            // CASO VOLVER ATRAS
                             case 0:
                                 break;
                             default:
@@ -128,18 +130,18 @@ public class Tview {
                         }
                     }
                     break;
-                //FUNCIONES DE ALFABETO
+                // FUNCIONES DE ALFABETO
                 case 2:
                     int optTec = -1;
                     while (optTec != 0) {
                         System.out.println("----- Gestión de Alfabetos -----");
-                        System.out.println("1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
+                        System.out.println(
+                                "1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
                         System.out.println("--------------------------------");
                         try {
                             optTec = input.nextInt();
                             input.nextLine();
-                        }
-                        catch (InputMismatchException ime) {
+                        } catch (InputMismatchException ime) {
                             System.out.println("El valor introducido no es un entero.\n");
                             input.nextLine();
                             continue;
@@ -148,11 +150,11 @@ public class Tview {
                             case 1:
                                 FuncCreacionAlfabeto();
                                 break;
-    
+
                             case 2:
                                 FuncModificarAlfabeto();
                                 break;
-    
+
                             case 3:
                                 FuncBorrarAlfabeto();
                                 break;
@@ -169,7 +171,7 @@ public class Tview {
                         }
                     }
                     break;
-                //CASO SALIR DEL PROGRAMA
+                // CASO SALIR DEL PROGRAMA
                 case 0:
                     System.out.println("Cerrando programa...");
                     break;
@@ -202,7 +204,8 @@ public class Tview {
                 System.out.println("¡Se ha creado el teclado \"" + name + "\" con éxito!");
             } catch (NombreAlfabetoNoValidoExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println("Recuerda que el alfabeto ha de existir antes de ser asignado. ¿Quieres intentar de nuevo?(s/n):");
+                System.out.println(
+                        "Recuerda que el alfabeto ha de existir antes de ser asignado. ¿Quieres intentar de nuevo?(s/n):");
                 String response = input.nextLine();
                 if (response.equals("n")) {
                     System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
@@ -222,9 +225,10 @@ public class Tview {
                     System.out.println("Introduce nuevamente el nombre del teclado:");
                     name = input.nextLine();
                 }
-            }catch (TipoAlgoritmoIncorrectoExcepcion e) {
+            } catch (TipoAlgoritmoIncorrectoExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un algoritmo de nuevo, recuerda que el alfabeto ha de existir (s/n):");
+                System.out.println(
+                        "¿Quieres intentar de nuevo y escoger un algoritmo de nuevo, recuerda que el alfabeto ha de existir (s/n):");
                 String response = input.nextLine();
                 if (response.equals("n")) {
                     System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
@@ -260,8 +264,9 @@ public class Tview {
     }
 
     void FuncSwapTeclas() {
-        if(controladorDominio.consultarNombresTeclados().isEmpty()){
-            System.out.println("No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
+        if (controladorDominio.consultarNombresTeclados().isEmpty()) {
+            System.out.println(
+                    "No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
             return;
         }
         System.out.println("Indica el teclado y introduce la fila y columna del primer " +
@@ -344,7 +349,7 @@ public class Tview {
     }
 
     void FuncMostrarTeclado() {
-        if(controladorDominio.consultarNombresTeclados().isEmpty()){
+        if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado. Para poder mostrar, crea uno antes.");
             return;
         }
@@ -372,7 +377,8 @@ public class Tview {
 
     void FuncMostrarAlfabetos() {
         String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
-        if (alfabetos.isEmpty()) System.out.println("No tienes ningún alfabeto creado.\n");
+        if (alfabetos.isEmpty())
+            System.out.println("No tienes ningún alfabeto creado.\n");
         else {
             System.out.println("Estos son los alfabetos que existen:");
             System.out.println(alfabetos);
@@ -380,7 +386,7 @@ public class Tview {
     }
 
     void FuncMostrarNombresTeclados() {
-        if(controladorDominio.consultarNombresTeclados().isEmpty()){
+        if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado.");
             return;
         }
@@ -390,7 +396,8 @@ public class Tview {
     void FuncCreacionAlfabeto() {
         System.out.println("Introduce el nombre que deseas asignar al alfabeto (ej: inglés):");
         String name = input.nextLine();
-        System.out.println("Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+        System.out.println(
+                "Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
         String idAlf = input.nextLine();
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
@@ -409,7 +416,7 @@ public class Tview {
                     System.out.println("Introduce nuevamente el nombre del alfabeto:");
                     name = input.nextLine();
                 }
-            }catch (NoHayCaracteresExcepcion nae) {
+            } catch (NoHayCaracteresExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger caracteres diferentes? (s/n):");
                 String response = input.nextLine();
@@ -440,15 +447,15 @@ public class Tview {
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder modificar, crea uno antes.");
             return;
-        }
-        else {
+        } else {
             System.out.println("Estos son los alfabetos que existen:");
             System.out.println(alfabetos);
         }
         boolean cancelarOperacion = false;
         System.out.println("Introduce el nombre del alfabeto a modificar:");
         String name = input.nextLine();
-        System.out.println("Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+        System.out.println(
+                "Introduce los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
         String idAlf = input.nextLine();
         while (!cancelarOperacion) {
             try {
@@ -466,8 +473,7 @@ public class Tview {
                     System.out.println("Introduce nuevamente el nombre del alfabeto a modificar:");
                     name = input.nextLine();
                 }
-            }
-            catch (NoHayCaracteresExcepcion nae) {
+            } catch (NoHayCaracteresExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger caracteres diferentes? (s/n):");
                 String response = input.nextLine();
@@ -475,7 +481,8 @@ public class Tview {
                     System.out.println("El alfabeto \"" + name + "\" no ha sido creado.\n");
                     cancelarOperacion = true;
                 } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+                    System.out.println(
+                            "Introduce nuevamente los carácteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
                     idAlf = input.nextLine();
                 }
             }
@@ -487,8 +494,7 @@ public class Tview {
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder borrar, crea uno antes.");
             return;
-        }
-        else {
+        } else {
             System.out.println("Estos son los alfabetos que existen:");
             System.out.println(alfabetos);
         }
@@ -514,7 +520,7 @@ public class Tview {
         }
     }
 
-    void FuncMostrarCaracteresAlfabeto (){
+    void FuncMostrarCaracteresAlfabeto() {
         String alfabetos = controladorDominio.consultarNombresYCaracteresDeAlfabetos();
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado.");

@@ -6,19 +6,21 @@ import java.util.Arrays;
  * Clase AlgoritmoHungarian
  * Representa un algoritmo para resolver el problema de asignacion utilizando el
  * metodo Hungarian Algorithm. Se utiliza para encontrar el coste de la
- * asignación optima entre dos conjuntos de elementos, obteniendo el coste minimo.
+ * asignación optima entre dos conjuntos de elementos, obteniendo el coste
+ * minimo.
  * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class AlgoritmoHungarian {
-    public AlgoritmoHungarian() {};
+    public AlgoritmoHungarian() {
+    };
 
     /**
      * Ejecuta el algoritmo hungaro en la matriz de entrada para encontrar el
      * coste de la asignación optima.
      * 
      * @param matrizEntrada La matriz de entrada que representa los costos de
-     * asignación
+     *                      asignación
      * @return El costo minimo de la asignacion optima
      */
     public double ejecutar(double[][] matrizEntrada) {
@@ -99,20 +101,21 @@ public class AlgoritmoHungarian {
      * Funcion recursiva que obtiene la asignacion con el maximo de ceros
      * marcados posible tales que no esten en la misma fila ni columna.
      *
-     * @param esCero La matriz booleana que indica celdas con valor cero
-     * @param filaCubierta Array de booleanos indicando filas con un cero
-     * asignado
-     * @param colCubierta Array de booleanos indicando columnas con un cero
-     * asignado
-     * @param countCubiertos Contador de celdas cubiertas
-     * @param esCeroAsignado La matriz booleana de asignacion marcada
+     * @param esCero              La matriz booleana que indica celdas con valor
+     *                            cero
+     * @param filaCubierta        Array de booleanos indicando filas con un cero
+     *                            asignado
+     * @param colCubierta         Array de booleanos indicando columnas con un cero
+     *                            asignado
+     * @param countCubiertos      Contador de celdas cubiertas
+     * @param esCeroAsignado      La matriz booleana de asignacion marcada
      * @param mejorCountCubiertos Mejor contador de celdas cubiertas
      * @param mejorEsCeroAsignado Mejor matriz booleana de asignacion marcada
-     * @param fila Indice de fila actual para la recursion
+     * @param fila                Indice de fila actual para la recursion
      */
     private void obtenerMejorAsignacionRecursivo(boolean[][] esCero, boolean[] filaCubierta,
-    boolean[] colCubierta, int countCubiertos, boolean[][] esCeroAsignado,
-    int[] mejorCountCubiertos, boolean[][] mejorEsCeroAsignado, int fila) {
+            boolean[] colCubierta, int countCubiertos, boolean[][] esCeroAsignado,
+            int[] mejorCountCubiertos, boolean[][] mejorEsCeroAsignado, int fila) {
         int n = esCero.length;
         if (fila == n) {
             if (countCubiertos > mejorCountCubiertos[0]) {
@@ -123,23 +126,24 @@ public class AlgoritmoHungarian {
             }
             return;
         }
-        if (mejorCountCubiertos[0] == n) return;
+        if (mejorCountCubiertos[0] == n)
+            return;
         for (int col = 0; col < n; ++col) {
             if (esCero[fila][col] && !filaCubierta[fila] && !colCubierta[col]) {
                 filaCubierta[fila] = true;
                 colCubierta[col] = true;
                 esCeroAsignado[fila][col] = true;
                 obtenerMejorAsignacionRecursivo(esCero, filaCubierta, colCubierta,
-                    countCubiertos + 1, esCeroAsignado, mejorCountCubiertos,
-                    mejorEsCeroAsignado, fila + 1);
+                        countCubiertos + 1, esCeroAsignado, mejorCountCubiertos,
+                        mejorEsCeroAsignado, fila + 1);
                 filaCubierta[fila] = false;
                 colCubierta[col] = false;
                 esCeroAsignado[fila][col] = false;
             }
         }
         obtenerMejorAsignacionRecursivo(esCero, filaCubierta, colCubierta,
-            countCubiertos, esCeroAsignado, mejorCountCubiertos, mejorEsCeroAsignado,
-            fila + 1);
+                countCubiertos, esCeroAsignado, mejorCountCubiertos, mejorEsCeroAsignado,
+                fila + 1);
     }
 
     /**
@@ -156,34 +160,37 @@ public class AlgoritmoHungarian {
         boolean[] filaCubierta = new boolean[n];
         boolean[] colCubierta = new boolean[n];
 
-        int[] mejorCountCubiertos = {0};
+        int[] mejorCountCubiertos = { 0 };
         boolean[][] mejorEsCeroAsignado = new boolean[n][n];
         obtenerMejorAsignacionRecursivo(esCero, filaCubierta, colCubierta, 0,
-            esCeroAsignado, mejorCountCubiertos, mejorEsCeroAsignado, 0);
+                esCeroAsignado, mejorCountCubiertos, mejorEsCeroAsignado, 0);
         return mejorEsCeroAsignado;
     }
-    
+
     /**
      * Obtiene el numero minimo de lineas para cubrir celdas con valor cero.
      * 
-     * @param esCero La matriz booleana que indica celdas con valor cero
+     * @param esCero         La matriz booleana que indica celdas con valor cero
      * @param esCeroAsignado La matriz booleana de asignacion marcada
-     * @param filaCubierta Array de booleanos indicando filas cubiertas
-     * @param colCubierta Array de booleanos indicando columnas cubiertas
+     * @param filaCubierta   Array de booleanos indicando filas cubiertas
+     * @param colCubierta    Array de booleanos indicando columnas cubiertas
      * @return El numero minimo de lineas necesarias para cubrir los ceros
      */
-    private int obtenerMinNumLineas(boolean[][] esCero, boolean[][] esCeroAsignado, boolean[] filaCubierta, boolean[] colCubierta) {
+    private int obtenerMinNumLineas(boolean[][] esCero, boolean[][] esCeroAsignado, boolean[] filaCubierta,
+            boolean[] colCubierta) {
         int n = esCero.length;
         boolean[] filaMarcada = new boolean[n];
         boolean[] colMarcada = new boolean[n];
-        
+
         // c) Marcamos las filas sin asignacion
-        for (int i = 0; i < n; ++i) { 
+        for (int i = 0; i < n; ++i) {
             boolean contieneCeroAsignado = false;
             for (int j = 0; j < n && !contieneCeroAsignado; ++j) {
-                if (esCeroAsignado[i][j]) contieneCeroAsignado = true;
+                if (esCeroAsignado[i][j])
+                    contieneCeroAsignado = true;
             }
-            if (!contieneCeroAsignado) filaMarcada[i] = true;
+            if (!contieneCeroAsignado)
+                filaMarcada[i] = true;
         }
 
         boolean existeCambio = true;
@@ -193,17 +200,19 @@ public class AlgoritmoHungarian {
             for (int j = 0; j < n; ++j) {
                 boolean contieneCeroEnFilaMarcada = false;
                 for (int i = 0; i < n && !contieneCeroEnFilaMarcada; ++i) {
-                    if (esCero[i][j] && filaMarcada[i]) contieneCeroEnFilaMarcada = true;
+                    if (esCero[i][j] && filaMarcada[i])
+                        contieneCeroEnFilaMarcada = true;
                 }
                 if (contieneCeroEnFilaMarcada && !colMarcada[j]) {
                     colMarcada[j] = true;
                     existeCambio = true;
                 }
             }
-    
+
             // e) Marcamos las filas que tienen su zero asignado en alguna columna marcada
             for (int i = 0; i < n; ++i) {
-                if (filaMarcada[i]) continue;
+                if (filaMarcada[i])
+                    continue;
                 for (int j = 0; j < n && !filaMarcada[i]; ++j) {
                     if (colMarcada[j] && esCeroAsignado[i][j] && !filaMarcada[i]) {
                         filaMarcada[i] = true;
@@ -232,13 +241,13 @@ public class AlgoritmoHungarian {
     /**
      * Obtiene el minimo valor no cubierto en la matriz.
      * 
-     * @param M La matriz de entrada
+     * @param M            La matriz de entrada
      * @param filaCubierta Array de booleanos indicando filas cubiertas
-     * @param colCubierta Array de booleanos indicando columnas cubiertas
+     * @param colCubierta  Array de booleanos indicando columnas cubiertas
      * @return El valor minimo no cubierto en la matriz
      */
     private double obtenerMinimoNoCubierto(double[][] M, boolean[] filaCubierta,
-    boolean[] colCubierta) {
+            boolean[] colCubierta) {
         int n = M.length;
         double minimo = Double.MAX_VALUE;
         for (int i = 0; i < n; ++i) {
@@ -246,7 +255,7 @@ public class AlgoritmoHungarian {
                 if (!filaCubierta[i] && !colCubierta[j] && M[i][j] < minimo)
                     minimo = M[i][j];
             }
-        } 
+        }
         return minimo;
     }
 
@@ -254,13 +263,13 @@ public class AlgoritmoHungarian {
      * Suma una vez el minimo a las celdas cubiertas, y dos veces a las celdas
      * doblemente cubiertas. A continuacion, resta el minimo a todas las celdas.
      * 
-     * @param M La matriz de entrada
+     * @param M            La matriz de entrada
      * @param filaCubierta Array de booleanos indicando filas cubiertas
-     * @param colCubierta Array de booleanos indicando columnas cubiertas
-     * @param minimo El valor minimo a ser sumado y restado
+     * @param colCubierta  Array de booleanos indicando columnas cubiertas
+     * @param minimo       El valor minimo a ser sumado y restado
      */
     private void sumarYRestarMinimoCubiertos(double[][] M, boolean[] filaCubierta,
-    boolean[] colCubierta, double minimo) {
+            boolean[] colCubierta, double minimo) {
         int n = M.length;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
@@ -278,7 +287,7 @@ public class AlgoritmoHungarian {
     /**
      * Calcula el costo minimo dada una matriz y su correspondiente asignacion.
      * 
-     * @param M La matriz de costos
+     * @param M         La matriz de costos
      * @param esMarcado La asignacion marcada en la matriz
      * @return El coste de la asignacion
      */
@@ -286,7 +295,8 @@ public class AlgoritmoHungarian {
         double coste = 0.0;
         for (int i = 0; i < M.length; ++i) {
             for (int j = 0; j < M[i].length; ++j) {
-                if (esMarcado[i][j]) coste += M[i][j];
+                if (esMarcado[i][j])
+                    coste += M[i][j];
             }
         }
         return coste;

@@ -6,7 +6,8 @@ import org.junit.Test;
 /**
  * Clase TestAlgoritmoSA
  * Representa los test de un algoritmo SA en concreto con sus caracteres.
- * @author ruben.catalan(ruben.catalan@estudiantat.upc.edu)
+ * 
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public class TestAlgoritmoSA {
 
@@ -21,7 +22,7 @@ public class TestAlgoritmoSA {
         String a = "ingles";
         String alf = "abcdefghijklmnopqrstuvwxyz";
 
-        Alfabeto alfabeto = new Alfabeto(a,alf);
+        Alfabeto alfabeto = new Alfabeto(a, alf);
 
         AlgoritmoSA alg = new AlgoritmoSA();
 

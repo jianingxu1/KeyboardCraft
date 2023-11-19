@@ -5,26 +5,28 @@ import org.junit.Test;
 
 import edu.upc.prop.cluster23.domain.Texto;
 
-/** Clase TestTexto
- *  Representan los test unitarios a la clase Texto.
- *  @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
+/**
+ * Clase TestTexto
+ * Representan los test unitarios a la clase Texto.
+ * 
+ * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
  */
 
-public class TestTexto{
-  
+public class TestTexto {
+
   @Test
   public void testDefaultConstructor() {
-      Texto texto = new Texto();
-      assertEquals("", texto.getTexto());
+    Texto texto = new Texto();
+    assertEquals("", texto.getTexto());
   }
-  
+
   @Test
   public void testParametrizedConstructor() {
     String input = "abcdedfghijklmnopqrstuvwxyz";
     Texto texto = new Texto(input);
     assertEquals(input, texto.getTexto());
   }
-  
+
   @Test
   public void testModificarTexto() {
     String input = "abcdedfghijklmnopqrstuvwxyz";
@@ -34,7 +36,7 @@ public class TestTexto{
     texto.modificarTexto(input2);
     assertEquals(input2, texto.getTexto());
   }
-  
+
   @Test
   public void testGetTexto() {
     String input = "abcdedfghijklmnopqrstuvwxyz";

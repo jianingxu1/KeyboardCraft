@@ -3,7 +3,6 @@ package edu.upc.prop.cluster23.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 /**
  * Clase PalabrasConFrecuencia
  * Representa una colección de alfabetos que tiene el sistema.
@@ -95,7 +94,8 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna la estructura donde se almacena el alfabeto con el nombre especificado.
+     * Retorna la estructura donde se almacena el alfabeto con el nombre
+     * especificado.
      *
      * @param nombre El nombre del alfabeto.
      */
@@ -112,9 +112,9 @@ public class CjtAlfabetos {
         return alfabetos.get(nombre).getCaracteresStringFormat();
     }
 
-
     /**
-     * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos del conjunto.
+     * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos
+     * del conjunto.
      */
     public ArrayList<ArrayList<Character>> getAlfabetos() {
         ArrayList<ArrayList<Character>> estructuras = new ArrayList<ArrayList<Character>>();
@@ -133,7 +133,8 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna true si existe un alfabeto con el nombre especificado, en su defecto retorna false.
+     * Retorna true si existe un alfabeto con el nombre especificado, en su defecto
+     * retorna false.
      *
      * @param nombre El nombre del alfabeto.
      */
@@ -142,15 +143,17 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna el alfabeto del formato {nombre | caracteres} de todos los alfabetos del conjunto.
+     * Retorna el alfabeto del formato {nombre | caracteres} de todos los alfabetos
+     * del conjunto.
      */
-    public String getNombresYCaracteresDeAlfabetos(){
+    public String getNombresYCaracteresDeAlfabetos() {
         String s = "";
         int mapSize = alfabetos.size();
         int count = 0;
         for (Alfabeto alfabeto : alfabetos.values()) {
             s += alfabeto.getNombre();
-            if(++count < mapSize) s += "\n";
+            if (++count < mapSize)
+                s += "\n";
         }
         return s;
     }
@@ -166,18 +169,15 @@ public class CjtAlfabetos {
         return s;
     }
 
-
     // FUNCIONES ELIMINADAS
 
-
     // /**************************************************************************
-    //  * Cambia el alfabeto de un alfabeto.
-    //  *
-    //  * @param nombre El nombre del alfabeto.
-    //  */
+    // * Cambia el alfabeto de un alfabeto.
+    // *
+    // * @param nombre El nombre del alfabeto.
+    // */
     // public void cambiarCaracteres (String nombre, String caracteres) {
-    //     alfabetos.get(nombre).cambiarCaracteres(caracteres);
+    // alfabetos.get(nombre).cambiarCaracteres(caracteres);
     // }**************************************************************************
-
 
 }

@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.Arrays;
 
-/** Clase TesTeclados
- * Representa los tests de un teclados. 
+/**
+ * Clase TesTeclados
+ * Representa los tests de un teclados.
+ * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 
@@ -18,7 +20,7 @@ public class TestTeclado {
         matrix[0][0] = 'a';
         matrix[0][1] = 'b';
 
-        Teclado tec = new Teclado(a,matrix);
+        Teclado tec = new Teclado(a, matrix);
         assertEquals("name", tec.getNombre());
         assertArrayEquals(matrix, tec.getTeclado());
     }
@@ -30,7 +32,7 @@ public class TestTeclado {
         matrix[0][0] = 'a';
         matrix[0][1] = 'b';
 
-        Teclado tec = new Teclado(a,matrix);
+        Teclado tec = new Teclado(a, matrix);
 
         char[][] matrix2 = new char[2][2];
 

@@ -4,8 +4,10 @@ import java.util.*;
 
 /**
  * Clase AlgoritmoSA
- * Clase que utiliza el algoritmo Simulated Annealing para crear una distribución de teclado
- * @author ruben.catalan(ruben.catalan@estudiantat.upc.edu)
+ * Clase que utiliza el algoritmo Simulated Annealing para crear una
+ * distribución de teclado
+ * 
+ * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 
 public class AlgoritmoSA implements Algoritmo {
@@ -24,7 +26,7 @@ public class AlgoritmoSA implements Algoritmo {
     public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         procesarInput(alf, palabras, texto);
         // branchAndBound(0, 0.0);
-        
+
         distribucion = new char[rows][cols];
         for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
             char c = entry.getKey();
@@ -33,7 +35,6 @@ public class AlgoritmoSA implements Algoritmo {
         }
         return distribucion;
     }
-
 
     private void procesarInput(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         n = alf.getCaracteres().size();
@@ -51,7 +52,8 @@ public class AlgoritmoSA implements Algoritmo {
 
         // por ahora, sol inicial en orden alfabético
 
-        // cada posición representa a donde iría el símbolo en la configuración final. Posición 0, valor 3 significa
+        // cada posición representa a donde iría el símbolo en la configuración final.
+        // Posición 0, valor 3 significa
         // que el caracter 0 va en la posición 3 del teclado
         int[] mejorActual = new int[n];
 
@@ -63,7 +65,8 @@ public class AlgoritmoSA implements Algoritmo {
 
         costeActual = calculoCoste(mejorActual);
 
-        if (costeActual < mejorCosteTotal) mejorCosteTotal = costeActual;
+        if (costeActual < mejorCosteTotal)
+            mejorCosteTotal = costeActual;
 
         // valores de temperatura e iteraciones por valor de temperatura
 
@@ -100,8 +103,7 @@ public class AlgoritmoSA implements Algoritmo {
                 if (costeActual < mejorCosteTotal) {
                     mejorCosteTotal = costeActual;
                     System.arraycopy(valActual, 0, mejorActual, 0, n);
-                }
-                else {
+                } else {
                     double prob = Math.pow(Math.E, (mejorCosteTotal - costeActual) / T);
 
                     if (prob > Math.random()) {
@@ -123,14 +125,16 @@ public class AlgoritmoSA implements Algoritmo {
         double costeActual = 0.0;
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
-                costeActual += calcularCosteEntreDosCaracteres(caracteres[i], valActual[i], caracteres[j], valActual[j]);
+                costeActual += calcularCosteEntreDosCaracteres(caracteres[i], valActual[i], caracteres[j],
+                        valActual[j]);
             }
         }
         return costeActual;
     }
 
     private void inicializarFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        // Process the input parameters (alf, palabras, texto) and generate frecuenciasCjts
+        // Process the input parameters (alf, palabras, texto) and generate
+        // frecuenciasCjts
         frecuenciasCjts = new HashMap<>();
 
         int total = 0; // total de caractéres
@@ -144,22 +148,24 @@ public class AlgoritmoSA implements Algoritmo {
             }
         }
         String Texto = texto.getTexto();
-        String TextoN = Texto.replaceAll("\\s","");
+        String TextoN = Texto.replaceAll("\\s", "");
 
         for (int i = 0; i < Texto.length() - 1; ++i) {
-            String a = "" + Texto.charAt(i) + Texto.charAt(i+1);
-            if (frecuenciasCjts.containsKey(a)) frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
+            String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
+            if (frecuenciasCjts.containsKey(a))
+                frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
             else {
                 StringBuffer b = new StringBuffer(a);
                 b.reverse();
                 String c = b.toString();
-                if (frecuenciasCjts.containsKey(c)) frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
+                if (frecuenciasCjts.containsKey(c))
+                    frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
             }
         }
 
         total = TextoN.length() - 1 - (Texto.length() - TextoN.length());
 
-        Map<String,Integer> ListaPal = new LinkedHashMap<String, Integer>();
+        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
 
         ListaPal = palabras.getMap();
 
@@ -168,12 +174,14 @@ public class AlgoritmoSA implements Algoritmo {
             Integer num = entry.getValue();
             for (int j = 0; j < pal.length() - 1; ++j) {
                 String a = "" + pal.charAt(j) + pal.charAt(j + 1);
-                if (frecuenciasCjts.containsKey(a)) frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
+                if (frecuenciasCjts.containsKey(a))
+                    frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
                 else {
                     StringBuffer b = new StringBuffer(a);
                     b.reverse();
                     String c = b.toString();
-                    if (frecuenciasCjts.containsKey(c)) frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
+                    if (frecuenciasCjts.containsKey(c))
+                        frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
                 }
             }
             total += (pal.length() - 1) * num;
@@ -185,19 +193,18 @@ public class AlgoritmoSA implements Algoritmo {
         if (n <= 2) {
             rows = 1;
             cols = n;
-        }
-        else if (n <= 6) {
+        } else if (n <= 6) {
             rows = 2;
-            cols = (int) Math.ceil((double) n / (double)rows);
-        }
-        else {
+            cols = (int) Math.ceil((double) n / (double) rows);
+        } else {
             rows = 3;
-            cols = (int) Math.ceil((double) n / (double)rows);
+            cols = (int) Math.ceil((double) n / (double) rows);
         }
         Posicion p = new Posicion(0, 0);
         for (int i = 0; i < n; ++i) {
             posiciones[i] = new Posicion(p);
-            if (p.col < cols - 1) ++p.col;
+            if (p.col < cols - 1)
+                ++p.col;
             else {
                 ++p.fila;
                 p.col = 0;
@@ -221,20 +228,20 @@ public class AlgoritmoSA implements Algoritmo {
         caracteres = new char[n];
         ArrayList<Character> car = alf.getCaracteres();
         for (int i = 0; i < n; ++i) {
-            caracteres[i] =  car.get(i);
+            caracteres[i] = car.get(i);
         }
     }
-
 
     private double calcularCosteEntreDosCaracteres(char c1, int posIndex1, char c2, int posIndex2) {
         double distancia = distancias[posIndex1][posIndex2];
         String key = calcularKey(c1, c2);
         double frec = (double) frecuenciasCjts.get(key);
-        return frec*distancia;
+        return frec * distancia;
     }
 
     private String calcularKey(char c1, char c2) {
-        if (frecuenciasCjts.containsKey("" + c1 + c2)) return "" + c1 + c2;
+        if (frecuenciasCjts.containsKey("" + c1 + c2))
+            return "" + c1 + c2;
         return "" + c2 + c1;
     }
 }
