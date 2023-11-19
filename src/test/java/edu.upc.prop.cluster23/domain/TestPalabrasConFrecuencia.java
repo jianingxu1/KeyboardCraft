@@ -71,8 +71,8 @@ public class TestPalabrasConFrecuencia {
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
         assertEquals(input, palabras.toString());
 
-        String input2 = " 0";
-        PalabrasConFrecuencia palabras2 = new PalabrasConFrecuencia(input2);
-        assertEquals(input2, palabras2.toString());
+        String input1 = "";
+        PalabrasConFrecuencia palabras1 = new PalabrasConFrecuencia(input1);
+        assertEquals(input1, palabras1.toString());
     }
 }

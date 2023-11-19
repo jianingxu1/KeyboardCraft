@@ -63,6 +63,7 @@ public class PalabrasConFrecuencia {
      */
     @Override
     public String toString() {
+        if (this.map.isEmpty()) return "";
         StringBuilder result = new StringBuilder();
         for (Map.Entry<String, Integer> entry : this.map.entrySet()) {
             result.append(entry.getKey()).append(" ").append(entry.getValue()).append(" ");
