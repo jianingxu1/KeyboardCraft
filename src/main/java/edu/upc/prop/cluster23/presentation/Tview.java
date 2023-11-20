@@ -310,61 +310,45 @@ public class Tview {
 
         System.out.println("Indica el nombre del teclado:");
         int f1, c1, f2, c2;
-        boolean cancelarOperacion = false;
         boolean cancelarOperacion2 = false;
 
         String name = input.nextLine();
 
-        while (!cancelarOperacion) {
+        while (!cancelarOperacion2) {
             try {
                 String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
-                cancelarOperacion = true;
-            } catch (NombreTecladoNoValidoExcepcion ntv) {
-                System.out.println("El teclado introducido no existe.");
-                System.out.println("¿Quieres intentar de nuevo y escoger una teclado válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("No se ha modificado ningún teclado\n");
-                    cancelarOperacion = true;
-                    cancelarOperacion2 = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado:");
-                    name = input.nextLine();
-                }
-            }
-        }
 
-        if (!cancelarOperacion2) {
-            System.out.println("Introduce el número de la fila y columna del primer elemento, y la fila y columna " +
-                    "del segundo elemento.\n" +
-                    "NOTA: Las filas y columnas se numeran desde 0");
-        }
+                System.out.println("Introduce el número de la fila y columna del primer elemento, y la fila y columna " +
+                        "del segundo elemento.\n" +
+                        "NOTA: Las filas y columnas se numeran desde 0");
 
-        while (!cancelarOperacion2) {
-            try {
                 f1 = input.nextInt();
                 c1 = input.nextInt();
                 f2 = input.nextInt();
                 c2 = input.nextInt();
                 input.nextLine();
                 controladorDominio.intercambiarTeclasTeclado(name, f1, c1, f2, c2);
-                String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
-                System.out.println(keyboard);
                 cancelarOperacion2 = true;
                 System.out.println("¡Se ha intercambiado las teclas del teclado \"" + name + "\" con éxito!\n Esta es la nueva distribución:");
                 keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
             } catch (InputMismatchException ime) {
+                input.nextLine();
                 System.out.println("El valor introducido no es un entero.");
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
                 String response = input.nextLine();
+
+                while (!response.equals("s") && !response.equals("n")) {
+                    System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
+                    response = input.nextLine();
+                }
+
                 if (response.equals("n")) {
                     System.out.println("El teclado \"" + name + "\" no ha sido modificado.\n");
                     cancelarOperacion2 = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente las posiciones de las teclas:");
                 }
+                
             } catch (IndiceTeclaFueraDeRangoExcepcion itf) {
                 System.out.println(itf.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
@@ -381,7 +365,6 @@ public class Tview {
                 String response = input.nextLine();
                 if (response.equals("n")) {
                     System.out.println("No se ha modificado ningún teclado\n");
-                    cancelarOperacion = true;
                     cancelarOperacion2 = true;
                 } else if (response.equals("s")) {
                     System.out.println("Introduce nuevamente el nombre del teclado:");
