@@ -35,17 +35,17 @@ public class AlgoritmoSA implements Algoritmo {
     /**
      * Número de caractéres
      */
-    int n;
+    private int n;
 
     /**
      * Número de filas de la distribución
      */
-    int rows;
+    private int rows;
 
     /**
      * Número de columnas de la distribución
      */
-    int cols;
+    private int cols;
 
     /**
      * Coste de la mejor distribución hasta el momento

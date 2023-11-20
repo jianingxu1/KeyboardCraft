@@ -235,7 +235,8 @@ public class Tview {
                 cancelarOperacion = true;
                 System.out.println("¡Se ha creado el teclado \"" + name + "\" con éxito!");
 
-                controladorDominio.consultarDistribucionDeTeclado(name);
+                String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
+                System.out.println(keyboard);
 
             } catch (NombreAlfabetoNoValidoExcepcion e) {
                 System.out.println(e.getMessage());
