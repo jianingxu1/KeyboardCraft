@@ -273,7 +273,7 @@ public class AlgoritmoSA implements Algoritmo {
      * Inicializa el array de posiciones y calcula cuantas filas y columans requerirá la distribución
      */
 
-    public void inicializarPosiciones() {
+    private void inicializarPosiciones() {
         posiciones = new Posicion[n];
         if (n <= 2) {
             rows = 1;
