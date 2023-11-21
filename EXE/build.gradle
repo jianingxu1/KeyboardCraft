@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group = '../'
+group = '../FONTS'
 version = '1.0-SNAPSHOT'
 
 ext {
