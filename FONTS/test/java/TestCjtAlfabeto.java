@@ -2,7 +2,13 @@ import static org.junit.Assert.*;
 
 import domain.CjtAlfabetos;
 import org.junit.Test;
+
+import java.beans.Transient;
 import java.util.ArrayList;
+
+import edu.upc.prop.cluster23.exceptions.NoHayCaracteresExcepcion;
+import edu.upc.prop.cluster23.exceptions.NombreAlfabetoDuplicadoExcepcion;
+import edu.upc.prop.cluster23.exceptions.NombreAlfabetoNoValidoExcepcion;
 
 /**
  * Clase estCjtTAlfabeto
@@ -169,4 +175,81 @@ public class TestCjtAlfabeto {
         assertFalse(cjtAlfabetos.existeAlfabeto("Español"));
     }
 
+    @Test
+    public void testExcepcionesAñadirAlfabeto(){
+        CjtAlfabetos cjtAlfabetos;
+        cjtAlfabetos = new CjtAlfabetos();
+        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
+        try{
+            añadirAlfabeto("Ingles", "abc", cjtAlfabetos);
+            }catch(NombreAlfabetoDuplicadoExcepcion e){
+                assertEquals("El alfabeto " + "Ingles" + " ya existe en el conjunto de alfabetos.", e.getMessage());
+            }catch(NombreAlfabetoNoValidoExcepcion e){
+                assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
+            }catch(NoHayCaracteresExcepcion e){
+                assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
+            }   
+    }
+    
+    public void añadirAlfabeto(String idAlfabeto, String caracteres, CjtAlfabetos cjtAlfabetos)
+			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+		if (idAlfabeto.trim().isEmpty())
+			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+
+		if (cjtAlfabetos.existeAlfabeto(idAlfabeto))
+			throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
+
+		if (caracteres.trim().isEmpty())
+			throw new NoHayCaracteresExcepcion();
+
+		cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
+	}
+
+    @Test 
+    public void testExcepsionesModificarAlfabeto(){
+        CjtAlfabetos cjtAlfabetos;
+        cjtAlfabetos = new CjtAlfabetos();
+        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
+        try{
+            modificarAlfabeto("Ingles", "abcd", cjtAlfabetos);
+            }catch(NombreAlfabetoNoValidoExcepcion e){
+                assertEquals("El alfabeto \"Ingles\" no existe.", e.getMessage());
+            }catch(NoHayCaracteresExcepcion e){
+                assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
+            }   
+    }
+
+    public void modificarAlfabeto(String idAlfabeto, String alfabeto, CjtAlfabetos cjtAlfabetos)
+			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+		if (idAlfabeto.trim().isEmpty())
+			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
+			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+		if (alfabeto.trim().isEmpty())
+			throw new NoHayCaracteresExcepcion();
+		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
+	}
+
+    @Test 
+    public void testExcepsionesEliminarAlfabeto(){
+        CjtAlfabetos cjtAlfabetos;
+        cjtAlfabetos = new CjtAlfabetos();
+        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
+        try{
+            eliminarAlfabeto("Ingles", cjtAlfabetos);
+            eliminarAlfabeto("Ingles", cjtAlfabetos);
+            fail("No se ha lanzado la excepcion");
+            }catch(NombreAlfabetoNoValidoExcepcion e){
+                assertEquals("El alfabeto \"" + "Ingles" + "\" no existe.", e.getMessage());
+            }   
+    }
+
+    public void eliminarAlfabeto(String idAlfabeto, CjtAlfabetos cjtAlfabetos) throws NombreAlfabetoNoValidoExcepcion {
+		if (idAlfabeto.trim().isEmpty())
+			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
+			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+
+		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
+	}
 }
