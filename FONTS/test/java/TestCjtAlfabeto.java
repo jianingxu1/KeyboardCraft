@@ -3,12 +3,11 @@ import static org.junit.Assert.*;
 import domain.CjtAlfabetos;
 import org.junit.Test;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 
-import edu.upc.prop.cluster23.exceptions.NoHayCaracteresExcepcion;
-import edu.upc.prop.cluster23.exceptions.NombreAlfabetoDuplicadoExcepcion;
-import edu.upc.prop.cluster23.exceptions.NombreAlfabetoNoValidoExcepcion;
+import exceptions.NoHayCaracteresExcepcion;
+import exceptions.NombreAlfabetoDuplicadoExcepcion;
+import exceptions.NombreAlfabetoNoValidoExcepcion;
 
 /**
  * Clase estCjtTAlfabeto
