@@ -1,0 +1,17 @@
+LEER ANTES DE INICIAR EL USO DEL PROGRAMA.
+
+- Información general:
+
+En esta primera entrega, encontrarás tres carpetas con toda la información, código y utilidades necesarias para entender y ejecutar el programa. Estas carpetas son las siguientes:
+
+- DOCS: contiene un fichero .pdf con toda la documentación del proyecto: 
+	+ Casos de uso y su explicación
+	+ diagrama de clases y la descripción de cada una
+	+ ED + algoritmos utilizados
+	+ Relación clases/miembro
+	
+- FONTS: contiene todos los archivos .java del proyecto. Estos se separan entre "main" y "test". Siendo main la carpeta con el código que se ejecutará en el driver y test todo el código de prueba del correcto funcionamiento de las clases.
+
+- EXE: contiene el esqueleto Gradle utilizado durante el proyecto. Es en este directorio donde podrás ejecutar las diferentes funcionalidades del programa:
+	+ Con el comando './gradlew run --console=plain' podrás ejecutar el Driver, que mostrará una vista por terminal del programa sobre la cual trabajar (NOTA: si esta opción falla, ejecuta primero './gradlew clean')
+	+ El comando './gradlew test' ejecutará todos los tests utilizados para probar la funcionalidad del programa. Si quieres volver a probar tests ya realizados, utiliza './gradlew test --rerun-tasks'
