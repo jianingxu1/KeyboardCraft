@@ -6,7 +6,7 @@ En esta primera entrega, encontrarás tres carpetas con toda la información, c�
 
 - DOCS: contiene un fichero .pdf con toda la documentación del proyecto: 
 	+ Casos de uso y su explicación
-	+ diagrama de clases y la descripción de cada una
+	+ Diagrama de clases y la descripción de cada una
 	+ ED + algoritmos utilizados
 	+ Relación clases/miembro
 	

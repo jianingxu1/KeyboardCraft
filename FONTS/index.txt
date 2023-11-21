@@ -1,0 +1,4 @@
+En este directorio tienes todo los archivos .java del proyecto, separados en dos subdirectorios.
+
+- 'main/java' contiene el código de los archivos de la capa de dominio y presentación, así como el código de las excepciones implementadas.
+- 'test/java' contiene los tests utilizados para probar el buen funcionamiento de las clases y sus métodos implementados.

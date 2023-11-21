@@ -1,0 +1,8 @@
+En la carpeta DOCS encontrarás un fichero LaTeX en formato .pdf con toda la documentación del proyecto:
+
+	- Casos de uso y su explicación
+	- Diagrama de clases y la descripción de cada una
+	- ED + algoritmos utilizados
+	- Relación clases/miembro
+
+Ciertos casos de uso explicados en el documento no han sido implementados en esta primera entrega y serán añadidos posteriormente.
