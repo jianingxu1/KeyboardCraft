@@ -3,3 +3,5 @@ En la carpeta EXE puedes ver todos los ficheros del esqueleto Gradle utilizado. 
 - './gradlew run --console=plain' - ejecuta el driver de vista por terminal
 - './gradlew test' - ejecuta los tests de funcionamiento del programa, anade '--rerun-tasks' al final para volver a ejecutar tests ya completados
 - './gradlew clean' - limpia el proyecto de la carpeta build. Solo es necesario si el comando 'run' falla inicialmente
+
+Además, contiene juegos de pruebas con entradas y salidas esperadas. Si ejecuta el programa, verá que las salidas corresponden correctamente con sus respectivas entradas.
