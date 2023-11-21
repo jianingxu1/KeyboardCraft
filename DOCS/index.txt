@@ -1,8 +1,12 @@
-En la carpeta DOCS encontrarás un fichero LaTeX en formato .pdf con toda la documentación del proyecto:
+En la carpeta DOCS encontraras un fichero LaTeX en formato .pdf con toda la documentacion del proyecto:
 
-	- Casos de uso y su explicación
-	- Diagrama de clases y la descripción de cada una
-	- ED + algoritmos utilizados
-	- Relación clases/miembro
+	- Casos de uso y su explicacion
+	- Diagrama de clases y la descripcion de cada una
+	- Estructura de datos y algoritmos utilizados para las funcionalidades principales
+	- Relacion clases/miembro
 
-Ciertos casos de uso explicados en el documento no han sido implementados en esta primera entrega y serán añadidos posteriormente.
+Ademas de otros documentos como:
+	- Javadoc: con la información de cada classe implementada
+	- Informacion adicional sobre QAP: documento en el que se basa la implementacion del algoritmo Branch and Bound implementado para la generacion de distribuciones de teclado.
+
+Ciertos casos de uso explicados en el documento no han sido implementados en esta primera entrega y seran anadidos posteriormente.
