@@ -1,0 +1,19 @@
+// "" equivale a darle a enter o poner en vez de "a1" --> " a1"
+
+1
+1 --> Error no Alfabetos
+0
+2 1 "" abcde --> Error Nombre vacio
+s a1 
+0
+1 1 "" a1 holaadios que 10 so 20 SA --> Error Teclado sin Nombre
+s t1 
+
+0
+1 t2 a1 hola "" SA 
+1 t2 a1 "" "" SA --> Texto y/o Lista De Palabras pueden ser vacios
+
+0
+0
+
+ 

@@ -1,0 +1,43 @@
+1 
+1 --> Error : No Hay Alfabetos Previamente
+2 3 4 5 --> Error : No Hay Ningun Teclado Creado
+0
+2
+1 a1 abcde
+2 a1 ""     --> Error : Cadena Vacia
+n 
+0 
+1 
+1 t1 a1 aabbccddee abaca 10 bedase 24 fafa 100 SA
+2
+1 t0 --> Error : No puedes modificar t0, no existe
+s 
+t1 0 0 1 1
+3 t2 --> Error : No puedes borrar t2, no existe
+n
+1 t2 a1 deeeedsssaaaad dc 100 sa 12 ce 97 SA
+1 t3 a1 fafa dc 10 sa SA --> Error : Lista de Palabras Mal
+s dc 10 sa 20 
+5
+4 t1
+2 4
+5 a1
+3 a1
+0 1 1 --> Error : No existe Alfabeto
+
+2 1 t1 0 2 3 3 --> Error : posicion invalid
+2 0 2 1 0
+
+0
+
+2 1 a1 helloworld
+
+5 a1 --> Fijese que no hay dos 'o' ni tres 'l'
+
+0
+
+0
+
+
+
+
