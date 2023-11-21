@@ -217,8 +217,8 @@ public class VistaTerminal {
         System.out.println("Introduce la lista de palabras con frecuencias (ej: 'coche 20 perro 15 teclado 200'):");
         String list = input.nextLine();
 
-        System.out.println("Introduce el nombre del algoritmo a utilizar (QAP o SA):\n" +
-                "NOTA: Los alfabetos con más de 12 caractéres pueden tardar +10 minutos con QAP.\n" +
+        System.out.println("Introduce el nombre del algoritmo a utilizar (B&B o SA):\n" +
+                "NOTA: Los alfabetos con más de 12 caractéres pueden tardar +10 minutos con B&B.\n" +
                 "Se recomienda SA en estos casos.");
         String alg = input.nextLine();
         boolean cancelarOperacion = false;

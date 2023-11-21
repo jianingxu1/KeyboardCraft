@@ -90,9 +90,9 @@ public class CtrlDominio {
 
 		if (algoritmo.trim().isEmpty())
 			throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
-		else if (!algoritmo.equals("QAP") && !algoritmo.equals("SA"))
+		else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))
 			throw new TipoAlgoritmoIncorrectoExcepcion(
-					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser QAP o SA.");
+					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
 
 		Texto text = new Texto(texto);
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
