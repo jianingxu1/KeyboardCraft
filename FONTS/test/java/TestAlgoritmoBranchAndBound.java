@@ -1,5 +1,5 @@
 import domain.Alfabeto;
-import domain.AlgoritmoQAP;
+import domain.AlgoritmoBranchAndBound;
 import domain.PalabrasConFrecuencia;
 import domain.Texto;
 import org.junit.Test;
@@ -11,10 +11,10 @@ import org.junit.Test;
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 
-public class TestAlgoritmoQAP {
+public class TestAlgoritmoBranchAndBound {
     @Test
     public void testGenerarDistribucion() {
-        AlgoritmoQAP alg = new AlgoritmoQAP();
+        AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
         Alfabeto alf = new Alfabeto("ingles", "abcdefghi");
         PalabrasConFrecuencia pal = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200 hi 200");
         Texto texto = new Texto();
@@ -94,7 +94,7 @@ public class TestAlgoritmoQAP {
                 { 6, 7, 6, 6, 7, 5, 7, 3, 2, 7, 9, 0 }
         };
 
-        AlgoritmoQAP alg = new AlgoritmoQAP();
+        AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
         // double coste = alg.calcularAsignacionOptima(frecuencias, distancias);
         // assertEquals(9552.0, coste, 0.001); // Tiempo: 3s
 

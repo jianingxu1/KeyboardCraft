@@ -3,13 +3,13 @@ package domain;
 import java.util.*;
 
 /**
- * Clase AlgoritmoQAP
+ * Clase AlgoritmoBranchAndBound
  * Representa un algoritmo Branch and Bound con cota Gilmore-Lawler para
  * crear la distribucion mas optima para un teclado.
  * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
-public class AlgoritmoQAP implements Algoritmo {
+public class AlgoritmoBranchAndBound implements Algoritmo {
     /**
      * Numero de instalaciones o caracteres.
      */

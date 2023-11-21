@@ -10,7 +10,7 @@ public class CtrlPresentacion {
 
 	/** Atributos **/
 
-	private Tview viewTerminal;
+	private VistaTerminal viewTerminal;
 
 	/** Constructor y metodos de inicializacion **/
 
@@ -21,7 +21,7 @@ public class CtrlPresentacion {
 
 		System.out.println("Durante esta primera entrega, solo tendrás la opción de la vista de terminal");
 
-		viewTerminal = new Tview();
+		viewTerminal = new VistaTerminal();
 
 		viewTerminal.init();
 	}

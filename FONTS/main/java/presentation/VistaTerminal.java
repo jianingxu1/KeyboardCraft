@@ -4,24 +4,17 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import domaincontrollers.CtrlDominio;
-import exceptions.FrecuenciaIncorrectaExcepcion;
-import exceptions.IndiceTeclaFueraDeRangoExcepcion;
-import exceptions.NoHayCaracteresExcepcion;
-import exceptions.NombreAlfabetoDuplicadoExcepcion;
-import exceptions.NombreAlfabetoNoValidoExcepcion;
-import exceptions.NombreTecladoDuplicadoExcepcion;
-import exceptions.NombreTecladoNoValidoExcepcion;
-import exceptions.TipoAlgoritmoIncorrectoExcepcion;
+import exceptions.*;
 
 /**
- * Clase Tview
+ * Clase VistaTerminal
  * Vista por terminal del programa
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  * @co-authors Muhammad Yasin Khokar & Momin Miah Begum
  */
 
-public class Tview {
+public class VistaTerminal {
 
     private CtrlDominio controladorDominio;
     private Scanner input;
@@ -30,7 +23,7 @@ public class Tview {
      * Constructora
      */
 
-    public Tview() {
+    public VistaTerminal() {
         controladorDominio = new CtrlDominio();
         input = new Scanner(System.in);
     }

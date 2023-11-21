@@ -1,5 +1,5 @@
 import domain.Alfabeto;
-import domain.AlgoritmoSA;
+import domain.AlgoritmoSimulatedAnnealing;
 import domain.PalabrasConFrecuencia;
 import domain.Texto;
 import org.junit.Test;
@@ -10,10 +10,10 @@ import org.junit.Test;
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
-public class TestAlgoritmoSA {
+public class TestAlgoritmoSimulatedAnnealing {
 
     @Test
-    public void testAlgoritmoSA() {
+    public void testAlgoritmoSimulatedAnnealing() {
         String input = "phone 1 keyboard 40 home 1000";
         PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
 
@@ -25,7 +25,7 @@ public class TestAlgoritmoSA {
 
         Alfabeto alfabeto = new Alfabeto(a, alf);
 
-        AlgoritmoSA alg = new AlgoritmoSA();
+        AlgoritmoSimulatedAnnealing alg = new AlgoritmoSimulatedAnnealing();
 
         char[][] dist = alg.generarDistribucion(alfabeto, palabras, texto);
 

@@ -100,11 +100,11 @@ public class CtrlDominio {
 		char[][] distribucion = new char[3][10];
 
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
-		if (algoritmo.equals("QAP")) {
-			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoQAP());
+		if (algoritmo.equals("B&B")) {
+			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
 			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
 		} else if (algoritmo.equals("SA")) {
-			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSA());
+			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSimulatedAnnealing());
 			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
 
 		}

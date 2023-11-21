@@ -3,14 +3,14 @@ package domain;
 import java.util.*;
 
 /**
- * Clase AlgoritmoSA
+ * Clase AlgoritmoSimulatedAnnealing
  * Clase que utiliza el algoritmo Simulated Annealing para crear una
  * distribución de teclado
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 
-public class AlgoritmoSA implements Algoritmo {
+public class AlgoritmoSimulatedAnnealing implements Algoritmo {
 
     /**
      * Mapa que guarda la frecuencia de los bigramas

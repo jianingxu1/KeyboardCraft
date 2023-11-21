@@ -1,3 +1,0 @@
-En este directorio se encontrarán los ficheros necesarios para cargar datos en el programa. Cuando se creen teclados o alfabetos en el programa, su información se guardará en este directorio para poder volver a ser utilizado. Alternativamente, se podrá crear un fichero con el mismo formato externamente y abrirlo de la misma manera.
-
-Durante esta primera entrega, no hay carga ni guardado en ficheros, por lo que se encuentra vacío. 
