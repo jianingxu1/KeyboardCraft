@@ -3,11 +3,11 @@ plugins {
     id 'application'
 }
 
-group = 'edu.upc.prop.cluster23'
+group = 'FONTS'
 version = '1.0-SNAPSHOT'
 
 ext {
-    javaMainClass = 'edu.upc.prop.cluster23.Main'
+    javaMainClass = 'Main'
 }
 
 application {
@@ -52,4 +52,9 @@ test {
     testLogging {
         showStandardStreams = true
     }
+}
+
+sourceSets {
+    main.java.srcDirs = ['FONTS/main/java']
+    test.java.srcDirs = ['FONTS/test/java']
 }
