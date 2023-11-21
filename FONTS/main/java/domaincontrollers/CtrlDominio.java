@@ -4,16 +4,13 @@ import domain.*;
 import exceptions.*;
 import java.util.ArrayList;
 
-import domain.*;
-import exceptions.*;
-
 /**
  * Clase CtrlDominio
  * Representa Controlador de Dominio. Se encarga de gestionar teclados y todas
  * sus características.
  * 
  * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
- * @co-author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
+ * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
 
 public class CtrlDominio {

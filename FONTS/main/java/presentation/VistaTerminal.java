@@ -11,7 +11,8 @@ import exceptions.*;
  * Vista por terminal del programa
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
- * @co-authors Muhammad Yasin Khokar & Momin Miah Begum
+ * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
+ * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
 
 public class VistaTerminal {

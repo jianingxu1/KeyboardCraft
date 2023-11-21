@@ -4,7 +4,7 @@ package domain;
  * Clase Posicion
  * Representa una posicion en una matriz
  * 
- * Autor: Jianing Xu (jianing.xu@estudiantat.upc.edu)
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class Posicion {
     int fila;
