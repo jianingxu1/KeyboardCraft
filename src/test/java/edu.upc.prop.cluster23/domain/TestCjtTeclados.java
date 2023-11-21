@@ -1,6 +1,9 @@
 package edu.upc.prop.cluster23.domain;
 
 import static org.junit.Assert.*;
+
+import edu.upc.prop.cluster23.exceptions.NombreTecladoDuplicadoExcepcion;
+import edu.upc.prop.cluster23.exceptions.NombreTecladoNoValidoExcepcion;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,5 +118,50 @@ public class TestCjtTeclados {
         Teclado aux = tecs.getTecladoObjeto(name);
         assertEquals(aux.getNombre(), name);
         assertArrayEquals(aux.getTeclado(), mat1);
+    }
+
+    @Test
+    public void testExisteTecladoExcepcion() {
+        CjtTeclados tecs = new CjtTeclados();
+        String name = "Name";
+        char[][] mat1 = new char[1][1];
+        mat1[0][0] = 'a';
+
+        tecs.crearTeclado(name, mat1);
+
+        try {
+            muestraTeclado(name, tecs);
+        } catch(NombreTecladoNoValidoExcepcion e) {
+            assertEquals("El teclado " + name + " no existe.", e.getMessage());
+        }
+
+        String name2 = "Name";
+        char[][] mat2 = new char[1][1];
+        mat2[0][0] = 'a';
+
+        try {
+            creaTeclado(name2, mat2, tecs);
+        }  catch (NombreTecladoDuplicadoExcepcion e) {
+            assertEquals("El teclado " + name2 + " ya existe.", e.getMessage());
+        }
+
+    }
+
+    private void muestraTeclado(String nombreTeclado, CjtTeclados tecs)
+            throws NombreTecladoNoValidoExcepcion {
+        // Informacion necesaria para poder crear el teclado
+
+        if (!tecs.existeTeclado(nombreTeclado))
+            throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
+        tecs.getDistribucioString(nombreTeclado);
+    }
+
+    private void creaTeclado(String nombreTeclado, char[][] dist, CjtTeclados tecs)
+            throws NombreTecladoDuplicadoExcepcion {
+        // Informacion necesaria para poder crear el teclado
+
+        if (!tecs.existeTeclado(nombreTeclado))
+            throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe.");
+        tecs.crearTeclado(nombreTeclado, dist);
     }
 }

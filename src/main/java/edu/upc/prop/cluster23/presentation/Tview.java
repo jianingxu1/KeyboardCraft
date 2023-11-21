@@ -36,7 +36,7 @@ public class Tview {
     }
 
     /**
-     * Inicializa el controlador de dominio y llama a la función que ejecuta los
+     * Inicializa  el controlador de dominio y llama a la función que ejecuta los
      * comandos
      */
 
@@ -348,7 +348,7 @@ public class Tview {
                     System.out.println("El teclado \"" + name + "\" no ha sido modificado.\n");
                     cancelarOperacion2 = true;
                 }
-                
+
             } catch (IndiceTeclaFueraDeRangoExcepcion itf) {
                 System.out.println(itf.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
