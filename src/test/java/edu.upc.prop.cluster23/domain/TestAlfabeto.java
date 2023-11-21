@@ -2,7 +2,7 @@ package edu.upc.prop.cluster23.domain;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-
+import edu.upc.prop.cluster23.exceptions.*;
 import java.beans.Transient;
 import java.util.ArrayList;
 
@@ -99,5 +99,68 @@ public class TestAlfabeto {
         Alfabeto alfabeto = new Alfabeto(name, "abc");
         assertEquals(alfabeto.getCaracteres(), alfabeto.toArray("abc"));
     }
+
+    @Test
+    public void testExcepcionesAlfabetoCrear() {
+        //el alfabeto no puede estar vacio, ni el nombre ni el alfabeto
+        String name = "";
+        String alf = "";
+        try {
+            crearAlfabeto(name, alf);
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
+        }
+        catch (NoHayCaracteresExcepcion e) {
+            assertEquals("La cadena de caracteres no puede estar vacia.", e.getMessage());
+        }
+    }
+
+    public void crearAlfabeto(String idAlfabeto, String caracteres)
+			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+		if (idAlfabeto.trim().isEmpty())
+			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+
+		if (caracteres.trim().isEmpty())
+			throw new NoHayCaracteresExcepcion();
+	}
+
+    @Test 
+    public void testExcepcionesAlfabetoBorrar(){
+        //el alfabeto no puede estar vacio, ni el nombre ni el alfabeto
+        String name = "";
+        try {
+            borrarAlfabeto(name);
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
+        }
+    }
+
+    public void borrarAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
+        if (idAlfabeto.trim().isEmpty())
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+    }
+
+    @Test 
+    public void testExcepcionesAlfabetoModificar(){
+        //el alfabeto no puede estar vacio, ni el nombre ni el alfabeto
+        String name = "";
+        String alf = "";
+        try {
+            modificarAlfabeto(name, alf);
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
+        }
+        catch (NoHayCaracteresExcepcion e) {
+            assertEquals("La cadena de caracteres no puede estar vacia.", e.getMessage());
+        }
+    }
+
+    public void modificarAlfabeto(String idAlfabeto, String caracteres)
+            throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+        if (idAlfabeto.trim().isEmpty())
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        if(caracteres.trim().isEmpty())
+            throw new NoHayCaracteresExcepcion();
+            }
 
 }

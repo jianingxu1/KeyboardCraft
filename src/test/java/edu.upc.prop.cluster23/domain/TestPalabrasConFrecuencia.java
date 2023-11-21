@@ -2,7 +2,7 @@ package edu.upc.prop.cluster23.domain;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-
+import edu.upc.prop.cluster23.exceptions.*;
 import edu.upc.prop.cluster23.domain.PalabrasConFrecuencia;
 
 /**
@@ -75,4 +75,69 @@ public class TestPalabrasConFrecuencia {
         PalabrasConFrecuencia palabras1 = new PalabrasConFrecuencia(input1);
         assertEquals(input1, palabras1.toString());
     }
+
+    @Test 
+    public void testExcepcionesInputListaDePalabras(){
+        String input = "phone 1 keyboard 2 home 10";
+        try {
+            mirarInputListaDePalabras(input);
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            fail("No debería lanzar excepción");
+        }
+        try {
+            mirarInputListaDePalabras("phone 1 keyboard 2 home 10 11");
+            fail("Debería lanzar excepción");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+        try {
+            mirarInputListaDePalabras("phone 1 keyboard 2 home");
+            fail("Debería lanzar excepción");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+        try {
+            mirarInputListaDePalabras("phone 1 keyboard 2 home 10 11 12");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+        try {
+            mirarInputListaDePalabras("           ");
+            fail("No Debería lanzar excepción");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+        try {
+            mirarInputListaDePalabras("");
+            fail("No Debería lanzar excepción");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+        try {
+            mirarInputListaDePalabras("10 hola 10 adios");
+            fail("Debería lanzar excepción");
+        } catch (FrecuenciaIncorrectaExcepcion e) {
+            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
+        }
+    }
+
+    public void mirarInputListaDePalabras(String listaPalabras) throws FrecuenciaIncorrectaExcepcion {
+        PalabrasConFrecuencia palabras ;
+		String[] palabrasSeparadas = listaPalabras.split(" ");
+		int words = palabrasSeparadas.length;
+		if (words % 2 == 1 && !listaPalabras.isEmpty())
+			throw new FrecuenciaIncorrectaExcepcion(
+					"El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+
+        if(listaPalabras.trim().isEmpty()) throw new FrecuenciaIncorrectaExcepcion("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+		try {
+			palabras = new PalabrasConFrecuencia(listaPalabras);
+		} catch (NumberFormatException e) {
+			throw new FrecuenciaIncorrectaExcepcion(
+					"El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+		} catch (IllegalArgumentException i) {
+			throw new FrecuenciaIncorrectaExcepcion(i.getMessage());
+		}
+    }
 }
+
