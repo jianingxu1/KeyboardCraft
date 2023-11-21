@@ -1,8 +1,8 @@
-Archivos fuente del proyecto, separados según la capa en la que se encuentran, siendo estás:
-- Presentación
+Archivos fuente del proyecto, separados segun la capa en la que se encuentran, siendo estas:
+- Presentacion
 - Dominio
 - Persistencia (no implementada esta primera entrega)
 
-Se añade además la carpeta con excepciones que heredan de la clase Exception de Java, y que se utilizan para el correcto funcionamiento del programa.
+Se añade ademas la carpeta con excepciones que heredan de la clase Exception de Java, y que se utilizan para el correcto funcionamiento del programa.
 
-El código mediante el driver puede ser ejecutado y probado desde la carpeta EXE con los comandos descritos allí.
+El codigo mediante el driver puede ser ejecutado y probado desde la carpeta EXE con los comandos descritos alli.

@@ -1,3 +1,3 @@
-Ficheros de test de todas las clases implementadas (exceptuando AlgoritmoSimulatedAnnealing, que es inherentemente estocástica), estas prueban todas las funciones públicas escritas con entradas exhaustivas. 
+Ficheros de test de todas las clases implementadas (exceptuando AlgoritmoSimulatedAnnealing, que es inherentemente estocastica), estas prueban todas las funciones publicas escritas con entradas exhaustivas. 
 
 Los tests pueden ser ejecutados desde la carpeta EXE con los comandos descritos allí.

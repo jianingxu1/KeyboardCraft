@@ -1,5 +1,5 @@
-En la carpeta EXE puedes ver todos los ficheros del esqueleto Gradle utilizado. Estos no requieren modificación ya que ya han sido modificados y preparados para la estructura de nuestro proyecto. Los comandos a utilizar son los siguientes:
+En la carpeta EXE puedes ver todos los ficheros del esqueleto Gradle utilizado. Estos no requieren modificacion ya que ya han sido modificados y preparados para la estructura de nuestro proyecto. Los comandos a utilizar son los siguientes:
 
 - './gradlew run --console=plain' - ejecuta el driver de vista por terminal
-- './gradlew test' - ejecuta los tests de funcionamiento del programa, añade '--rerun-tasks' al final para volver a ejecutar tests ya completados
-- './gradlew clean' - limpia el proyecto de la carpeta build. Solo es necesario si el 		comando 'run' falla inicialmente
+- './gradlew test' - ejecuta los tests de funcionamiento del programa, anade '--rerun-tasks' al final para volver a ejecutar tests ya completados
+- './gradlew clean' - limpia el proyecto de la carpeta build. Solo es necesario si el comando 'run' falla inicialmente
