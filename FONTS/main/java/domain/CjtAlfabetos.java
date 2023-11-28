@@ -169,6 +169,10 @@ public class CjtAlfabetos {
         return s;
     }
 
+    public void clearCjtAlfabetos() {
+        alfabetos.clear();
+    }
+
     // FUNCIONES ELIMINADAS
 
     // /**************************************************************************

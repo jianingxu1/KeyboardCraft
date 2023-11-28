@@ -154,4 +154,8 @@ public class CjtTeclados {
     public int totalTeclados() {
         return conjunto.size();
     }
+
+    public void clearCjtTeclados() {
+        conjunto.clear();
+    }
 }
