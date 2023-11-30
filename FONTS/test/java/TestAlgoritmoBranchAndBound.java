@@ -1,3 +1,5 @@
+import static org.junit.Assert.*;
+
 import domain.Alfabeto;
 import domain.AlgoritmoBranchAndBound;
 import domain.PalabrasConFrecuencia;
@@ -95,10 +97,10 @@ public class TestAlgoritmoBranchAndBound {
         };
 
         AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
-        // double coste = alg.calcularAsignacionOptima(frecuencias, distancias);
-        // assertEquals(9552.0, coste, 0.001); // Tiempo: 3s
+        double coste = alg.calcularAsignacionOptima(frecuencias, distancias);
+        assertEquals(9552.0, coste, 0.001); // Tiempo: 3s
 
-        // coste = alg.calcularAsignacionOptima(frecuencias1, distancias1);
-        // assertEquals(1652.0, coste, 0.001); // Tiempo: 3s
+        coste = alg.calcularAsignacionOptima(frecuencias1, distancias1);
+        assertEquals(1652.0, coste, 0.001); // Tiempo: 3s
     }
 }
