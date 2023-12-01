@@ -173,15 +173,13 @@ public class CjtAlfabetos {
         alfabetos.clear();
     }
 
-    // FUNCIONES ELIMINADAS
-
-    // /**************************************************************************
-    // * Cambia el alfabeto de un alfabeto.
-    // *
-    // * @param nombre El nombre del alfabeto.
-    // */
-    // public void cambiarCaracteres (String nombre, String caracteres) {
-    // alfabetos.get(nombre).cambiarCaracteres(caracteres);
-    // }**************************************************************************
-
+    public String[] getNombreAlfabetos() {
+        String s[] = new String[alfabetos.size()];
+        int i = 0;
+        for (Alfabeto alfabeto : alfabetos.values()) {            
+            s[i] = alfabeto.getNombre();
+            ++i;
+        }
+        return s;
+    }
 }
