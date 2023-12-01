@@ -1,9 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
 /**
  * Clase Alfabeto
  * Representa un alfabeto en concreto con sus caracteres.
@@ -129,16 +126,4 @@ public class Alfabeto {
         }
         return s;
     }
-
-    // Funcion eliminada
-
-    // /**************************************************************
-    // * Cambia los caracteres del alfabeto.
-    // *
-    // * @param caracteres Los nuevos caracteres del alfabeto.
-    // */
-    // public void cambiarCaracteres(String chars) {
-    // this.caracteres = toArray(chars);
-    // }***************************************************************
-
 }
