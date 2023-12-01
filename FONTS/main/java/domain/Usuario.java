@@ -16,11 +16,15 @@ public class Usuario {
         this.password = password;
     }
 
-    public void modifyPassword(String newPass) {
+    public void modificaContraseña(String newPass) {
         this.password = newPass;
     }
 
-    public String getPassword() {
+    public String getContraseña() {
         return password;
+    }
+
+    public String getNombre() {
+        return username;
     }
 }

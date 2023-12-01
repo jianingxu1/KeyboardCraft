@@ -26,7 +26,7 @@ public class CjtUsuarios {
         return singletonObject;
     }
 
-    public void crearUsuario(String user, String pass) {
+    public void añadirUsuario(String user, String pass) {
         Usuario usuario = new Usuario(user, pass);
         conjunto.put(user, usuario);
     }
@@ -36,14 +36,36 @@ public class CjtUsuarios {
     }
 
     public void modificarUsuario(String user, String newPass) {
-        conjunto.get(user).modifyPassword(newPass);
+        conjunto.get(user).modificaContraseña(newPass);
     }
 
     public boolean correctPass(String user, String pass) {
-        return pass == conjunto.get(user).getPassword();
+        return conjunto.get(user).getContraseña().equals(pass);
     }
 
-    public boolean userExists(String user) {
+    public boolean existeUsuario(String user) {
         return conjunto.containsKey(user);
+    }
+
+    public String getNombreUsuario(String user) {
+        return conjunto.get(user).getNombre();
+    }
+
+    public String getContraseñaUsuario(String user) {
+        return conjunto.get(user).getContraseña();
+    }
+
+    public String[] getNombreUsuarios() {
+        String[] usuarios = new String[conjunto.size()];
+        int i = 0;
+        for (String user : conjunto.keySet()) {
+            usuarios[i] = user;
+            ++i;
+        }
+        return usuarios;
+    }
+
+    public void clearCjtUsuarios() {
+        conjunto.clear();
     }
 }

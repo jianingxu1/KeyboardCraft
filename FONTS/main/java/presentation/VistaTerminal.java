@@ -36,11 +36,53 @@ public class VistaTerminal {
 
     public void init() {
         controladorDominio.inicializarCtrlDominio();
+        try {
+            controladorDominio.cargarUsuarios();
+        }
+        catch (LecturaIncorrectaFicheroExcepcion e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("\n*--------* Bienvenido al generador de teclados *--------*");
         System.out.println(
                 "Para navegar a través del programa, introduce el número de la\nopción que desees en cada momento.\n");
-        menuPrincipal();
+        menuIniciarSesion();
     }
+
+    public void menuIniciarSesion () {
+        int value = -1;
+        while (value != 0) {
+            boolean usuarioIdentificado = false;
+            System.out.println("-------- Menú de inicio de sesión --------");
+            System.out.println("1. Iniciar sesión\n2. Registrarse\n\n0. Salir del programa");
+            try {
+                value = input.nextInt();
+                input.nextLine();
+            } catch (InputMismatchException ime) {
+                System.out.println("El valor introducido no es un entero.\n");
+                input.nextLine();
+                continue;
+            }
+            switch (value) {
+                case 1:
+                    usuarioIdentificado = FuncIniciarSesion();
+                    break;
+                case 2:
+                    FuncRegistrarse();
+                    break;
+                case 0:
+                    System.out.println("Cerrando programa...");
+                    FuncEscribirUsuarios();
+                    break;
+                default:
+                    System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
+            }
+            if (usuarioIdentificado) {
+                System.out.println("¡Bienvenido " + controladorDominio.getNombreUsuario() + "!");
+                if(value != 0) menuPrincipal();
+            }
+        }
+    }
+
 
     /**
      * Menú desde el cual se puede acceder a las zonas de gestión de teclados y alfabetos
@@ -48,12 +90,11 @@ public class VistaTerminal {
      */
 
     public void menuPrincipal() {
-
+        FuncCargarDatos();
         int value = -1;
-
         while (value != 0) {
             System.out.println("-------- Menú Principal --------");
-            System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n\n0. Salir del programa");
+            System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sessión\n\n0. Salir del programa");
             System.out.println("--------------------------------");
             try {
                 value = input.nextInt();
@@ -179,11 +220,18 @@ public class VistaTerminal {
                         }
                     }
                     break;
+                case 3:
+                    FuncEscribirCambios();
+                    input.nextLine();
+                    controladorDominio.CerrarSesion();
+                    menuIniciarSesion();
+                    break;
                 // CASO SALIR DEL PROGRAMA
                 case 0:
                     System.out.println("Cerrando programa...");
+                    FuncEscribirCambios();
+                    controladorDominio.CerrarSesion();
                     break;
-
                 default:
                     System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
             }
@@ -631,6 +679,119 @@ public class VistaTerminal {
                     System.out.println("Introduce nuevamente el nombre del alfabeto a consultar:");
                 }
             }
+        }
+    }
+
+    /**
+     * Función que permite a un usuario iniciar sesión en el sistema
+     */
+    boolean FuncIniciarSesion () {
+        System.out.println("----- Iniciar Sesión -----");
+        boolean cancelarOperacion = false;
+        boolean usuarioIdentificado = false;
+        System.out.println("Introduce el nombre de usuario:");
+        String nombreUsuario = input.nextLine();
+        System.out.println("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        while (!cancelarOperacion) {
+            try{
+                usuarioIdentificado = controladorDominio.IniciarSesion(nombreUsuario, contraseña);
+                cancelarOperacion = true;
+            } catch (NombreUsuarioNoValidoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    cancelarOperacion = true;
+                }
+                else {
+                    System.out.println("Introduce nuevamente el nombre de usuario:");
+                    nombreUsuario = input.nextLine();
+                }
+            } catch (ContrasenaNoValidaExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    cancelarOperacion = true;
+                }
+                else {
+                    System.out.println("Introduce nuevamente la contraseña:");
+                    contraseña = input.nextLine();
+                }
+            }
+        }
+        return usuarioIdentificado;
+    }
+
+    void FuncRegistrarse () {
+        System.out.println("----- Registrarse -----");
+        boolean cancelarOperacion = false;
+        System.out.println("Introduce el nombre de usuario:");
+        String nombreUsuario = input.nextLine();
+        System.out.println("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        while (!cancelarOperacion) {
+            try{
+                controladorDominio.añadirUsuario(nombreUsuario, contraseña);
+                cancelarOperacion = true;
+                System.out.println("¡Se ha registrado el usuario \"" + nombreUsuario + "\" con éxito!");
+                FuncCargarDatos();
+            } catch (NombreUsuarioNoValidoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    cancelarOperacion = true;
+                }
+                else {
+                    System.out.println("Introduce nuevamente el nombre de usuario:");
+                    nombreUsuario = input.nextLine();
+                }
+            } catch (ContrasenaNoValidaExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
+                String response = input.nextLine();
+                if (response.equals("n")) {
+                    cancelarOperacion = true;
+                }
+                else {
+                    System.out.println("Introduce nuevamente la contraseña:");
+                    contraseña = input.nextLine();
+                }
+            } catch (EscrituraIncorrectaFicheroExcepcion e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    void FuncCargarDatos() {
+        boolean completaCarga = false;
+        while (!completaCarga) {            
+            try {
+                controladorDominio.cargarTeclados();
+                controladorDominio.cargarAlfabetos();
+                completaCarga = true;
+            } catch (LecturaIncorrectaFicheroExcepcion e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    void FuncEscribirUsuarios() {
+        try{
+            controladorDominio.guardarUsuarios();
+        } catch (EscrituraIncorrectaFicheroExcepcion e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    void FuncEscribirCambios() {
+        try{
+            controladorDominio.guardarTeclados();
+            controladorDominio.guardarAlfabetos();
+        } catch (EscrituraIncorrectaFicheroExcepcion e) {
+            System.out.println(e.getMessage());
         }
     }
 }

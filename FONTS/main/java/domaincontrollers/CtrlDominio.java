@@ -2,6 +2,12 @@ package domaincontrollers;
 
 import domain.*;
 import exceptions.*;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +22,10 @@ import java.util.ArrayList;
 public class CtrlDominio {
 
 	/** Atributos */
-	private CjtTeclados cjtTeclados;
+	private static CjtTeclados cjtTeclados;
 	private CjtAlfabetos cjtAlfabetos;
+	private CjtUsuarios cjtUsuarios;
+	private String userName;
 
 	// ----- Constructora -----
 
@@ -35,6 +43,8 @@ public class CtrlDominio {
 	public void inicializarCtrlDominio() {
 		cjtTeclados = CjtTeclados.getInstance();
 		cjtAlfabetos = CjtAlfabetos.getInstance();
+		cjtUsuarios = CjtUsuarios.getInstance();
+		userName = "";
 	}
 
 	// ----- Métodos públicos -----
@@ -62,7 +72,7 @@ public class CtrlDominio {
 		if (nombreTeclado.trim().isEmpty())
 			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
 		else if (cjtTeclados.existeTeclado(nombreTeclado))
-			throw new NombreTecladoDuplicadoExcepcion(nombreTeclado);
+			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe.");
 
 		PalabrasConFrecuencia palabras;
 		String[] palabrasSeparadas = listaPalabras.split(" ");
@@ -191,7 +201,6 @@ public class CtrlDominio {
 			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
 		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
 			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
-
 		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
 	}
 
@@ -209,6 +218,203 @@ public class CtrlDominio {
 		if (alfabeto.trim().isEmpty())
 			throw new NoHayCaracteresExcepcion();
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
+	}
+
+	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
+		if (userName.trim().isEmpty()) return;
+		try {
+			String path = "../DATA/" + userName + "Teclados" + ".prop";
+      BufferedWriter writer = new BufferedWriter(new FileWriter(path,false));
+			for (String nombreTeclado : cjtTeclados.getNombreTeclados()) {
+				writer.write(nombreTeclado + 'º' +cjtTeclados.getDistribucioStringSimplificado(nombreTeclado)+"\n");
+			}
+			writer.close();
+    } catch (Exception e) {
+      throw new EscrituraIncorrectaFicheroExcepcion("Error al escribir en el fichero de teclados "+ e.getMessage());
+    }
+	}
+
+	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
+		if (userName.trim().isEmpty()) return;
+		String path = "../DATA/" + userName + "Teclados" + ".prop";
+		try {
+      BufferedReader reader = new BufferedReader(new FileReader(path));
+      String linea;
+      while ((linea = reader.readLine()) != null) {
+          // System.out.println(linea);
+					String elementos [] = linea.split("º");
+					String nombreTeclado = elementos[0];
+					char[][] distribucion = convertirStringADistribucion(elementos[1]);
+					cjtTeclados.crearTeclado(nombreTeclado, distribucion);
+      }
+      reader.close();
+		}
+		catch (Exception e) {
+			File file = new File(path);
+			try {
+				file.createNewFile();
+			} catch (Exception ex) {
+				throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de teclados "+ ex.getMessage());
+			}
+			//throw new LecturaIncorrectaFicheroExcepcion("Error al leer el fichero de teclados "+ e.getMessage()+"\nSe ha creado un fichero nuevo.");
+		}
+  }
+
+	private static char[][] convertirStringADistribucion(String distribucionString){
+		char[][] distribucion = new char[3][10];
+		int i = 0;
+		int j = 0;
+		for (int k = 0; k < distribucionString.length(); ++k) {
+			if (distribucionString.charAt(k) == '◘') {
+				i++;
+				j = 0;
+			} else {
+				distribucion[i][j] = distribucionString.charAt(k);
+				j++;
+			}
+		}
+		return distribucion;
+	}
+
+	public void añadirUsuario(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion{
+		if (nombreUsuario.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (cjtUsuarios.existeUsuario(nombreUsuario))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " ya existe.");
+		else if (contraseña.trim().isEmpty())
+			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+		else if (contraseña.length() < 8)
+			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+		cjtUsuarios.añadirUsuario(nombreUsuario, contraseña);
+		userName = nombreUsuario;
+	}
+
+	//Implementar este caso en el main, seria como borrar cuenta
+	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
+		if (nombreUsuario.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+		cjtUsuarios.eliminarUsuario(nombreUsuario);
+		File file = new File("../DATA/" + nombreUsuario + "Teclados" + ".prop");
+		file.delete();
+		File file2 = new File("../DATA/" + nombreUsuario + "Alfabetos" + ".prop");
+		file2.delete();
+	}
+
+	public void modificarContraseña(String nombreUsuario, String nuevaContraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+		if (nombreUsuario.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+		else if (nuevaContraseña.trim().isEmpty())
+			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+		else if (nuevaContraseña.length() < 8)
+			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+		
+			cjtUsuarios.modificarUsuario(nombreUsuario, nuevaContraseña);
+	}
+
+	public boolean IniciarSesion(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+		if (nombreUsuario.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+		else if (contraseña.trim().isEmpty())
+			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+		else if (contraseña.length() < 8)
+			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contraseña);
+		if (!usuarioIdentificado) throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
+		else userName = nombreUsuario;
+		return usuarioIdentificado;
+	}
+
+	public void CerrarSesion(){
+		cjtTeclados.clearCjtTeclados();
+		cjtAlfabetos.clearCjtAlfabetos();
+		userName = "";
+	}
+
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
+		String path = "../DATA/usuarios.prop";
+		try {
+      BufferedReader reader = new BufferedReader(new FileReader(path));
+      String linea;
+      while ((linea = reader.readLine()) != null) {
+          // System.out.println(linea);
+					String elementos [] = linea.split("º");
+					String nombreUsuario = elementos[0];
+					String contraseña = elementos[1];
+					cjtUsuarios.añadirUsuario(nombreUsuario, contraseña);
+      }
+      reader.close();
+		}
+		catch (Exception e) {
+			File file = new File(path);
+			try {
+				file.createNewFile();
+			} catch (Exception ex) {
+				throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de usuarios "+ ex.getMessage());
+			}
+			throw new LecturaIncorrectaFicheroExcepcion("Error al leer el fichero de usuarios "+ e.getMessage()+"\nSe ha creado un fichero nuevo.");
+			
+		}
+	}
+
+	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
+		try {
+			String path = "../DATA/usuarios.prop";
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path,false));			
+
+			for (String nombreUsuario : cjtUsuarios.getNombreUsuarios()) {
+				writer.write(nombreUsuario + 'º' +cjtUsuarios.getContraseñaUsuario(nombreUsuario)+"\n");
+			}
+			writer.close();
+		} catch (Exception e) {
+			throw new EscrituraIncorrectaFicheroExcepcion("Error al escribir en el fichero de usuarios "+ e.getMessage());
+		}
+	}
+
+	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
+		if (userName.trim().isEmpty()) return;
+		try {
+			String path = "../DATA/"+userName+"Alfabetos"+".prop";
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path,false));
+			for (String idAlfabeto: cjtAlfabetos.getNombreAlfabetos()){
+				writer.write(idAlfabeto + 'º' +cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto).replaceAll("\\s", "◘") + "\n");
+			}
+			writer.close();
+		} catch (Exception e) {
+			throw new EscrituraIncorrectaFicheroExcepcion("Error al escribir en el fichero de alfabetos "+ e.getMessage());
+		}
+	}
+
+	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
+		//System.out.println(userName+"Alfabetos");
+		String path = "../DATA/" + userName + "Alfabetos" + ".prop";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(path));
+			String linea;
+			while ((linea = reader.readLine()) != null) {
+					// System.out.println(linea);
+					String elementos [] = linea.split("º");
+					String idAlfabeto = elementos[0];
+					String caracteres = elementos[1];
+					caracteres = caracteres.replace("◘", "\n");
+					cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
+			}
+			reader.close();
+		}
+		catch (Exception e) {
+			File file = new File(path);
+			try {
+				file.createNewFile();
+			} catch (Exception ex) {
+				throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de alfabetos "+ ex.getMessage());
+			}
+			//throw new LecturaIncorrectaFicheroExcepcion("Error al leer el fichero de alfabetos "+ e.getMessage()+"\nSe ha creado un fichero nuevo.");
+		}
 	}
 
 	// ----- Getters -----
@@ -287,6 +493,10 @@ public class CtrlDominio {
 	 */
 	public boolean existeAlfabeto(String nombreAlfabeto) {
 		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
+	}
+
+	public String getNombreUsuario() {
+		return userName;
 	}
 
 	// ----- Utilidades -----
