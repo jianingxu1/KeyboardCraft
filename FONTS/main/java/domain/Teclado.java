@@ -94,4 +94,16 @@ public class Teclado {
 
         return s.toString();
     }
+
+    public String toStringSimplificado() {
+        StringBuilder s = new StringBuilder();
+        //guarda la distribucion por filas
+        for (char[] fila : distribucion) {
+            for (char caracter : fila) {
+                s.append(caracter);
+            }
+            s.append("◘");
+        }
+        return s.toString();
+    }
 }
