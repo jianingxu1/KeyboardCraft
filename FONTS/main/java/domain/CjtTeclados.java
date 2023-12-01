@@ -146,6 +146,10 @@ public class CjtTeclados {
         return conjunto.get(nombre).toString();
     }
 
+    public String getDistribucioStringSimplificado(String nombre) {
+        return conjunto.get(nombre).toStringSimplificado();
+    }
+
     /**
      * Devuelve el número de teclados en el conjunto
      * 
