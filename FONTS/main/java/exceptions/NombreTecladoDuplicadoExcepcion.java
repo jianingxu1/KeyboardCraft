@@ -10,6 +10,6 @@ package exceptions;
  */
 public class NombreTecladoDuplicadoExcepcion extends Exception {
     public NombreTecladoDuplicadoExcepcion(String errorMessage) {
-        super("El teclado " + errorMessage + " ya existe en el conjunto de teclados.");
+        super(errorMessage);
     }
 }
