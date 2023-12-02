@@ -17,18 +17,18 @@ public class TestAlgoritmoBranchAndBound {
     @Test
     public void testGenerarDistribucion() {
         AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
-        Alfabeto alf = new Alfabeto("ingles", "abcdefghi");
-        PalabrasConFrecuencia pal = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200 hi 200");
+        Alfabeto alf = new Alfabeto("ingles", "abcdefg");
+        PalabrasConFrecuencia pal = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200");
         Texto texto = new Texto();
-        // char[][] distribucion = alg.generarDistribucion(alf, pal, texto);
+        char[][] distribucion = alg.generarDistribucion(alf, pal, texto);
 
-        // System.out.println("coste: " + alg.getMejorCosteTotal());
-        // for (int i = 0; i < distribucion.length; ++i) {
-        // for (int j = 0; j < distribucion[i].length; ++j) {
-        // System.out.print(distribucion[i][j]);
-        // }
-        // System.out.println();
-        // }
+        System.out.println("coste: " + alg.getMejorCosteTotal());
+        for (int i = 0; i < distribucion.length; ++i) {
+            for (int j = 0; j < distribucion[i].length; ++j) {
+                System.out.print(distribucion[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     @Test
@@ -65,6 +65,7 @@ public class TestAlgoritmoBranchAndBound {
                 { 46.0, 79.0, 54.0, 68.0, 5.0, 0.0, 56.0, 15.0, 39.0, 70.0, 0.0, 18.0 },
                 { 95.0, 36.0, 63.0, 85.0, 76.0, 34.0, 37.0, 80.0, 33.0, 86.0, 18.0, 0.0 }
         };
+        double solucion = 9552.0;
 
         // Nombre de instancia resuelta: Had12
         int[][] frecuencias1 = {
@@ -95,12 +96,15 @@ public class TestAlgoritmoBranchAndBound {
                 { 4, 4, 3, 3, 6, 7, 6, 5, 5, 7, 0, 9 },
                 { 6, 7, 6, 6, 7, 5, 7, 3, 2, 7, 9, 0 }
         };
+        double solucion1 = 1652.0;
 
         AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
+        double delta = 0.001;
+
         double coste = alg.calcularAsignacionOptima(frecuencias, distancias);
-        assertEquals(9552.0, coste, 0.001); // Tiempo: 3s
+        assertEquals(solucion, coste, delta);
 
         coste = alg.calcularAsignacionOptima(frecuencias1, distancias1);
-        assertEquals(1652.0, coste, 0.001); // Tiempo: 3s
+        assertEquals(solucion1, coste, delta);
     }
 }
