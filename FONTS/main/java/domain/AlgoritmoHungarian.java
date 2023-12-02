@@ -19,65 +19,59 @@ public class AlgoritmoHungarian {
      * Ejecuta el algoritmo hungaro en la matriz de entrada para encontrar el
      * coste de la asignación optima.
      * 
-     * @param matrizEntrada La matriz de entrada que representa los costos de
-     *                      asignación
-     * @return El costo minimo de la asignacion optima
+     * @param matrizCostes La matriz de entrada que representa los costes de
+     *                     asignación
+     * @return El coste minimo de la asignacion optima
      */
-    public double ejecutar(double[][] matrizEntrada) {
-        int n = matrizEntrada.length;
-        double[][] M = new double[n][n];
-        for (int i = 0; i < n; ++i) {
-            M[i] = matrizEntrada[i].clone();
-        }
-
-        // Paso 1: Preproceso
+    public double ejecutar(double[][] matrizCostes) {
+        double[][] M = clonarMatriz(matrizCostes);
         preprocesarMatriz(M);
+        return calcularCosteDeAsignacion(matrizCostes, M);
+    }
 
-        // Paso 2: Fase iterativa
-        boolean[][] esCero = obtenerMatrizCero(M);
-        boolean[][] esCeroMarcado = obtenerMejorAsignacion(esCero);
-        boolean[] filaCubierta = new boolean[n];
-        boolean[] colCubierta = new boolean[n];
-        int numLineas = obtenerMinNumLineas(esCero, esCeroMarcado, filaCubierta, colCubierta);
-
-        while (numLineas != n) {
-            double minimo = obtenerMinimoNoCubierto(M, filaCubierta, colCubierta);
-            sumarYRestarMinimoCubiertos(M, filaCubierta, colCubierta, minimo);
-            esCero = obtenerMatrizCero(M);
-            esCeroMarcado = obtenerMejorAsignacion(esCero);
-            numLineas = obtenerMinNumLineas(esCero, esCeroMarcado, filaCubierta, colCubierta);
+    private double[][] clonarMatriz(double[][] matriz) {
+        int length = matriz.length;
+        double[][] copiaMatriz = new double[length][length];
+        for (int i = 0; i < length; ++i) {
+            copiaMatriz[i] = matriz[i].clone();
         }
-        return obtenerCosteDeAsignacion(matrizEntrada, esCeroMarcado);
+        return copiaMatriz;
+    }
+
+    private void restarMinimoDeCadaFilaEnMatriz(double[][] matriz) {
+        int length = matriz.length;
+        for (int i = 0; i < length; ++i) {
+            double min = Double.MAX_VALUE;
+            for (int j = 0; j < length; ++j) {
+                min = Math.min(matriz[i][j], min);
+            }
+            for (int j = 0; j < length; ++j) {
+                matriz[i][j] -= min;
+            }
+        }
+    }
+
+    private void restarMinimoDeCadaColumnaEnMatriz(double[][] matriz) {
+        int length = matriz.length;
+        for (int j = 0; j < length; ++j) {
+            double min = Double.MAX_VALUE;
+            for (int i = 0; i < length; ++i) {
+                min = Math.min(matriz[i][j], min);
+            }
+            for (int i = 0; i < length; ++i) {
+                matriz[i][j] -= min;
+            }
+        }
     }
 
     /**
      * Realiza el preprocesamiento de la matriz para prepararla para el algoritmo.
      * 
-     * @param M La matriz de entrada a ser preprocesada
+     * @param matriz La matriz de entrada a ser preprocesada
      */
-    private void preprocesarMatriz(double[][] M) {
-        int n = M.length;
-        // Substrae el minimo de cada fila
-        for (int i = 0; i < n; ++i) {
-            double min = Double.MAX_VALUE;
-            for (int j = 0; j < n; ++j) {
-                min = Math.min(M[i][j], min);
-            }
-            for (int j = 0; j < n; ++j) {
-                M[i][j] -= min;
-            }
-        }
-
-        // Substrae el minimo de cada columna
-        for (int j = 0; j < n; ++j) {
-            double min = Double.MAX_VALUE;
-            for (int i = 0; i < n; ++i) {
-                min = Math.min(M[i][j], min);
-            }
-            for (int i = 0; i < n; ++i) {
-                M[i][j] -= min;
-            }
-        }
+    private void preprocesarMatriz(double[][] matriz) {
+        restarMinimoDeCadaFilaEnMatriz(matriz);
+        restarMinimoDeCadaColumnaEnMatriz(matriz);
     }
 
     /**
@@ -98,8 +92,8 @@ public class AlgoritmoHungarian {
     }
 
     /**
-     * Funcion recursiva que obtiene la asignacion con el maximo de ceros
-     * marcados posible tales que no esten en la misma fila ni columna.
+     * Funcion recursiva que obtiene la asignacion maxima de ceros tales que no
+     * estan en la misma fila ni columna.
      *
      * @param esCero              La matriz booleana que indica celdas con valor
      *                            cero
@@ -167,22 +161,8 @@ public class AlgoritmoHungarian {
         return mejorEsCeroAsignado;
     }
 
-    /**
-     * Obtiene el numero minimo de lineas para cubrir celdas con valor cero.
-     * 
-     * @param esCero         La matriz booleana que indica celdas con valor cero
-     * @param esCeroAsignado La matriz booleana de asignacion marcada
-     * @param filaCubierta   Array de booleanos indicando filas cubiertas
-     * @param colCubierta    Array de booleanos indicando columnas cubiertas
-     * @return El numero minimo de lineas necesarias para cubrir los ceros
-     */
-    private int obtenerMinNumLineas(boolean[][] esCero, boolean[][] esCeroAsignado, boolean[] filaCubierta,
-            boolean[] colCubierta) {
-        int n = esCero.length;
-        boolean[] filaMarcada = new boolean[n];
-        boolean[] colMarcada = new boolean[n];
-
-        // c) Marcamos las filas sin asignacion
+    private void marcarFilasSinCeroAsignado(boolean[][] esCeroAsignado, boolean[] filaMarcada) {
+        int n = esCeroAsignado.length;
         for (int i = 0; i < n; ++i) {
             boolean contieneCeroAsignado = false;
             for (int j = 0; j < n && !contieneCeroAsignado; ++j) {
@@ -192,50 +172,82 @@ public class AlgoritmoHungarian {
             if (!contieneCeroAsignado)
                 filaMarcada[i] = true;
         }
+    }
 
-        boolean existeCambio = true;
-        while (existeCambio) {
-            existeCambio = false;
-            // d) Marcamos las columnas que tienen algun zero en alguna fila marcada
-            for (int j = 0; j < n; ++j) {
-                boolean contieneCeroEnFilaMarcada = false;
-                for (int i = 0; i < n && !contieneCeroEnFilaMarcada; ++i) {
-                    if (esCero[i][j] && filaMarcada[i])
-                        contieneCeroEnFilaMarcada = true;
-                }
-                if (contieneCeroEnFilaMarcada && !colMarcada[j]) {
-                    colMarcada[j] = true;
-                    existeCambio = true;
-                }
+    private void marcarColumnasConCeroEnFilaMarcada(boolean[][] esCero, boolean[] esFilaMarcada, boolean[] esColMarcada,
+            boolean[] existeCambio) {
+        int n = esCero.length;
+        for (int j = 0; j < n; ++j) {
+            boolean contieneCeroEnFilaMarcada = false;
+            for (int i = 0; i < n && !contieneCeroEnFilaMarcada; ++i) {
+                if (esCero[i][j] && esFilaMarcada[i])
+                    contieneCeroEnFilaMarcada = true;
             }
+            if (contieneCeroEnFilaMarcada && !esColMarcada[j]) {
+                esColMarcada[j] = true;
+                existeCambio[0] = true;
+            }
+        }
+    }
 
-            // e) Marcamos las filas que tienen su zero asignado en alguna columna marcada
-            for (int i = 0; i < n; ++i) {
-                if (filaMarcada[i])
-                    continue;
-                for (int j = 0; j < n && !filaMarcada[i]; ++j) {
-                    if (colMarcada[j] && esCeroAsignado[i][j] && !filaMarcada[i]) {
-                        filaMarcada[i] = true;
-                        existeCambio = true;
-                    }
+    private void marcarFilasConCeroAsignadoEnColumnaMarcada(boolean[][] esCeroAsignado, boolean[] esFilaMarcada,
+            boolean[] esColMarcada, boolean[] existeCambio) {
+        int n = esCeroAsignado.length;
+        for (int i = 0; i < n; ++i) {
+            if (esFilaMarcada[i])
+                continue;
+            for (int j = 0; j < n && !esFilaMarcada[i]; ++j) {
+                if (esColMarcada[j] && esCeroAsignado[i][j] && !esFilaMarcada[i]) {
+                    esFilaMarcada[i] = true;
+                    existeCambio[0] = true;
                 }
             }
         }
+    }
 
-        int count = 0;
+    private int calcularLineasUsadasParaCubrirCeros(boolean[] filaCubierta, boolean[] colCubierta,
+            boolean[] esFilaMarcada, boolean[] esColMarcada) {
+        int n = filaCubierta.length;
+        int numLineas = 0;
         Arrays.fill(filaCubierta, false);
         Arrays.fill(colCubierta, false);
         for (int i = 0; i < n; ++i) {
-            if (colMarcada[i]) {
-                ++count;
+            if (esColMarcada[i]) {
+                ++numLineas;
                 colCubierta[i] = true;
             }
-            if (!filaMarcada[i]) {
-                ++count;
+            if (!esFilaMarcada[i]) {
+                ++numLineas;
                 filaCubierta[i] = true;
             }
         }
-        return count;
+        return numLineas;
+    }
+
+    /**
+     * Obtiene el numero minimo de lineas para cubrir celdas con valor cero.
+     * 
+     * @param esCero         La matriz booleana que indica celdas con valor cero
+     * @param esCeroAsignado La matriz booleana de asignacion marcada
+     * @param filaCubierta   Array de booleanos indicando filas cubiertas
+     * @param colCubierta    Array de booleanos indicando columnas cubiertas
+     * @return El numero minimo de lineas necesarias para cubrir los ceros
+     */
+    private int calcularMinNumLineasParaCubrirCeros(boolean[][] esCero, boolean[][] esCeroAsignado, boolean[] filaCubierta,
+            boolean[] colCubierta) {
+        int n = esCero.length;
+        boolean[] esFilaMarcada = new boolean[n];
+        boolean[] esColMarcada = new boolean[n];
+
+        marcarFilasSinCeroAsignado(esCeroAsignado, esFilaMarcada);
+        
+        boolean[] existeCambio = { true };
+        while (existeCambio[0]) {
+            existeCambio[0] = false;
+            marcarColumnasConCeroEnFilaMarcada(esCero, esFilaMarcada, esColMarcada, existeCambio);
+            marcarFilasConCeroAsignadoEnColumnaMarcada(esCeroAsignado, esFilaMarcada, esColMarcada, existeCambio);
+        }
+        return calcularLineasUsadasParaCubrirCeros(filaCubierta, colCubierta, esFilaMarcada, esColMarcada);
     }
 
     /**
@@ -246,7 +258,7 @@ public class AlgoritmoHungarian {
      * @param colCubierta  Array de booleanos indicando columnas cubiertas
      * @return El valor minimo no cubierto en la matriz
      */
-    private double obtenerMinimoNoCubierto(double[][] M, boolean[] filaCubierta,
+    private double calcularElementoMinimoNoCubierto(double[][] M, boolean[] filaCubierta,
             boolean[] colCubierta) {
         int n = M.length;
         double minimo = Double.MAX_VALUE;
@@ -285,9 +297,9 @@ public class AlgoritmoHungarian {
     }
 
     /**
-     * Calcula el costo minimo dada una matriz y su correspondiente asignacion.
+     * Calcula el coste minimo dada una matriz y su correspondiente asignacion.
      * 
-     * @param M         La matriz de costos
+     * @param M         La matriz de costes
      * @param esMarcado La asignacion marcada en la matriz
      * @return El coste de la asignacion
      */
@@ -301,4 +313,23 @@ public class AlgoritmoHungarian {
         }
         return coste;
     }
+
+    private double calcularCosteDeAsignacion(double[][] matrizEntrada, double[][] M) {
+        int n = M.length;
+        boolean[][] esCero = obtenerMatrizCero(M);
+        boolean[][] esCeroMarcado = obtenerMejorAsignacion(esCero);
+        boolean[] filaCubierta = new boolean[n];
+        boolean[] colCubierta = new boolean[n];
+        int numLineas = calcularMinNumLineasParaCubrirCeros(esCero, esCeroMarcado, filaCubierta, colCubierta);
+
+        while (numLineas != n) {
+            double minimo = calcularElementoMinimoNoCubierto(M, filaCubierta, colCubierta);
+            sumarYRestarMinimoCubiertos(M, filaCubierta, colCubierta, minimo);
+            esCero = obtenerMatrizCero(M);
+            esCeroMarcado = obtenerMejorAsignacion(esCero);
+            numLineas = calcularMinNumLineasParaCubrirCeros(esCero, esCeroMarcado, filaCubierta, colCubierta);
+        }
+        return obtenerCosteDeAsignacion(matrizEntrada, esCeroMarcado);
+    }
+
 }
