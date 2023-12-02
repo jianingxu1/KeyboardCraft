@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Clase AlgoritmoHungarian
  * Representa un algoritmo para resolver el problema de asignacion utilizando el
  * metodo Hungarian Algorithm. Se utiliza para encontrar el coste de la
- * asignación optima entre dos conjuntos de elementos, obteniendo el coste
+ * asignacion optima entre dos conjuntos de elementos, obteniendo el coste
  * minimo.
  * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
@@ -17,27 +17,41 @@ public class AlgoritmoHungarian {
 
     /**
      * Ejecuta el algoritmo hungaro en la matriz de entrada para encontrar el
-     * coste de la asignación optima.
+     * coste de la asignacion optima.
      * 
      * @param matrizCostes La matriz de entrada que representa los costes de
-     *                     asignación
+     *                     asignacion
      * @return El coste minimo de la asignacion optima
      */
     public double ejecutar(double[][] matrizCostes) {
         double[][] M = clonarMatriz(matrizCostes);
         preprocesarMatriz(M);
-        return calcularCosteDeAsignacion(matrizCostes, M);
+        boolean[][] asignacionOptima = calcularAsignacionOptima(M);
+        return obtenerCosteDeAsignacion(matrizCostes, asignacionOptima);
     }
 
-    private double[][] clonarMatriz(double[][] matriz) {
-        int length = matriz.length;
+    /**
+     * Crea y devuelve una copia exacta de la matriz proporcionada.
+     * 
+     * @param matrizOriginal La matriz que se va a clonar.
+     * @return Una nueva matriz que es una copia exacta de la matriz original.
+     */
+    private double[][] clonarMatriz(double[][] matrizOriginal) {
+        int length = matrizOriginal.length;
         double[][] copiaMatriz = new double[length][length];
         for (int i = 0; i < length; ++i) {
-            copiaMatriz[i] = matriz[i].clone();
+            copiaMatriz[i] = matrizOriginal[i].clone();
         }
         return copiaMatriz;
     }
 
+    /**
+     * Resta el valor minimo de cada fila de la matriz dada de todos los elementos
+     * de esa fila.
+     * Utilizado para normalizar la matriz en el algoritmo hungaro.
+     * 
+     * @param matriz La matriz a la que se le restara el minimo de cada fila.
+     */
     private void restarMinimoDeCadaFilaEnMatriz(double[][] matriz) {
         int length = matriz.length;
         for (int i = 0; i < length; ++i) {
@@ -51,6 +65,14 @@ public class AlgoritmoHungarian {
         }
     }
 
+    /**
+     * Resta el valor minimo de cada columna de la matriz dada de todos los
+     * elementos de esa columna.
+     * Utilizado para normalizar la matriz en el algoritmo hungaro despues de restar
+     * los minimos de las filas.
+     * 
+     * @param matriz La matriz a la que se le restara el minimo de cada columna.
+     */
     private void restarMinimoDeCadaColumnaEnMatriz(double[][] matriz) {
         int length = matriz.length;
         for (int j = 0; j < length; ++j) {
@@ -161,6 +183,13 @@ public class AlgoritmoHungarian {
         return mejorEsCeroAsignado;
     }
 
+    /**
+     * Marca las filas de la matriz que no tienen un cero asignado.
+     * 
+     * @param matriz La matriz en la que se marcaran las filas.
+     * @return Un array de booleanos donde cada elemento representa si una fila esta
+     *         marcada.
+     */
     private void marcarFilasSinCeroAsignado(boolean[][] esCeroAsignado, boolean[] filaMarcada) {
         int n = esCeroAsignado.length;
         for (int i = 0; i < n; ++i) {
@@ -174,6 +203,14 @@ public class AlgoritmoHungarian {
         }
     }
 
+    /**
+     * Marca las columnas que tienen un cero en cualquier fila marcada.
+     * 
+     * @param matriz        La matriz en la que se marcaran las columnas.
+     * @param filasMarcadas Array de booleanos indicando las filas marcadas.
+     * @return Un array de booleanos donde cada elemento representa si una columna
+     *         esta marcada.
+     */
     private void marcarColumnasConCeroEnFilaMarcada(boolean[][] esCero, boolean[] esFilaMarcada, boolean[] esColMarcada,
             boolean[] existeCambio) {
         int n = esCero.length;
@@ -190,6 +227,14 @@ public class AlgoritmoHungarian {
         }
     }
 
+    /**
+     * Marca las filas que tienen un cero asignado en cualquier columna marcada.
+     * 
+     * @param matriz           La matriz en la que se marcaran las filas.
+     * @param columnasMarcadas Array de booleanos indicando las columnas marcadas.
+     * @return Un array de booleanos donde cada elemento representa si una fila esta
+     *         marcada.
+     */
     private void marcarFilasConCeroAsignadoEnColumnaMarcada(boolean[][] esCeroAsignado, boolean[] esFilaMarcada,
             boolean[] esColMarcada, boolean[] existeCambio) {
         int n = esCeroAsignado.length;
@@ -204,6 +249,14 @@ public class AlgoritmoHungarian {
             }
         }
     }
+
+    /**
+     * Calcula el numero minimo de lineas (filas o columnas) necesarias para cubrir
+     * todos los ceros en una matriz.
+     * 
+     * @param matriz La matriz sobre la cual se realizara el calculo.
+     * @return El numero minimo de lineas necesarias para cubrir todos los ceros.
+     */
 
     private int calcularLineasUsadasParaCubrirCeros(boolean[] filaCubierta, boolean[] colCubierta,
             boolean[] esFilaMarcada, boolean[] esColMarcada) {
@@ -233,14 +286,15 @@ public class AlgoritmoHungarian {
      * @param colCubierta    Array de booleanos indicando columnas cubiertas
      * @return El numero minimo de lineas necesarias para cubrir los ceros
      */
-    private int calcularMinNumLineasParaCubrirCeros(boolean[][] esCero, boolean[][] esCeroAsignado, boolean[] filaCubierta,
+    private int calcularMinNumLineasParaCubrirCeros(boolean[][] esCero, boolean[][] esCeroAsignado,
+            boolean[] filaCubierta,
             boolean[] colCubierta) {
         int n = esCero.length;
         boolean[] esFilaMarcada = new boolean[n];
         boolean[] esColMarcada = new boolean[n];
 
         marcarFilasSinCeroAsignado(esCeroAsignado, esFilaMarcada);
-        
+
         boolean[] existeCambio = { true };
         while (existeCambio[0]) {
             existeCambio[0] = false;
@@ -280,7 +334,7 @@ public class AlgoritmoHungarian {
      * @param colCubierta  Array de booleanos indicando columnas cubiertas
      * @param minimo       El valor minimo a ser sumado y restado
      */
-    private void sumarYRestarMinimoCubiertos(double[][] M, boolean[] filaCubierta,
+    private void sumarYRestarMinimoAElementosCubiertos(double[][] M, boolean[] filaCubierta,
             boolean[] colCubierta, double minimo) {
         int n = M.length;
         for (int i = 0; i < n; ++i) {
@@ -297,39 +351,47 @@ public class AlgoritmoHungarian {
     }
 
     /**
-     * Calcula el coste minimo dada una matriz y su correspondiente asignacion.
+     * Calcula la asignacion optima basada en la matriz procesada, minimizando el
+     * costo total o maximizando el beneficio total.
+     * Este es el resultado final del algoritmo hungaro.
      * 
-     * @param M         La matriz de costes
-     * @param esMarcado La asignacion marcada en la matriz
-     * @return El coste de la asignacion
+     * @param matriz La matriz que ha sido procesada por el algoritmo hungaro.
+     * @return Un array que representa la asignacion optima de los elementos.
      */
-    private double obtenerCosteDeAsignacion(double[][] M, boolean[][] esMarcado) {
-        double coste = 0.0;
-        for (int i = 0; i < M.length; ++i) {
-            for (int j = 0; j < M[i].length; ++j) {
-                if (esMarcado[i][j])
-                    coste += M[i][j];
-            }
-        }
-        return coste;
-    }
-
-    private double calcularCosteDeAsignacion(double[][] matrizEntrada, double[][] M) {
-        int n = M.length;
-        boolean[][] esCero = obtenerMatrizCero(M);
+    private boolean[][] calcularAsignacionOptima(double[][] matriz) {
+        int n = matriz.length;
+        boolean[][] esCero = obtenerMatrizCero(matriz);
         boolean[][] esCeroMarcado = obtenerMejorAsignacion(esCero);
         boolean[] filaCubierta = new boolean[n];
         boolean[] colCubierta = new boolean[n];
         int numLineas = calcularMinNumLineasParaCubrirCeros(esCero, esCeroMarcado, filaCubierta, colCubierta);
 
         while (numLineas != n) {
-            double minimo = calcularElementoMinimoNoCubierto(M, filaCubierta, colCubierta);
-            sumarYRestarMinimoCubiertos(M, filaCubierta, colCubierta, minimo);
-            esCero = obtenerMatrizCero(M);
+            double minimo = calcularElementoMinimoNoCubierto(matriz, filaCubierta, colCubierta);
+            sumarYRestarMinimoAElementosCubiertos(matriz, filaCubierta, colCubierta, minimo);
+            esCero = obtenerMatrizCero(matriz);
             esCeroMarcado = obtenerMejorAsignacion(esCero);
             numLineas = calcularMinNumLineasParaCubrirCeros(esCero, esCeroMarcado, filaCubierta, colCubierta);
         }
-        return obtenerCosteDeAsignacion(matrizEntrada, esCeroMarcado);
+        return esCeroMarcado;
+    }
+
+    /**
+     * Calcula el coste minimo dada una matriz y su correspondiente asignacion.
+     * 
+     * @param matriz    La matriz de costes
+     * @param esMarcado La asignacion marcada en la matriz
+     * @return El coste de la asignacion
+     */
+    private double obtenerCosteDeAsignacion(double[][] matriz, boolean[][] esMarcado) {
+        double costeDeAsignacion = 0.0;
+        for (int i = 0; i < matriz.length; ++i) {
+            for (int j = 0; j < matriz[i].length; ++j) {
+                if (esMarcado[i][j])
+                    costeDeAsignacion += matriz[i][j];
+            }
+        }
+        return costeDeAsignacion;
     }
 
 }
