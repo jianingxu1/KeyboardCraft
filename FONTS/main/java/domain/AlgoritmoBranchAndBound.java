@@ -13,7 +13,7 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
     /**
      * Numero de instalaciones o caracteres.
      */
-    private int n;
+    private int numInstancias;
 
     /**
      * Matriz donde cada elemento representa la frecuencia entre dos caracteres.
@@ -41,34 +41,31 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
     /**
      * Genera la distribucion optima para el teclado dada una entrada.
      * 
-     * @param alf      Alfabeto a utilizar.
+     * @param alfabeto Alfabeto a utilizar.
      * @param palabras Palabras con sus frecuencias.
      * @param texto    Texto para analizar.
      * @return Matriz de caracteres que representa la distribucion optima.
      */
     @Override
-    public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        this.n = alf.getCaracteres().size();
+    public char[][] generarDistribucion(Alfabeto alfabeto, PalabrasConFrecuencia palabras, Texto texto) {
+        this.numInstancias = alfabeto.getCaracteres().size();
 
-        if (n > 1) {
-
-            HashMap<String, Integer> frecuenciasCjts = obtenerFrecuenciasCjts(alf, palabras, texto);
-            char[] caracteres = obtenerCaracteres(alf);
-            inicializarFrecuencias(frecuenciasCjts, caracteres);
+        if (numInstancias > 1) {
+            HashMap<String, Integer> frecuenciasBigrama = obtenerFrecuenciasBigramas(alfabeto, palabras, texto);
+            char[] caracteres = obtenerCaracteres(alfabeto);
+            inicializarMatrizFrecuencias(frecuenciasBigrama, caracteres);
 
             int[] filas = new int[1];
             int[] cols = new int[1];
             Posicion[] posiciones = obtenerPosiciones(filas, cols);
-            inicializarDistancias(posiciones);
+            inicializarMatrizDistancias(posiciones);
 
             calcularAsignacionOptima(this.frecuencias, this.distancias);
 
             distribucion = convertirMejorDistribucion(caracteres, posiciones, filas, cols);
-        }
-
-        else {
+        } else {
             distribucion = new char[1][10];
-            distribucion[0][0] = alf.getCaracteres().get(0);
+            distribucion[0][0] = alfabeto.getCaracteres().get(0);
         }
 
         return distribucion;
@@ -86,22 +83,23 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
     /**
      * Obtiene las frecuencias de los bigramas en el texto.
      * 
-     * @param alf      Alfabeto a utilizar.
+     * @param alfabeto Alfabeto a utilizar.
      * @param palabras Palabras con sus frecuencias.
      * @param texto    Texto para analizar.
      * @return Mapa con las frecuencias de los bigramas.
      */
-    private HashMap<String, Integer> obtenerFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        HashMap<String, Integer> frecuenciasCjts = new HashMap<>();
+    private HashMap<String, Integer> obtenerFrecuenciasBigramas(Alfabeto alfabeto, PalabrasConFrecuencia palabras,
+            Texto texto) {
+        HashMap<String, Integer> frecuenciasBigrama = new HashMap<>();
 
         int total = 0; // total de caractéres
 
         ArrayList<Character> alfChar = new ArrayList<Character>();
-        alfChar = alf.getCaracteres();
+        alfChar = alfabeto.getCaracteres();
 
         for (int i = 0; i < alfChar.size(); ++i) {
             for (int j = i + 1; j < alfChar.size(); ++j) {
-                frecuenciasCjts.put("" + alfChar.get(i) + alfChar.get(j), 0);
+                frecuenciasBigrama.put("" + alfChar.get(i) + alfChar.get(j), 0);
             }
         }
         String Texto = texto.getTexto();
@@ -109,14 +107,14 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
 
         for (int i = 0; i < Texto.length() - 1; ++i) {
             String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
-            if (frecuenciasCjts.containsKey(a))
-                frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
+            if (frecuenciasBigrama.containsKey(a))
+                frecuenciasBigrama.put(a, frecuenciasBigrama.get(a) + 1);
             else {
                 StringBuffer b = new StringBuffer(a);
                 b.reverse();
                 String c = b.toString();
-                if (frecuenciasCjts.containsKey(c))
-                    frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
+                if (frecuenciasBigrama.containsKey(c))
+                    frecuenciasBigrama.put(c, frecuenciasBigrama.get(c) + 1);
             }
         }
 
@@ -131,32 +129,32 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
             Integer num = entry.getValue();
             for (int j = 0; j < pal.length() - 1; ++j) {
                 String a = "" + pal.charAt(j) + pal.charAt(j + 1);
-                if (frecuenciasCjts.containsKey(a))
-                    frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
+                if (frecuenciasBigrama.containsKey(a))
+                    frecuenciasBigrama.put(a, frecuenciasBigrama.get(a) + num);
                 else {
                     StringBuffer b = new StringBuffer(a);
                     b.reverse();
                     String c = b.toString();
-                    if (frecuenciasCjts.containsKey(c))
-                        frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
+                    if (frecuenciasBigrama.containsKey(c))
+                        frecuenciasBigrama.put(c, frecuenciasBigrama.get(c) + num);
                 }
             }
             total += (pal.length() - 1) * num;
         }
-        return frecuenciasCjts;
+        return frecuenciasBigrama;
     }
 
     /**
      * Obtiene los caracteres del alfabeto.
      * 
-     * @param alf Alfabeto a utilizar.
+     * @param alfabeto Alfabeto a utilizar.
      * @return Array de caracteres del alfabeto.
      */
-    private char[] obtenerCaracteres(Alfabeto alf) {
-        char[] caracteres = new char[n];
-        ArrayList<Character> car = alf.getCaracteres();
-        for (int i = 0; i < n; ++i) {
-            caracteres[i] = car.get(i);
+    private char[] obtenerCaracteres(Alfabeto alfabeto) {
+        char[] caracteres = new char[numInstancias];
+        ArrayList<Character> caracteresAux = alfabeto.getCaracteres();
+        for (int i = 0; i < numInstancias; ++i) {
+            caracteres[i] = caracteresAux.get(i);
         }
         return caracteres;
     }
@@ -164,37 +162,84 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
     /**
      * Calcula la clave para la frecuencia de bigramas.
      * 
-     * @param frecuenciasCjts Mapa de frecuencias de bigramas.
-     * @param c1              Caracter 1.
-     * @param c2              Caracter 2.
+     * @param frecuenciasBigrama Mapa de frecuencias de bigramas.
+     * @param caracter1          Caracter 1.
+     * @param caracter2          Caracter 2.
      * @return Clave para la frecuencia de bigramas.
      */
-    private String calcularKey(Map<String, Integer> frecuenciasCjts, char c1, char c2) {
-        if (frecuenciasCjts.containsKey("" + c1 + c2))
-            return "" + c1 + c2;
-        return "" + c2 + c1;
+    private String calcularKey(Map<String, Integer> frecuenciasBigrama, char caracter1, char caracter2) {
+        if (frecuenciasBigrama.containsKey("" + caracter1 + caracter2))
+            return "" + caracter1 + caracter2;
+        return "" + caracter2 + caracter1;
     }
 
     /**
      * Inicializa la matriz de frecuencias de bigramas.
-     * 
-     * @param frecuenciasCjts Mapa de frecuencias de bigramas.
-     * @param caracteres      Array de caracteres distintos.
+     *
+     * @param frecuenciasBigrama Mapa de frecuencias de bigramas.
+     * @param caracteres         Array de caracteres distintos.
      */
-    private void inicializarFrecuencias(Map<String, Integer> frecuenciasCjts, char[] caracteres) {
-        this.frecuencias = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            char c1 = caracteres[i];
-            for (int j = 0; j < n; ++j) {
-                char c2 = caracteres[j];
-                if (i == j)
+    private void inicializarMatrizFrecuencias(Map<String, Integer> frecuenciasBigrama, char[] caracteres) {
+        this.frecuencias = new int[numInstancias][numInstancias];
+        for (int i = 0; i < numInstancias; ++i) {
+            char caracter1 = caracteres[i];
+            for (int j = 0; j < numInstancias; ++j) {
+                char caracter2 = caracteres[j];
+                if (i == j) {
+                    // Inicializamos la diagonal principal a 0, ya que los bigramas no pueden ser
+                    // iguales.
                     this.frecuencias[i][j] = 0;
-                else {
-                    String key = calcularKey(frecuenciasCjts, c1, c2);
-                    this.frecuencias[i][j] = frecuenciasCjts.get(key);
+                } else {
+                    String key = calcularKey(frecuenciasBigrama, caracter1, caracter2);
+                    // Obtenemos la frecuencia del bigrama y la asignamos a la matriz.
+                    this.frecuencias[i][j] = frecuenciasBigrama.get(key);
                 }
             }
         }
+    }
+
+    /**
+     * Obtiene el numero de filas y columnas para la distribucion del teclado.
+     *
+     * @param filas Arreglo para almacenar el numero de filas.
+     * @param cols  Arreglo para almacenar el numero de columnas.
+     */
+    private void obtenerNumFilasYColsParaDistribucionTeclado(int[] filas, int[] cols) {
+        final int MAX_INSTANCIAS_PARA_UNA_FILA = 2;
+        final int MAX_INSTANCIAS_PARA_DOS_FILAS = 6;
+        if (numInstancias <= MAX_INSTANCIAS_PARA_UNA_FILA) {
+            filas[0] = 1;
+            cols[0] = numInstancias;
+        } else if (numInstancias <= MAX_INSTANCIAS_PARA_DOS_FILAS) {
+            filas[0] = 2;
+            cols[0] = (int) Math.ceil((double) numInstancias / (double) filas[0]);
+        } else {
+            filas[0] = 3;
+            cols[0] = (int) Math.ceil((double) numInstancias / (double) filas[0]);
+        }
+    }
+
+    /**
+     * Obtiene un arreglo de posiciones a partir de la matriz de filas y columnas
+     * especificadas.
+     *
+     * @param filas Numero de filas.
+     * @param cols  Numero de columnas.
+     * @return Arreglo de posiciones.
+     */
+    private Posicion[] obtenerPosicionesAPartirDeMatriz(int filas, int cols) {
+        Posicion[] posiciones = new Posicion[numInstancias];
+        Posicion posicion = new Posicion(0, 0);
+        for (int i = 0; i < numInstancias; ++i) {
+            posiciones[i] = new Posicion(posicion);
+            if (posicion.col < cols - 1) {
+                ++posicion.col;
+            } else {
+                ++posicion.fila;
+                posicion.col = 0;
+            }
+        }
+        return posiciones;
     }
 
     /**
@@ -204,57 +249,45 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @param cols  Arreglo de columnas.
      * @return Arreglo de posiciones.
      */
-    public Posicion[] obtenerPosiciones(int[] filas, int[] cols) {
-        Posicion[] posiciones = new Posicion[n];
-        if (n <= 2) {
-            filas[0] = 1;
-            cols[0] = n;
-        } else if (n <= 6) {
-            filas[0] = 2;
-            cols[0] = (int) Math.ceil((double) n / (double) filas[0]);
-        } else {
-            filas[0] = 3;
-            cols[0] = (int) Math.ceil((double) n / (double) filas[0]);
-        }
-        Posicion p = new Posicion(0, 0);
-        for (int i = 0; i < n; ++i) {
-            posiciones[i] = new Posicion(p);
-            if (p.col < cols[0] - 1)
-                ++p.col;
-            else {
-                ++p.fila;
-                p.col = 0;
-            }
-        }
+    private Posicion[] obtenerPosiciones(int[] filas, int[] cols) {
+        obtenerNumFilasYColsParaDistribucionTeclado(filas, cols);
+        Posicion[] posiciones = obtenerPosicionesAPartirDeMatriz(filas[0], cols[0]);
         return posiciones;
     }
 
     /**
      * Inicializa la matriz de distancias entre posiciones.
-     * 
+     *
      * @param posiciones Arreglo de posiciones.
      */
-    private void inicializarDistancias(Posicion[] posiciones) {
-        this.distancias = new double[n][n];
-        for (int i = 0; i < n; ++i) {
-            Posicion p1 = posiciones[i];
-            for (int j = 0; j < n; ++j) {
-                Posicion p2 = posiciones[j];
-                this.distancias[i][j] = p1.euclidianDistanceTo(p2);
+    private void inicializarMatrizDistancias(Posicion[] posiciones) {
+        this.distancias = new double[numInstancias][numInstancias];
+        for (int i = 0; i < numInstancias; ++i) {
+            Posicion pos1 = posiciones[i];
+            for (int j = 0; j < numInstancias; ++j) {
+                Posicion pos2 = posiciones[j];
+                this.distancias[i][j] = pos1.euclidianDistanceTo(pos2);
             }
         }
     }
 
+    /**
+     * Calcula la asignacion optima recursivamente.
+     *
+     * @param mapAsignacionActual Mapa de asignacion actual.
+     * @param costeActual         Coste actual.
+     * @param ubicacionActual     Ubicacion actual.
+     */
     private void calcularAsignacionOptimaRecursivo(HashMap<Integer, Integer> mapAsignacionActual, double costeActual,
             int ubicacionActual) {
-        if (ubicacionActual == this.n) {
+        if (ubicacionActual == this.numInstancias) {
             if (costeActual < this.mejorCosteTotal) {
                 this.mapMejorAsignacion = new HashMap<Integer, Integer>(mapAsignacionActual);
                 this.mejorCosteTotal = costeActual;
             }
             return;
         }
-        for (int instalacion = 0; instalacion < this.n; ++instalacion) {
+        for (int instalacion = 0; instalacion < this.numInstancias; ++instalacion) {
             if (mapAsignacionActual.containsKey(instalacion))
                 continue;
 
@@ -265,7 +298,7 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
 
             // Calcular el bound para decidir si hacer branch
             double costeTotalAproximado = newCosteActual +
-                    calcularCosteNoEmplazados(mapAsignacionActual, ubicacionActual + 1);
+                    calcularCosteAproximadoNoEmplazados(mapAsignacionActual, ubicacionActual + 1);
             if (costeTotalAproximado >= this.mejorCosteTotal) {
                 mapAsignacionActual.remove(instalacion);
                 continue;
@@ -279,13 +312,13 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
 
     /**
      * Calcula la asignacion optima de caracteres a posiciones y su coste.
-     * 
+     *
      * @param frecuencias Matriz de frecuencias entre caracteres.
      * @param distancias  Matriz de distancias entre posiciones.
      * @return El coste total de la asignacion optima.
      */
     public double calcularAsignacionOptima(int[][] frecuencias, double[][] distancias) {
-        this.n = frecuencias.length;
+        this.numInstancias = frecuencias.length;
         this.frecuencias = frecuencias;
         this.distancias = distancias;
         this.mapMejorAsignacion = new HashMap<Integer, Integer>();
@@ -300,11 +333,11 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
 
     /**
      * Calcula el coste entre dos asignaciones.
-     * 
-     * @param instalacion1 Instalación 1.
-     * @param ubicacion1   Ubicación 1.
-     * @param instalacion2 Instalación 2.
-     * @param ubicacion2   Ubicación 2.
+     *
+     * @param instalacion1 Instalacion 1.
+     * @param ubicacion1   Ubicacion 1.
+     * @param instalacion2 Instalacion 2.
+     * @param ubicacion2   Ubicacion 2.
      * @return El coste entre dos asignaciones.
      */
     private double calcularCosteEntreDosAsignaciones(int instalacion1, int ubicacion1,
@@ -336,80 +369,175 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
     }
 
     /**
-     * Calcula el coste de las instalaciones no asignadas.
+     * Calcula y ordena el vector de traficos desde una instalacion dada hasta todas
+     * las otras instalaciones no asignadas.
+     * Este vector se utiliza para estimar el coste de emplazamiento en el problema
+     * de asignacion cuadratica.
      * 
-     * @param mapAsignacionActual Mapa con la asignacion actual.
-     * @param k                   La primera ubicacion no asignada. De 0 a k-1
-     *                            estan asignadas.
-     * @return El coste de las instalaciones no asignadas.
+     * @param instalacionesNoAsignadas Array de instalaciones que aun no han sido
+     *                                 asignadas.
+     * @param instalacion1             La instalacion para la cual se calcula el
+     *                                 vector de traficos.
+     * @return Un array de Double que contiene los traficos calculados, ordenados de
+     *         menor a mayor.
      */
-    private double calcularCosteNoEmplazados(HashMap<Integer, Integer> mapAsignacionActual,
-            int k) {
+    private Double[] calculaVectorTraficos(int[] instalacionesNoAsignadas, int instalacion1) {
+        int numNoAsignados = instalacionesNoAsignadas.length;
+        Double[] T = new Double[numNoAsignados - 1];
+
+        // Calcula vector de traficos
+        for (int t = 0, index = 0; t < numNoAsignados; ++t) {
+            int instalacion2 = instalacionesNoAsignadas[t];
+            if (instalacion1 == instalacion2)
+                continue;
+            T[index] = (double) this.frecuencias[instalacion1][instalacion2];
+            ++index;
+        }
+        Arrays.sort(T);
+        return T;
+    }
+
+    /**
+     * Calcula y ordena el vector de distancias desde una ubicacion dada hasta todas
+     * las otras ubicaciones no asignadas.
+     * Este vector se utiliza para estimar el coste de emplazamiento en el problema
+     * de asignacion cuadratica.
+     * 
+     * @param numNoAsignados             El numero de ubicaciones no asignadas.
+     * @param primeraUbicacionNoAsignada El indice de la primera ubicacion no
+     *                                   asignada.
+     * @param ubicacion1                 La ubicacion desde la cual se calculan las
+     *                                   distancias.
+     * @return Un array de Double que contiene las distancias calculadas, ordenadas
+     *         de mayor a menor.
+     */
+    private Double[] calculaVectorDistancias(int numNoAsignados, int primeraUbicacionNoAsignada, int ubicacion1) {
+        Double[] D = new Double[numNoAsignados - 1];
+        for (int d = 0, index = 0; d < numNoAsignados; ++d) {
+            int ubicacion2 = primeraUbicacionNoAsignada + d;
+            if (ubicacion1 == ubicacion2)
+                continue;
+            D[index] = this.distancias[ubicacion1][ubicacion2];
+            ++index;
+        }
+        Arrays.sort(D, Collections.reverseOrder());
+        return D;
+    }
+
+    /**
+     * Calcula la matriz de costes C1 para el problema de asignacion cuadratica.
+     * Cada elemento de la matriz
+     * representa el coste de asignar una instalacion no emplazada a una ubicacion
+     * especifica, considerando
+     * las instalaciones ya emplazadas.
+     * 
+     * @param mapAsignacionActual        Un mapa que representa la asignacion actual
+     *                                   de instalaciones a ubicaciones.
+     * @param instalacionesNoAsignadas   Un array de instalaciones que aun no han
+     *                                   sido asignadas.
+     * @param primeraUbicacionNoAsignada El indice de la primera ubicacion no
+     *                                   asignada.
+     * @return Una matriz 2D de double representando los costes de asignacion.
+     */
+    private double[][] calculaC1(HashMap<Integer, Integer> mapAsignacionActual, int[] instalacionesNoAsignadas,
+            int primeraUbicacionNoAsignada) {
+        int numNoAsignados = instalacionesNoAsignadas.length;
+        double[][] C1 = new double[numNoAsignados][numNoAsignados];
+        for (int i = 0; i < numNoAsignados; ++i) {
+            int instalacion = instalacionesNoAsignadas[i];
+            for (int j = 0; j < numNoAsignados; ++j) {
+                int ubicacion = primeraUbicacionNoAsignada + j;
+                C1[i][j] = calcularCosteDeAsignar(mapAsignacionActual, instalacion, ubicacion);
+            }
+        }
+        return C1;
+    }
+
+    /**
+     * Calcula la matriz de costes C2 para el problema de asignacion cuadratica.
+     * Cada elemento de la matriz
+     * representa el coste estimado de asignar una instalacion no emplazada a una
+     * ubicacion especifica,
+     * considerando las instalaciones y ubicaciones aun no emplazadas.
+     * 
+     * @param instalacionesNoAsignadas   Un array de instalaciones que aun no han
+     *                                   sido asignadas.
+     * @param primeraUbicacionNoAsignada El indice de la primera ubicacion no
+     *                                   asignada.
+     * @return Una matriz 2D de double representando los costes de asignacion
+     *         estimados.
+     */
+    private double[][] calculaC2(int[] instalacionesNoAsignadas, int primeraUbicacionNoAsignada) {
+        int numNoAsignados = instalacionesNoAsignadas.length;
+        double[][] C2 = new double[numNoAsignados][numNoAsignados];
+        for (int i = 0; i < numNoAsignados; ++i) {
+            int instalacion = instalacionesNoAsignadas[i];
+            Double[] T = calculaVectorTraficos(instalacionesNoAsignadas, instalacion);
+
+            for (int j = 0; j < numNoAsignados; ++j) {
+                int ubicacion = primeraUbicacionNoAsignada + j;
+                // Calcula vector de distancias
+                Double[] D = calculaVectorDistancias(numNoAsignados, primeraUbicacionNoAsignada, ubicacion);
+                C2[i][j] = productoEscalar(T, D);
+            }
+        }
+        return C2;
+    }
+
+    /**
+     * Suma dos matrices de igual dimension elemento a elemento. Utilizada para
+     * combinar las matrices de coste
+     * C1 y C2 en el proceso de resolucion del problema de asignacion cuadratica.
+     * 
+     * @param X La primera matriz de double.
+     * @param Y La segunda matriz de double.
+     * @return Una matriz que es la suma elemento a elemento de X e Y.
+     */
+    private double[][] sumaMatrices(double[][] X, double[][] Y) {
+        int length = X.length;
+        double[][] Z = new double[length][length];
+        for (int i = 0; i < length; ++i) {
+            for (int j = 0; j < length; ++j) {
+                Z[i][j] = X[i][j] + Y[i][j];
+            }
+        }
+        return Z;
+    }
+
+    /**
+     * Calcula el coste aproximado para las instalaciones no emplazadas utilizando
+     * el Algoritmo Hungaro.
+     * Esta funcion considera la asignacion actual, calcula las matrices de coste C1
+     * y C2, y utiliza
+     * el Algoritmo Hungaro para encontrar el coste de la asignacion optima.
+     * 
+     * @param mapAsignacionActual        Un mapa con la asignacion actual de
+     *                                   instalaciones a ubicaciones.
+     * @param primeraUbicacionNoAsignada El indice de la primera ubicacion no
+     *                                   asignada.
+     * @return El coste aproximado de las instalaciones no emplazadas.
+     */
+    private double calcularCosteAproximadoNoEmplazados(HashMap<Integer, Integer> mapAsignacionActual,
+            int primeraUbicacionNoAsignada) {
         int m = mapAsignacionActual.size();
-        int numNoAsignados = n - m;
+        int numNoAsignados = numInstancias - m;
 
         // Inicializar instalacionesNoAsignadas
         int[] instalacionesNoAsignadas = new int[numNoAsignados];
-        for (int instalacion = 0, i = 0; instalacion < n; ++instalacion) {
+        for (int instalacion = 0, i = 0; instalacion < numInstancias; ++instalacion) {
             if (mapAsignacionActual.containsKey(instalacion))
                 continue;
             instalacionesNoAsignadas[i] = instalacion;
             ++i;
         }
 
-        // Calcula C1
-        double[][] C1 = new double[numNoAsignados][numNoAsignados];
-        for (int i = 0; i < numNoAsignados; ++i) {
-            int instalacion = instalacionesNoAsignadas[i];
-            for (int j = 0; j < numNoAsignados; ++j) {
-                int ubicacion = k + j;
-                C1[i][j] = calcularCosteDeAsignar(mapAsignacionActual, instalacion, ubicacion);
-            }
-        }
-
-        // Calcula C2
-        double[][] C2 = new double[numNoAsignados][numNoAsignados];
-        for (int i = 0; i < numNoAsignados; ++i) {
-            int instalacion1 = instalacionesNoAsignadas[i];
-            for (int j = 0; j < numNoAsignados; ++j) {
-                int ubicacion1 = k + j;
-                Double[] T = new Double[numNoAsignados - 1];
-
-                // Calcula vector de traficos
-                for (int t = 0, index = 0; t < numNoAsignados; ++t) {
-                    int instalacion2 = instalacionesNoAsignadas[t];
-                    if (instalacion1 == instalacion2)
-                        continue;
-                    T[index] = (double) this.frecuencias[instalacion1][instalacion2];
-                    ++index;
-                }
-
-                // Calcula vector de distancias
-                Double[] D = new Double[numNoAsignados - 1];
-                for (int d = 0, index = 0; d < numNoAsignados; ++d) {
-                    int ubicacion2 = k + d;
-                    if (ubicacion1 == ubicacion2)
-                        continue;
-                    D[index] = this.distancias[ubicacion1][ubicacion2];
-                    ++index;
-                }
-                Arrays.sort(T);
-                Arrays.sort(D, Collections.reverseOrder());
-                C2[i][j] = productoEscalar(T, D);
-            }
-        }
-
-        // Calcula C1+C2
-        double[][] C1C2 = new double[numNoAsignados][numNoAsignados];
-        for (int i = 0; i < numNoAsignados; ++i) {
-            for (int j = 0; j < numNoAsignados; ++j) {
-                C1C2[i][j] = C1[i][j] + C2[i][j];
-            }
-        }
+        double[][] C1 = calculaC1(mapAsignacionActual, instalacionesNoAsignadas, primeraUbicacionNoAsignada);
+        double[][] C2 = calculaC2(instalacionesNoAsignadas, primeraUbicacionNoAsignada);
+        double[][] C1C2 = sumaMatrices(C1, C2);
 
         // Algoritmo Hungarian
-        AlgoritmoHungarian alg = new AlgoritmoHungarian();
-        double coste = alg.ejecutar(C1C2);
+        AlgoritmoHungarian algoritmo = new AlgoritmoHungarian();
+        double coste = algoritmo.ejecutar(C1C2);
         return coste;
     }
 
@@ -427,9 +555,9 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
         for (Map.Entry<Integer, Integer> entry : mapMejorAsignacion.entrySet()) {
             int instalacion = entry.getKey();
             int ubicacion = entry.getValue();
-            char c = caracteres[instalacion];
-            Posicion p = posiciones[ubicacion];
-            distribucion[p.fila][p.col] = c;
+            char caracter = caracteres[instalacion];
+            Posicion posicion = posiciones[ubicacion];
+            distribucion[posicion.fila][posicion.col] = caracter;
         }
         return distribucion;
     }
@@ -442,11 +570,11 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @return El producto escalar entre los vectores X e Y.
      */
     private double productoEscalar(Double[] X, Double[] Y) {
-        double res = 0;
-        int n = X.length;
-        for (int i = 0; i < n; ++i) {
-            res += X[i] * Y[i];
+        double resultado = 0;
+        int numElementos = X.length;
+        for (int i = 0; i < numElementos; ++i) {
+            resultado += X[i] * Y[i];
         }
-        return res;
+        return resultado;
     }
 }
