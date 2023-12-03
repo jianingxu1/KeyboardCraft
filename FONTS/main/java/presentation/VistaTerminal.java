@@ -34,35 +34,41 @@ public class VistaTerminal {
      * comandos
      */
 
-    public void init() {
+     public void init() {
         controladorDominio.inicializarCtrlDominio();
+    
         try {
             controladorDominio.cargarUsuarios();
+        } catch (LecturaIncorrectaFicheroExcepcion e) {
+            System.out.println("Error al cargar usuarios: " + e.getMessage());
         }
-        catch (LecturaIncorrectaFicheroExcepcion e) {
-            System.out.println(e.getMessage());
-        }
+    
         System.out.println("\n*--------* Bienvenido al generador de teclados *--------*");
-        System.out.println(
-                "Para navegar a través del programa, introduce el número de la\nopción que desees en cada momento.\n");
+        System.out.println("Para navegar a través del programa, introduce el número de la");
+        System.out.println("opción que desees en cada momento.\n");
+    
         menuIniciarSesion();
     }
-
-    public void menuIniciarSesion () {
-        int value = -1;
-        while (value != 0) {
+    
+    public void menuIniciarSesion() {
+        int opcion = -1;
+    
+        while (opcion != 0) {
             boolean usuarioIdentificado = false;
+    
             System.out.println("-------- Menú de inicio de sesión --------");
             System.out.println("1. Iniciar sesión\n2. Registrarse\n\n0. Salir del programa");
+    
             try {
-                value = input.nextInt();
+                opcion = input.nextInt();
                 input.nextLine();
             } catch (InputMismatchException ime) {
-                System.out.println("El valor introducido no es un entero.\n");
+                System.out.println("Error: Ingrese un valor entero válido.\n");
                 input.nextLine();
                 continue;
             }
-            switch (value) {
+    
+            switch (opcion) {
                 case 1:
                     usuarioIdentificado = FuncIniciarSesion();
                     break;
@@ -76,13 +82,115 @@ public class VistaTerminal {
                 default:
                     System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
             }
+    
             if (usuarioIdentificado) {
                 System.out.println("¡Bienvenido " + controladorDominio.getNombreUsuario() + "!");
-                if(value != 0) menuPrincipal();
+                if (opcion != 0) {
+                    menuPrincipal();
+                }
             }
         }
     }
 
+    /**
+     * Función que permite a un usuario iniciar sesión en el sistema
+     */
+    Boolean FuncIniciarSesion() {
+        System.out.println("----- Iniciar Sesión -----");
+        boolean cancelarOperacion = false;
+        boolean usuarioIdentificado = false;
+    
+        while (!cancelarOperacion) {
+            System.out.println("Introduce el nombre de usuario:");
+            String nombreUsuario = input.nextLine();
+            System.out.println("Introduce la contrasena:");
+            String contrasena = input.nextLine();
+    
+            try {
+                usuarioIdentificado = controladorDominio.IniciarSesion(nombreUsuario, contrasena);
+                cancelarOperacion = true;
+            } catch (NombreUsuarioNoValidoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("nombre de usuario", "iniciado sesión");
+                if (!cancelarOperacion) {
+                    nombreUsuario = input.nextLine();
+                }
+            } catch (ContrasenaNoValidaExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("contrasena", "iniciado sesión");
+                if (!cancelarOperacion) {
+                    contrasena = input.nextLine();
+                }
+            }
+        }
+    
+        return usuarioIdentificado;
+    }
+    
+    void FuncRegistrarse() {
+        System.out.println("----- Registrarse -----");
+        boolean cancelarOperacion = false;
+    
+        while (!cancelarOperacion) {
+            System.out.println("Introduce el nombre de usuario:");
+            String nombreUsuario = input.nextLine();
+            System.out.println("Introduce la contrasena:");
+            String contrasena = input.nextLine();
+    
+            try {
+                controladorDominio.añadirUsuario(nombreUsuario, contrasena);
+                cancelarOperacion = true;
+                System.out.println("¡Se ha registrado el usuario \"" + nombreUsuario + "\" con éxito!");
+                FuncCargarDatos();
+            } catch (NombreUsuarioNoValidoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("nombre de usuario" , "registrado");
+                if (!cancelarOperacion) {
+                    nombreUsuario = input.nextLine();
+                }
+            } catch (ContrasenaNoValidaExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("contrasena", "registrado");
+                if (!cancelarOperacion) {
+                    contrasena = input.nextLine();
+                }
+            } catch (EscrituraIncorrectaFicheroExcepcion e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void cerrarSesion() {
+        FuncEscribirCambios();
+        input.nextLine();
+        controladorDominio.CerrarSesion();
+        menuIniciarSesion();
+    }
+
+
+    public Boolean reintentarOperacionUsuario(String elementoUsuario, String operacion) {
+        String response = input.nextLine();
+        
+        if (response.equals("n")) {
+            System.out.println("No se ha " + operacion + ".\n");
+            return true;
+        } else if (response.equals("s")) {
+            System.out.println("Introduce nuevamente el " + elementoUsuario + ":");
+            return false;
+        }
+    
+        if(!response.equals("n") && !response.equals("s")) {
+            System.out.println("El valor introducido no es válido.\n" + "volviendo al menú anterior...");
+            
+        }
+        return true;
+    }
+    
+    
 
     /**
      * Menú desde el cual se puede acceder a las zonas de gestión de teclados y alfabetos
@@ -91,142 +199,34 @@ public class VistaTerminal {
 
     public void menuPrincipal() {
         FuncCargarDatos();
-        int value = -1;
-        while (value != 0) {
+        int opcionPrincipal = -1;
+    
+        while (opcionPrincipal != 0) {
             System.out.println("-------- Menú Principal --------");
-            System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sessión\n\n0. Salir del programa");
+            System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sesión\n4. Gestionar Usuario\n\n0. Salir del programa");
             System.out.println("--------------------------------");
+
             try {
-                value = input.nextInt();
+                opcionPrincipal = input.nextInt();
             } catch (InputMismatchException ime) {
-                System.out.println("El valor introducido no es un entero.");
+                System.out.println("Error: El valor introducido no es un entero.");
                 input.nextLine();
                 continue;
             }
-            switch (value) {
+    
+            switch (opcionPrincipal) {
                 case 1:
-                    // FUNCIONES DE LOS TECLADOS
-                    int opt = -1;
-                    while (opt != 0) {
-                        System.out.println("----- Gestión de Teclados -----");
-                        System.out.println(
-                                "1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
-                        System.out.println("-------------------------------");
-                        try {
-                            opt = input.nextInt();
-                            input.nextLine();
-                        } catch (InputMismatchException ime) {
-                            System.out.println("El valor introducido no es un entero.\n");
-                            input.nextLine();
-                            continue;
-                        }
-                        switch (opt) {
-                            // CASO CREAR TECLADO
-                            case 1:
-                                FuncCreacionTeclado();
-                                break;
-                            // CASO MODIFICAR TECLADOS (SWAP unicamente)
-                            case 2:
-                                if (controladorDominio.consultarNombresTeclados().isEmpty()) {
-                                    System.out.println(
-                                            "No tienes ningún teclado creado. La modificación de teclado requiere que exista un teclado.");
-                                }
-                                else {
-                                    System.out.println("----- Modificación de teclado -----");
-                                    System.out.println("1. Swap de teclas\n\n0. Volver a la gestión de teclados");
-                                    System.out.println("-----------------------------------");
-                                    int modOpt = -1;
-                                    try {
-                                        modOpt = input.nextInt();
-                                        input.nextLine();
-                                    } catch (InputMismatchException ime) {
-                                        System.out.println("El valor introducido no es un entero.\n");
-                                        input.nextLine();
-                                        continue;
-                                    }
-                                    switch (modOpt) {
-                                    case 1:
-                                        FuncSwapTeclas();
-                                        break;
-
-                                    case 0:
-                                        break;
-
-                                    default:
-                                        System.out.println("Valor inválido.");
-                                    }
-                                }
-                                break;
-
-                        // CASO BORRAR TECLADOS
-                            case 3:
-                                FuncBorrarTeclado();
-                                break;
-
-                            // CASO MOSTRAR UN TECLADO
-                            case 4:
-                                FuncMostrarTeclado();
-                                break;
-                            // CASO MOSTRAR TODOS LOS TECLADOS
-                            case 5:
-                                FuncMostrarNombresTeclados();
-                                break;
-                            // CASO VOLVER ATRAS
-                            case 0:
-                                break;
-                            default:
-                                System.out.println("Valor inválido.");
-                        }
-                    }
+                    gestionarTeclados();
                     break;
-                // FUNCIONES DE ALFABETO
                 case 2:
-                    int optTec = -1;
-                    while (optTec != 0) {
-                        System.out.println("----- Gestión de Alfabetos -----");
-                        System.out.println(
-                                "1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
-                        System.out.println("--------------------------------");
-                        try {
-                            optTec = input.nextInt();
-                            input.nextLine();
-                        } catch (InputMismatchException ime) {
-                            System.out.println("El valor introducido no es un entero.\n");
-                            input.nextLine();
-                            continue;
-                        }
-                        switch (optTec) {
-                            case 1:
-                                FuncCreacionAlfabeto();
-                                break;
-
-                            case 2:
-                                FuncModificarAlfabeto();
-                                break;
-
-                            case 3:
-                                FuncBorrarAlfabeto();
-                                break;
-                            case 4:
-                                FuncMostrarAlfabetos();
-                                break;
-                            case 5:
-                                FuncMostrarCaracteresAlfabeto();
-                                break;
-                            case 0:
-                                break;
-                            default:
-                                System.out.println("Valor inválido.");
-                        }
-                    }
+                    gestionarAlfabetos();
                     break;
                 case 3:
-                    FuncEscribirCambios();
-                    input.nextLine();
-                    controladorDominio.CerrarSesion();
-                    menuIniciarSesion();
+                    cerrarSesion();
                     break;
-                // CASO SALIR DEL PROGRAMA
+                case 4:
+                    gestionarUsuario();
+                    break;
                 case 0:
                     System.out.println("Cerrando programa...");
                     FuncEscribirCambios();
@@ -237,185 +237,367 @@ public class VistaTerminal {
             }
         }
     }
+    
+    private void gestionarTeclados() {
+        int opcionTeclado = -1;
+    
+        while (opcionTeclado != 0) {
+            System.out.println("----- Gestión de Teclados -----");
+            System.out.println("1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n" +
+                    "4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
+            System.out.println("-------------------------------");
+    
+            try {
+                opcionTeclado = input.nextInt();
+                input.nextLine();
+            } catch (InputMismatchException ime) {
+                System.out.println("Error: El valor introducido no es un entero.\n");
+                input.nextLine();
+                continue;
+            }
+    
+            switch (opcionTeclado) {
+                case 1:
+                    FuncCreacionTeclado();
+                    break;
+                case 2:
+                    FuncSwapTeclas();
+                    break;
+                case 3:
+                    FuncBorrarTeclado();
+                    break;
+                case 4:
+                    FuncMostrarTeclado();
+                    break;
+                case 5:
+                    FuncMostrarNombresTeclados();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Error: Valor inválido.");
+            }
+        }
+    }
+    
+    private void gestionarAlfabetos() {
+        int opcionAlfabeto = -1;
+
+        while (opcionAlfabeto != 0) {
+            System.out.println("----- Gestión de Alfabetos -----");
+            System.out.println("1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n" +
+                    "4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
+            System.out.println("--------------------------------");
+
+            try {
+                opcionAlfabeto = input.nextInt();
+                input.nextLine();
+            } catch (InputMismatchException ime) {
+                System.out.println("Error: El valor introducido no es un entero.\n");
+                input.nextLine();
+                continue;
+            }
+
+            switch (opcionAlfabeto) {
+                case 1:
+                    FuncCreacionAlfabeto();
+                    break;
+                case 2:
+                    FuncModificarAlfabeto();
+                    break;
+                case 3:
+                    FuncBorrarAlfabeto();
+                    break;
+                case 4:
+                    FuncMostrarAlfabetos();
+                    break;
+                case 5:
+                    FuncMostrarCaracteresAlfabeto();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Error: Valor inválido.");
+            }
+        }
+    }
+
+    public void gestionarUsuario() {
+        int opcionUsuario = -1;
+
+        while (opcionUsuario != 0) {
+            System.out.println("----- Gestión de Usuario -----");
+            System.out.println("1. Modificar contraseña\n2. Borrar usuario\n\n0. Volver al menú principal");
+            System.out.println("------------------------------");
+
+            try {
+                opcionUsuario = input.nextInt();
+                input.nextLine();
+            } catch (InputMismatchException ime) {
+                System.out.println("Error: El valor introducido no es un entero.\n");
+                input.nextLine();
+                continue;
+            }
+
+            switch (opcionUsuario) {
+                case 1:
+                    FuncModificarContrasena();
+                    break;
+                case 2:
+                    FuncBorrarUsuario();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Error: Valor inválido.");
+            }
+        }
+    }
 
     /**
-     * Función que mediante unos parámetros recibidos como input, genera y guarda un teclado
+     * Función que permite al usuario modificar su contraseña
      */
-
-    void FuncCreacionTeclado() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
-        if (alfabetos.isEmpty()) {
-            System.out.println("No tienes ningún alfabeto creado. La creación de teclado requiere de un alfabeto.");
-            return;
-        }
-
-        System.out.println("Teclados actuales:\n" +
-                        controladorDominio.consultarNombresTeclados());
-        System.out.println("Introduce el nombre del nuevo teclado:");
-        String name = input.nextLine();
-
-        System.out.println("Alfabetos actuales:\n" +
-                        controladorDominio.consultarNombresDeAlfabetos());
-
-        System.out.println("Introduce el nombre del alfabeto a utilizar:");
-        String idAlf = input.nextLine();
-
-        System.out.println("Introduce el texto para calcular frecuencias (ej: 'hola buenas tardes'):");
-        String text = input.nextLine();
-
-        System.out.println("Introduce la lista de palabras con frecuencias (ej: 'coche 20 perro 15 teclado 200'):");
-        String list = input.nextLine();
-
-        System.out.println("Introduce el nombre del algoritmo a utilizar (B&B o SA):\n" +
-                "NOTA: Los alfabetos con más de 12 caractéres pueden tardar +10 minutos con B&B.\n" +
-                "Se recomienda SA en estos casos.");
-        String alg = input.nextLine();
+    public void FuncModificarContrasena()  
+    {
+        System.out.println("----- Modificar Contraseña -----");
         boolean cancelarOperacion = false;
+
         while (!cancelarOperacion) {
+            System.out.println("Introduce el nombre de usuario:");
+            String nombreUsuario = input.nextLine();
+            System.out.println("Introduce la contrasena actual:");
+            String contrasenaActual = input.nextLine();
+            System.out.println("Introduce la nueva contrasena:");
+            String contrasenaNueva = input.nextLine();
+
             try {
-                controladorDominio.creaTeclado(name, idAlf, text, list, alg);
+                controladorDominio.modificarContrasena(nombreUsuario, contrasenaActual, contrasenaNueva);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha creado el teclado \"" + name + "\" con éxito!");
-
-                String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
-                System.out.println(keyboard);
-
-            } catch (NombreAlfabetoNoValidoExcepcion e) {
+                System.out.println("¡Se ha modificado la contraseña con éxito!");
+            } catch (ContrasenaNoValidaExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println(
-                        "Recuerda que el alfabeto ha de existir antes de ser asignado. ¿Quieres intentar de nuevo?(s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce de nuevo el alfabeto a usar:");
-                    idAlf = input.nextLine();
+                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("contraseña", "modificado la contraseña");
+                if (!cancelarOperacion) {
+                    contrasenaNueva = input.nextLine();
                 }
-            } catch (NombreTecladoDuplicadoExcepcion ntd) {
-                System.out.println(ntd.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado:");
-                    name = input.nextLine();
-                }
-            } catch (TipoAlgoritmoIncorrectoExcepcion e) {
+            }
+            catch (NombreUsuarioNoValidoExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println(
-                        "¿Quieres intentar de nuevo y escoger un algoritmo de nuevo, recuerda que el alfabeto ha de existir (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el algoritmo a usar, debe ser QAP o SA:");
-                    alg = input.nextLine();
-                }
-            } catch (FrecuenciaIncorrectaExcepcion fi) {
-                System.out.println(fi.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y añadir lista de palabras con frecuencias? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente la lista de palabras con frecuencias:");
-                    list = input.nextLine();
-                }
-            } catch (NombreTecladoNoValidoExcepcion ntv) {
-                System.out.println(ntv.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado:");
-                    name = input.nextLine();
+                cancelarOperacion = reintentarOperacionUsuario("nombre de usuario", "modificado la contraseña");
+                if (!cancelarOperacion) {
+                    nombreUsuario = input.nextLine();
                 }
             }
         }
     }
 
+    /**
+     * Función que permite al usuario borrar su cuenta
+     */
+    public void FuncBorrarUsuario()  {
+        boolean cancelarOperacion = false;
+        System.out.println("----- Borrar Usuario -----");
+        System.out.println("¿Estás seguro de que quieres borrar tu cuenta? (s/n):");
+        cancelarOperacion = reintentarOperacionUsuario("cuenta", "borrado");
+
+        System.out.println("Por medidas de seguridad, para poder borrar la cuenta inicie" +
+                            "de nuevo sesión para poder verificar al usuario.");
+        boolean usuarioIdentificado = FuncIniciarSesion();
+        
+        try {
+            if (usuarioIdentificado) {
+                System.out.println("Por medidas de seguridad, introduzco el usuario nuevamente:");
+                String nombreUsuario = input.nextLine();
+                controladorDominio.eliminarUsuario(nombreUsuario);
+            }
+            else {
+            System.out.println("No se ha borrado la cuenta.");
+            System.out.println("Volviendo al menú anterior...");
+        }
+        } catch (NombreUsuarioNoValidoExcepcion e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Función que mediante unos parámetros recibidos como input, genera y guarda un teclado
+     */
+    void FuncCreacionTeclado() {
+        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
+    
+        if (alfabetos.isEmpty()) {
+            System.out.println("No tienes ningún alfabeto creado. La creación de teclado requiere de un alfabeto.");
+            return;
+        }
+    
+        // Entrada de datos para la creación del teclado
+        System.out.println("Teclados actuales:\n" + controladorDominio.consultarNombresTeclados());
+        System.out.println("Introduce el nombre del nuevo teclado:");
+        String nombreTeclado = input.nextLine();
+    
+        System.out.println("Alfabetos actuales:\n" + controladorDominio.consultarNombresDeAlfabetos());
+        System.out.println("Introduce el nombre del alfabeto a utilizar:");
+        String idAlfabeto = input.nextLine();
+    
+        System.out.println("Introduce el texto para calcular frecuencias (ej: 'hola buenas tardes'):");
+        String textoFrecuencias = input.nextLine();
+    
+        System.out.println("Introduce la lista de palabras con frecuencias (ej: 'coche 20 perro 15 teclado 200'):");
+        String listaFrecuencias = input.nextLine();
+    
+        System.out.println("Introduce el nombre del algoritmo a utilizar (B&B o SA):\n" +
+                "NOTA: Los alfabetos con más de 12 caracteres pueden tardar +10 minutos" +
+                "con B&B.\n" + "Se recomienda SA en estos casos.");
+    
+        String algoritmo = input.nextLine();
+        boolean cancelarOperacion = false;
+    
+        while (!cancelarOperacion) {
+            try {
+                controladorDominio.creaTeclado(nombreTeclado, idAlfabeto, textoFrecuencias, listaFrecuencias, algoritmo);
+                cancelarOperacion = true;
+                System.out.println("¡Se ha creado el teclado \"" + nombreTeclado + "\" con éxito!");
+    
+                String keyboard = controladorDominio.consultarDistribucionDeTeclado(nombreTeclado);
+                System.out.println(keyboard);
+    
+            } catch (NombreAlfabetoNoValidoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("Recuerda que el alfabeto ha de existir antes de ser asignado.\n" +
+                        "¿Quieres intentar de nuevo?(s/n):");
+
+                cancelarOperacion = reintentarOperacionTeclado("alfabeto", nombreTeclado, "creado");
+                if (!cancelarOperacion) {
+                    idAlfabeto = input.nextLine();
+                }
+    
+            } catch (NombreTecladoDuplicadoExcepcion ntd) {
+                System.out.println(ntd.getMessage());
+                System.out.println("Recuerda que no puedes tener dos teclados con el mismo nombre.\n" +
+                        "¿Quieres intentar de nuevo?(s/n):");
+
+                cancelarOperacion = reintentarOperacionTeclado("nombre", nombreTeclado, "creado");
+                if (!cancelarOperacion) {
+                    nombreTeclado = input.nextLine();
+                }
+    
+            } catch (TipoAlgoritmoIncorrectoExcepcion e) {
+                System.out.println(e.getMessage());
+                System.out.println("Recuerda que el algoritmo ha de ser B&B o SA.\n" +
+                        "¿Quieres intentar de nuevo?(s/n):");
+
+                cancelarOperacion = reintentarOperacionTeclado("algoritmo", nombreTeclado, "creado");
+                if (!cancelarOperacion) {
+                    algoritmo = input.nextLine();
+                }
+    
+            } catch (FrecuenciaIncorrectaExcepcion fi) {
+                System.out.println(fi.getMessage());
+                System.out.println("El formato de la lista de frecuencias es por ejemplo : hola 20 adios 10\n"+
+                                    "¿Quieres intentar de nuevo y escoger un texto válido? (s/n):");
+
+                cancelarOperacion = reintentarOperacionTeclado("lista de palabras con frecuencias", nombreTeclado, "creado");
+                if (!cancelarOperacion) {
+                    listaFrecuencias = input.nextLine();
+                }
+    
+            } catch (NombreTecladoNoValidoExcepcion ntv) {
+                System.out.println(ntv.getMessage());
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                cancelarOperacion = reintentarOperacionTeclado("nombre", nombreTeclado, "creado");
+                if (!cancelarOperacion) {
+                    nombreTeclado = input.nextLine();
+                }
+            }
+        }
+    }
+    
+    public Boolean reintentarOperacionTeclado(String element, String name, String operacion) {
+        String response = input.nextLine();
+        if (response.equals("n")) {
+            System.out.println("El teclado \"" + name + "\" no ha sido "+ operacion +".\n");
+            return true;
+        } else if (response.equals("s")) {
+            System.out.println("Introduce nuevamente el " + element + " del teclado:");
+        }
+        if(!response.equals("n") && !response.equals("s")) {
+            System.out.println("El valor introducido no es válido.\n" + "volviendo al menú anterior...");
+        }
+        return true;
+    }
+    
     /**
      * Función modificadora que gira la posición de dos teclas existentes de un teclado
      */
 
     void FuncSwapTeclas() {
-
-        System.out.println("Teclados actuales:\n" +
-                controladorDominio.consultarNombresTeclados());
-
+        System.out.println("Teclados actuales:\n" + controladorDominio.consultarNombresTeclados());
+        
         System.out.println("Indica el nombre del teclado:");
-        int f1, c1, f2, c2;
-        boolean cancelarOperacion2 = false;
-
         String name = input.nextLine();
-
-        while (!cancelarOperacion2) {
+        boolean cancelarOperacion = false;
+    
+        while (!cancelarOperacion) {
             try {
                 String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
-
+    
                 System.out.println("Introduce el número de la fila y columna del primer elemento, y la fila y columna " +
-                        "del segundo elemento.\n" +
-                        "NOTA: Las filas y columnas se numeran desde 0");
-
-                f1 = input.nextInt();
-                c1 = input.nextInt();
-                f2 = input.nextInt();
-                c2 = input.nextInt();
+                                   "del segundo elemento.\n" + "NOTA: Las filas y columnas se numeran desde 0");
+    
+                // Input de las posiciones a intercambiar
+                int f1 = input.nextInt();
+                int c1 = input.nextInt();
+                int f2 = input.nextInt();
+                int c2 = input.nextInt();
                 input.nextLine();
+    
                 controladorDominio.intercambiarTeclasTeclado(name, f1, c1, f2, c2);
-                cancelarOperacion2 = true;
-                System.out.println("¡Se ha intercambiado las teclas del teclado \"" + name + "\" con éxito!\n Esta es la nueva distribución:");
+                cancelarOperacion = true;
+    
+                System.out.println("¡Se ha intercambiado las teclas del teclado \"" + name + 
+                                    "\" con éxito!\nEsta es la nueva distribución:");
+                
                 keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
+    
             } catch (InputMismatchException ime) {
                 input.nextLine();
                 System.out.println("El valor introducido no es un entero.");
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
-                String response = input.nextLine();
-
-                while (!response.equals("s") && !response.equals("n")) {
-                    System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
-                    response = input.nextLine();
-                }
-
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido modificado.\n");
-                    cancelarOperacion2 = true;
-                }
-
+                cancelarOperacion = reintentarOperacion();
             } catch (IndiceTeclaFueraDeRangoExcepcion itf) {
                 System.out.println(itf.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger una posición válida? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El teclado \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion2 = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente las posiciones de las teclas.\n");
-                }
+                cancelarOperacion = reintentarOperacion();
             } catch (NombreTecladoNoValidoExcepcion ntd) {
                 System.out.println("El teclado introducido no existe.");
                 System.out.println("¿Quieres intentar de nuevo y escoger una teclado válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("No se ha modificado ningún teclado\n");
-                    cancelarOperacion2 = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado:");
+                cancelarOperacion = reintentarOperacion();
+                if(!cancelarOperacion) {
+                    System.out.println("Introduce el nombre del teclado:");
                     name = input.nextLine();
                 }
             }
         }
     }
-
+    
+    private Boolean reintentarOperacion() {
+        String response = input.nextLine();
+        if (response.equals("n")) {
+            return true;
+            
+        } else if (response.equals("s")) {
+            return false;
+        }
+        if(!response.equals("n") && !response.equals("s")) {
+            System.out.println("El valor introducido no es válido.\n" + "Saliendo del menú...");
+        }
+        return true;
+    }
+    
     /**
      * Borra un teclado de los existentes en el sistema
      */
@@ -426,26 +608,29 @@ public class VistaTerminal {
             return;
         }
 
-        System.out.println("Teclados actuales:\n" +
-                controladorDominio.consultarNombresTeclados());
-
+        System.out.println("Teclados actuales:\n" + controladorDominio.consultarNombresTeclados());
         System.out.println("Introduce el nombre del teclado a borrar:");
+
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
             try {
-                String nameDel = input.nextLine();
-                controladorDominio.borrarTeclado(nameDel);
+
+                String name = input.nextLine();
+                controladorDominio.borrarTeclado(name);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha borrado el teclado \"" + nameDel + "\" con éxito!");
+                System.out.println("¡Se ha borrado el teclado \"" + name + "\" con éxito!");
+
             } catch (NombreTecladoNoValidoExcepcion ntd) {
+
                 System.out.println(ntd.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("No se ha borrado ningun teclado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado.\n");
+
+                cancelarOperacion = reintentarOperacion();
+                if  (!cancelarOperacion) {
+                    System.out.println("Introduce nuevamente el nombre del teclado a borrar:");
+                }
+                else {
+                    System.out.println("No se ha borrado ningún teclado.\n");
                 }
             }
         }
@@ -455,30 +640,34 @@ public class VistaTerminal {
      * Se muestra por pantalla la distribución del teclado, del cual se pasa su nombre por input
      */
     void FuncMostrarTeclado() {
+
         if (controladorDominio.consultarNombresTeclados().isEmpty()) {
             System.out.println("No tienes ningún teclado creado. Para poder mostrar, crea uno antes.");
             return;
         }
-
-        System.out.println("Teclados actuales:\n" +
-                controladorDominio.consultarNombresTeclados());
-
+        System.out.println("Teclados actuales:\n" + controladorDominio.consultarNombresTeclados());
         System.out.println("Introduce el nombre del teclado a mostrar:");
+
         boolean cancelarOperacion = false;
         while (!cancelarOperacion) {
             try {
+
                 String name = input.nextLine();
                 String keyboard = controladorDominio.consultarDistribucionDeTeclado(name);
                 System.out.println(keyboard);
                 cancelarOperacion = true;
+
             } catch (NombreTecladoNoValidoExcepcion ntd) {
+                
                 System.out.println(ntd.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
                 String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del teclado.\n");
+                cancelarOperacion = reintentarOperacion();
+                if  (!cancelarOperacion) {
+                    System.out.println("Introduce nuevamente el nombre del teclado a mostrar:");
+                }
+                else {
+                    System.out.println("No se ha mostrado ningún teclado.\n");
                 }
             }
         }
@@ -515,50 +704,46 @@ public class VistaTerminal {
      * Crea un nuevo alfabeto mediante un nombre y los caracteres que contendrá pasados por input
      */
 
-    void FuncCreacionAlfabeto() {
+     void FuncCreacionAlfabeto() {
+        // Solicitar nombre para el alfabeto
         System.out.println("Introduce el nombre que deseas asignar al alfabeto (ej: inglés):");
-        String name = input.nextLine();
-        System.out.println(
-                "Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
-        String idAlf = input.nextLine();
+        String nombreAlfabeto = input.nextLine();
+    
+        // Solicitar caracteres para el alfabeto
+        System.out.println("Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+        String caracteresAlfabeto = input.nextLine();
+    
         boolean cancelarOperacion = false;
+    
         while (!cancelarOperacion) {
             try {
-                controladorDominio.añadirAlfabeto(name, idAlf);
+                // Intentar anadir el alfabeto
+                controladorDominio.añadirAlfabeto(nombreAlfabeto, caracteresAlfabeto);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha creado el alfabeto \"" + name + "\" con éxito!");
+                System.out.println("¡Se ha creado el alfabeto \"" + nombreAlfabeto + "\" con éxito!");
+    
             } catch (NombreAlfabetoDuplicadoExcepcion nad) {
                 System.out.println(nad.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El alfabeto \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del alfabeto:");
-                    name = input.nextLine();
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre no duplicado? (s/n):");
+                cancelarOperacion = reintentarOperacionAlfabeto("nombre", nombreAlfabeto, "creado");
+                if (!cancelarOperacion) {
+                    nombreAlfabeto = input.nextLine();
                 }
+    
             } catch (NoHayCaracteresExcepcion nae) {
                 System.out.println(nae.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger caracteres diferentes? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El alfabeto \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente los caracteres del alfabeto:");
-                    idAlf = input.nextLine();
+                System.out.println("¿Quieres intentar de nuevo y escoger caracteres validos? (s/n):");
+                cancelarOperacion = reintentarOperacionAlfabeto("caracteres", caracteresAlfabeto, "creado");
+                if (!cancelarOperacion) {
+                    caracteresAlfabeto = input.nextLine();
                 }
+    
             } catch (NombreAlfabetoNoValidoExcepcion nae) {
                 System.out.println(nae.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El alfabeto \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del alfabeto:");
-                    name = input.nextLine();
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre valido? (s/n):");
+                cancelarOperacion = reintentarOperacionAlfabeto( "nombre", nombreAlfabeto, "creado");
+                if (!cancelarOperacion) {
+                    nombreAlfabeto = input.nextLine();
                 }
             }
         }
@@ -568,49 +753,49 @@ public class VistaTerminal {
      * Modifica la lista de símbolos de uno de los alfabetos creados
      */
 
-    void FuncModificarAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
-        if (alfabetos.isEmpty()) {
+     void FuncModificarAlfabeto() {
+        // Consultar alfabetos existentes
+        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder modificar, crea uno antes.");
             return;
         } else {
             System.out.println("Estos son los alfabetos que existen:");
-            System.out.println(alfabetos);
+            System.out.println(nombresAlfabetos);
         }
+    
         boolean cancelarOperacion = false;
+    
+        // Solicitar nombre del alfabeto a modificar
         System.out.println("Introduce el nombre del alfabeto a modificar:");
-        String name = input.nextLine();
-        System.out.println(
-                "Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
-        String idAlf = input.nextLine();
+        String nombreAlfabeto = input.nextLine();
+    
+        // Solicitar nuevos caracteres para el alfabeto
+        System.out.println("Introduce los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
+        String nuevosCaracteres = input.nextLine();
+    
         while (!cancelarOperacion) {
             try {
-                controladorDominio.modificarAlfabeto(name, idAlf);
+                // Intentar modificar el alfabeto
+                controladorDominio.modificarAlfabeto(nombreAlfabeto, nuevosCaracteres);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha modificado el alfabeto \"" + name + "\" con éxito!\nEstos son los nuevos caracteres que contiene:");
-                System.out.println(controladorDominio.consultarCaracteresAlfabeto(name));
+                System.out.println("¡Se ha modificado el alfabeto \"" + nombreAlfabeto + "\" con éxito!\nEstos son los nuevos caracteres que contiene:");
+                System.out.println(controladorDominio.consultarCaracteresAlfabeto(nombreAlfabeto));
+    
             } catch (NombreAlfabetoNoValidoExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("No se ha modificado ningún alfabeto.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del alfabeto a modificar:");
-                    name = input.nextLine();
+                cancelarOperacion = reintentarOperacionAlfabeto("nombre", nombreAlfabeto, "modificado");
+                if (!cancelarOperacion) {
+                    nombreAlfabeto = input.nextLine();
                 }
+    
             } catch (NoHayCaracteresExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger caracteres diferentes? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("El alfabeto \"" + name + "\" no ha sido creado.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println(
-                            "Introduce nuevamente los caracteres que quieres que contenga,\ntodos juntos y sin espacios (ej: abcdef):");
-                    idAlf = input.nextLine();
+                cancelarOperacion = reintentarOperacionAlfabeto("caracteres", nuevosCaracteres, "modificado");
+                if (!cancelarOperacion) {
+                    nuevosCaracteres = input.nextLine();
                 }
             }
         }
@@ -620,151 +805,91 @@ public class VistaTerminal {
      * Borra uno de los alfabetos especificados por el input
      */
 
-    void FuncBorrarAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
-        if (alfabetos.isEmpty()) {
+     void FuncBorrarAlfabeto() {
+        // Consultar alfabetos existentes
+        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder borrar, crea uno antes.");
             return;
         } else {
             System.out.println("Estos son los alfabetos que existen:");
-            System.out.println(alfabetos);
+            System.out.println(nombresAlfabetos);
         }
-        System.out.println("Introduce el nombre del alfabeto a borrar:");
+    
         boolean cancelarOperacion = false;
+    
+        // Solicitar nombre del alfabeto a borrar
+        System.out.println("Introduce el nombre del alfabeto a borrar:");
+        String nombreAlfabeto = input.nextLine();
+    
         while (!cancelarOperacion) {
             try {
-                String name = input.nextLine();
-                controladorDominio.eliminarAlfabeto(name);
+                // Intentar borrar el alfabeto
+                controladorDominio.eliminarAlfabeto(nombreAlfabeto);
                 cancelarOperacion = true;
-                System.out.println("¡Se ha borrado el alfabeto \"" + name + "\" con éxito!");
+                System.out.println("¡Se ha borrado el alfabeto \"" + nombreAlfabeto + "\" con éxito!");
+    
             } catch (NombreAlfabetoNoValidoExcepcion nae) {
                 System.out.println(nae.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger con un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    System.out.println("No se ha borrado ningún alfabeto.\n");
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del alfabeto a borrar:");
+                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
+                cancelarOperacion = reintentarOperacionAlfabeto("nombre", nombreAlfabeto, "borrado");
+                if (!cancelarOperacion) {
+                    nombreAlfabeto = input.nextLine();
                 }
             }
         }
     }
-
+    
     /**
      * Muestra los caracteres de los que se compone uno de los alfabetos
      */
 
-    void FuncMostrarCaracteresAlfabeto() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
-        if (alfabetos.isEmpty()) {
+     void FuncMostrarCaracteresAlfabeto() {
+        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        
+        if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado.");
             return;
         }
+        
         System.out.println("Introduce el nombre del alfabeto del que quieres ver los caracteres:");
+        String nombreAlfabeto = input.nextLine();
         boolean cancelarOperacion = false;
+        
         while (!cancelarOperacion) {
             try {
-                String name = input.nextLine();
-                String alfabeto = controladorDominio.consultarCaracteresAlfabeto(name);
-                System.out.println("Los caracteres del alfabeto \"" + name + "\" son: " + alfabeto);
+                String caracteresAlfabeto = controladorDominio.consultarCaracteresAlfabeto(nombreAlfabeto);
+                System.out.println("Los caracteres del alfabeto \"" + nombreAlfabeto + "\" son: " + caracteresAlfabeto);
                 cancelarOperacion = true;
             } catch (NombreAlfabetoNoValidoExcepcion nae) {
                 System.out.println(nae.getMessage());
                 System.out.println("¿Quieres intentar de nuevo y escoger con un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                } else if (response.equals("s")) {
-                    System.out.println("Introduce nuevamente el nombre del alfabeto a consultar:");
+                cancelarOperacion = reintentarOperacionAlfabeto("nombre", nombreAlfabeto, "consultado");
+                if (!cancelarOperacion) {
+                    nombreAlfabeto = input.nextLine();
                 }
             }
         }
     }
 
-    /**
-     * Función que permite a un usuario iniciar sesión en el sistema
-     */
-    boolean FuncIniciarSesion () {
-        System.out.println("----- Iniciar Sesión -----");
-        boolean cancelarOperacion = false;
-        boolean usuarioIdentificado = false;
-        System.out.println("Introduce el nombre de usuario:");
-        String nombreUsuario = input.nextLine();
-        System.out.println("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        while (!cancelarOperacion) {
-            try{
-                usuarioIdentificado = controladorDominio.IniciarSesion(nombreUsuario, contraseña);
-                cancelarOperacion = true;
-            } catch (NombreUsuarioNoValidoExcepcion e) {
-                System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                }
-                else {
-                    System.out.println("Introduce nuevamente el nombre de usuario:");
-                    nombreUsuario = input.nextLine();
-                }
-            } catch (ContrasenaNoValidaExcepcion e) {
-                System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                }
-                else {
-                    System.out.println("Introduce nuevamente la contraseña:");
-                    contraseña = input.nextLine();
-                }
-            }
+    // Función para manejar casos de reintento
+    public Boolean reintentarOperacionAlfabeto(String elementoDelAlfabeto, String nombreAlfabeto, String operacion) {
+        String respuesta = input.nextLine();
+        if (respuesta.equals("n")) {
+            System.out.println("El alfabeto \"" + nombreAlfabeto + "\" no ha sido " + operacion + ".\n");
+            return true;
+    
+        } else if (respuesta.equals("s")) {
+            System.out.println("Introduce nuevamente el " + elementoDelAlfabeto + " del alfabeto:");
+            return false;
         }
-        return usuarioIdentificado;
-    }
-
-    void FuncRegistrarse () {
-        System.out.println("----- Registrarse -----");
-        boolean cancelarOperacion = false;
-        System.out.println("Introduce el nombre de usuario:");
-        String nombreUsuario = input.nextLine();
-        System.out.println("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        while (!cancelarOperacion) {
-            try{
-                controladorDominio.añadirUsuario(nombreUsuario, contraseña);
-                cancelarOperacion = true;
-                System.out.println("¡Se ha registrado el usuario \"" + nombreUsuario + "\" con éxito!");
-                FuncCargarDatos();
-            } catch (NombreUsuarioNoValidoExcepcion e) {
-                System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger un nombre válido? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                }
-                else {
-                    System.out.println("Introduce nuevamente el nombre de usuario:");
-                    nombreUsuario = input.nextLine();
-                }
-            } catch (ContrasenaNoValidaExcepcion e) {
-                System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
-                String response = input.nextLine();
-                if (response.equals("n")) {
-                    cancelarOperacion = true;
-                }
-                else {
-                    System.out.println("Introduce nuevamente la contraseña:");
-                    contraseña = input.nextLine();
-                }
-            } catch (EscrituraIncorrectaFicheroExcepcion e) {
-                System.out.println(e.getMessage());
-            }
+        if(!respuesta.equals("n") && !respuesta.equals("s")) {
+            System.out.println("El valor introducido no es válido.\n" + "volviendo al menú anterior...");
         }
+        return true;
     }
-
+    
+    
     void FuncCargarDatos() {
         boolean completaCarga = false;
         while (!completaCarga) {            
