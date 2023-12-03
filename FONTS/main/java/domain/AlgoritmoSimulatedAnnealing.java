@@ -35,7 +35,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     /**
      * Número de caractéres
      */
-    private int n;
+    private int numCaracteres;
 
     /**
      * Número de filas de la distribución
@@ -52,6 +52,8 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
     private double mejorCosteTotal;
 
+    private double costeIni;
+
     /**
      * Matriz con la mejor distribución del teclado
      */
@@ -61,6 +63,16 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      * Mapa que guarda la distribución para luego convertirla en la matriz a retornar
      */
     private Map<Character, Integer> mejorDistribucion;
+
+    private Random rand;
+
+    public AlgoritmoSimulatedAnnealing(){
+        rand = new Random();
+    }
+
+    public AlgoritmoSimulatedAnnealing(long seedValue) {
+        rand = new Random(seedValue);
+    }
 
 
     /**
@@ -99,8 +111,8 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
 
     private void procesarInput(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        n = alf.getCaracteres().size();
-        inicializarFrecuenciasCjts(alf, palabras, texto);
+        numCaracteres = alf.getCaracteres().size();
+        inicializarBigramasConFrecuencia(alf, palabras, texto);
         inicializarPosiciones();
         inicializarDistancias();
         inicializarCaracteres(alf);
@@ -122,18 +134,20 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
         // cada posición representa a donde iría el símbolo en la configuración final.
         // Posición 0, valor 3 significa
         // que el caracter 0 va en la posición 3 del teclado
-        int[] mejorActual = new int[n];
+        int[] mejorActual = new int[numCaracteres];
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < numCaracteres; ++i) {
             mejorActual[i] = i;
         }
 
         double costeActual = 0.0;
+        costeIni = 0.0;
 
         costeActual = calculoCoste(mejorActual);
 
         if (costeActual < mejorCosteTotal)
             mejorCosteTotal = costeActual;
+            costeIni = mejorCosteTotal;
 
         // valores de temperatura e iteraciones por valor de temperatura
 
@@ -141,22 +155,20 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
 
         int iters = 10000;
 
-        int[] valActual = new int[n];
-
-        Random rand = new Random();
+        int[] valActual = new int[numCaracteres];
 
         while (T > 1.0) {
             for (int i = 0; i < iters; ++i) {
                 costeActual = 0.0;
 
-                System.arraycopy(mejorActual, 0, valActual, 0, n);
+                System.arraycopy(mejorActual, 0, valActual, 0, numCaracteres);
 
-                int a = rand.nextInt(n);
+                int a = rand.nextInt(numCaracteres);
 
-                int b = rand.nextInt(n);
+                int b = rand.nextInt(numCaracteres);
 
                 while (b == a) {
-                    b = rand.nextInt(n);
+                    b = rand.nextInt(numCaracteres);
                 }
 
                 int temp = mejorActual[a];
@@ -169,20 +181,20 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
 
                 if (costeActual < mejorCosteTotal) {
                     mejorCosteTotal = costeActual;
-                    System.arraycopy(valActual, 0, mejorActual, 0, n);
+                    System.arraycopy(valActual, 0, mejorActual, 0, numCaracteres);
                 } else {
                     double prob = Math.pow(Math.E, (mejorCosteTotal - costeActual) / T);
 
-                    if (prob > Math.random()) {
+                    if (prob > rand.nextDouble()) {
                         mejorCosteTotal = costeActual;
-                        System.arraycopy(valActual, 0, mejorActual, 0, n);
+                        System.arraycopy(valActual, 0, mejorActual, 0, numCaracteres);
                     }
                 }
             }
 
             T *= 0.9;
         }
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < numCaracteres; ++i) {
             mejorDistribucion.put(caracteres[i], mejorActual[i]);
         }
     }
@@ -196,8 +208,8 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
 
     private double calculoCoste(int[] valActual) {
         double costeActual = 0.0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
+        for (int i = 0; i < numCaracteres; ++i) {
+            for (int j = i + 1; j < numCaracteres; ++j) {
                 costeActual += calcularCosteEntreDosCaracteres(caracteres[i], valActual[i], caracteres[j],
                         valActual[j]);
             }
@@ -213,7 +225,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      * @param texto    Texto para analizar.
      */
 
-    private void inicializarFrecuenciasCjts(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
+    private void inicializarBigramasConFrecuencia(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
         // Process the input parameters (alf, palabras, texto) and generate
         // frecuenciasCjts
         frecuenciasCjts = new HashMap<>();
@@ -223,14 +235,28 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
         ArrayList<Character> alfChar = new ArrayList<Character>();
         alfChar = alf.getCaracteres();
 
+        guardarBigramas(alfChar);
+
+        String Texto = texto.getTexto();
+
+        contarBigramasTexto(Texto);
+
+        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
+
+        ListaPal = palabras.getMap();
+
+        contarBigramasListaPalabras(ListaPal);
+    }
+
+    private void guardarBigramas(ArrayList<Character> alfChar) {
         for (int i = 0; i < alfChar.size(); ++i) {
             for (int j = i + 1; j < alfChar.size(); ++j) {
                 frecuenciasCjts.put("" + alfChar.get(i) + alfChar.get(j), 0);
             }
         }
-        String Texto = texto.getTexto();
-        String TextoN = Texto.replaceAll("\\s", "");
+    }
 
+    private void contarBigramasTexto(String Texto) {
         for (int i = 0; i < Texto.length() - 1; ++i) {
             String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
             if (frecuenciasCjts.containsKey(a))
@@ -243,13 +269,9 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
                     frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
             }
         }
+    }
 
-        total = TextoN.length() - 1 - (Texto.length() - TextoN.length());
-
-        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
-
-        ListaPal = palabras.getMap();
-
+    private void contarBigramasListaPalabras(Map<String,Integer> ListaPal) {
         for (Map.Entry<String, Integer> entry : ListaPal.entrySet()) {
             String pal = entry.getKey();
             Integer num = entry.getValue();
@@ -265,7 +287,6 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
                         frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
                 }
             }
-            total += (pal.length() - 1) * num;
         }
     }
 
@@ -274,19 +295,19 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
 
     private void inicializarPosiciones() {
-        posiciones = new Posicion[n];
-        if (n <= 2) {
+        posiciones = new Posicion[numCaracteres];
+        if (numCaracteres <= 2) {
             rows = 1;
-            cols = n;
-        } else if (n <= 6) {
+            cols = numCaracteres;
+        } else if (numCaracteres <= 6) {
             rows = 2;
-            cols = (int) Math.ceil((double) n / (double) rows);
+            cols = (int) Math.ceil((double) numCaracteres / (double) rows);
         } else {
             rows = 3;
-            cols = (int) Math.ceil((double) n / (double) rows);
+            cols = (int) Math.ceil((double) numCaracteres / (double) rows);
         }
         Posicion p = new Posicion(0, 0);
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < numCaracteres; ++i) {
             posiciones[i] = new Posicion(p);
             if (p.col < cols - 1)
                 ++p.col;
@@ -320,9 +341,9 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
 
     private void inicializarCaracteres(Alfabeto alf) {
-        caracteres = new char[n];
+        caracteres = new char[numCaracteres];
         ArrayList<Character> car = alf.getCaracteres();
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < numCaracteres; ++i) {
             caracteres[i] = car.get(i);
         }
     }
@@ -355,4 +376,17 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
             return "" + c1 + c2;
         return "" + c2 + c1;
     }
+
+    public Map<String, Integer> getFrecuenciasCjts() {
+        return frecuenciasCjts;
+    }
+
+    public double getMejorCosteTotal() {
+        return this.mejorCosteTotal;
+    }
+
+    public double getCosteInicial() {
+        return this.costeIni;
+    }
+
 }
