@@ -47,11 +47,11 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @return Matriz de caracteres que representa la distribucion optima.
      */
     @Override
-    public char[][] generarDistribucion(Alfabeto alfabeto, PalabrasConFrecuencia palabras, Texto texto) {
+    public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
         this.numInstancias = alfabeto.getCaracteres().size();
 
         if (numInstancias > 1) {
-            HashMap<String, Integer> frecuenciasBigrama = obtenerFrecuenciasBigramas(alfabeto, palabras, texto);
+            Map<String, Integer> frecuenciasBigrama = bigramasConFrecuencia;
             char[] caracteres = obtenerCaracteres(alfabeto);
             inicializarMatrizFrecuencias(frecuenciasBigrama, caracteres);
 
@@ -78,70 +78,6 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      */
     public double getMejorCosteTotal() {
         return this.mejorCosteTotal;
-    }
-
-    /**
-     * Obtiene las frecuencias de los bigramas en el texto.
-     * 
-     * @param alfabeto Alfabeto a utilizar.
-     * @param palabras Palabras con sus frecuencias.
-     * @param texto    Texto para analizar.
-     * @return Mapa con las frecuencias de los bigramas.
-     */
-    private HashMap<String, Integer> obtenerFrecuenciasBigramas(Alfabeto alfabeto, PalabrasConFrecuencia palabras,
-            Texto texto) {
-        HashMap<String, Integer> frecuenciasBigrama = new HashMap<>();
-
-        int total = 0; // total de caractéres
-
-        ArrayList<Character> alfChar = new ArrayList<Character>();
-        alfChar = alfabeto.getCaracteres();
-
-        for (int i = 0; i < alfChar.size(); ++i) {
-            for (int j = i + 1; j < alfChar.size(); ++j) {
-                frecuenciasBigrama.put("" + alfChar.get(i) + alfChar.get(j), 0);
-            }
-        }
-        String Texto = texto.getTexto();
-        String TextoN = Texto.replaceAll("\\s", "");
-
-        for (int i = 0; i < Texto.length() - 1; ++i) {
-            String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
-            if (frecuenciasBigrama.containsKey(a))
-                frecuenciasBigrama.put(a, frecuenciasBigrama.get(a) + 1);
-            else {
-                StringBuffer b = new StringBuffer(a);
-                b.reverse();
-                String c = b.toString();
-                if (frecuenciasBigrama.containsKey(c))
-                    frecuenciasBigrama.put(c, frecuenciasBigrama.get(c) + 1);
-            }
-        }
-
-        total = TextoN.length() - 1 - (Texto.length() - TextoN.length());
-
-        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
-
-        ListaPal = palabras.getMap();
-
-        for (Map.Entry<String, Integer> entry : ListaPal.entrySet()) {
-            String pal = entry.getKey();
-            Integer num = entry.getValue();
-            for (int j = 0; j < pal.length() - 1; ++j) {
-                String a = "" + pal.charAt(j) + pal.charAt(j + 1);
-                if (frecuenciasBigrama.containsKey(a))
-                    frecuenciasBigrama.put(a, frecuenciasBigrama.get(a) + num);
-                else {
-                    StringBuffer b = new StringBuffer(a);
-                    b.reverse();
-                    String c = b.toString();
-                    if (frecuenciasBigrama.containsKey(c))
-                        frecuenciasBigrama.put(c, frecuenciasBigrama.get(c) + num);
-                }
-            }
-            total += (pal.length() - 1) * num;
-        }
-        return frecuenciasBigrama;
     }
 
     /**

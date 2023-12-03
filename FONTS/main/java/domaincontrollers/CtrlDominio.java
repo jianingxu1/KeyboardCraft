@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Clase CtrlDominio
@@ -109,12 +110,14 @@ public class CtrlDominio {
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
 		if (algoritmo.equals("B&B")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
-			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, text);
+			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
 		} else if (algoritmo.equals("SA")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSimulatedAnnealing());
-			distribucion = gdt.generarDistribucion(alfabeto, palabras, text);
-
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, text);
+			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
 		}
+		
 		// Se añade el teclado con la distribucion generada
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}

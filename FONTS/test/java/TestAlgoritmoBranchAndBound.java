@@ -1,9 +1,12 @@
 import static org.junit.Assert.*;
 
+import java.util.Map;
+
 import domain.Alfabeto;
 import domain.AlgoritmoBranchAndBound;
 import domain.PalabrasConFrecuencia;
 import domain.Texto;
+import domain.CalculadoraBigramasConFrecuencia;
 import org.junit.Test;
 
 /**
@@ -12,15 +15,15 @@ import org.junit.Test;
  * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
-
 public class TestAlgoritmoBranchAndBound {
     @Test
     public void testGenerarDistribucion() {
         AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
-        Alfabeto alf = new Alfabeto("ingles", "abcdefg");
-        PalabrasConFrecuencia pal = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200");
+        Alfabeto alfabeto = new Alfabeto("ingles", "abcdefg");
+        PalabrasConFrecuencia palabras = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200");
         Texto texto = new Texto();
-        char[][] distribucion = alg.generarDistribucion(alf, pal, texto);
+        Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, texto);
+        char[][] distribucion = alg.generarDistribucion(alfabeto, bigramasConFrecuencia);
 
         System.out.println("coste: " + alg.getMejorCosteTotal());
         for (int i = 0; i < distribucion.length; ++i) {

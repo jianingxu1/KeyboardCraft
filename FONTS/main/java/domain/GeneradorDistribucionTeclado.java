@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Map;
+
 /**
  * Clase GeneradorDistribucionTeclado
  * Representa una clase para generar distribuciones de teclado con la opcion
@@ -28,8 +30,8 @@ public class GeneradorDistribucionTeclado {
    * @param texto    Texto a analizar
    * @return La distribucion de caracteres en una matriz generada por el algoritmo
    */
-  public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-    return algoritmo.generarDistribucion(alf, palabras, texto);
+  public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
+    return algoritmo.generarDistribucion(alfabeto, bigramasConFrecuencia);
   }
 
   /**

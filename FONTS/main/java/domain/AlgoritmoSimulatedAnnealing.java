@@ -15,7 +15,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     /**
      * Mapa que guarda la frecuencia de los bigramas
      */
-    private Map<String, Integer> frecuenciasCjts;
+    private Map<String, Integer> bigramasConFrecuencia;
 
     /**
      * Array de las posiciones del teclado
@@ -73,20 +73,18 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     public AlgoritmoSimulatedAnnealing(long seedValue) {
         rand = new Random(seedValue);
     }
-
-
+    
     /**
      * Función que llama a los métodos necesarios para generar una distribución del teclado
-     * @param alf Alfabeto del que se extraen los caractéres
-     * @param palabras lista de palabras con frecuencia para el cálculo de frecuencia de bigramas
-     * @param texto contiene un String utilizado en el cálculo de frecuencias de bigramas
+     * @param alfabeto Alfabeto del que se extraen los caractéres
+     * @param bigramasConFrecuencia Mapa que guarda la frecuencia de los bigramas
      * @return Matriz de caractéres con la distribución optimizada (no necesariamente la mejor) del teclado
      */
     @Override
-    public char[][] generarDistribucion(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-
-        if (alf.getCaracteres().size() > 1) {
-            procesarInput(alf, palabras, texto);
+    public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
+        if (alfabeto.getCaracteres().size() > 1) {
+            this.bigramasConFrecuencia = bigramasConFrecuencia;
+            inicializar(alfabeto);
             distribucion = new char[rows][cols];
             for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
                 char c = entry.getKey();
@@ -94,31 +92,25 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
                 distribucion[p.fila][p.col] = c;
             }
         }
-
         else {
             distribucion = new char[1][10];
-            distribucion[0][0] = alf.getCaracteres().get(0);
+            distribucion[0][0] = alfabeto.getCaracteres().get(0);
         }
-
         return distribucion;
     }
 
     /**
      * Procesa los diferentes parámetros de la entrada y llama a la función que genera la distribución
      * @param alf Alfabeto del que se extraen los caractéres
-     * @param palabras lista de palabras con frecuencia para el cálculo de frecuencia de bigramas
-     * @param texto contiene un String utilizado en el cálculo de frecuencias de bigramas
      */
 
-    private void procesarInput(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        numCaracteres = alf.getCaracteres().size();
-        inicializarBigramasConFrecuencia(alf, palabras, texto);
+    private void inicializar(Alfabeto alfabeto) {
+        numCaracteres = alfabeto.getCaracteres().size();
         inicializarPosiciones();
         inicializarDistancias();
-        inicializarCaracteres(alf);
+        inicializarCaracteres(alfabeto);
         mejorCosteTotal = Double.MAX_VALUE;
         mejorDistribucion = new HashMap<>();
-
         SimulatedAnnealing();
     }
 
@@ -218,82 +210,8 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     }
 
     /**
-     * Obtiene las frecuencias de los bigramas en el texto.
-     *
-     * @param alf      Alfabeto a utilizar.
-     * @param palabras Palabras con sus frecuencias.
-     * @param texto    Texto para analizar.
-     */
-
-    private void inicializarBigramasConFrecuencia(Alfabeto alf, PalabrasConFrecuencia palabras, Texto texto) {
-        // Process the input parameters (alf, palabras, texto) and generate
-        // frecuenciasCjts
-        frecuenciasCjts = new HashMap<>();
-
-        int total = 0; // total de caractéres
-
-        ArrayList<Character> alfChar = new ArrayList<Character>();
-        alfChar = alf.getCaracteres();
-
-        guardarBigramas(alfChar);
-
-        String Texto = texto.getTexto();
-
-        contarBigramasTexto(Texto);
-
-        Map<String, Integer> ListaPal = new LinkedHashMap<String, Integer>();
-
-        ListaPal = palabras.getMap();
-
-        contarBigramasListaPalabras(ListaPal);
-    }
-
-    private void guardarBigramas(ArrayList<Character> alfChar) {
-        for (int i = 0; i < alfChar.size(); ++i) {
-            for (int j = i + 1; j < alfChar.size(); ++j) {
-                frecuenciasCjts.put("" + alfChar.get(i) + alfChar.get(j), 0);
-            }
-        }
-    }
-
-    private void contarBigramasTexto(String Texto) {
-        for (int i = 0; i < Texto.length() - 1; ++i) {
-            String a = "" + Texto.charAt(i) + Texto.charAt(i + 1);
-            if (frecuenciasCjts.containsKey(a))
-                frecuenciasCjts.put(a, frecuenciasCjts.get(a) + 1);
-            else {
-                StringBuffer b = new StringBuffer(a);
-                b.reverse();
-                String c = b.toString();
-                if (frecuenciasCjts.containsKey(c))
-                    frecuenciasCjts.put(c, frecuenciasCjts.get(c) + 1);
-            }
-        }
-    }
-
-    private void contarBigramasListaPalabras(Map<String,Integer> ListaPal) {
-        for (Map.Entry<String, Integer> entry : ListaPal.entrySet()) {
-            String pal = entry.getKey();
-            Integer num = entry.getValue();
-            for (int j = 0; j < pal.length() - 1; ++j) {
-                String a = "" + pal.charAt(j) + pal.charAt(j + 1);
-                if (frecuenciasCjts.containsKey(a))
-                    frecuenciasCjts.put(a, frecuenciasCjts.get(a) + num);
-                else {
-                    StringBuffer b = new StringBuffer(a);
-                    b.reverse();
-                    String c = b.toString();
-                    if (frecuenciasCjts.containsKey(c))
-                        frecuenciasCjts.put(c, frecuenciasCjts.get(c) + num);
-                }
-            }
-        }
-    }
-
-    /**
      * Inicializa el array de posiciones y calcula cuantas filas y columans requerirá la distribución
      */
-
     private void inicializarPosiciones() {
         posiciones = new Posicion[numCaracteres];
         if (numCaracteres <= 2) {
@@ -360,7 +278,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     private double calcularCosteEntreDosCaracteres(char c1, int posIndex1, char c2, int posIndex2) {
         double distancia = distancias[posIndex1][posIndex2];
         String key = calcularKey(c1, c2);
-        double frec = (double) frecuenciasCjts.get(key);
+        double frec = (double) bigramasConFrecuencia.get(key);
         return frec * distancia;
     }
 
@@ -372,13 +290,13 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
 
     private String calcularKey(char c1, char c2) {
-        if (frecuenciasCjts.containsKey("" + c1 + c2))
+        if (bigramasConFrecuencia.containsKey("" + c1 + c2))
             return "" + c1 + c2;
         return "" + c2 + c1;
     }
 
-    public Map<String, Integer> getFrecuenciasCjts() {
-        return frecuenciasCjts;
+    public Map<String, Integer> getBigramasConFrecuencia() {
+        return bigramasConFrecuencia;
     }
 
     public double getMejorCosteTotal() {
