@@ -54,6 +54,7 @@ public class VistaTerminal {
 
          System.out.println("-------- Menú de inicio de sesión --------");
          System.out.println("1. Iniciar sesión\n2. Registrarse\n\n0. Salir del programa");
+         System.out.println("------------------------------------------");
          seleccionIniciarSesion();
     }
 
@@ -106,7 +107,7 @@ public class VistaTerminal {
         
         System.out.println("Introduce el nombre de usuario:");
         String nombreUsuario = input.nextLine();
-        System.out.println("Introduce la contrasena:");
+        System.out.println("Introduce la contraseña:");
         String contrasena = input.nextLine();
 
         while (!cancelarOperacion) {
@@ -123,8 +124,8 @@ public class VistaTerminal {
                 }
             } catch (ContrasenaNoValidaExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
-                cancelarOperacion = reintentarOperacionUsuario("contrasena", "iniciado sesión");
+                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("contraseña", "iniciado sesión");
                 if (!cancelarOperacion) {
                     contrasena = input.nextLine();
                 }
@@ -141,7 +142,7 @@ public class VistaTerminal {
         while (!cancelarOperacion) {
             System.out.println("Introduce el nombre de usuario:");
             String nombreUsuario = input.nextLine();
-            System.out.println("Introduce la contrasena:");
+            System.out.println("Introduce la contraseña:");
             String contrasena = input.nextLine();
     
             try {
@@ -158,8 +159,8 @@ public class VistaTerminal {
                 }
             } catch (ContrasenaNoValidaExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
-                cancelarOperacion = reintentarOperacionUsuario("contrasena", "registrado");
+                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
+                cancelarOperacion = reintentarOperacionUsuario("contraseña", "registrado");
                 if (!cancelarOperacion) {
                     contrasena = input.nextLine();
                 }
@@ -380,9 +381,9 @@ public class VistaTerminal {
         while (!cancelarOperacion) {
             System.out.println("Introduce el nombre de usuario:");
             String nombreUsuario = input.nextLine();
-            System.out.println("Introduce la contrasena actual:");
+            System.out.println("Introduce la contraseña actual:");
             String contrasenaActual = input.nextLine();
-            System.out.println("Introduce la nueva contrasena:");
+            System.out.println("Introduce la nueva contraseña:");
             String contrasenaNueva = input.nextLine();
 
             try {
@@ -391,7 +392,7 @@ public class VistaTerminal {
                 System.out.println("¡Se ha modificado la contraseña con éxito!");
             } catch (ContrasenaNoValidaExcepcion e) {
                 System.out.println(e.getMessage());
-                System.out.println("¿Quieres intentar de nuevo y escoger una contrasena válida? (s/n):");
+                System.out.println("¿Quieres intentar de nuevo y escoger una contraseña válida? (s/n):");
                 cancelarOperacion = reintentarOperacionUsuario("contraseña", "modificado la contraseña");
                 if (!cancelarOperacion) {
                     contrasenaNueva = input.nextLine();
@@ -555,6 +556,7 @@ public class VistaTerminal {
         }
         if(!response.equals("n") && !response.equals("s")) {
             System.out.println("El valor introducido no es válido.\n" + "volviendo al menú anterior...");
+            return true;
         }
         return false;
     }
