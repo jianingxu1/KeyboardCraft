@@ -51,45 +51,47 @@ public class VistaTerminal {
     }
     
     public void menuIniciarSesion() {
+
+         System.out.println("-------- Menú de inicio de sesión --------");
+         System.out.println("1. Iniciar sesión\n2. Registrarse\n\n0. Salir del programa");
+         seleccionIniciarSesion();
+    }
+
+    private void seleccionIniciarSesion() {
+
+        boolean usuarioIdentificado = false;
+
         int opcion = -1;
-    
-        while (opcion != 0) {
-            boolean usuarioIdentificado = false;
-    
-            System.out.println("-------- Menú de inicio de sesión --------");
-            System.out.println("1. Iniciar sesión\n2. Registrarse\n\n0. Salir del programa");
-    
-            try {
-                opcion = input.nextInt();
-                input.nextLine();
-            } catch (InputMismatchException ime) {
-                System.out.println("Error: Ingrese un valor entero válido.\n");
-                input.nextLine();
-                continue;
-            }
-    
-            switch (opcion) {
-                case 1:
-                    usuarioIdentificado = FuncIniciarSesion();
-                    break;
-                case 2:
-                    FuncRegistrarse();
-                    break;
-                case 0:
-                    System.out.println("Cerrando programa...");
-                    FuncEscribirUsuarios();
-                    break;
-                default:
-                    System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
-            }
-    
-            if (usuarioIdentificado) {
-                System.out.println("¡Bienvenido " + controladorDominio.getNombreUsuario() + "!");
-                if (opcion != 0) {
-                    menuPrincipal();
-                }
+
+        try {
+            opcion = input.nextInt();
+            input.nextLine();
+        } catch (InputMismatchException ime) {
+            input.nextLine();
+        }
+
+        switch (opcion) {
+        case 1:
+            usuarioIdentificado = FuncIniciarSesion();
+            break;
+        case 2:
+            FuncRegistrarse();
+            break;
+        case 0:
+            System.out.println("Cerrando programa...");
+            FuncEscribirUsuarios();
+            return;
+        default:
+            System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
+        }
+
+        if (usuarioIdentificado) {
+            System.out.println("¡Bienvenido " + controladorDominio.getNombreUsuario() + "!");
+            if (opcion != 0) {
+                menuPrincipal();
             }
         }
+        else menuIniciarSesion();
     }
 
     /**
@@ -199,159 +201,165 @@ public class VistaTerminal {
 
     public void menuPrincipal() {
         FuncCargarDatos();
-        int opcionPrincipal = -1;
-    
-        while (opcionPrincipal != 0) {
-            System.out.println("-------- Menú Principal --------");
-            System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sesión\n4. Gestionar Usuario\n\n0. Salir del programa");
-            System.out.println("--------------------------------");
+        System.out.println("-------- Menú Principal --------");
+        System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sesión\n4. Gestionar Usuario\n\n0. Salir del programa");
+        System.out.println("--------------------------------");
+        seleccionMenuPrincipal();
+    }
 
-            try {
-                opcionPrincipal = input.nextInt();
-            } catch (InputMismatchException ime) {
-                System.out.println("Error: El valor introducido no es un entero.");
-                input.nextLine();
-                continue;
-            }
-    
-            switch (opcionPrincipal) {
-                case 1:
-                    gestionarTeclados();
-                    break;
-                case 2:
-                    gestionarAlfabetos();
-                    break;
-                case 3:
-                    cerrarSesion();
-                    break;
-                case 4:
-                    gestionarUsuario();
-                    break;
-                case 0:
-                    System.out.println("Cerrando programa...");
-                    FuncEscribirCambios();
-                    controladorDominio.CerrarSesion();
-                    break;
-                default:
-                    System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
-            }
+    private void seleccionMenuPrincipal() {
+
+        int opcionPrincipal = -1;
+
+        try {
+            opcionPrincipal = input.nextInt();
+        } catch (InputMismatchException ime) {
+            input.nextLine();
         }
+
+        switch (opcionPrincipal) {
+        case 1:
+            gestionarTeclados();
+            break;
+        case 2:
+            gestionarAlfabetos();
+            break;
+        case 3:
+            cerrarSesion();
+            break;
+        case 4:
+            gestionarUsuario();
+            break;
+        case 0:
+            FuncEscribirCambios();
+            controladorDominio.CerrarSesion();
+            menuIniciarSesion();
+            return;
+        default:
+            System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
+        }
+
+        menuPrincipal();
     }
     
     private void gestionarTeclados() {
+        System.out.println("----- Gestión de Teclados -----");
+        System.out.println("1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n" +
+                "4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
+        System.out.println("-------------------------------");
+        seleccionTeclados();
+    }
+
+    private void seleccionTeclados() {
+
         int opcionTeclado = -1;
-    
-        while (opcionTeclado != 0) {
-            System.out.println("----- Gestión de Teclados -----");
-            System.out.println("1. Crear teclado\n2. Modificar teclado existente\n3. Borrar teclado existente\n" +
-                    "4. Mostrar teclado existente\n5. Consultar todos los teclados existente\n\n0. Volver al menú principal");
-            System.out.println("-------------------------------");
-    
-            try {
-                opcionTeclado = input.nextInt();
-                input.nextLine();
-            } catch (InputMismatchException ime) {
-                System.out.println("Error: El valor introducido no es un entero.\n");
-                input.nextLine();
-                continue;
-            }
-    
-            switch (opcionTeclado) {
-                case 1:
-                    FuncCreacionTeclado();
-                    break;
-                case 2:
-                    FuncSwapTeclas();
-                    break;
-                case 3:
-                    FuncBorrarTeclado();
-                    break;
-                case 4:
-                    FuncMostrarTeclado();
-                    break;
-                case 5:
-                    FuncMostrarNombresTeclados();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Error: Valor inválido.");
-            }
+
+        try {
+            opcionTeclado = input.nextInt();
+            input.nextLine();
+        } catch (InputMismatchException ime) {
+            input.nextLine();
         }
+
+        switch (opcionTeclado) {
+        case 1:
+            FuncCreacionTeclado();
+            break;
+        case 2:
+            FuncSwapTeclas();
+            break;
+        case 3:
+            FuncBorrarTeclado();
+            break;
+        case 4:
+            FuncMostrarTeclado();
+            break;
+        case 5:
+            FuncMostrarNombresTeclados();
+            break;
+        case 0:
+            return;
+        default:
+            System.out.println("Error: Valor inválido.");
+        }
+        gestionarTeclados();
     }
     
     private void gestionarAlfabetos() {
+        System.out.println("----- Gestión de Alfabetos -----");
+        System.out.println("1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n" +
+                "4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
+        System.out.println("--------------------------------");
+        seleccionAlfabeto();
+    }
+
+    private void seleccionAlfabeto() {
+
         int opcionAlfabeto = -1;
 
-        while (opcionAlfabeto != 0) {
-            System.out.println("----- Gestión de Alfabetos -----");
-            System.out.println("1. Crear alfabeto\n2. Modificar alfabeto existente\n3. Borrar alfabeto existente\n" +
-                    "4. Mostrar alfabetos\n5. Consultar caracteres alfabeto\n\n0. Volver al menú principal");
-            System.out.println("--------------------------------");
-
-            try {
-                opcionAlfabeto = input.nextInt();
-                input.nextLine();
-            } catch (InputMismatchException ime) {
-                System.out.println("Error: El valor introducido no es un entero.\n");
-                input.nextLine();
-                continue;
-            }
-
-            switch (opcionAlfabeto) {
-                case 1:
-                    FuncCreacionAlfabeto();
-                    break;
-                case 2:
-                    FuncModificarAlfabeto();
-                    break;
-                case 3:
-                    FuncBorrarAlfabeto();
-                    break;
-                case 4:
-                    FuncMostrarAlfabetos();
-                    break;
-                case 5:
-                    FuncMostrarCaracteresAlfabeto();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Error: Valor inválido.");
-            }
+        try {
+            opcionAlfabeto = input.nextInt();
+            input.nextLine();
+        } catch (InputMismatchException ime) {
+            input.nextLine();
         }
+
+        switch (opcionAlfabeto) {
+        case 1:
+            FuncCreacionAlfabeto();
+            break;
+        case 2:
+            FuncModificarAlfabeto();
+            break;
+        case 3:
+            FuncBorrarAlfabeto();
+            break;
+        case 4:
+            FuncMostrarAlfabetos();
+            break;
+        case 5:
+            FuncMostrarCaracteresAlfabeto();
+            break;
+        case 0:
+            return;
+        default:
+            System.out.println("Error: Valor inválido.");
+        }
+        gestionarAlfabetos();
     }
 
     public void gestionarUsuario() {
+
+        System.out.println("----- Gestión de Usuario -----");
+        System.out.println("1. Modificar contraseña\n2. Borrar usuario\n\n0. Volver al menú principal");
+        System.out.println("------------------------------");
+        seleccionUsuario();
+    }
+
+    private void seleccionUsuario() {
+
         int opcionUsuario = -1;
 
-        while (opcionUsuario != 0) {
-            System.out.println("----- Gestión de Usuario -----");
-            System.out.println("1. Modificar contraseña\n2. Borrar usuario\n\n0. Volver al menú principal");
-            System.out.println("------------------------------");
-
-            try {
-                opcionUsuario = input.nextInt();
-                input.nextLine();
-            } catch (InputMismatchException ime) {
-                System.out.println("Error: El valor introducido no es un entero.\n");
-                input.nextLine();
-                continue;
-            }
-
-            switch (opcionUsuario) {
-                case 1:
-                    FuncModificarContrasena();
-                    break;
-                case 2:
-                    FuncBorrarUsuario();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Error: Valor inválido.");
-            }
+        try {
+            opcionUsuario = input.nextInt();
+            input.nextLine();
+        } catch (InputMismatchException ime) {
+            input.nextLine();
         }
+
+        switch (opcionUsuario) {
+        case 1:
+            FuncModificarContrasena();
+            break;
+        case 2:
+            FuncBorrarUsuario();
+            break;
+        case 0:
+            return;
+        default:
+            System.out.println("Error: Valor inválido.");
+        }
+        gestionarUsuario();
     }
 
     /**
