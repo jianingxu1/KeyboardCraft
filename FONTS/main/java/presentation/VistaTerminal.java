@@ -467,10 +467,26 @@ public class VistaTerminal {
                 "con B&B.\n" + "Se recomienda SA en estos casos.");
     
         String algoritmo = input.nextLine();
+        
         boolean cancelarOperacion = false;
-    
+        
         while (!cancelarOperacion) {
+            
             try {
+                if (nombreTeclado.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+
+                if (idAlfabeto.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+                
+                String[] palabrasSeparadas = listaFrecuencias.split(" ");
+		        int words = palabrasSeparadas.length;
+		        
+                if (words % 2 == 1 && !listaFrecuencias.isEmpty()) throw new FrecuenciaIncorrectaExcepcion("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+                
+                if (algoritmo.trim().isEmpty()) throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
+                
+                else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))throw new TipoAlgoritmoIncorrectoExcepcion("El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
+
+
                 controladorDominio.creaTeclado(nombreTeclado, idAlfabeto, textoFrecuencias, listaFrecuencias, algoritmo);
                 cancelarOperacion = true;
                 System.out.println("¡Se ha creado el teclado \"" + nombreTeclado + "\" con éxito!");

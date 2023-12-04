@@ -72,18 +72,10 @@ public class CtrlDominio {
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
 			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
 		// Informacion necesaria para poder crear el teclado
-
-		if (nombreTeclado.trim().isEmpty())
-			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (cjtTeclados.existeTeclado(nombreTeclado))
+		
+		if (cjtTeclados.existeTeclado(nombreTeclado))
 			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe.");
-
 		PalabrasConFrecuencia palabras;
-		String[] palabrasSeparadas = listaPalabras.split(" ");
-		int words = palabrasSeparadas.length;
-		if (words % 2 == 1 && !listaPalabras.isEmpty())
-			throw new FrecuenciaIncorrectaExcepcion(
-			"El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
 		try {
 			palabras = new PalabrasConFrecuencia(listaPalabras);
 
@@ -93,17 +85,9 @@ public class CtrlDominio {
 		} catch (IllegalArgumentException i) {
 			throw new FrecuenciaIncorrectaExcepcion(i.getMessage());
 		}
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-
-		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
+		
+		if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
 			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
-
-		if (algoritmo.trim().isEmpty())
-			throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
-		else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))
-			throw new TipoAlgoritmoIncorrectoExcepcion(
-					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
 
 		Texto text = new Texto(texto);
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
