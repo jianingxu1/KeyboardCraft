@@ -80,7 +80,8 @@ public class VistaTerminal {
         case 0:
             System.out.println("Cerrando programa...");
             FuncEscribirUsuarios();
-            return;
+            // System.out.println("I'm here");
+            break; //return;
         default:
             System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
         }
@@ -88,10 +89,11 @@ public class VistaTerminal {
         if (usuarioIdentificado) {
             System.out.println("¡Bienvenido " + controladorDominio.getNombreUsuario() + "!");
             if (opcion != 0) {
+                // System.out.println("Volviendo al menú principal...");
                 menuPrincipal();
             }
         }
-        else menuIniciarSesion();
+        else if (opcion != 0 ) menuIniciarSesion();
     }
 
     /**
@@ -101,12 +103,13 @@ public class VistaTerminal {
         System.out.println("----- Iniciar Sesión -----");
         boolean cancelarOperacion = false;
         boolean usuarioIdentificado = false;
-    
+        
+        System.out.println("Introduce el nombre de usuario:");
+        String nombreUsuario = input.nextLine();
+        System.out.println("Introduce la contrasena:");
+        String contrasena = input.nextLine();
+
         while (!cancelarOperacion) {
-            System.out.println("Introduce el nombre de usuario:");
-            String nombreUsuario = input.nextLine();
-            System.out.println("Introduce la contrasena:");
-            String contrasena = input.nextLine();
     
             try {
                 usuarioIdentificado = controladorDominio.IniciarSesion(nombreUsuario, contrasena);
@@ -168,9 +171,7 @@ public class VistaTerminal {
 
     private void cerrarSesion() {
         FuncEscribirCambios();
-        input.nextLine();
         controladorDominio.CerrarSesion();
-        menuIniciarSesion();
     }
 
 
@@ -181,7 +182,12 @@ public class VistaTerminal {
             System.out.println("No se ha " + operacion + ".\n");
             return true;
         } else if (response.equals("s")) {
-            System.out.println("Introduce nuevamente el " + elementoUsuario + ":");
+            if (elementoUsuario.equals("nombre de usuario")) {
+                System.out.println("Introduce nuevamente el " + elementoUsuario + ":");
+            }
+            else {
+                System.out.println("Introduce nuevamente la " + elementoUsuario + ":");
+            }
             return false;
         }
     
@@ -202,7 +208,7 @@ public class VistaTerminal {
     public void menuPrincipal() {
         FuncCargarDatos();
         System.out.println("-------- Menú Principal --------");
-        System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Cerrar Sesión\n4. Gestionar Usuario\n\n0. Salir del programa");
+        System.out.println("1. Gestionar teclados\n2. Gestionar alfabetos\n3. Gestionar Usuario\n4. Cerrar Sesión\n\n0. Salir del programa");
         System.out.println("--------------------------------");
         seleccionMenuPrincipal();
     }
@@ -225,21 +231,22 @@ public class VistaTerminal {
             gestionarAlfabetos();
             break;
         case 3:
-            cerrarSesion();
-            break;
-        case 4:
             gestionarUsuario();
-            break;
-        case 0:
-            FuncEscribirCambios();
-            controladorDominio.CerrarSesion();
+        break;
+        case 4:
+            cerrarSesion();
             menuIniciarSesion();
-            return;
+            // System.out.println("Volviendo al menú de inicio de sesión...");
+            return; //break;
+        case 0:
+            cerrarSesion();
+            FuncEscribirUsuarios();
+            break; //return;
         default:
             System.out.println("¡Número de opción inválido! Vuelve a probar.\n");
         }
 
-        menuPrincipal();
+        if (opcionPrincipal != 0) menuPrincipal();
     }
     
     private void gestionarTeclados() {
@@ -533,7 +540,7 @@ public class VistaTerminal {
         if(!response.equals("n") && !response.equals("s")) {
             System.out.println("El valor introducido no es válido.\n" + "volviendo al menú anterior...");
         }
-        return true;
+        return false;
     }
     
     /**
