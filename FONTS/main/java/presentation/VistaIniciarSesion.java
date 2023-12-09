@@ -6,9 +6,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
-public class VistaInterfazTitulo {
+public class VistaIniciarSesion {
     private CtrlPresentacion iCtrlPresentacion;
-    private JFrame frameVista = new JFrame("Login");
+    private JFrame frameVista = new JFrame("Iniciar Sesión");
     private JPanel panelContenidos = new JPanel();
     private JPanel panelBotones = new JPanel();
 
@@ -18,7 +18,7 @@ public class VistaInterfazTitulo {
     private JButton buttonCrearCuenta = new JButton("Crear cuenta");
 
 
-    public VistaInterfazTitulo (CtrlPresentacion pCtrlPresentacion) {
+    public VistaIniciarSesion(CtrlPresentacion pCtrlPresentacion) {
 
         iCtrlPresentacion = pCtrlPresentacion;
         System.out.println
@@ -49,7 +49,7 @@ public class VistaInterfazTitulo {
 
     private void inicializar_frameVista() {
         // Tamanyo
-        frameVista.setMinimumSize(new Dimension(700,400));
+        frameVista.setMinimumSize(new Dimension(700, 400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
@@ -74,8 +74,8 @@ public class VistaInterfazTitulo {
         // Layout
         panelContenidos.setLayout(new BorderLayout());
         // Paneles
-        panelContenidos.add(panelTitulo,BorderLayout.NORTH);
-        panelContenidos.add(panelBotones,BorderLayout.SOUTH);
+        panelContenidos.add(panelTitulo, BorderLayout.NORTH);
+        panelContenidos.add(panelBotones, BorderLayout.SOUTH);
     }
 
 

@@ -1,5 +1,9 @@
 package presentation;
 import domaincontrollers.CtrlDominio;
+import exceptions.ContrasenaNoValidaExcepcion;
+import exceptions.EscrituraIncorrectaFicheroExcepcion;
+import exceptions.LecturaIncorrectaFicheroExcepcion;
+import exceptions.NombreUsuarioNoValidoExcepcion;
 
 /**
  * Clase CtrlPresentacion
@@ -16,6 +20,8 @@ public class CtrlPresentacion {
 
 	private int opcion;	// 1: terminal, 2: interfaz
 	private VistaInterfazTitulo vTitulo;
+	private VistaIniciarSesion vSesion;
+	private VistaCrearCuenta vCuenta;
 
 	/** Constructor y metodos de inicializacion **/
 
@@ -28,6 +34,14 @@ public class CtrlPresentacion {
 		}
 
 		ctrlDominio = new CtrlDominio();
+
+		ctrlDominio.inicializarCtrlDominio();
+
+		try {
+			ctrlDominio.cargarUsuarios();
+		} catch (LecturaIncorrectaFicheroExcepcion e) {
+			System.out.println("Error al cargar usuarios: " + e.getMessage());
+		}
 	}
 
 	public void inicializarPresentacion() {
@@ -39,6 +53,30 @@ public class CtrlPresentacion {
 		else {
 			vTitulo.hacerVisible();
 		}
+	}
+
+	public void syncIniciarSesion() {
+		vTitulo.desactivar();
+		if (vSesion == null) {
+			vSesion = new VistaIniciarSesion(this);
+		}
+		vSesion.hacerVisible();
+	}
+
+	public void syncCrearCuenta() {
+		if (vCuenta == null) {
+			vCuenta = new VistaCrearCuenta(this);
+		}
+		vCuenta.hacerVisible();
+	}
+
+	public void crearUsuario(String Username, String Password) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		ctrlDominio.añadirUsuario(Username,Password);
+		vCuenta.hacerInvisible();
+	}
+
+	public boolean existeUsuario(String Username) {
+		return ctrlDominio.existeUsuario(Username);
 	}
 
 

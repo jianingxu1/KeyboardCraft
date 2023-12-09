@@ -35,14 +35,6 @@ public class VistaTerminal {
      */
 
      public void init() {
-        controladorDominio.inicializarCtrlDominio();
-    
-        try {
-            controladorDominio.cargarUsuarios();
-        } catch (LecturaIncorrectaFicheroExcepcion e) {
-            System.out.println("Error al cargar usuarios: " + e.getMessage());
-        }
-    
         System.out.println("\n*--------* Bienvenido al generador de teclados *--------*");
         System.out.println("Para navegar a través del programa, introduce el número de la");
         System.out.println("opción que desees en cada momento.\n");

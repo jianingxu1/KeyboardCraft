@@ -224,6 +224,11 @@ public class CtrlDominio {
 		userName = nombreUsuario;
 	}
 
+	public boolean existeUsuario(String nombreUsuario) {
+		if (cjtUsuarios.existeUsuario(nombreUsuario)) return true;
+		return false;
+	}
+
 	//Implementar este caso en el main, seria como borrar cuenta
 	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
 		if (nombreUsuario.trim().isEmpty())
