@@ -24,8 +24,8 @@ public class VistaTerminal {
      * Constructora
      */
 
-    public VistaTerminal() {
-        controladorDominio = new CtrlDominio();
+    public VistaTerminal(CtrlDominio ctrlDominio) {
+        this.controladorDominio = ctrlDominio;
         input = new Scanner(System.in);
     }
 
