@@ -14,7 +14,7 @@ public class VistaCrearCuenta {
     private CtrlPresentacion iCtrlPresentacion;
     private JFrame frameVista = new JFrame("Crear cuenta");
     private JPanel panelContenidos = new JPanel();
-
+    private JButton buttonCerrar = new JButton("Atrás");
     private JPanel panelUser = new JPanel();
     private JTextArea Username = new JTextArea(2,25);
     private JPanel panelPass = new JPanel();
@@ -93,9 +93,12 @@ public class VistaCrearCuenta {
         panelBotones.setLayout(new FlowLayout());
         // Componentes
         buttonRegistro.setBackground(Color.green);
+        buttonCerrar.setBackground(Color.red);
         panelBotones.add(buttonRegistro);
+        panelBotones.add(buttonCerrar);
         // Tooltips
         buttonRegistro.setToolTipText("Crear cuenta");
+        buttonCerrar.setToolTipText("Cierra la pestaña");
     }
 
     private void asignar_listenersComponentes() {
@@ -117,6 +120,13 @@ public class VistaCrearCuenta {
                     }
                 });
 
+        buttonCerrar.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        actionPerformed_buttonCerrar(event);
+                    }
+                });
+
     }
 
     public void actionPerformed_buttonIniciarSesion(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
@@ -133,6 +143,10 @@ public class VistaCrearCuenta {
         }
 
         else iCtrlPresentacion.crearUsuario(user,pass);
+    }
+
+    public void actionPerformed_buttonCerrar(ActionEvent event) {
+        iCtrlPresentacion.cerrarPestañaCrearCuenta();
     }
 
     public void activar() {

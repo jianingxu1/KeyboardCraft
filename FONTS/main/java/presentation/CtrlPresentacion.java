@@ -118,4 +118,8 @@ public class CtrlPresentacion {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	public void cerrarPestañaCrearCuenta() {
+		vCuenta.hacerInvisible();
+	}
 }
