@@ -55,6 +55,8 @@ public class CtrlPresentacion {
 		}
 	}
 
+	/** Métodos de sincronizacion entre vistas **/
+
 	public void syncIniciarSesion() {
 		vTitulo.desactivar();
 		if (vSesion == null) {
@@ -70,18 +72,50 @@ public class CtrlPresentacion {
 		vCuenta.hacerVisible();
 	}
 
+	/** Llamadas al controlador de dominio **/
+
 	public void crearUsuario(String Username, String Password) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		ctrlDominio.añadirUsuario(Username,Password);
 		vCuenta.hacerInvisible();
+		FuncCargarDatos();
 	}
 
 	public boolean existeUsuario(String Username) {
 		return ctrlDominio.existeUsuario(Username);
 	}
 
+	public void cerrarPrograma() {
+		FuncEscribirUsuarios();
+		System.exit(0);
+	}
 
+	private void FuncCargarDatos() {
+		boolean completaCarga = false;
+		while (!completaCarga) {
+			try {
+				ctrlDominio.cargarTeclados();
+				ctrlDominio.cargarAlfabetos();
+				completaCarga = true;
+			} catch (LecturaIncorrectaFicheroExcepcion e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
-	/** Métodos de sincronizacion entre vistas **/
+	private void FuncEscribirUsuarios() {
+		try{
+			ctrlDominio.guardarUsuarios();
+		} catch (EscrituraIncorrectaFicheroExcepcion e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
-	/** Llamadas al controlador de dominio **/
+	private void FuncEscribirCambios() {
+		try{
+			ctrlDominio.guardarTeclados();
+			ctrlDominio.guardarAlfabetos();
+		} catch (EscrituraIncorrectaFicheroExcepcion e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

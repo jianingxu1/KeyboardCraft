@@ -11,11 +11,13 @@ public class VistaInterfazTitulo {
     private JFrame frameVista = new JFrame("Login");
     private JPanel panelContenidos = new JPanel();
     private JPanel panelBotones = new JPanel();
-
+    private JPanel panelCerrar = new JPanel();
     private JPanel panelTitulo = new JPanel();
     private JLabel labelTitulo = new JLabel("Generador de teclados");
     private JButton buttonIniciarSesion = new JButton("Iniciar sesión");
     private JButton buttonCrearCuenta = new JButton("Crear cuenta");
+
+    private JButton buttonCerrarPrograma = new JButton("Cerrar");
 
 
     public VistaInterfazTitulo (CtrlPresentacion pCtrlPresentacion) {
@@ -74,7 +76,8 @@ public class VistaInterfazTitulo {
         // Layout
         panelContenidos.setLayout(new BorderLayout());
         // Paneles
-        panelContenidos.add(panelTitulo,BorderLayout.NORTH);
+        panelContenidos.add(panelCerrar,BorderLayout.NORTH);
+        panelContenidos.add(panelTitulo,BorderLayout.CENTER);
         panelContenidos.add(panelBotones,BorderLayout.SOUTH);
     }
 
@@ -84,12 +87,17 @@ public class VistaInterfazTitulo {
         panelBotones.setLayout(new FlowLayout());
         // Componentes
         buttonIniciarSesion.setBackground(Color.green);
-        buttonCrearCuenta.setBackground(Color.red);
+        buttonCrearCuenta.setBackground(Color.blue);
         panelBotones.add(buttonIniciarSesion);
         panelBotones.add(buttonCrearCuenta);
         // Tooltips
         buttonIniciarSesion.setToolTipText("Inicia sesión con una cuenta ya creada");
         buttonCrearCuenta.setToolTipText("Crea una nueva cuenta vacía");
+
+
+        panelCerrar.setLayout(new BorderLayout());
+        buttonCerrarPrograma.setBackground(Color.red);
+        panelCerrar.add(buttonCerrarPrograma, BorderLayout.EAST);
     }
 
     private void asignar_listenersComponentes() {
@@ -109,6 +117,13 @@ public class VistaInterfazTitulo {
                         actionPerformed_buttonCrearCuenta(event);
                     }
                 });
+
+        buttonCerrarPrograma.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        actionPerformed_buttonCerrarPrograma(event);
+                    }
+                });
     }
 
     public void actionPerformed_buttonIniciarSesion(ActionEvent event) {
@@ -117,6 +132,9 @@ public class VistaInterfazTitulo {
 
     public void actionPerformed_buttonCrearCuenta(ActionEvent event) {
         iCtrlPresentacion.syncCrearCuenta();
+    }
+    public void actionPerformed_buttonCerrarPrograma(ActionEvent event) {
+        iCtrlPresentacion.cerrarPrograma();
     }
 
     public void activar() {
