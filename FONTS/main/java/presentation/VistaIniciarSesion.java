@@ -1,5 +1,9 @@
 package presentation;
 
+import exceptions.ContrasenaNoValidaExcepcion;
+import exceptions.EscrituraIncorrectaFicheroExcepcion;
+import exceptions.NombreUsuarioNoValidoExcepcion;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,13 +14,15 @@ public class VistaIniciarSesion {
     private CtrlPresentacion iCtrlPresentacion;
     private JFrame frameVista = new JFrame("Iniciar Sesión");
     private JPanel panelContenidos = new JPanel();
+    private JButton buttonCerrar = new JButton("Atrás");
+    private JPanel panelUser = new JPanel();
+    private JTextArea Username = new JTextArea(2,25);
+    private JPanel panelPass = new JPanel();
+    private JTextArea Password = new JTextArea(2,25);
+
+
     private JPanel panelBotones = new JPanel();
-
-    private JPanel panelTitulo = new JPanel();
-    private JLabel labelTitulo = new JLabel("Generador de teclados");
-    private JButton buttonIniciarSesion = new JButton("Iniciar sesión");
-    private JButton buttonCrearCuenta = new JButton("Crear cuenta");
-
+    private JButton buttonRegistro = new JButton("Iniciar Sesión");
 
     public VistaIniciarSesion(CtrlPresentacion pCtrlPresentacion) {
 
@@ -41,15 +47,16 @@ public class VistaIniciarSesion {
 
     private void inicializarComponentes() {
         inicializar_frameVista();
-        inicializar_panelContenidos();
+        inicializar_panelUser();
+        inicializar_panelPass();
         inicializar_panelBotones();
-        inicializar_panelTitulo();
+        inicializar_panelContenidos();
         asignar_listenersComponentes();
     }
 
     private void inicializar_frameVista() {
         // Tamanyo
-        frameVista.setMinimumSize(new Dimension(700, 400));
+        frameVista.setMinimumSize(new Dimension(300, 200));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
@@ -61,21 +68,23 @@ public class VistaIniciarSesion {
         contentPane.add(panelContenidos);
     }
 
-    private void inicializar_panelTitulo() {
-        // Layout
-        panelTitulo.setLayout(new FlowLayout(FlowLayout.CENTER)); // Usamos FlowLayout para centrar el JLabel        labelTitulo.setFont(new Font("Serif", Font.PLAIN, 30));
-        // Componentes
-        labelTitulo.setFont(new Font("Serif", Font.BOLD, 40));
-        labelTitulo.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-        panelTitulo.add(labelTitulo);
-    }
-
     private void inicializar_panelContenidos() {
         // Layout
-        panelContenidos.setLayout(new BorderLayout());
+        panelContenidos.setLayout(new FlowLayout());
         // Paneles
-        panelContenidos.add(panelTitulo, BorderLayout.NORTH);
-        panelContenidos.add(panelBotones, BorderLayout.SOUTH);
+        panelContenidos.add(panelUser);
+        panelContenidos.add(panelPass);
+        panelContenidos.add(panelBotones);
+    }
+
+    private void inicializar_panelUser() {
+        Username.setText("Nombre de usuario");
+        panelUser.add(new JScrollPane(Username));
+    }
+
+    private void inicializar_panelPass() {
+        Password.setText("Contraseña");
+        panelPass.add(new JScrollPane(Password));
     }
 
 
@@ -83,40 +92,66 @@ public class VistaIniciarSesion {
         // Layout
         panelBotones.setLayout(new FlowLayout());
         // Componentes
-        buttonIniciarSesion.setBackground(Color.green);
-        buttonCrearCuenta.setBackground(Color.red);
-        panelBotones.add(buttonIniciarSesion);
-        panelBotones.add(buttonCrearCuenta);
+        buttonRegistro.setBackground(Color.green);
+        buttonCerrar.setBackground(Color.red);
+        panelBotones.add(buttonRegistro);
+        panelBotones.add(buttonCerrar);
         // Tooltips
-        buttonIniciarSesion.setToolTipText("Inicia sesión con una cuenta ya creada");
-        buttonCrearCuenta.setToolTipText("Crea una nueva cuenta vacía");
+        buttonRegistro.setToolTipText("Inicia sesión con una cuenta existente");
+        buttonCerrar.setToolTipText("Cierra la pestaña");
     }
 
     private void asignar_listenersComponentes() {
 
         // Listeners para los botones
 
-        buttonIniciarSesion.addActionListener
+        buttonRegistro.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        actionPerformed_buttonIniciarSesion(event);
+                        try {
+                            actionPerformed_buttonIniciarSesion(event);
+                        } catch (EscrituraIncorrectaFicheroExcepcion e) {
+                            throw new RuntimeException(e);
+                        } catch (NombreUsuarioNoValidoExcepcion e) {
+                            throw new RuntimeException(e);
+                        } catch (ContrasenaNoValidaExcepcion e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
 
-        buttonCrearCuenta.addActionListener
+        buttonCerrar.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        actionPerformed_buttonCrearCuenta(event);
+                        actionPerformed_buttonCerrar(event);
                     }
                 });
+
     }
 
-    public void actionPerformed_buttonIniciarSesion(ActionEvent event) {
-        iCtrlPresentacion.syncIniciarSesion();
+    public void actionPerformed_buttonIniciarSesion(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+        String user = Username.getText();
+        String pass = Password.getText();
+
+        if (pass.length() < 8) {
+            JOptionPane.showMessageDialog(frameVista, "Error: la contraseña ha de tener\n" +
+                    "8 o más caractéres.");
+        }
+
+        else if (!iCtrlPresentacion.existeUsuario(user)) {
+            JOptionPane.showMessageDialog(frameVista, "Error: el usuario no existe.");
+        }
+
+        else if (iCtrlPresentacion.iniciarSesion(user,pass)) {
+            iCtrlPresentacion.syncMenuPrincipal();
+        }
+        else {
+            JOptionPane.showMessageDialog(frameVista, "Error: usuario o contraseña incorrectos.");
+        }
     }
 
-    public void actionPerformed_buttonCrearCuenta(ActionEvent event) {
-        iCtrlPresentacion.syncCrearCuenta();
+    public void actionPerformed_buttonCerrar(ActionEvent event) {
+        iCtrlPresentacion.cerrarPestañaIniciarSesion();
     }
 
     public void activar() {
@@ -126,4 +161,5 @@ public class VistaIniciarSesion {
     public void desactivar() {
         frameVista.setEnabled(false);
     }
+
 }

@@ -58,11 +58,12 @@ public class CtrlPresentacion {
 	/** Métodos de sincronizacion entre vistas **/
 
 	public void syncIniciarSesion() {
-		vTitulo.desactivar();
 		if (vSesion == null) {
 			vSesion = new VistaIniciarSesion(this);
 		}
 		vSesion.hacerVisible();
+
+		if (vCuenta != null) vCuenta.hacerInvisible();
 	}
 
 	public void syncCrearCuenta() {
@@ -70,9 +71,24 @@ public class CtrlPresentacion {
 			vCuenta = new VistaCrearCuenta(this);
 		}
 		vCuenta.hacerVisible();
+
+		if (vSesion != null) vSesion.hacerInvisible();
+	}
+
+	public void syncMenuPrincipal() {
+		vSesion.hacerInvisible();
+		System.exit(0);
 	}
 
 	/** Llamadas al controlador de dominio **/
+
+	public boolean iniciarSesion(String Username, String Password) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		if (ctrlDominio.contraseñaCorrecta(Username,Password)) {
+			ctrlDominio.IniciarSesion(Username,Password);
+			return true;
+		}
+		else return false;
+	}
 
 	public void crearUsuario(String Username, String Password) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		ctrlDominio.añadirUsuario(Username,Password);
@@ -121,5 +137,8 @@ public class CtrlPresentacion {
 
 	public void cerrarPestañaCrearCuenta() {
 		vCuenta.hacerInvisible();
+	}
+	public void cerrarPestañaIniciarSesion() {
+		vSesion.hacerInvisible();
 	}
 }

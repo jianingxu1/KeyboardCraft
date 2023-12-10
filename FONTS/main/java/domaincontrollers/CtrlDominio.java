@@ -272,6 +272,10 @@ public class CtrlDominio {
 		return usuarioIdentificado;
 	}
 
+	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) {
+		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
+	}
+
 	public void CerrarSesion(){
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();

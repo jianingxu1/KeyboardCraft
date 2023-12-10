@@ -109,7 +109,7 @@ public class VistaCrearCuenta {
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         try {
-                            actionPerformed_buttonIniciarSesion(event);
+                            actionPerformed_buttonCrearCuenta(event);
                         } catch (EscrituraIncorrectaFicheroExcepcion e) {
                             throw new RuntimeException(e);
                         } catch (NombreUsuarioNoValidoExcepcion e) {
@@ -129,7 +129,7 @@ public class VistaCrearCuenta {
 
     }
 
-    public void actionPerformed_buttonIniciarSesion(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+    public void actionPerformed_buttonCrearCuenta(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
         String user = Username.getText();
         String pass = Password.getText();
 
