@@ -50,13 +50,24 @@ public class VistaIniciarSesion extends JFrame {
 
         // Posicion y operaciones por defecto
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Set default close operation
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        // Se agrega panelContenidos al contentPane (el panelContenidos se
-        // podria ahorrar y trabajar directamente sobre el contentPane)
-        // JPanel contentPane = (JPanel) this.getContentPane();
-        // contentPane.add(panelContenidos);
+        // Add a window listener to intercept the window-closing event
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                performOperationBeforeExit();
+            }
+        });
+
         this.setContentPane(panelContenidos);
+    }
+
+    // Method to perform an operation before exiting
+    private void performOperationBeforeExit() {
+        iCtrlPresentacion.syncVistaIniciarSesion_a_Bienvenida();
+        dispose();
     }
 
     {
