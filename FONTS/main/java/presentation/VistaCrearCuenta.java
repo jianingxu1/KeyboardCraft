@@ -10,102 +10,60 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
-public class VistaCrearCuenta {
+public class VistaCrearCuenta extends JFrame {
     private CtrlPresentacion iCtrlPresentacion;
-    private JFrame frameVista = new JFrame("Crear cuenta");
-    private JPanel panelContenidos = new JPanel();
-    private JButton buttonCerrar = new JButton("Atrás");
-    private JPanel panelUser = new JPanel();
-    private JTextArea Username = new JTextArea(2,25);
-    private JPanel panelPass = new JPanel();
-    private JTextArea Password = new JTextArea(2,25);
-
-
-    private JPanel panelBotones = new JPanel();
-    private JButton buttonRegistro = new JButton("Registrarse");
+    private JPanel panelContenidos;
+    private JLabel labelLogo;
+    private JLabel labelUsuario;
+    private JTextField fieldUsuario;
+    private JLabel labelContra;
+    private JPasswordField fieldContra;
+    private JPanel panelBotones;
+    private JButton btnLogin;
+    private JButton btnVolver;
+    private JPanel panelInput;
 
     public VistaCrearCuenta(CtrlPresentacion pCtrlPresentacion) {
-
-        iCtrlPresentacion = pCtrlPresentacion;
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
 
     public void hacerVisible() {
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
-        frameVista.pack();
-        frameVista.setVisible(true);
+        this.pack();
+        this.setVisible(true);
     }
 
     public void hacerInvisible() {
-        frameVista.setVisible(false);
+        this.setVisible(false);
     }
-
 
     private void inicializarComponentes() {
         inicializar_frameVista();
-        inicializar_panelUser();
-        inicializar_panelPass();
-        inicializar_panelBotones();
-        inicializar_panelContenidos();
         asignar_listenersComponentes();
     }
 
     private void inicializar_frameVista() {
-        // Tamanyo
-        frameVista.setMinimumSize(new Dimension(300, 200));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
+        this.setTitle("Generador de teclados");
+        this.setMinimumSize(new Dimension(500, 300));
+        this.setPreferredSize(this.getMinimumSize());
+        this.setResizable(false);
+
         // Posicion y operaciones por defecto
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
-        JPanel contentPane = (JPanel) frameVista.getContentPane();
-        contentPane.add(panelContenidos);
-    }
-
-    private void inicializar_panelContenidos() {
-        // Layout
-        panelContenidos.setLayout(new FlowLayout());
-        // Paneles
-        panelContenidos.add(panelUser);
-        panelContenidos.add(panelPass);
-        panelContenidos.add(panelBotones);
-    }
-
-    private void inicializar_panelUser() {
-        Username.setText("Nombre de usuario");
-        panelUser.add(new JScrollPane(Username));
-    }
-
-    private void inicializar_panelPass() {
-        Password.setText("Contraseña");
-        panelPass.add(new JScrollPane(Password));
-    }
-
-
-    private void inicializar_panelBotones() {
-        // Layout
-        panelBotones.setLayout(new FlowLayout());
-        // Componentes
-        buttonRegistro.setBackground(Color.green);
-        buttonCerrar.setBackground(Color.red);
-        panelBotones.add(buttonRegistro);
-        panelBotones.add(buttonCerrar);
-        // Tooltips
-        buttonRegistro.setToolTipText("Crear cuenta");
-        buttonCerrar.setToolTipText("Cierra la pestaña");
+        // JPanel contentPane = (JPanel) this.getContentPane();
+        // contentPane.add(panelContenidos);
+        this.setContentPane(panelContenidos);
     }
 
     private void asignar_listenersComponentes() {
 
         // Listeners para los botones
 
-        buttonRegistro.addActionListener
+        btnLogin.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         try {
@@ -120,7 +78,7 @@ public class VistaCrearCuenta {
                     }
                 });
 
-        buttonCerrar.addActionListener
+        btnVolver.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         actionPerformed_buttonCerrar(event);
@@ -130,19 +88,15 @@ public class VistaCrearCuenta {
     }
 
     public void actionPerformed_buttonCrearCuenta(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
-        String user = Username.getText();
-        String pass = Password.getText();
+        String user = fieldUsuario.getText();
+        String pass = fieldContra.getPassword().toString();
 
         if (pass.length() < 8) {
-            JOptionPane.showMessageDialog(frameVista, "Error: la contraseña ha de tener\n" +
+            JOptionPane.showMessageDialog(this, "Error: la contraseña ha de tener\n" +
                     "8 o más caractéres.");
-        }
-
-        else if (iCtrlPresentacion.existeUsuario(user)) {
-            JOptionPane.showMessageDialog(frameVista, "Error: el usuario ya existe.");
-        }
-
-        else iCtrlPresentacion.crearUsuario(user,pass);
+        } else if (iCtrlPresentacion.existeUsuario(user)) {
+            JOptionPane.showMessageDialog(this, "Error: el usuario ya existe.");
+        } else iCtrlPresentacion.crearUsuario(user, pass);
     }
 
     public void actionPerformed_buttonCerrar(ActionEvent event) {
@@ -150,11 +104,130 @@ public class VistaCrearCuenta {
     }
 
     public void activar() {
-        frameVista.setEnabled(true);
+        this.setEnabled(true);
     }
 
     public void desactivar() {
-        frameVista.setEnabled(false);
+        this.setEnabled(false);
     }
 
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        panelContenidos = new JPanel();
+        panelContenidos.setLayout(new GridBagLayout());
+        labelLogo = new JLabel();
+        labelLogo.setText("Logo");
+        GridBagConstraints gbc;
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        panelContenidos.add(labelLogo, gbc);
+        panelBotones = new JPanel();
+        panelBotones.setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelContenidos.add(panelBotones, gbc);
+        btnLogin = new JButton();
+        btnLogin.setText("Crear Cuenta");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelBotones.add(btnLogin, gbc);
+        btnVolver = new JButton();
+        btnVolver.setText("Volver");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelBotones.add(btnVolver, gbc);
+        panelInput = new JPanel();
+        panelInput.setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelContenidos.add(panelInput, gbc);
+        labelContra = new JLabel();
+        labelContra.setText("Contraseña:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelInput.add(labelContra, gbc);
+        fieldContra = new JPasswordField();
+        fieldContra.setColumns(15);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelInput.add(fieldContra, gbc);
+        fieldUsuario = new JTextField();
+        fieldUsuario.setColumns(15);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelInput.add(fieldUsuario, gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 60;
+        panelInput.add(spacer1, gbc);
+        final JPanel spacer2 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 60;
+        panelInput.add(spacer2, gbc);
+        labelUsuario = new JLabel();
+        labelUsuario.setText("Usuario:");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelInput.add(labelUsuario, gbc);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return panelContenidos;
+    }
 }
