@@ -1,6 +1,9 @@
 package domain;
 
 import java.util.Map;
+
+import exceptions.FrecuenciaIncorrectaExcepcion;
+
 import java.util.LinkedHashMap;
 
 /**
@@ -30,8 +33,22 @@ public class PalabrasConFrecuencia {
      * @param input El texto de entrada en el formato "palabra frecuencia\n"
      *              que se repite.
      */
-    public PalabrasConFrecuencia(String input) {
-        this.map = convertStringToMap(input);
+    public PalabrasConFrecuencia(String input) throws FrecuenciaIncorrectaExcepcion {
+
+        String[] palabrasSeparadas = input.split(" ");
+        int words = palabrasSeparadas.length;
+
+        if (words % 2 == 1 && !input.isEmpty())
+            throw new FrecuenciaIncorrectaExcepcion(
+                    "El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.");
+        try {
+            this.map = convertStringToMap(input);
+        } catch (NumberFormatException e) {
+            throw new FrecuenciaIncorrectaExcepcion(
+                    "El formato de palabras con frecuencia no es correcto, debe ser palabras seguida de un espacio y su número de frecuencia.");
+        } catch (IllegalArgumentException i) {
+            throw new FrecuenciaIncorrectaExcepcion(i.getMessage());
+        }
     }
 
     // ----- Modificadoras -----
@@ -63,7 +80,8 @@ public class PalabrasConFrecuencia {
      */
     @Override
     public String toString() {
-        if (this.map.isEmpty()) return "";
+        if (this.map.isEmpty())
+            return "";
         StringBuilder result = new StringBuilder();
         for (Map.Entry<String, Integer> entry : this.map.entrySet()) {
             result.append(entry.getKey()).append(" ").append(entry.getValue()).append(" ");

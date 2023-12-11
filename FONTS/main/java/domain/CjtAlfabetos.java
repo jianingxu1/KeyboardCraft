@@ -3,6 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exceptions.NoHayCaracteresExcepcion;
+import exceptions.NombreAlfabetoDuplicadoExcepcion;
+import exceptions.NombreAlfabetoNoValidoExcepcion;
+
 /**
  * Clase PalabrasConFrecuencia
  * Representa una colección de alfabetos que tiene el sistema.
@@ -45,7 +49,16 @@ public class CjtAlfabetos {
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
      */
-    public void añadirAlfabeto(String nombre, String caracteres) {
+    public void añadirAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
+
+        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+
+        else if (existeAlfabeto(nombre))
+        throw new NombreAlfabetoDuplicadoExcepcion(nombre);
+
+        else if (caracteres.trim().isEmpty())
+        throw new NoHayCaracteresExcepcion();
+
         Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
         alfabetos.put(nombre, alfabeto);
     }
@@ -55,7 +68,12 @@ public class CjtAlfabetos {
      *
      * @param nombre El identificador unico del alfabeto.
      */
-    public void eliminarAlfabeto(String nombre) {
+    public void eliminarAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
+        if (nombre.trim().isEmpty())
+        throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+    else if (!existeAlfabeto(nombre))
+        throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+
         alfabetos.remove(nombre);
     }
 
@@ -78,7 +96,14 @@ public class CjtAlfabetos {
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los nuevos caracteres del alfabeto.
      */
-    public void modificarAlfabeto(String nombre, String caracteres) {
+    public void modificarAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion{
+        if (nombre.trim().isEmpty())
+        throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        
+        else if (!existeAlfabeto(nombre))
+        throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+
+        else if (caracteres.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
         alfabetos.get(nombre).modificarAlfabeto(caracteres);
     }
 
@@ -89,7 +114,9 @@ public class CjtAlfabetos {
      *
      * @param nombre El identificador unico del alfabeto.
      */
-    public Alfabeto getAlfabeto(String nombre) {
+    public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion{
+        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
         return alfabetos.get(nombre);
     }
 
@@ -108,7 +135,9 @@ public class CjtAlfabetos {
      *
      * @param nombre El nombre del alfabeto.
      */
-    public String getAlfabetoCaracteresEnString(String nombre) {
+    public String getAlfabetoCaracteresEnString(String nombre) throws NombreAlfabetoNoValidoExcepcion {
+        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
+        else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion(nombre);
         return alfabetos.get(nombre).getCaracteresStringFormat();
     }
 

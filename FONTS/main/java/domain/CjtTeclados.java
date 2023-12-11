@@ -3,6 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exceptions.IndiceTeclaFueraDeRangoExcepcion;
+import exceptions.NombreTecladoDuplicadoExcepcion;
+import exceptions.NombreTecladoNoValidoExcepcion;
+
 /**
  * Clase CjtTeclados
  * Representa un conjunto de teclados. Estos se definen por su nombre
@@ -44,7 +48,10 @@ public class CjtTeclados {
      * @param mat    su matriz de caractéres que representa la distribución de su
      *               teclado
      */
-    public void crearTeclado(String nombre, char[][] mat) {
+    public void crearTeclado(String nombre, char[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
+        if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
+        else if (existeTeclado(nombre))
+        throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
         Teclado teclado = new Teclado(nombre, mat);
         conjunto.put(nombre, teclado);
     }
@@ -55,7 +62,10 @@ public class CjtTeclados {
      * @param nombre el nombre del teclado a borrar
      */
 
-    public void eliminarTeclado(String nombre) {
+    public void eliminarTeclado(String nombre) throws NombreTecladoNoValidoExcepcion{
+        if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+
+        else if (!existeTeclado(nombre)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
         conjunto.remove(nombre);
     }
 
@@ -70,7 +80,32 @@ public class CjtTeclados {
      * @param j2     col. tecla 2
      */
 
-    public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) {
+    public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
+        
+        if (nombre.trim().isEmpty())
+        throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+        
+        else if (!existeTeclado(nombre))
+			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
+
+		char[][] distribucion = getTeclado(nombre);
+		String mensaje = "";
+
+		if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
+				|| i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
+			if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length) {
+				mensaje += "La posicion de la primera tecla " + i1 + " " + j1 + " no es correcta";
+			}
+			if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
+				if (mensaje.isEmpty())
+					mensaje += "La posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
+				else {
+					mensaje += " y la posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
+				}
+			}
+
+			throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
+		}
         conjunto.get(nombre).intercambiarTeclas(i1, j1, i2, j2);
     }
 

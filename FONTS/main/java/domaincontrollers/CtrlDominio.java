@@ -4,11 +4,6 @@ import domain.*;
 import exceptions.*;
 import persistence.*;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -72,39 +67,30 @@ public class CtrlDominio {
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
 			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
 		// Informacion necesaria para poder crear el teclado
-		
-		if (cjtTeclados.existeTeclado(nombreTeclado))
-			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe.");
-		PalabrasConFrecuencia palabras;
-		try {
-			palabras = new PalabrasConFrecuencia(listaPalabras);
-
-		} catch (NumberFormatException e) {
-			throw new FrecuenciaIncorrectaExcepcion(
-			"El formato de palabras con frecuencia no es correcto, debe ser palabras seguida de un espacio y su número de frecuencia.");
-		} catch (IllegalArgumentException i) {
-			throw new FrecuenciaIncorrectaExcepcion(i.getMessage());
-		}
-		
-		if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
-
+		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
 		Texto text = new Texto(texto);
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
-
 		char[][] distribucion = new char[3][10];
+
+		if (algoritmo.trim().isEmpty())
+			throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
+
+		else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))
+			throw new TipoAlgoritmoIncorrectoExcepcion(
+					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
 
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
 		if (algoritmo.equals("B&B")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
-			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, text);
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,
+					text);
 			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
 		} else if (algoritmo.equals("SA")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSimulatedAnnealing());
-			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, text);
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,
+					text);
 			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
 		}
-		
 		// Se añade el teclado con la distribucion generada
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}
@@ -116,10 +102,6 @@ public class CtrlDominio {
 	 */
 
 	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
-		if (nombreTeclado.trim().isEmpty())
-			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (!cjtTeclados.existeTeclado(nombreTeclado))
-			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
 		cjtTeclados.eliminarTeclado(nombreTeclado);
 	}
 
@@ -134,31 +116,8 @@ public class CtrlDominio {
 	 */
 	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)
 			throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
-		if (nombreTeclado.trim().isEmpty())
-			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (!cjtTeclados.existeTeclado(nombreTeclado))
-			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
-
-		char[][] distribucion = cjtTeclados.getTeclado(nombreTeclado);
-		String mensaje = "";
-
-		if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
-				|| i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-			if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length) {
-				mensaje += "La posicion de la primera tecla " + i1 + " " + j1 + " no es correcta";
-			}
-			if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-				if (mensaje.isEmpty())
-					mensaje += "La posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-				else {
-					mensaje += " y la posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-				}
-			}
-
-			throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
-		}
-
 		cjtTeclados.intercambiarTeclasTeclado(nombreTeclado, i1, j1, i2, j2);
+
 	}
 
 	/**
@@ -169,14 +128,6 @@ public class CtrlDominio {
 	 */
 	public void añadirAlfabeto(String idAlfabeto, String caracteres)
 			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-
-		if (cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
-
-		if (caracteres.trim().isEmpty())
-			throw new NoHayCaracteresExcepcion();
 
 		cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
 	}
@@ -187,10 +138,7 @@ public class CtrlDominio {
 	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
 	 */
 	public void eliminarAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+
 		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
 	}
 
@@ -201,17 +149,12 @@ public class CtrlDominio {
 	 */
 	public void modificarAlfabeto(String idAlfabeto, String alfabeto)
 			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
-		if (alfabeto.trim().isEmpty())
-			throw new NoHayCaracteresExcepcion();
+
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
 	}
 
-
-	public void añadirUsuario(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion{
+	public void añadirUsuario(String nombreUsuario, String contraseña)
+			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
 		if (nombreUsuario.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
 		else if (cjtUsuarios.existeUsuario(nombreUsuario))
@@ -225,23 +168,25 @@ public class CtrlDominio {
 	}
 
 	public boolean existeUsuario(String nombreUsuario) {
-		if (cjtUsuarios.existeUsuario(nombreUsuario)) return true;
+		if (cjtUsuarios.existeUsuario(nombreUsuario))
+			return true;
 		return false;
 	}
 
-	//Implementar este caso en el main, seria como borrar cuenta
-	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
+	// Implementar este caso en el main, seria como borrar cuenta
+	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion {
 		if (nombreUsuario.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
 		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
 			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
 		cjtUsuarios.eliminarUsuario(nombreUsuario);
-		
+
 		ctrlPersistencia.eliminarUsuario(nombreUsuario);
-		
+
 	}
 
-	public void modificarContrasena(String nombreUsuario,String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+	public void modificarContrasena(String nombreUsuario, String actualContrasena, String nuevaContrasena)
+			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		if (nombreUsuario.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
 		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
@@ -250,14 +195,15 @@ public class CtrlDominio {
 			throw new ContrasenaNoValidaExcepcion("La contrasena no puede ser vacia.");
 		else if (nuevaContrasena.length() < 8)
 			throw new ContrasenaNoValidaExcepcion("La contrasena debe tener al menos 8 caracteres.");
-		else if(!cjtUsuarios.correctPass(nombreUsuario, actualContrasena)){
+		else if (!cjtUsuarios.correctPass(nombreUsuario, actualContrasena)) {
 			throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
 		}
-		
+
 		cjtUsuarios.modificarUsuario(nombreUsuario, nuevaContrasena);
 	}
 
-	public boolean IniciarSesion(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+	public boolean IniciarSesion(String nombreUsuario, String contraseña)
+			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		if (nombreUsuario.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
 		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
@@ -267,8 +213,10 @@ public class CtrlDominio {
 		else if (contraseña.length() < 8)
 			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
 		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contraseña);
-		if (!usuarioIdentificado) throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
-		else userName = nombreUsuario;
+		if (!usuarioIdentificado)
+			throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
+		else
+			userName = nombreUsuario;
 		return usuarioIdentificado;
 	}
 
@@ -276,39 +224,39 @@ public class CtrlDominio {
 		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
 	}
 
-	public void CerrarSesion(){
+	public void CerrarSesion() {
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();
 		userName = "";
 	}
 
-
-	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
-		if (userName.trim().isEmpty()) return;
-		try{
+	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion {
+		if (userName.trim().isEmpty())
+			return;
+		try {
 			ctrlPersistencia.guardarTeclados(cjtTeclados, userName);
 		} catch (Exception e) {
 			throw new EscrituraIncorrectaFicheroExcepcion(e.getMessage());
 		}
 	}
 
-	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
-		try{
+	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion {
+		try {
 			cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
 		} catch (Exception e) {
 			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
-		}	
-  	}	
+		}
+	}
 
-	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
-		try{
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
+		try {
 			cjtUsuarios = ctrlPersistencia.cargarUsuarios();
 		} catch (Exception e) {
 			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
 		}
 	}
 
-	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
+	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion {
 		try {
 			ctrlPersistencia.guardarUsuarios(cjtUsuarios);
 		} catch (Exception e) {
@@ -316,21 +264,22 @@ public class CtrlDominio {
 		}
 	}
 
-	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
-		try{
+	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion {
+		try {
 			cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
 		} catch (Exception e) {
 			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
 		}
 	}
 
-	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
-		if (userName.trim().isEmpty()) return;
-		try{
+	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion {
+		if (userName.trim().isEmpty())
+			return;
+		try {
 			ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, userName);
 		} catch (Exception e) {
 			throw new EscrituraIncorrectaFicheroExcepcion(e.getMessage());
-		
+
 		}
 	}
 
@@ -340,10 +289,6 @@ public class CtrlDominio {
 	 * Retorna todos los nombres del conjunto de alfabetos.
 	 */
 	public String consultarCaracteresAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
-		if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion(idAlfabeto);
 		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto);
 		String res = "";
 		res += "{";
@@ -363,6 +308,7 @@ public class CtrlDominio {
 
 	/**
 	 * Muestra los nombres de los alfabetos creados hasta el momento
+	 * 
 	 * @return String con los nombres de todos los alfabetos
 	 */
 
