@@ -153,16 +153,8 @@ public class CtrlDominio {
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
 	}
 
-	public void añadirUsuario(String nombreUsuario, String contraseña)
-			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
-		if (nombreUsuario.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (cjtUsuarios.existeUsuario(nombreUsuario))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " ya existe.");
-		else if (contraseña.trim().isEmpty())
-			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
-		else if (contraseña.length() < 8)
-			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+
+	public void añadirUsuario(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
 		cjtUsuarios.añadirUsuario(nombreUsuario, contraseña);
 		userName = nombreUsuario;
 	}
@@ -185,8 +177,7 @@ public class CtrlDominio {
 
 	}
 
-	public void modificarContrasena(String nombreUsuario, String actualContrasena, String nuevaContrasena)
-			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+	public void modificarContrasena(String nombreUsuario,String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		if (nombreUsuario.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
 		else if (!cjtUsuarios.existeUsuario(nombreUsuario))

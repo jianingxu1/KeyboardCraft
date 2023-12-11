@@ -2,6 +2,9 @@ package domain;
 
 import java.util.HashMap;
 
+import exceptions.ContrasenaNoValidaExcepcion;
+import exceptions.EscrituraIncorrectaFicheroExcepcion;
+import exceptions.NombreUsuarioNoValidoExcepcion;
 /**
  * Clase CjtUsuarios
  * Representa un conjunto de usuarios. Estos se definen por su nombre de usuario
@@ -26,7 +29,9 @@ public class CjtUsuarios {
         return singletonObject;
     }
 
-    public void añadirUsuario(String user, String pass) {
+    public void añadirUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
+        if (existeUsuario(user))
+            throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " ya existe.");
         Usuario usuario = new Usuario(user, pass);
         conjunto.put(user, usuario);
     }
