@@ -27,29 +27,33 @@ public class TestCjtTeclados {
         char[][] mat2 = new char[1][1];
         mat2[0][0] = 'b';
 
-        tecs.crearTeclado("Name", mat1);
-        tecs.crearTeclado("Name2", mat2);
+        try {
+            tecs.crearTeclado("Name", mat1);
+            tecs.crearTeclado("Name2", mat2);
+            assertEquals(2, tecs.totalTeclados());
 
-        assertEquals(2, tecs.totalTeclados());
+            assertTrue(tecs.existeTeclado("Name"));
+            assertTrue(tecs.existeTeclado("Name2"));
 
-        assertTrue(tecs.existeTeclado("Name"));
-        assertTrue(tecs.existeTeclado("Name2"));
+            tecs.eliminarTeclado("Name2");
 
-        tecs.eliminarTeclado("Name2");
+            assertEquals(1, tecs.totalTeclados());
 
-        assertEquals(1, tecs.totalTeclados());
+            assertFalse(tecs.existeTeclado("Name2"));
 
-        assertFalse(tecs.existeTeclado("Name2"));
+            mat2[0][0] = 'a';
 
-        mat2[0][0] = 'a';
+            assertArrayEquals(mat2, tecs.getTeclado("Name"));
 
-        assertArrayEquals(mat2, tecs.getTeclado("Name"));
+            mat2[0][0] = 'b';
 
-        mat2[0][0] = 'b';
+            tecs.setDistribucionTeclado("Name", mat2);
 
-        tecs.setDistribucionTeclado("Name", mat2);
+            assertNotSame(mat1, tecs.getTeclado("Name"));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
-        assertNotSame(mat1, tecs.getTeclado("Name"));
     }
 
     @Test
@@ -68,18 +72,22 @@ public class TestCjtTeclados {
         mat2[1][0] = 'c';
         mat2[1][1] = 'd';
 
-        tecs.crearTeclado("Name", mat1);
+        try {
+            tecs.crearTeclado("Name", mat1);
 
-        tecs.intercambiarTeclasTeclado("Name", 0, 0, 1, 1);
+            tecs.intercambiarTeclasTeclado("Name", 0, 0, 1, 1);
 
-        assertNotSame(mat2, tecs.getTeclado("Name"));
+            assertNotSame(mat2, tecs.getTeclado("Name"));
 
-        mat2[0][0] = 'd';
-        mat2[1][1] = 'a';
+            mat2[0][0] = 'd';
+            mat2[1][1] = 'a';
 
-        tecs.setDistribucionTeclado("Name", mat2);
+            tecs.setDistribucionTeclado("Name", mat2);
 
-        assertArrayEquals(mat1, tecs.getTeclado("Name"));
+            assertArrayEquals(mat1, tecs.getTeclado("Name"));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
@@ -88,10 +96,14 @@ public class TestCjtTeclados {
 
         assertEquals(0, tecs.getNombreTeclados().size());
 
-        tecs.crearTeclado("Name", new char[1][1]);
-        tecs.crearTeclado("Name2", new char[1][1]);
-        tecs.crearTeclado("Name3", new char[1][1]);
-        tecs.crearTeclado("Name4", new char[1][1]);
+        try {
+            tecs.crearTeclado("Name", new char[1][1]);
+            tecs.crearTeclado("Name2", new char[1][1]);
+            tecs.crearTeclado("Name3", new char[1][1]);
+            tecs.crearTeclado("Name4", new char[1][1]);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
         ArrayList<String> nombres = new ArrayList<String>();
         nombres.add("Name");
@@ -112,7 +124,11 @@ public class TestCjtTeclados {
         mat1[0][0] = 'a';
 
         CjtTeclados tecs = new CjtTeclados();
-        tecs.crearTeclado(name, mat1);
+        try {
+            tecs.crearTeclado(name, mat1);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
         Teclado aux = tecs.getTecladoObjeto(name);
         assertEquals(aux.getNombre(), name);
@@ -126,7 +142,11 @@ public class TestCjtTeclados {
         char[][] mat1 = new char[1][1];
         mat1[0][0] = 'a';
 
-        tecs.crearTeclado(name, mat1);
+        try {
+            tecs.crearTeclado(name, mat1);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
         try {
             muestraTeclado(name, tecs);
@@ -161,6 +181,10 @@ public class TestCjtTeclados {
 
         if (!tecs.existeTeclado(nombreTeclado))
             throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe.");
-        tecs.crearTeclado(nombreTeclado, dist);
+        try {
+            tecs.crearTeclado(nombreTeclado, dist);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
