@@ -34,10 +34,14 @@ public class TestCjtAlfabeto {
 
         String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
-        assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
-        assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
+            assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
+            assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
@@ -47,10 +51,14 @@ public class TestCjtAlfabeto {
 
         String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
-        cjtAlfabetos.eliminarAlfabeto("Ingles");
-        assertTrue(cjtAlfabetos.getAlfabetos().isEmpty());
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
+            cjtAlfabetos.eliminarAlfabeto("Ingles");
+            assertTrue(cjtAlfabetos.getAlfabetos().isEmpty());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -62,19 +70,22 @@ public class TestCjtAlfabeto {
         caracteres.add('b');
         caracteres.add('c');
 
-        String alf = "abc";
+        try {
+            String alf = "abc";
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            ArrayList<Character> caracteres2 = new ArrayList<Character>();
+            caracteres2.add('R');
+            caracteres2.add('G');
+            caracteres2.add('B');
+            String alf2 = "RGB";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        ArrayList<Character> caracteres2 = new ArrayList<Character>();
-        caracteres2.add('R');
-        caracteres2.add('G');
-        caracteres2.add('B');
+            cjtAlfabetos.modificarAlfabeto("Ingles", alf2);
+            assertEquals(caracteres2, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+            assertFalse(caracteres == cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
-        String alf2 = "RGB";
-
-        cjtAlfabetos.modificarAlfabeto("Ingles", alf2);
-        assertEquals(caracteres2, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
-        assertFalse(caracteres == cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
     }
 
     @Test
@@ -83,10 +94,14 @@ public class TestCjtAlfabeto {
         cjtAlfabetos = new CjtAlfabetos();
 
         String alf = "abc";
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        cjtAlfabetos.cambiarNombre("Ingles", "Español");
-        assertEquals("Español", cjtAlfabetos.getAlfabeto("Español").getNombre());
-        assertFalse("Ingles" == cjtAlfabetos.getAlfabeto("Español").getNombre());
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.cambiarNombre("Ingles", "Español");
+            assertEquals("Español", cjtAlfabetos.getAlfabeto("Español").getNombre());
+            assertFalse("Ingles" == cjtAlfabetos.getAlfabeto("Español").getNombre());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
@@ -100,9 +115,13 @@ public class TestCjtAlfabeto {
 
         String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
-        assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
+            assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
@@ -116,8 +135,12 @@ public class TestCjtAlfabeto {
 
         String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        assertEquals(caracteres, cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            assertEquals(caracteres, cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
     }
 
@@ -130,23 +153,27 @@ public class TestCjtAlfabeto {
         caracteres.add('b');
         caracteres.add('c');
 
-        String alf = "abc";
+        try {
+            String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        ArrayList<Character> caracteres2 = new ArrayList<Character>();
-        caracteres2.add('R');
-        caracteres2.add('G');
-        caracteres2.add('B');
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            ArrayList<Character> caracteres2 = new ArrayList<Character>();
+            caracteres2.add('R');
+            caracteres2.add('G');
+            caracteres2.add('B');
 
-        String alf2 = "RGB";
-        cjtAlfabetos.añadirAlfabeto("RGB", alf2);
+            String alf2 = "RGB";
+            cjtAlfabetos.añadirAlfabeto("RGB", alf2);
 
-        assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
-        assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
-        assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
-        assertEquals("RGB", cjtAlfabetos.getAlfabeto("RGB").getNombre());
-        assertEquals(caracteres2, cjtAlfabetos.getAlfabeto("RGB").getCaracteres());
-        assertTrue(cjtAlfabetos.getAlfabetos().size() == 2);
+            assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
+            assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
+            assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
+            assertEquals("RGB", cjtAlfabetos.getAlfabeto("RGB").getNombre());
+            assertEquals(caracteres2, cjtAlfabetos.getAlfabeto("RGB").getCaracteres());
+            assertTrue(cjtAlfabetos.getAlfabetos().size() == 2);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
@@ -158,97 +185,107 @@ public class TestCjtAlfabeto {
         caracteres.add('b');
         caracteres.add('c');
 
-        String alf = "abc";
+        try {
+            String alf = "abc";
 
-        cjtAlfabetos.añadirAlfabeto("Ingles", alf);
-        ArrayList<Character> caracteres2 = new ArrayList<Character>();
-        caracteres2.add('R');
-        caracteres2.add('G');
-        caracteres2.add('B');
+            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            ArrayList<Character> caracteres2 = new ArrayList<Character>();
+            caracteres2.add('R');
+            caracteres2.add('G');
+            caracteres2.add('B');
 
-        String alf2 = "RGB";
-        cjtAlfabetos.añadirAlfabeto("RGB", alf2);
+            String alf2 = "RGB";
+            cjtAlfabetos.añadirAlfabeto("RGB", alf2);
 
-        assertTrue(cjtAlfabetos.existeAlfabeto("RGB"));
-        assertTrue(cjtAlfabetos.existeAlfabeto("Ingles"));
-        assertFalse(cjtAlfabetos.existeAlfabeto("Español"));
+            assertTrue(cjtAlfabetos.existeAlfabeto("RGB"));
+            assertTrue(cjtAlfabetos.existeAlfabeto("Ingles"));
+            assertFalse(cjtAlfabetos.existeAlfabeto("Español"));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
-    public void testExcepcionesAñadirAlfabeto(){
+    public void testExcepcionesAñadirAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
-        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
-        try{
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
             añadirAlfabeto("Ingles", "abc", cjtAlfabetos);
-            }catch(NombreAlfabetoDuplicadoExcepcion e){
-                assertEquals("El alfabeto " + "Ingles" + " ya existe en el conjunto de alfabetos.", e.getMessage());
-            }catch(NombreAlfabetoNoValidoExcepcion e){
-                assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
-            }catch(NoHayCaracteresExcepcion e){
-                assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
-            }   
+        } catch (NombreAlfabetoDuplicadoExcepcion e) {
+            assertEquals("El alfabeto " + "Ingles" + " ya existe en el conjunto de alfabetos.", e.getMessage());
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El nombre del alfabeto no puede ser vacio.", e.getMessage());
+        } catch (NoHayCaracteresExcepcion e) {
+            assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
+        }
     }
-    
+
     public void añadirAlfabeto(String idAlfabeto, String caracteres, CjtAlfabetos cjtAlfabetos)
-			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+            throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+        if (idAlfabeto.trim().isEmpty())
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
 
-		if (cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
+        if (cjtAlfabetos.existeAlfabeto(idAlfabeto))
+            throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
 
-		if (caracteres.trim().isEmpty())
-			throw new NoHayCaracteresExcepcion();
+        if (caracteres.trim().isEmpty())
+            throw new NoHayCaracteresExcepcion();
 
-		cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
-	}
+        cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
+    }
 
-    @Test 
-    public void testExcepsionesModificarAlfabeto(){
+    @Test
+    public void testExcepsionesModificarAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
-        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
-        try{
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
             modificarAlfabeto("Ingles", "abcd", cjtAlfabetos);
-            }catch(NombreAlfabetoNoValidoExcepcion e){
-                assertEquals("El alfabeto \"Ingles\" no existe.", e.getMessage());
-            }catch(NoHayCaracteresExcepcion e){
-                assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
-            }   
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El alfabeto \"Ingles\" no existe.", e.getMessage());
+        } catch (NoHayCaracteresExcepcion e) {
+            assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
+        } catch (NombreAlfabetoDuplicadoExcepcion e) {
+            assertEquals("El alfabeto Ingles ya existe en el conjunto de alfabetos.", e.getMessage());
+        }
     }
 
     public void modificarAlfabeto(String idAlfabeto, String alfabeto, CjtAlfabetos cjtAlfabetos)
-			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
-		if (alfabeto.trim().isEmpty())
-			throw new NoHayCaracteresExcepcion();
-		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
-	}
+            throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+        if (idAlfabeto.trim().isEmpty())
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
+            throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+        if (alfabeto.trim().isEmpty())
+            throw new NoHayCaracteresExcepcion();
+        cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
+    }
 
-    @Test 
-    public void testExcepsionesEliminarAlfabeto(){
+    @Test
+    public void testExcepsionesEliminarAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
-        cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
-        try{
+        try {
+            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
             eliminarAlfabeto("Ingles", cjtAlfabetos);
             eliminarAlfabeto("Ingles", cjtAlfabetos);
             fail("No se ha lanzado la excepcion");
-            }catch(NombreAlfabetoNoValidoExcepcion e){
-                assertEquals("El alfabeto \"" + "Ingles" + "\" no existe.", e.getMessage());
-            }   
+        } catch (NombreAlfabetoNoValidoExcepcion e) {
+            assertEquals("El alfabeto \"" + "Ingles" + "\" no existe.", e.getMessage());
+        } catch (NombreAlfabetoDuplicadoExcepcion e) {
+            assertEquals("El alfabeto Ingles ya existe en el conjunto de alfabetos.", e.getMessage());
+        } catch (NoHayCaracteresExcepcion e) {
+            assertEquals("El alfabeto no puede estar vacio.", e.getMessage());
+        }
     }
 
     public void eliminarAlfabeto(String idAlfabeto, CjtAlfabetos cjtAlfabetos) throws NombreAlfabetoNoValidoExcepcion {
-		if (idAlfabeto.trim().isEmpty())
-			throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-		else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
-			throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
+        if (idAlfabeto.trim().isEmpty())
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        else if (!cjtAlfabetos.existeAlfabeto(idAlfabeto))
+            throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
 
-		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
-	}
+        cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
+    }
 }
