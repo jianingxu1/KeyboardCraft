@@ -203,57 +203,31 @@ public class CtrlDominio {
 		userName = "";
 	}
 
-	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion {
-		if (userName.trim().isEmpty())
-			return;
-		try {
-			ctrlPersistencia.guardarTeclados(cjtTeclados, userName);
-		} catch (Exception e) {
-			throw new EscrituraIncorrectaFicheroExcepcion(e.getMessage());
-		}
+
+	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
+		if (userName.trim().isEmpty()) return;
+		ctrlPersistencia.guardarTeclados(cjtTeclados, userName);
 	}
 
-	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion {
-		try {
-			cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
-		} catch (Exception e) {
-			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
-		}
+	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
+		cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
+	}	
+
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
+		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
 	}
 
-	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
-		try {
-			cjtUsuarios = ctrlPersistencia.cargarUsuarios();
-		} catch (Exception e) {
-			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
-		}
+	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
+		ctrlPersistencia.guardarUsuarios(cjtUsuarios);
 	}
 
-	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion {
-		try {
-			ctrlPersistencia.guardarUsuarios(cjtUsuarios);
-		} catch (Exception e) {
-			throw new EscrituraIncorrectaFicheroExcepcion(e.getMessage());
-		}
+	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
+		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
 	}
 
-	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion {
-		try {
-			cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
-		} catch (Exception e) {
-			throw new LecturaIncorrectaFicheroExcepcion(e.getMessage());
-		}
-	}
-
-	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion {
-		if (userName.trim().isEmpty())
-			return;
-		try {
-			ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, userName);
-		} catch (Exception e) {
-			throw new EscrituraIncorrectaFicheroExcepcion(e.getMessage());
-
-		}
+	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
+		if (userName.trim().isEmpty()) return;
+		ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, userName);
 	}
 
 	// ----- Getters -----
