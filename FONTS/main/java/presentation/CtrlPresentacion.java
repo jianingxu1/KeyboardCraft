@@ -1,9 +1,6 @@
 package presentation;
 import domaincontrollers.CtrlDominio;
-import exceptions.ContrasenaNoValidaExcepcion;
-import exceptions.EscrituraIncorrectaFicheroExcepcion;
-import exceptions.LecturaIncorrectaFicheroExcepcion;
-import exceptions.NombreUsuarioNoValidoExcepcion;
+import java.lang.Exception;
 
 /**
  * Clase CtrlPresentacion
@@ -14,75 +11,63 @@ import exceptions.NombreUsuarioNoValidoExcepcion;
 public class CtrlPresentacion {
 
 	/** Atributos **/
-
-	private VistaTerminal viewTerminal;
 	private CtrlDominio ctrlDominio;
 
-	private int opcion;	// 1: terminal, 2: interfaz
-	private VistaInterfazTitulo vTitulo;
-	private VistaIniciarSesion vSesion;
-	private VistaCrearCuenta vCuenta;
+	private VistaInterfazTitulo vistaBienvenida;
+	private VistaIniciarSesion vistaIniciarSesion;
+	private VistaCrearCuenta vistaCrearCuenta;
 
 	/** Constructor y metodos de inicializacion **/
 
-	public CtrlPresentacion(int opcion) {
-		this.opcion = opcion;
-
-		if (opcion == 2) {
-			if (vTitulo == null)  // innecesario
-				vTitulo = new VistaInterfazTitulo(this);
-		}
-
+	public CtrlPresentacion() {
 		ctrlDominio = new CtrlDominio();
-
-		ctrlDominio.inicializarCtrlDominio();
-
-		try {
-			ctrlDominio.cargarUsuarios();
-		} catch (LecturaIncorrectaFicheroExcepcion e) {
-			System.out.println("Error al cargar usuarios: " + e.getMessage());
-		}
+		vistaBienvenida = new VistaInterfazTitulo(this);
 	}
 
 	public void inicializarPresentacion() {
-
-		if (opcion == 1) {
-			viewTerminal = new VistaTerminal(ctrlDominio);
-			viewTerminal.init();
-		}
-		else {
-			vTitulo.hacerVisible();
+		ctrlDominio.inicializarCtrlDominio();
+		vistaBienvenida.hacerVisible();
+		try {
+			ctrlDominio.cargarUsuarios();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
 	/** Métodos de sincronizacion entre vistas **/
 
-	public void syncIniciarSesion() {
-		if (vSesion == null) {
-			vSesion = new VistaIniciarSesion(this);
-		}
-		vSesion.hacerVisible();
-
-		if (vCuenta != null) vCuenta.hacerInvisible();
+	public void syncVistaBienvenida_a_IniciarSesion() {
+		vistaBienvenida.desactivar();
+		if (vistaIniciarSesion == null)
+			vistaIniciarSesion = new VistaIniciarSesion(this);
+		vistaIniciarSesion.hacerVisible();
 	}
 
-	public void syncCrearCuenta() {
-		if (vCuenta == null) {
-			vCuenta = new VistaCrearCuenta(this);
-		}
-		vCuenta.hacerVisible();
+	public void syncVistaIniciarSesion_a_Bienvenida() {
+		vistaIniciarSesion.hacerInvisible();
+		vistaBienvenida.activar();
+	}
 
-		if (vSesion != null) vSesion.hacerInvisible();
+	public void syncVistaBienvenida_a_CrearCuenta() {
+		vistaBienvenida.desactivar();
+		if (vistaCrearCuenta == null)
+			vistaCrearCuenta = new VistaCrearCuenta(this);
+		vistaCrearCuenta.hacerVisible();
+	}
+
+	public void syncVistaCrearCuenta_a_Bienvenida() {
+		vistaCrearCuenta.hacerInvisible();
+		vistaBienvenida.activar();
 	}
 
 	public void syncMenuPrincipal() {
-		vSesion.hacerInvisible();
+		vistaIniciarSesion.hacerInvisible();
 		System.exit(0);
 	}
 
 	/** Llamadas al controlador de dominio **/
 
-	public boolean iniciarSesion(String Username, String Password) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+	public boolean iniciarSesion(String Username, String Password) throws Exception {
 		if (ctrlDominio.contraseñaCorrecta(Username,Password)) {
 			ctrlDominio.IniciarSesion(Username,Password);
 			return true;
@@ -90,9 +75,8 @@ public class CtrlPresentacion {
 		else return false;
 	}
 
-	public void crearUsuario(String Username, String Password) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
-		ctrlDominio.añadirUsuario(Username,Password);
-		vCuenta.hacerInvisible();
+	public void crearUsuario(String username, String password) throws Exception {
+		ctrlDominio.añadirUsuario(username, password);
 		FuncCargarDatos();
 	}
 
@@ -112,7 +96,7 @@ public class CtrlPresentacion {
 				ctrlDominio.cargarTeclados();
 				ctrlDominio.cargarAlfabetos();
 				completaCarga = true;
-			} catch (LecturaIncorrectaFicheroExcepcion e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
@@ -121,7 +105,7 @@ public class CtrlPresentacion {
 	private void FuncEscribirUsuarios() {
 		try{
 			ctrlDominio.guardarUsuarios();
-		} catch (EscrituraIncorrectaFicheroExcepcion e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -130,15 +114,8 @@ public class CtrlPresentacion {
 		try{
 			ctrlDominio.guardarTeclados();
 			ctrlDominio.guardarAlfabetos();
-		} catch (EscrituraIncorrectaFicheroExcepcion e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
-
-	public void cerrarPestañaCrearCuenta() {
-		vCuenta.hacerInvisible();
-	}
-	public void cerrarPestañaIniciarSesion() {
-		vSesion.hacerInvisible();
 	}
 }

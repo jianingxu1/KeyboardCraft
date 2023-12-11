@@ -21,17 +21,11 @@ public class VistaInterfazTitulo {
 
 
     public VistaInterfazTitulo (CtrlPresentacion pCtrlPresentacion) {
-
-        iCtrlPresentacion = pCtrlPresentacion;
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
 
     public void hacerVisible() {
-        System.out.println
-                ("isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
         frameVista.pack();
         frameVista.setVisible(true);
     }
@@ -127,11 +121,11 @@ public class VistaInterfazTitulo {
     }
 
     public void actionPerformed_buttonIniciarSesion(ActionEvent event) {
-        iCtrlPresentacion.syncIniciarSesion();
+        iCtrlPresentacion.syncVistaBienvenida_a_IniciarSesion();
     }
 
     public void actionPerformed_buttonCrearCuenta(ActionEvent event) {
-        iCtrlPresentacion.syncCrearCuenta();
+        iCtrlPresentacion.syncVistaBienvenida_a_CrearCuenta();
     }
     public void actionPerformed_buttonCerrarPrograma(ActionEvent event) {
         iCtrlPresentacion.cerrarPrograma();

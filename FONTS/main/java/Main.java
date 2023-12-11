@@ -9,12 +9,8 @@ public class Main {
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-
-				int opcion = escoger();
-
-				CtrlPresentacion mainWindow = new CtrlPresentacion(opcion);
-
-				mainWindow.inicializarPresentacion();
+				CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
+				ctrlPresentacion.inicializarPresentacion();
 			}
 		});
 

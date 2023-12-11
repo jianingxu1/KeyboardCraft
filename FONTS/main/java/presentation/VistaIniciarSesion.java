@@ -184,47 +184,43 @@ public class VistaIniciarSesion extends JFrame {
         // Listeners para los botones
 
         btnLogin.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        try {
-                            actionPerformed_buttonIniciarSesion(event);
-                        } catch (EscrituraIncorrectaFicheroExcepcion e) {
-                            throw new RuntimeException(e);
-                        } catch (NombreUsuarioNoValidoExcepcion e) {
-                            throw new RuntimeException(e);
-                        } catch (ContrasenaNoValidaExcepcion e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
+            (new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    actionPerformed_btnIniciarSesion(event);
+                }
+            });
 
         btnVolver.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        actionPerformed_buttonCerrar(event);
-                    }
-                });
+            (new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    actionPerformed_btnVolver(event);
+                }
+            });
 
     }
 
-    public void actionPerformed_buttonIniciarSesion(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+    public void actionPerformed_btnIniciarSesion(ActionEvent event) {
         String user = fieldUsuario.getText();
-        String pass = fieldContra.getPassword().toString();
-
-        if (pass.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Error: la contraseña ha de tener\n" +
-                    "8 o más caractéres.");
-        } else if (!iCtrlPresentacion.existeUsuario(user)) {
-            JOptionPane.showMessageDialog(this, "Error: el usuario no existe.");
-        } else if (iCtrlPresentacion.iniciarSesion(user, pass)) {
-            iCtrlPresentacion.syncMenuPrincipal();
-        } else {
-            JOptionPane.showMessageDialog(this, "Error: usuario o contraseña incorrectos.");
+        char[] passwordChars = fieldContra.getPassword();
+        String password = new String(passwordChars);
+        try {
+            iCtrlPresentacion.iniciarSesion(user, password);
+            limpiarCamposInput();
+            iCtrlPresentacion.syncVistaIniciarSesion_a_Bienvenida();
+            JOptionPane.showMessageDialog(this, "Has iniciado sesión!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    public void actionPerformed_buttonCerrar(ActionEvent event) {
-        iCtrlPresentacion.cerrarPestañaIniciarSesion();
+    private void limpiarCamposInput() {
+        fieldUsuario.setText("");
+        fieldContra.setText("");
+    }
+
+    public void actionPerformed_btnVolver(ActionEvent event) {
+        limpiarCamposInput();
+        iCtrlPresentacion.syncVistaIniciarSesion_a_Bienvenida();
     }
 
     public void activar() {
