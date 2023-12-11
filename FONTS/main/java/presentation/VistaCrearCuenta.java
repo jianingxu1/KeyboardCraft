@@ -1,9 +1,5 @@
 package presentation;
 
-import exceptions.ContrasenaNoValidaExcepcion;
-import exceptions.EscrituraIncorrectaFicheroExcepcion;
-import exceptions.NombreUsuarioNoValidoExcepcion;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -19,7 +15,7 @@ public class VistaCrearCuenta extends JFrame {
     private JLabel labelContra;
     private JPasswordField fieldContra;
     private JPanel panelBotones;
-    private JButton btnLogin;
+    private JButton btnCrearCuenta;
     private JButton btnVolver;
     private JPanel panelInput;
 
@@ -62,45 +58,44 @@ public class VistaCrearCuenta extends JFrame {
     private void asignar_listenersComponentes() {
 
         // Listeners para los botones
-
-        btnLogin.addActionListener
+        btnCrearCuenta.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        try {
-                            actionPerformed_buttonCrearCuenta(event);
-                        } catch (EscrituraIncorrectaFicheroExcepcion e) {
-                            throw new RuntimeException(e);
-                        } catch (NombreUsuarioNoValidoExcepcion e) {
-                            throw new RuntimeException(e);
-                        } catch (ContrasenaNoValidaExcepcion e) {
-                            throw new RuntimeException(e);
-                        }
+                        actionPerformed_btnCrearCuenta(event);
                     }
                 });
 
         btnVolver.addActionListener
                 (new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        actionPerformed_buttonCerrar(event);
+                        actionPerformed_btnVolver(event);
                     }
                 });
 
     }
 
-    public void actionPerformed_buttonCrearCuenta(ActionEvent event) throws EscrituraIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+    public void actionPerformed_btnCrearCuenta(ActionEvent event) {
         String user = fieldUsuario.getText();
-        String pass = fieldContra.getPassword().toString();
-
-        if (pass.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Error: la contraseña ha de tener\n" +
-                    "8 o más caractéres.");
-        } else if (iCtrlPresentacion.existeUsuario(user)) {
-            JOptionPane.showMessageDialog(this, "Error: el usuario ya existe.");
-        } else iCtrlPresentacion.crearUsuario(user, pass);
+        char[] passwordChars = fieldContra.getPassword();
+        String password = new String(passwordChars);
+        try {
+            iCtrlPresentacion.crearUsuario(user, password);
+            limpiarCamposInput();
+            iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
+            JOptionPane.showMessageDialog(this, "¡Has creado una cuenta nueva!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 
-    public void actionPerformed_buttonCerrar(ActionEvent event) {
-        iCtrlPresentacion.cerrarPestañaCrearCuenta();
+    public void actionPerformed_btnVolver(ActionEvent event) {
+        limpiarCamposInput();
+        iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
+    }
+
+    private void limpiarCamposInput() {
+        fieldUsuario.setText("");
+        fieldContra.setText("");
     }
 
     public void activar() {
@@ -146,14 +141,14 @@ public class VistaCrearCuenta extends JFrame {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelContenidos.add(panelBotones, gbc);
-        btnLogin = new JButton();
-        btnLogin.setText("Crear Cuenta");
+        btnCrearCuenta = new JButton();
+        btnCrearCuenta.setText("Crear Cuenta");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelBotones.add(btnLogin, gbc);
+        panelBotones.add(btnCrearCuenta, gbc);
         btnVolver = new JButton();
         btnVolver.setText("Volver");
         gbc = new GridBagConstraints();
