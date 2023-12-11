@@ -16,6 +16,7 @@ public class CtrlPresentacion {
 	private VistaInterfazTitulo vistaBienvenida;
 	private VistaIniciarSesion vistaIniciarSesion;
 	private VistaCrearCuenta vistaCrearCuenta;
+	private VistaMenuPrincipal vistaMenuPrincipal;
 
 	/** Constructor y metodos de inicializacion **/
 
@@ -57,6 +58,22 @@ public class CtrlPresentacion {
 
 	public void syncVistaCrearCuenta_a_Bienvenida() {
 		vistaCrearCuenta.hacerInvisible();
+		vistaBienvenida.activar();
+	}
+
+	public void syncVistaIniciarSesion_a_MenuPrincipal() {
+		vistaIniciarSesion.hacerInvisible();
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
+		vistaMenuPrincipal.hacerVisible();
+		vistaBienvenida.hacerInvisible();
+	}
+
+	public void syncVistaMenuPrincipal_a_Bienvenida() {
+		vistaMenuPrincipal.hacerInvisible();
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaInterfazTitulo(this);
+		vistaBienvenida.hacerVisible();
 		vistaBienvenida.activar();
 	}
 
