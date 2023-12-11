@@ -81,11 +81,6 @@ public class CtrlPresentacion {
 		return ctrlDominio.existeUsuario(Username);
 	}
 
-	public void cerrarPrograma() {
-		FuncEscribirUsuarios();
-		System.exit(0);
-	}
-
 	private void FuncCargarDatos() {
 		boolean completaCarga = false;
 		while (!completaCarga) {
@@ -99,20 +94,9 @@ public class CtrlPresentacion {
 		}
 	}
 
-	private void FuncEscribirUsuarios() {
-		try{
-			ctrlDominio.guardarUsuarios();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	private void FuncEscribirCambios() {
-		try{
-			ctrlDominio.guardarTeclados();
-			ctrlDominio.guardarAlfabetos();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	public void guardarDatos() throws Exception {
+		ctrlDominio.guardarTeclados();
+		ctrlDominio.guardarAlfabetos();
+		ctrlDominio.guardarUsuarios();
 	}
 }

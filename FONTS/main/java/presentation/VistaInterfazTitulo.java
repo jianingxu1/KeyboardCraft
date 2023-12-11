@@ -11,14 +11,10 @@ public class VistaInterfazTitulo {
     private JFrame frameVista = new JFrame("Login");
     private JPanel panelContenidos = new JPanel();
     private JPanel panelBotones = new JPanel();
-    private JPanel panelCerrar = new JPanel();
     private JPanel panelTitulo = new JPanel();
     private JLabel labelTitulo = new JLabel("Generador de teclados");
     private JButton buttonIniciarSesion = new JButton("Iniciar sesión");
     private JButton buttonCrearCuenta = new JButton("Crear cuenta");
-
-    private JButton buttonCerrarPrograma = new JButton("Cerrar");
-
 
     public VistaInterfazTitulo (CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -50,11 +46,35 @@ public class VistaInterfazTitulo {
         frameVista.setResizable(false);
         // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        // Add a window listener to intercept the window-closing event
+        frameVista.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                performOperationBeforeExit();
+            }
+        });
+
         // Se agrega panelContenidos al contentPane (el panelContenidos se
         // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelContenidos);
+    }
+
+    // Method to perform an operation before exiting
+    private void performOperationBeforeExit() {
+        // Your operation logic goes here
+        int result = JOptionPane.showConfirmDialog(frameVista, "Seguro que quieres salir?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            // Perform cleanup or other necessary operations before exiting
+            try {
+                iCtrlPresentacion.guardarDatos();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(frameVista, e.getMessage());
+            }
+            frameVista.dispose(); // Close the frame
+        }
     }
 
     private void inicializar_panelTitulo() {
@@ -70,7 +90,6 @@ public class VistaInterfazTitulo {
         // Layout
         panelContenidos.setLayout(new BorderLayout());
         // Paneles
-        panelContenidos.add(panelCerrar,BorderLayout.NORTH);
         panelContenidos.add(panelTitulo,BorderLayout.CENTER);
         panelContenidos.add(panelBotones,BorderLayout.SOUTH);
     }
@@ -87,11 +106,6 @@ public class VistaInterfazTitulo {
         // Tooltips
         buttonIniciarSesion.setToolTipText("Inicia sesión con una cuenta ya creada");
         buttonCrearCuenta.setToolTipText("Crea una nueva cuenta vacía");
-
-
-        panelCerrar.setLayout(new BorderLayout());
-        buttonCerrarPrograma.setBackground(Color.red);
-        panelCerrar.add(buttonCerrarPrograma, BorderLayout.EAST);
     }
 
     private void asignar_listenersComponentes() {
@@ -111,13 +125,6 @@ public class VistaInterfazTitulo {
                         actionPerformed_buttonCrearCuenta(event);
                     }
                 });
-
-        buttonCerrarPrograma.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        actionPerformed_buttonCerrarPrograma(event);
-                    }
-                });
     }
 
     public void actionPerformed_buttonIniciarSesion(ActionEvent event) {
@@ -126,9 +133,6 @@ public class VistaInterfazTitulo {
 
     public void actionPerformed_buttonCrearCuenta(ActionEvent event) {
         iCtrlPresentacion.syncVistaBienvenida_a_CrearCuenta();
-    }
-    public void actionPerformed_buttonCerrarPrograma(ActionEvent event) {
-        iCtrlPresentacion.cerrarPrograma();
     }
 
     public void activar() {
