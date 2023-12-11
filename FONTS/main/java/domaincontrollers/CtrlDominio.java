@@ -172,19 +172,7 @@ public class CtrlDominio {
 	}
 
 	public void modificarContrasena(String nombreUsuario,String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
-		if (nombreUsuario.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
-		else if (nuevaContrasena.trim().isEmpty())
-			throw new ContrasenaNoValidaExcepcion("La contrasena no puede ser vacia.");
-		else if (nuevaContrasena.length() < 8)
-			throw new ContrasenaNoValidaExcepcion("La contrasena debe tener al menos 8 caracteres.");
-		else if (!cjtUsuarios.correctPass(nombreUsuario, actualContrasena)) {
-			throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
-		}
-
-		cjtUsuarios.modificarUsuario(nombreUsuario, nuevaContrasena);
+		cjtUsuarios.modificarContrasenaUsuario(nombreUsuario, actualContrasena, nuevaContrasena);
 	}
 
 	public boolean IniciarSesion(String nombreUsuario, String contraseña)

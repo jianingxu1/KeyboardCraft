@@ -44,7 +44,14 @@ public class CjtUsuarios {
         conjunto.remove(user);
     }
 
-    public void modificarUsuario(String user, String newPass) {
+    public void modificarContrasenaUsuario(String user, String oldPass, String newPass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+		if (user.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!existeUsuario(user))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
+		else if(!correctPass(user, oldPass)){
+			throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
+		}
         conjunto.get(user).modificaContraseña(newPass);
     }
 
