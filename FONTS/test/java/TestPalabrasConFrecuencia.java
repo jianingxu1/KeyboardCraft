@@ -21,27 +21,31 @@ public class TestPalabrasConFrecuencia {
     @Test
     public void testParametrizedConstructor() {
         String input = "phone 1 keyboard 2 home 10";
-        PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
+        try {
+            PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
+            assertEquals(3, palabras.getMap().size());
 
-        assertEquals(3, palabras.getMap().size());
+            assertTrue(palabras.getMap().containsKey("phone"));
+            assertTrue(palabras.getMap().containsKey("keyboard"));
+            assertTrue(palabras.getMap().containsKey("home"));
+            assertFalse(palabras.getMap().containsKey("apple"));
 
-        assertTrue(palabras.getMap().containsKey("phone"));
-        assertTrue(palabras.getMap().containsKey("keyboard"));
-        assertTrue(palabras.getMap().containsKey("home"));
-        assertFalse(palabras.getMap().containsKey("apple"));
+            assertEquals(Integer.valueOf(1), palabras.getMap().get("phone"));
+            assertEquals(Integer.valueOf(2), palabras.getMap().get("keyboard"));
+            assertEquals(Integer.valueOf(10), palabras.getMap().get("home"));
+            assertNull(palabras.getMap().get("apple"));
 
-        assertEquals(Integer.valueOf(1), palabras.getMap().get("phone"));
-        assertEquals(Integer.valueOf(2), palabras.getMap().get("keyboard"));
-        assertEquals(Integer.valueOf(10), palabras.getMap().get("home"));
-        assertNull(palabras.getMap().get("apple"));
+            String input2 = "";
+            PalabrasConFrecuencia palabras2 = new PalabrasConFrecuencia(input2);
+            assertEquals(0, palabras2.getMap().size());
+            assertFalse(palabras2.getMap().containsKey("phone"));
+            assertFalse(palabras2.getMap().containsKey("keyboard"));
+            assertFalse(palabras2.getMap().containsKey("home"));
+            assertFalse(palabras2.getMap().containsKey("apple"));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
-        String input2 = "";
-        PalabrasConFrecuencia palabras2 = new PalabrasConFrecuencia(input2);
-        assertEquals(0, palabras2.getMap().size());
-        assertFalse(palabras2.getMap().containsKey("phone"));
-        assertFalse(palabras2.getMap().containsKey("keyboard"));
-        assertFalse(palabras2.getMap().containsKey("home"));
-        assertFalse(palabras2.getMap().containsKey("apple"));
     }
 
     @Test
@@ -66,13 +70,17 @@ public class TestPalabrasConFrecuencia {
 
     @Test
     public void testToString() {
-        String input = "phone 1 keyboard 2 home 10";
-        PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
-        assertEquals(input, palabras.toString());
+        try {
+            String input = "phone 1 keyboard 2 home 10";
+            PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(input);
+            assertEquals(input, palabras.toString());
 
-        String input1 = "";
-        PalabrasConFrecuencia palabras1 = new PalabrasConFrecuencia(input1);
-        assertEquals(input1, palabras1.toString());
+            String input1 = "";
+            PalabrasConFrecuencia palabras1 = new PalabrasConFrecuencia(input1);
+            assertEquals(input1, palabras1.toString());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test

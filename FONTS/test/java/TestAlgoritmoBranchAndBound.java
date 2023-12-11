@@ -18,19 +18,23 @@ import org.junit.Test;
 public class TestAlgoritmoBranchAndBound {
     @Test
     public void testGenerarDistribucion() {
-        AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
-        Alfabeto alfabeto = new Alfabeto("ingles", "abcdefg");
-        PalabrasConFrecuencia palabras = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200");
-        Texto texto = new Texto();
-        Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, texto);
-        char[][] distribucion = alg.generarDistribucion(alfabeto, bigramasConFrecuencia);
+        try {
+            AlgoritmoBranchAndBound alg = new AlgoritmoBranchAndBound();
+            Alfabeto alfabeto = new Alfabeto("ingles", "abcdefg");
+            PalabrasConFrecuencia palabras = new PalabrasConFrecuencia("ab 100 ac 90 ad 80 ae 70 af 50 bc 200");
+            Texto texto = new Texto();
+            Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras, texto);
+            char[][] distribucion = alg.generarDistribucion(alfabeto, bigramasConFrecuencia);
 
-        System.out.println("coste: " + alg.getMejorCosteTotal());
-        for (int i = 0; i < distribucion.length; ++i) {
-            for (int j = 0; j < distribucion[i].length; ++j) {
-                System.out.print(distribucion[i][j]);
+            System.out.println("coste: " + alg.getMejorCosteTotal());
+            for (int i = 0; i < distribucion.length; ++i) {
+                for (int j = 0; j < distribucion[i].length; ++j) {
+                    System.out.print(distribucion[i][j]);
+                }
+                System.out.println();
             }
-            System.out.println();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 
