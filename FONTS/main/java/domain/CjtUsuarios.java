@@ -36,7 +36,11 @@ public class CjtUsuarios {
         conjunto.put(user, usuario);
     }
 
-    public void eliminarUsuario(String user) {
+    public void eliminarUsuario(String user) throws NombreUsuarioNoValidoExcepcion {
+		if (user.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!existeUsuario(user))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
         conjunto.remove(user);
     }
 

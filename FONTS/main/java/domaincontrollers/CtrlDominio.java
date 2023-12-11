@@ -165,16 +165,10 @@ public class CtrlDominio {
 		return false;
 	}
 
-	// Implementar este caso en el main, seria como borrar cuenta
-	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion {
-		if (nombreUsuario.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+	//Implementar este caso en el main, seria como borrar cuenta
+	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
 		cjtUsuarios.eliminarUsuario(nombreUsuario);
-
 		ctrlPersistencia.eliminarUsuario(nombreUsuario);
-
 	}
 
 	public void modificarContrasena(String nombreUsuario,String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
