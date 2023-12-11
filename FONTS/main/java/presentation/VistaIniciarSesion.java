@@ -207,7 +207,7 @@ public class VistaIniciarSesion extends JFrame {
             iCtrlPresentacion.iniciarSesion(user, password);
             limpiarCamposInput();
             iCtrlPresentacion.syncVistaIniciarSesion_a_Bienvenida();
-            JOptionPane.showMessageDialog(this, "Has iniciado sesión!");
+            JOptionPane.showMessageDialog(this, "¡Has iniciado sesión!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

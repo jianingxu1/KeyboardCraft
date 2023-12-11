@@ -68,11 +68,8 @@ public class CtrlPresentacion {
 	/** Llamadas al controlador de dominio **/
 
 	public boolean iniciarSesion(String Username, String Password) throws Exception {
-		if (ctrlDominio.contraseñaCorrecta(Username,Password)) {
-			ctrlDominio.IniciarSesion(Username,Password);
-			return true;
-		}
-		else return false;
+		boolean esCorrecto = ctrlDominio.IniciarSesion(Username,Password);
+		return esCorrecto;
 	}
 
 	public void crearUsuario(String username, String password) throws Exception {

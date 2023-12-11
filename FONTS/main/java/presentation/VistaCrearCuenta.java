@@ -82,6 +82,7 @@ public class VistaCrearCuenta extends JFrame {
             iCtrlPresentacion.crearUsuario(user, password);
             limpiarCamposInput();
             iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
+            JOptionPane.showMessageDialog(this, "¡Has creado una cuenta nueva!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
