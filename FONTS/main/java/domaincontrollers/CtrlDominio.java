@@ -271,10 +271,6 @@ public class CtrlDominio {
 	 * @return La distribución del teclado en forma de String.
 	 */
 	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
-		if (nombreTeclado.trim().isEmpty())
-			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (!cjtTeclados.existeTeclado(nombreTeclado))
-			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
 		return cjtTeclados.getDistribucioString(nombreTeclado);
 	}
 

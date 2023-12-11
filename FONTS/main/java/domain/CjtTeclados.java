@@ -177,7 +177,11 @@ public class CjtTeclados {
      * @param nombre nombre del teclado
      * @return String que representa la distribución
      */
-    public String getDistribucioString(String nombre) {
+    public String getDistribucioString(String nombre) throws NombreTecladoNoValidoExcepcion {
+		if (nombre.trim().isEmpty())
+			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if (!existeTeclado(nombre))
+			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
         return conjunto.get(nombre).toString();
     }
 
