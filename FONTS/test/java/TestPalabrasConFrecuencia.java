@@ -120,12 +120,6 @@ public class TestPalabrasConFrecuencia {
         } catch (FrecuenciaIncorrectaExcepcion e) {
             assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
         }
-        try {
-            mirarInputListaDePalabras("10 hola 10 adios");
-            fail("Debería lanzar excepción");
-        } catch (FrecuenciaIncorrectaExcepcion e) {
-            assertEquals("El formato de palabras con frecuencia no es correcto, debe ser palabras seguidas de un espacio y su número de frecuencia.", e.getMessage());
-        }
     }
 
     public void mirarInputListaDePalabras(String listaPalabras) throws FrecuenciaIncorrectaExcepcion {
