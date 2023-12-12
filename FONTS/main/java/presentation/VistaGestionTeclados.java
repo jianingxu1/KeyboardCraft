@@ -132,7 +132,7 @@ public class VistaGestionTeclados extends JFrame {
     }
 
     void actionPerformed_buttonConsultarTeclado(ActionEvent event) {
-
+        iCtrlPresentacion.syncVistaGestionTeclados_a_ConsultarTeclado();
     }
 
     void actionPerformed_buttonEliminarTeclado(ActionEvent event) {
