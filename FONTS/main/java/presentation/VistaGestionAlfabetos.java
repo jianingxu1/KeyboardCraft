@@ -97,11 +97,6 @@ public class VistaGestionAlfabetos extends JFrame {
     }
 
     void actionPerformed_atrásButton(ActionEvent event) {
-        try {
-            iCtrlPresentacion.guardarDatos();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
         iCtrlPresentacion.syncVistaGestionAlfabetos_a_MenuPrincipal();
     }
 
