@@ -6,20 +6,8 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
 
-public class GestorFicherosAlfabetos {
+public class CtrlFicherosAlfabetos {
 
-    /*
-     * Constructora de la clase GestorFicherosAlfabetos
-    */
-    public GestorFicherosAlfabetos() {
-    }
-
-    /*
-     * Guarda los alfabetos en el fichero de alfabetos
-     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido escribir correctamente
-     * @param cjtAlfabetos El conjunto de alfabetos que se quiere guardar
-     * @param userName El nombre del usuario que quiere guardar los alfabetos
-     */
     public void guardarAlfabetos(CjtAlfabetos cjtAlfabetos, String userName) throws EscrituraIncorrectaFicheroExcepcion {
         if (userName.trim().isEmpty()) return;
         try {
@@ -34,12 +22,6 @@ public class GestorFicherosAlfabetos {
         }
     }
 
-    /*
-     * Carga los alfabetos del fichero de alfabetos
-     * @return El conjunto de alfabetos que se ha cargado
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido leer correctamente
-     * @param userName El nombre del usuario que quiere cargar los alfabetos
-     */
     public CjtAlfabetos cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
         CjtAlfabetos cjtAlfabetos = CjtAlfabetos.getInstance();
         String path = "../DATA/" + userName + "Alfabetos" + ".prop";
@@ -65,20 +47,6 @@ public class GestorFicherosAlfabetos {
         return cjtAlfabetos;
     }
 
-    /*
-     * Elimina los alfabetos del usuario
-     * @param userName El nombre del usuario que quiere eliminar los alfabetos
-     */
-    public void eliminarAlfabetosDeUsuario(String userName) {
-        File fileAlfabetos = new File("../DATA/" + userName + "Alfabetos" + ".prop");
-        fileAlfabetos.delete();
-    }
-
-    /*
-     * Convierte un string en una matriz de caracteres
-     * @param distribucionString El string que contiene la distribucion
-     * @return La matriz de caracteres que contiene la distribucion
-     */
 	private static char[][] convertirStringADistribucion(String distribucionString){
 		char[][] distribucion = new char[3][10];
 		int i = 0;
