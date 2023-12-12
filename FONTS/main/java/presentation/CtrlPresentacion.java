@@ -19,6 +19,7 @@ public class CtrlPresentacion {
 	private VistaMenuPrincipal vistaMenuPrincipal;
 
 	private VistaGestionAlfabetos vistaGestionAlfabetos;
+	private VistaGestionTeclados vistaGestionTeclados;
 
 	/** Constructor y metodos de inicializacion **/
 
@@ -94,6 +95,22 @@ public class CtrlPresentacion {
 		vistaGestionAlfabetos.hacerVisible();
 	}
 
+	public void syncVistaMenuPrincipal_a_GestionTeclados() {
+		vistaMenuPrincipal.desactivar();
+		vistaMenuPrincipal.hacerInvisible();
+		if (vistaGestionTeclados == null) {
+			vistaGestionTeclados = new VistaGestionTeclados(this);
+		}
+		vistaGestionTeclados.activar();
+		vistaGestionTeclados.hacerVisible();
+	}
+
+	public void syncVistaGestionTeclados_a_MenuPrincipal() {
+		vistaGestionTeclados.hacerInvisible();
+		vistaGestionTeclados.desactivar();
+		vistaMenuPrincipal.activar();
+		vistaMenuPrincipal.hacerVisible();
+	}
 
 	/** Llamadas al controlador de dominio **/
 

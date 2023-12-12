@@ -98,7 +98,7 @@ public class VistaMenuPrincipal extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-
+                        actionPerformed_btnGestionarTeclados(event);
                     }
                 });
         btnGestionarPerfil.addActionListener(
@@ -123,6 +123,7 @@ public class VistaMenuPrincipal extends JFrame {
     }
 
     public void actionPerformed_btnGestionarTeclados(ActionEvent event) {
+        iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionTeclados();
     }
 
     public void actionPerformed_btnGestionarPerfil(ActionEvent event) {
