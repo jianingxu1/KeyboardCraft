@@ -6,7 +6,5 @@ En la carpeta DOCS encontraras un fichero LaTeX en formato .pdf con toda la docu
 	- Relacion clases/miembro
 
 Ademas de otros documentos como:
-	- Javadoc: con la información de cada classe implementada
-	- Informacion adicional sobre QAP: documento en el que se basa la implementacion del algoritmo Branch and Bound implementado para la generacion de distribuciones de teclado.
-
-Ciertos casos de uso explicados en el documento no han sido implementados en esta primera entrega y seran anadidos posteriormente.
+	- Javadoc: con la información de cada clase implementada
+	- Imagenes de las relaciones entre clases
