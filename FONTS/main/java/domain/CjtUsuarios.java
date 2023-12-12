@@ -55,8 +55,20 @@ public class CjtUsuarios {
         conjunto.get(user).modificaContraseña(newPass);
     }
 
-    public boolean correctPass(String user, String pass) {
-        return conjunto.get(user).getContraseña().equals(pass);
+    public boolean correctPass(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+    
+        if (nombreUsuario.trim().isEmpty())
+        throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+        
+        else if (!existeUsuario(nombreUsuario))
+        throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+        
+        else if (contrasena.trim().isEmpty())
+        throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+        
+        else if (contrasena.length() < 8)
+        throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+        return conjunto.get(nombreUsuario).getContraseña().equals(contrasena);
     }
 
     public boolean existeUsuario(String user) {

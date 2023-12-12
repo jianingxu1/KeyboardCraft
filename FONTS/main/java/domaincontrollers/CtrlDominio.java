@@ -177,14 +177,7 @@ public class CtrlDominio {
 
 	public boolean IniciarSesion(String nombreUsuario, String contraseña)
 			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
-		if (nombreUsuario.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
-		else if (contraseña.trim().isEmpty())
-			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
-		else if (contraseña.length() < 8)
-			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+
 		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contraseña);
 		if (!usuarioIdentificado)
 			throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
@@ -193,7 +186,7 @@ public class CtrlDominio {
 		return usuarioIdentificado;
 	}
 
-	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) {
+	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
 	}
 
