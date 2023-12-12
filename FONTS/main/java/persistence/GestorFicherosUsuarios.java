@@ -6,8 +6,19 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
 
-public class CtrlFicherosUsuarios {
+public class GestorFicherosUsuarios {
 
+    /*
+     * Constructora de la clase GestorFicherosUsuarios
+     */
+    public GestorFicherosUsuarios() {
+    }
+
+    /*
+     * Guarda los usuarios en el fichero de usuarios
+     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido escribir correctamente
+     * @param cjtUsuarios El conjunto de usuarios que se quiere guardar
+     */
     public void guardarUsuarios(CjtUsuarios cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
         try {
             String path = "../DATA/usuarios.prop";
@@ -22,6 +33,11 @@ public class CtrlFicherosUsuarios {
         }
     }
 
+    /*
+     * Carga los usuarios del fichero de usuarios
+     * @return El conjunto de usuarios que se ha cargado
+     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente
+     */
     public CjtUsuarios cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
         CjtUsuarios cjtUsuarios = CjtUsuarios.getInstance();
         String path = "../DATA/usuarios.prop";
@@ -48,11 +64,4 @@ public class CtrlFicherosUsuarios {
         return cjtUsuarios;
     }
 
-    public void eliminarUsuario(String nombreUsuario) {
-        File fileTeclados = new File("../DATA/" + nombreUsuario + "Teclados" + ".prop");
-        fileTeclados.delete();
-
-        File fileAlfabetos = new File("../DATA/" + nombreUsuario + "Alfabetos" + ".prop");
-        fileAlfabetos.delete();
-    }
 }
