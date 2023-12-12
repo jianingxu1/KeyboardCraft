@@ -97,9 +97,8 @@ public class CtrlPresentacion {
 
 	/** Llamadas al controlador de dominio **/
 
-	public boolean iniciarSesion(String Username, String Password) throws Exception {
-		boolean esCorrecto = ctrlDominio.IniciarSesion(Username,Password);
-		return esCorrecto;
+	public void iniciarSesion(String Username, String Password) throws Exception {
+		ctrlDominio.IniciarSesion(Username,Password);
 	}
 
 	public void crearUsuario(String username, String password) throws Exception {

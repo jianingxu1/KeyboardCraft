@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="presentation.VistaMenuPrincipal">
   <grid id="27dc6" binding="panelContenidos" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="353" height="292"/>
+      <xy x="20" y="20" width="353" height="367"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -21,6 +21,7 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
+              <preferredSize width="250" height="60"/>
               <text value="Gestionar teclados"/>
             </properties>
           </component>
@@ -30,6 +31,7 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
+              <preferredSize width="250" height="60"/>
               <text value="Gestionar alfabetos"/>
             </properties>
           </component>
@@ -40,6 +42,7 @@
             </constraints>
             <properties>
               <horizontalAlignment value="0"/>
+              <preferredSize width="250" height="60"/>
               <text value="Gestionar perfil"/>
             </properties>
           </component>
@@ -57,19 +60,10 @@
           </vspacer>
         </children>
       </grid>
-      <component id="49bd3" class="javax.swing.JButton" binding="btnLogOut">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Log out"/>
-        </properties>
-      </component>
       <vspacer id="166ac">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0" ipady="20"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </vspacer>
       <component id="f8638" class="javax.swing.JLabel" binding="labelTitulo">
@@ -95,6 +89,16 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </vspacer>
+      <component id="49bd3" class="javax.swing.JButton" binding="btnLogOut">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <preferredSize width="82" height="30"/>
+          <text value="Log out"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

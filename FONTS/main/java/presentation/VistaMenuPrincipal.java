@@ -164,6 +164,7 @@ public class VistaMenuPrincipal extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         panelContenidos.add(panelBotones, gbc);
         btnGestionarTeclados = new JButton();
+        btnGestionarTeclados.setPreferredSize(new Dimension(250, 60));
         btnGestionarTeclados.setText("Gestionar teclados");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -172,6 +173,7 @@ public class VistaMenuPrincipal extends JFrame {
         gbc.weighty = 1.0;
         panelBotones.add(btnGestionarTeclados, gbc);
         btnGestionarAlfabetos = new JButton();
+        btnGestionarAlfabetos.setPreferredSize(new Dimension(250, 60));
         btnGestionarAlfabetos.setText("Gestionar alfabetos");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -181,6 +183,7 @@ public class VistaMenuPrincipal extends JFrame {
         panelBotones.add(btnGestionarAlfabetos, gbc);
         btnGestionarPerfil = new JButton();
         btnGestionarPerfil.setHorizontalAlignment(0);
+        btnGestionarPerfil.setPreferredSize(new Dimension(250, 60));
         btnGestionarPerfil.setText("Gestionar perfil");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -200,19 +203,11 @@ public class VistaMenuPrincipal extends JFrame {
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.VERTICAL;
         panelBotones.add(spacer2, gbc);
-        btnLogOut = new JButton();
-        btnLogOut.setText("Log out");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.weightx = 1.0;
-        panelContenidos.add(btnLogOut, gbc);
         final JPanel spacer3 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.ipady = 20;
         panelContenidos.add(spacer3, gbc);
         labelTitulo = new JLabel();
         labelTitulo.setHorizontalAlignment(0);
@@ -235,6 +230,14 @@ public class VistaMenuPrincipal extends JFrame {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.VERTICAL;
         panelContenidos.add(spacer5, gbc);
+        btnLogOut = new JButton();
+        btnLogOut.setPreferredSize(new Dimension(82, 30));
+        btnLogOut.setText("Log out");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.weightx = 1.0;
+        panelContenidos.add(btnLogOut, gbc);
     }
 
     /**

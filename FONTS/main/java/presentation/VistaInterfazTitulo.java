@@ -104,8 +104,6 @@ public class VistaInterfazTitulo {
         // Layout
         panelBotones.setLayout(new FlowLayout());
         // Componentes
-        buttonIniciarSesion.setBackground(Color.green);
-        buttonCrearCuenta.setBackground(Color.blue);
         panelBotones.add(buttonIniciarSesion);
         panelBotones.add(buttonCrearCuenta);
         // Tooltips
