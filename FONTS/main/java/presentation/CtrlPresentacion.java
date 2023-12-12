@@ -18,6 +18,8 @@ public class CtrlPresentacion {
 	private VistaCrearCuenta vistaCrearCuenta;
 	private VistaMenuPrincipal vistaMenuPrincipal;
 
+	private VistaGestionAlfabetos vistaGestionAlfabetos;
+
 	/** Constructor y metodos de inicializacion **/
 
 	public CtrlPresentacion() {
@@ -71,16 +73,27 @@ public class CtrlPresentacion {
 
 	public void syncVistaMenuPrincipal_a_Bienvenida() {
 		vistaMenuPrincipal.hacerInvisible();
-		if (vistaBienvenida == null)
-			vistaBienvenida = new VistaInterfazTitulo(this);
 		vistaBienvenida.hacerVisible();
 		vistaBienvenida.activar();
 	}
 
-	public void syncMenuPrincipal() {
-		vistaIniciarSesion.hacerInvisible();
-		System.exit(0);
+	public void syncVistaGestionAlfabetos_a_MenuPrincipal() {
+		vistaGestionAlfabetos.hacerInvisible();
+		vistaGestionAlfabetos.desactivar();
+		vistaMenuPrincipal.activar();
+		vistaMenuPrincipal.hacerVisible();
 	}
+
+	public void syncVistaMenuPrincipal_a_GestionAlfabetos() {
+		vistaMenuPrincipal.desactivar();
+		vistaMenuPrincipal.hacerInvisible();
+		if (vistaGestionAlfabetos == null) {
+			vistaGestionAlfabetos = new VistaGestionAlfabetos(this);
+		}
+		vistaGestionAlfabetos.activar();
+		vistaGestionAlfabetos.hacerVisible();
+	}
+
 
 	/** Llamadas al controlador de dominio **/
 
@@ -115,5 +128,9 @@ public class CtrlPresentacion {
 		ctrlDominio.guardarTeclados();
 		ctrlDominio.guardarAlfabetos();
 		ctrlDominio.guardarUsuarios();
+	}
+
+	public void cerrarPrograma() throws Exception {
+		System.exit(0);
 	}
 }

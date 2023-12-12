@@ -52,7 +52,11 @@ public class VistaInterfazTitulo {
         frameVista.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                performOperationBeforeExit();
+                try {
+                    performOperationBeforeExit();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -63,7 +67,7 @@ public class VistaInterfazTitulo {
     }
 
     // Method to perform an operation before exiting
-    private void performOperationBeforeExit() {
+    private void performOperationBeforeExit() throws Exception {
         // Your operation logic goes here
         int result = JOptionPane.showConfirmDialog(frameVista, "Seguro que quieres salir?", "Confirmation", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
@@ -74,6 +78,7 @@ public class VistaInterfazTitulo {
                 JOptionPane.showMessageDialog(frameVista, e.getMessage());
             }
             frameVista.dispose(); // Close the frame
+            iCtrlPresentacion.cerrarPrograma();
         }
     }
 

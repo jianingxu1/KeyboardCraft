@@ -1,25 +1,26 @@
 package presentation;
 
-import exceptions.ContrasenaNoValidaExcepcion;
-import exceptions.EscrituraIncorrectaFicheroExcepcion;
-import exceptions.NombreUsuarioNoValidoExcepcion;
-
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class VistaMenuPrincipal extends JFrame {
+public class VistaGestionAlfabetos extends JFrame {
+
     CtrlPresentacion iCtrlPresentacion;
+    private JButton buttonConsultarAlfabeto;
+    private JButton buttonModificarAlfabeto;
+    private JButton buttonEliminarAlfabeto;
     private JPanel panelContenidos;
-    private JButton btnGestionarTeclados;
-    private JButton btnGestionarAlfabetos;
-    private JButton btnGestionarPerfil;
-    private JButton btnLogOut;
     private JPanel panelBotones;
-    private JLabel labelTitulo;
+    private JLabel labelGestionAlfabetos;
+    private JButton atrásButton;
+    private JButton buttonCrearAlfabeto;
 
-    public VistaMenuPrincipal(CtrlPresentacion pCtrlPresentacion) {
+
+    public VistaGestionAlfabetos(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
@@ -47,8 +48,8 @@ public class VistaMenuPrincipal extends JFrame {
     }
 
     private void inicializar_frameVista() {
-        this.setTitle("Generador de teclados");
-        this.setMinimumSize(new Dimension(700, 400));
+        this.setTitle("Gestión de alfabetos");
+        this.setMinimumSize(new Dimension(700, 500));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
 
@@ -86,55 +87,22 @@ public class VistaMenuPrincipal extends JFrame {
     }
 
     private void asignar_listenersComponentes() {
-        // Listeners para los botones
-        btnGestionarAlfabetos.addActionListener(
+        atrásButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        actionPerformed_btnGestionarAlfabetos(event);
+                        actionPerformed_atrásButton(event);
                     }
                 });
-        btnGestionarTeclados.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-
-                    }
-                });
-        btnGestionarPerfil.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-
-                    }
-                });
-        btnLogOut.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        actionPerformed_btnLogout(event);
-                    }
-                });
-
     }
 
-    public void actionPerformed_btnGestionarAlfabetos(ActionEvent event) {
-        iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionAlfabetos();
-    }
-
-    public void actionPerformed_btnGestionarTeclados(ActionEvent event) {
-    }
-
-    public void actionPerformed_btnGestionarPerfil(ActionEvent event) {
-    }
-
-    public void actionPerformed_btnLogout(ActionEvent event) {
+    void actionPerformed_atrásButton(ActionEvent event) {
         try {
             iCtrlPresentacion.guardarDatos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        iCtrlPresentacion.syncVistaMenuPrincipal_a_Bienvenida();
+        iCtrlPresentacion.syncVistaGestionAlfabetos_a_MenuPrincipal();
     }
 
     {
@@ -154,87 +122,109 @@ public class VistaMenuPrincipal extends JFrame {
     private void $$$setupUI$$$() {
         panelContenidos = new JPanel();
         panelContenidos.setLayout(new GridBagLayout());
-        panelBotones = new JPanel();
-        panelBotones.setLayout(new GridBagLayout());
+        final JPanel spacer1 = new JPanel();
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panelContenidos.add(panelBotones, gbc);
-        btnGestionarTeclados = new JButton();
-        btnGestionarTeclados.setText("Gestionar teclados");
+        gbc.gridy = 2;
+        gbc.ipady = 30;
+        panelContenidos.add(spacer1, gbc);
+        panelBotones = new JPanel();
+        panelBotones.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        panelBotones.add(btnGestionarTeclados, gbc);
-        btnGestionarAlfabetos = new JButton();
-        btnGestionarAlfabetos.setText("Gestionar alfabetos");
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        panelContenidos.add(panelBotones, gbc);
+        buttonConsultarAlfabeto = new JButton();
+        buttonConsultarAlfabeto.setMaximumSize(new Dimension(250, 60));
+        buttonConsultarAlfabeto.setMinimumSize(new Dimension(250, 60));
+        buttonConsultarAlfabeto.setPreferredSize(new Dimension(250, 60));
+        buttonConsultarAlfabeto.setText("Consultar alfabetos");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        panelBotones.add(btnGestionarAlfabetos, gbc);
-        btnGestionarPerfil = new JButton();
-        btnGestionarPerfil.setHorizontalAlignment(0);
-        btnGestionarPerfil.setText("Gestionar perfil");
+        panelBotones.add(buttonConsultarAlfabeto, gbc);
+        buttonModificarAlfabeto = new JButton();
+        buttonModificarAlfabeto.setMaximumSize(new Dimension(250, 60));
+        buttonModificarAlfabeto.setMinimumSize(new Dimension(250, 60));
+        buttonModificarAlfabeto.setPreferredSize(new Dimension(250, 60));
+        buttonModificarAlfabeto.setText("Modificar alfabeto");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        panelBotones.add(btnGestionarPerfil, gbc);
-        final JPanel spacer1 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        panelBotones.add(spacer1, gbc);
-        final JPanel spacer2 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        panelBotones.add(spacer2, gbc);
-        btnLogOut = new JButton();
-        btnLogOut.setText("Log out");
+        panelBotones.add(buttonModificarAlfabeto, gbc);
+        buttonEliminarAlfabeto = new JButton();
+        buttonEliminarAlfabeto.setMaximumSize(new Dimension(250, 60));
+        buttonEliminarAlfabeto.setMinimumSize(new Dimension(250, 60));
+        buttonEliminarAlfabeto.setPreferredSize(new Dimension(250, 60));
+        buttonEliminarAlfabeto.setText("Eliminar alfabeto");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.weightx = 1.0;
-        panelContenidos.add(btnLogOut, gbc);
-        final JPanel spacer3 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.ipady = 20;
-        panelContenidos.add(spacer3, gbc);
-        labelTitulo = new JLabel();
-        labelTitulo.setHorizontalAlignment(0);
-        labelTitulo.setHorizontalTextPosition(0);
-        labelTitulo.setText("Menú Principal");
+        panelBotones.add(buttonEliminarAlfabeto, gbc);
+        final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panelContenidos.add(labelTitulo, gbc);
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelBotones.add(spacer2, gbc);
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelBotones.add(spacer3, gbc);
         final JPanel spacer4 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.ipady = 30;
-        panelContenidos.add(spacer4, gbc);
+        panelBotones.add(spacer4, gbc);
         final JPanel spacer5 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelBotones.add(spacer5, gbc);
+        atrásButton = new JButton();
+        atrásButton.setActionCommand("Atras");
+        atrásButton.setMaximumSize(new Dimension(50, 30));
+        atrásButton.setMinimumSize(new Dimension(50, 30));
+        atrásButton.setPreferredSize(new Dimension(50, 30));
+        atrásButton.setText("Atrás");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.ipadx = 20;
+        panelBotones.add(atrásButton, gbc);
+        final JPanel spacer6 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelBotones.add(spacer6, gbc);
+        buttonCrearAlfabeto = new JButton();
+        buttonCrearAlfabeto.setMaximumSize(new Dimension(250, 60));
+        buttonCrearAlfabeto.setMinimumSize(new Dimension(250, 60));
+        buttonCrearAlfabeto.setPreferredSize(new Dimension(250, 60));
+        buttonCrearAlfabeto.setText("Crear nuevo alfabeto");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelBotones.add(buttonCrearAlfabeto, gbc);
+        labelGestionAlfabetos = new JLabel();
+        labelGestionAlfabetos.setText("Gestión de alfabetos");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panelContenidos.add(labelGestionAlfabetos, gbc);
+        final JPanel spacer7 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.VERTICAL;
-        panelContenidos.add(spacer5, gbc);
+        panelContenidos.add(spacer7, gbc);
     }
 
     /**
