@@ -177,12 +177,24 @@ public class CtrlDominio {
 
 	public boolean IniciarSesion(String nombreUsuario, String contraseña)
 			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		if (nombreUsuario.trim().isEmpty())
+			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+		else if (!cjtUsuarios.existeUsuario(nombreUsuario))
+			throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
+		else if (contraseña.trim().isEmpty())
+			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+		else if (contraseña.length() < 8)
+			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
 		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contraseña);
 		if (!usuarioIdentificado)
 			throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
 		else
 			userName = nombreUsuario;
 		return usuarioIdentificado;
+	}
+
+	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) {
+		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
 	}
 
 	public void CerrarSesion() {
@@ -200,6 +212,10 @@ public class CtrlDominio {
 	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
 		cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
 	}	
+
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
+		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
+	}
 
 	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
 		ctrlPersistencia.guardarUsuarios(cjtUsuarios);
@@ -263,6 +279,26 @@ public class CtrlDominio {
 	 */
 	public String consultarNombresTeclados() {
 		return ArrayToString(cjtTeclados.getNombreTeclados());
+	}
+
+	/**
+	 * Consulta si un teclado existe.
+	 * 
+	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
+	 * @return True si el teclado existe, false si no existe.
+	 */
+	public boolean existeTeclado(String nombreTeclado) {
+		return cjtTeclados.existeTeclado(nombreTeclado);
+	}
+
+	/**
+	 * Comprueba si existe un alfabeto en el conjunto de alfabetos.
+	 * 
+	 * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
+	 * @return True si existe el alfabeto, false en caso contrario.
+	 */
+	public boolean existeAlfabeto(String nombreAlfabeto) {
+		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
 	}
 
 	public String getNombreUsuario() {
