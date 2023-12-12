@@ -14,14 +14,21 @@ import exceptions.NombreUsuarioNoValidoExcepcion;
 
 public class CjtUsuarios {
 
+    /** Atributos **/
     private HashMap<String, Usuario> conjunto;
 
+    /** Constructora **/
     public CjtUsuarios() {
         conjunto = new HashMap<String, Usuario>();
     }
 
     private static CjtUsuarios singletonObject;
 
+    /**
+     * Devuelve la instancia de CjtUsuarios
+     * 
+     * @return instancia de CjtUsuarios
+     */
     public static CjtUsuarios getInstance() {
         if (singletonObject == null)
             singletonObject = new CjtUsuarios() {
@@ -29,6 +36,19 @@ public class CjtUsuarios {
         return singletonObject;
     }
 
+    /** Métodos públicos **/
+
+    /** ----- Setters ----- **/
+
+    /**
+     * Crea un usuario nuevo y lo guarda en el conjunto
+     * 
+     * @param user el nombre del nuevo usuario
+     * @param pass su contraseña
+     * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
+     */
     public void añadirUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
         if (existeUsuario(user))
             throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " ya existe.");
@@ -36,6 +56,12 @@ public class CjtUsuarios {
         conjunto.put(user, usuario);
     }
 
+    /**
+     * Elimina un usuario del conjunto
+     * 
+     * @param user el nombre del usuario a eliminar
+     * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+     */
     public void eliminarUsuario(String user) throws NombreUsuarioNoValidoExcepcion {
 		if (user.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
@@ -44,6 +70,15 @@ public class CjtUsuarios {
         conjunto.remove(user);
     }
 
+    /**
+     * Modifica la contraseña de un usuario
+     * 
+     * @param user el nombre del usuario a modificar
+     * @param oldPass la contraseña actual del usuario
+     * @param newPass la nueva contraseña del usuario
+     * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     */
     public void modificarContrasenaUsuario(String user, String oldPass, String newPass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
 		if (user.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
@@ -55,6 +90,15 @@ public class CjtUsuarios {
         conjunto.get(user).modificaContraseña(newPass);
     }
 
+    /**
+     * Comprueba si la contraseña de un usuario es correcta
+     * 
+     * @param nombreUsuario el nombre del usuario
+     * @param contrasena la contraseña del usuario
+     * @return true si la contraseña es correcta, false en caso contrario
+     * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     */
     public boolean correctPass(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
     
         if (nombreUsuario.trim().isEmpty())
@@ -71,18 +115,41 @@ public class CjtUsuarios {
         return conjunto.get(nombreUsuario).getContraseña().equals(contrasena);
     }
 
+    /**
+     * Comprueba si un usuario existe
+     * 
+     * @param user el nombre del usuario
+     * @return el nombre del usuario
+     */
     public boolean existeUsuario(String user) {
         return conjunto.containsKey(user);
     }
 
+    /**
+     * Devuelve el nombre de un usuario
+     * 
+     * @param user el nombre del usuario
+     * @return el nombre del usuario
+     */
     public String getNombreUsuario(String user) {
         return conjunto.get(user).getNombre();
     }
 
+    /**
+     * Devuelve la contraseña de un usuario
+     * 
+     * @param user el nombre del usuario
+     * @return la contraseña del usuario
+     */
     public String getContraseñaUsuario(String user) {
         return conjunto.get(user).getContraseña();
     }
 
+    /**
+     * Devuelve el conjunto de usuarios
+     * 
+     * @return el conjunto de usuarios
+     */
     public String[] getNombreUsuarios() {
         String[] usuarios = new String[conjunto.size()];
         int i = 0;
@@ -93,6 +160,10 @@ public class CjtUsuarios {
         return usuarios;
     }
 
+    /**
+     * Limpia el conjunto de usuarios
+     * 
+     */
     public void clearCjtUsuarios() {
         conjunto.clear();
     }

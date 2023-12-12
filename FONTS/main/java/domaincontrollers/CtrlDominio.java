@@ -62,6 +62,11 @@ public class CtrlDominio {
 	 *                      la distribución del teclado.
 	 * @param algoritmo     Un string que representa el algoritmo utilizado para la
 	 *                      creación del teclado.
+	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+	 * @throws NombreTecladoDuplicadoExcepcion Si el nombre del teclado ya existe.
+	 * @throws TipoAlgoritmoIncorrectoExcepcion Si el tipo de algoritmo no es correcto.
+	 * @throws FrecuenciaIncorrectaExcepcion Si la frecuencia de las palabras no es correcta.
+	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
 	public void creaTeclado(String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo)
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
@@ -99,6 +104,7 @@ public class CtrlDominio {
 	 * Elimina el teclado del conjunto de teclados y su respectiva información.
 	 *
 	 * @param nombreTeclado El nombre del teclado que se procederá a eliminar.
+	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
 
 	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
@@ -113,6 +119,8 @@ public class CtrlDominio {
 	 * @param j1            La columna de la primera tecla.
 	 * @param i2            La fila de la segunda tecla.
 	 * @param j2            La columna de la segunda tecla.
+	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
+	 * @throws IndiceTeclaFueraDeRangoExcepcion Si el indice de la tecla esta fuera de rango.
 	 */
 	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)
 			throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
@@ -125,6 +133,9 @@ public class CtrlDominio {
 	 * 
 	 * @param idAlfabeto ID del alfabeto que se va a añadir.
 	 * @param caracteres String que representa caracteres.
+	 * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
+	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
 	public void añadirAlfabeto(String idAlfabeto, String caracteres)
 			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
@@ -136,6 +147,7 @@ public class CtrlDominio {
 	 * Eliminar alfabeto
 	 * 
 	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
+	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 */
 	public void eliminarAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
 
@@ -146,6 +158,8 @@ public class CtrlDominio {
 	 * Modificar alfabeto del conjunto de alfabetos.
 	 *
 	 * @param alfabeto String que representa los caracteres modificados.
+	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
 	public void modificarAlfabeto(String idAlfabeto, String alfabeto)
 			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
@@ -153,28 +167,64 @@ public class CtrlDominio {
 		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
 	}
 
-
+	/**
+	 * añaide un usuario al conjunto de usuarios
+	 * 
+	 * @param nombreUsuario el nombre del usuario que se quiere añadir
+	 * @param contraseña la contraseña del usuario que se quiere añadir
+	 * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+	 * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+	 * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
+	 */
 	public void añadirUsuario(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
 		cjtUsuarios.añadirUsuario(nombreUsuario, contraseña);
 		userName = nombreUsuario;
 	}
 
+	/**
+	 * Comprueba si existe un usuario en el conjunto de usuarios
+	 * 
+	 * @param nombreUsuario el nombre del usuario que se quiere comprobar
+	 * @return true si el usuario existe, false en caso contrario
+	 */
 	public boolean existeUsuario(String nombreUsuario) {
 		if (cjtUsuarios.existeUsuario(nombreUsuario))
 			return true;
 		return false;
 	}
 
-	//Implementar este caso en el main, seria como borrar cuenta
+	/**
+	 * Elimina un usuario del conjunto
+	 * 
+	 * @param nombreUsuario el nombre del usuario a eliminar
+	 * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+	 */
 	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
 		cjtUsuarios.eliminarUsuario(nombreUsuario);
 		ctrlPersistencia.eliminarUsuario(nombreUsuario);
 	}
 
+	/**
+	 * Modifica la contraseña de un usuario
+	 * 
+	 * @param nombreUsuario el nombre del usuario a modificar
+	 * @param actualContrasena la contraseña actual del usuario
+	 * @param nuevaContrasena la nueva contraseña del usuario
+	 * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
+	 * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+	 */
 	public void modificarContrasena(String nombreUsuario,String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		cjtUsuarios.modificarContrasenaUsuario(nombreUsuario, actualContrasena, nuevaContrasena);
 	}
 
+	/**
+	 * Inicia sesión con un usuario
+	 * @param nombreUsuario
+	 * @param contraseña
+	 * @return
+	 * @throws NombreUsuarioNoValidoExcepcion
+	 * @throws ContrasenaNoValidaExcepcion
+	 */
 	public boolean IniciarSesion(String nombreUsuario, String contraseña)
 			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 
@@ -186,47 +236,84 @@ public class CtrlDominio {
 		return usuarioIdentificado;
 	}
 
+	/**
+	 * Comprueba si la contraseña de un usuario es correcta
+	 * @param nombreUsuario
+	 * @param contraseña
+	 * @return
+	 * @throws NombreUsuarioNoValidoExcepcion
+	 * @throws ContrasenaNoValidaExcepcion
+	 */
 	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
 	}
 
+	/**
+	 * Cierra la sesión del usuario actual
+	 */
 	public void CerrarSesion() {
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();
 		userName = "";
 	}
 
-
+	/**
+	 * Guarda los teclados en un fichero
+	 * @throws EscrituraIncorrectaFicheroExcepcion
+	 */
 	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
 		if (userName.trim().isEmpty()) return;
 		ctrlPersistencia.guardarTeclados(cjtTeclados, userName);
 	}
 
+	/**
+	 * Carga los teclados de un fichero
+	 * @throws LecturaIncorrectaFicheroExcepcion
+	 */
 	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
 		cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
 	}	
 
-	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
-		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
-	}
-
+	/**
+	 * Guarda los usuarios en un fichero
+	 * @throws EscrituraIncorrectaFicheroExcepcion
+	 */
 	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
 		ctrlPersistencia.guardarUsuarios(cjtUsuarios);
 	}
 
-	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
-		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
+	/**
+	 * carga los usuarios de un fichero
+	 * @throws LecturaIncorrectaFicheroExcepcion
+	 */
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
+		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
 	}
 
+	/**
+	 * Guarda los alfabetos en un fichero
+	 * @throws EscrituraIncorrectaFicheroExcepcion
+	 */
 	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
 		if (userName.trim().isEmpty()) return;
 		ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, userName);
+	}
+
+	/**
+	 * Carga los alfabetos de un fichero
+	 * @throws LecturaIncorrectaFicheroExcepcion
+	 */
+	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
+		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
 	}
 
 	// ----- Getters -----
 
 	/**
 	 * Retorna todos los nombres del conjunto de alfabetos.
+	 * @param idAlfabeto ID del alfabeto que se quiere consultar.
+	 * @return String con los nombres de todos los alfabetos.
+	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 */
 	public String consultarCaracteresAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
 		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto);
@@ -262,6 +349,7 @@ public class CtrlDominio {
 	 * 
 	 * @param nombreTeclado El nombre del teclado que se ha de mostrar.
 	 * @return La distribución del teclado en forma de String.
+	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
 	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
 		return cjtTeclados.getDistribucioString(nombreTeclado);
@@ -269,6 +357,7 @@ public class CtrlDominio {
 
 	/**
 	 * Devuelve el nombre de todos los teclados del conjunto de teclados.
+	 * @return String con los nombres de todos los teclados.
 	 */
 	public String consultarNombresTeclados() {
 		return ArrayToString(cjtTeclados.getNombreTeclados());
@@ -294,6 +383,10 @@ public class CtrlDominio {
 		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
 	}
 
+	/**
+	 * Devuelve el nombre del usuario actual
+	 * @return el nombre del usuario actual
+	 */
 	public String getNombreUsuario() {
 		return userName;
 	}

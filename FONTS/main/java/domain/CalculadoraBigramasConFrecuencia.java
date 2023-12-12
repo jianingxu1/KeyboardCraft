@@ -7,7 +7,7 @@ import java.util.*;
  * Representa una clase para calcular la frecuencia de bigramas en un texto,
  * dado un alfabeto y un conjunto de palabras con su frecuencia.
  * 
- * @author: [Nombre del autor]
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class CalculadoraBigramasConFrecuencia {
 

@@ -47,6 +47,8 @@ public class CjtTeclados {
      * @param nombre el nombre del nuevo teclado
      * @param mat    su matriz de caractéres que representa la distribución de su
      *               teclado
+     * @throws NombreTecladoDuplicadoExcepcion si el nombre del teclado ya existe 
+     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
     public void crearTeclado(String nombre, char[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
         if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
@@ -60,6 +62,7 @@ public class CjtTeclados {
      * Borra un teclado del conjunto
      * 
      * @param nombre el nombre del teclado a borrar
+     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
 
     public void eliminarTeclado(String nombre) throws NombreTecladoNoValidoExcepcion{
@@ -78,6 +81,8 @@ public class CjtTeclados {
      * @param j1     col. tecla 1
      * @param i2     fila tecla 2
      * @param j2     col. tecla 2
+     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
+     * @throws IndiceTeclaFueraDeRangoExcepcion si el indice de la tecla esta fuera de rango
      */
 
     public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
@@ -176,6 +181,7 @@ public class CjtTeclados {
      * 
      * @param nombre nombre del teclado
      * @return String que representa la distribución
+     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
     public String getDistribucioString(String nombre) throws NombreTecladoNoValidoExcepcion {
 		if (nombre.trim().isEmpty())
@@ -185,6 +191,12 @@ public class CjtTeclados {
         return conjunto.get(nombre).toString();
     }
 
+    /**
+     * Devuelve la distribución de un teclado en formato String simplificado
+     * 
+     * @param nombre nombre del teclado
+     * @return String que representa la distribución
+     */
     public String getDistribucioStringSimplificado(String nombre) {
         return conjunto.get(nombre).toStringSimplificado();
     }

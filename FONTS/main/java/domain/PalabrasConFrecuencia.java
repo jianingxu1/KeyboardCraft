@@ -32,6 +32,7 @@ public class PalabrasConFrecuencia {
      *
      * @param input El texto de entrada en el formato "palabra frecuencia\n"
      *              que se repite.
+     * @throws FrecuenciaIncorrectaExcepcion Si el formato de palabras con frecuencia no es correcto.
      */
     public PalabrasConFrecuencia(String input) throws FrecuenciaIncorrectaExcepcion {
 

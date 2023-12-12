@@ -7,6 +7,10 @@ package exceptions;
  * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
  * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
+
+ /**
+  * Excepción que se lanza cuando la cadena de caracteres está vacía.
+  */
 public class NoHayCaracteresExcepcion extends Exception {
     public NoHayCaracteresExcepcion() {
         super("La cadena de caracteres no puede estar vacía.");
