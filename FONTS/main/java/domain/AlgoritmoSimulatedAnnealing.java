@@ -52,19 +52,14 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
     private double mejorCosteTotal;
 
-    private double costeIni;
-
-    /**
-     * Matriz con la mejor distribución del teclado
-     */
-    private char[][] distribucion;
-
     /**
      * Mapa que guarda la distribución para luego convertirla en la matriz a retornar
      */
     private Map<Character, Integer> mejorDistribucion;
 
     private Random rand;
+
+    private double costeIni;
 
     public AlgoritmoSimulatedAnnealing(){
         rand = new Random();
@@ -82,6 +77,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      */
     @Override
     public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
+        char[][] distribucion;
         if (alfabeto.getCaracteres().size() > 1) {
             this.bigramasConFrecuencia = bigramasConFrecuencia;
             inicializar(alfabeto);
@@ -101,7 +97,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
 
     /**
      * Procesa los diferentes parámetros de la entrada y llama a la función que genera la distribución
-     * @param alf Alfabeto del que se extraen los caractéres
+     * @param alfabeto Alfabeto del que se extraen los caractéres
      */
 
     private void inicializar(Alfabeto alfabeto) {
@@ -210,7 +206,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
     }
 
     /**
-     * Inicializa el array de posiciones y calcula cuantas filas y columans requerirá la distribución
+     * Inicializa el array de posiciones y calcula cuantas filas y columnas requerirá la distribución
      */
     private void inicializarPosiciones() {
         posiciones = new Posicion[numCaracteres];
