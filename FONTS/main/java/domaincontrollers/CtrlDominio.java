@@ -201,10 +201,6 @@ public class CtrlDominio {
 		cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
 	}	
 
-	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
-		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
-	}
-
 	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
 		ctrlPersistencia.guardarUsuarios(cjtUsuarios);
 	}
