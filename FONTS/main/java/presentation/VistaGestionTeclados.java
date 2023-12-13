@@ -226,7 +226,7 @@ public class VistaGestionTeclados extends JFrame {
         buttonVolver.setMaximumSize(new Dimension(50, 30));
         buttonVolver.setMinimumSize(new Dimension(50, 30));
         buttonVolver.setPreferredSize(new Dimension(50, 30));
-        buttonVolver.setText("Volver");
+        buttonVolver.setText("Atrás");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 8;

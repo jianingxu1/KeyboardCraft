@@ -91,7 +91,7 @@
               <maximumSize width="50" height="30"/>
               <minimumSize width="50" height="30"/>
               <preferredSize width="50" height="30"/>
-              <text value="Volver"/>
+              <text value="Atrás"/>
             </properties>
           </component>
           <vspacer id="92ab8">

@@ -105,7 +105,7 @@ public class VistaMenuPrincipal extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-
+                        actionPerformed_btnGestionarPerfil(event);
                     }
                 });
         btnLogOut.addActionListener(
@@ -127,6 +127,7 @@ public class VistaMenuPrincipal extends JFrame {
     }
 
     public void actionPerformed_btnGestionarPerfil(ActionEvent event) {
+        iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionPerfil();
     }
 
     public void actionPerformed_btnLogout(ActionEvent event) {

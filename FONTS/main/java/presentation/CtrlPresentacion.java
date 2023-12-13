@@ -20,6 +20,9 @@ public class CtrlPresentacion {
 
 	private VistaGestionAlfabetos vistaGestionAlfabetos;
 	private VistaGestionTeclados vistaGestionTeclados;
+
+	private VistaGestionPerfil vistaGestionPerfil;
+
 	private VistaConsultarTeclado vistaConsultarTeclado;
 
 	/** Constructor y metodos de inicializacion **/
@@ -94,6 +97,23 @@ public class CtrlPresentacion {
 		}
 		vistaGestionAlfabetos.activar();
 		vistaGestionAlfabetos.hacerVisible();
+	}
+
+	public void syncVistaGestionPerfil_a_MenuPrincipal() {
+		vistaGestionPerfil.hacerInvisible();
+		vistaGestionPerfil.desactivar();
+		vistaMenuPrincipal.activar();
+		vistaMenuPrincipal.hacerVisible();
+	}
+
+	public void syncVistaMenuPrincipal_a_GestionPerfil() {
+		vistaMenuPrincipal.desactivar();
+		vistaMenuPrincipal.hacerInvisible();
+		if (vistaGestionPerfil == null) {
+			vistaGestionPerfil = new VistaGestionPerfil(this);
+		}
+		vistaGestionPerfil.activar();
+		vistaGestionPerfil.hacerVisible();
 	}
 
 	public void syncVistaMenuPrincipal_a_GestionTeclados() {
