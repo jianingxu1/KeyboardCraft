@@ -349,26 +349,9 @@ public class CtrlDominio {
 	}
 
 	/**
-	 * Printea la distribución de un teclado.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de mostrar.
-	 * @return La distribución del teclado en forma de String.
-	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
-	 */
-	public String consultarDistribucionDeTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
-		return cjtTeclados.getDistribucioString(nombreTeclado);
-	}
-
-	/**
 	 * Devuelve el nombre de todos los teclados del conjunto de teclados.
-	 * @return String con los nombres de todos los teclados.
+	 * @return ArrayList con los nombres de todos los teclados.
 	 */
-	// ELIMINAR
-	public String consultarNombresTeclados() {
-		return ArrayToString(cjtTeclados.getNombreTeclados());
-	}
-
-	// UTILIZAR ESTE
 	public ArrayList<String> getNombreTeclados() {
 		return cjtTeclados.getNombreTeclados();
 	}

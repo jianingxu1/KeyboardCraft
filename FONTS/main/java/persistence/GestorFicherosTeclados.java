@@ -27,7 +27,8 @@ public class GestorFicherosTeclados {
             String path = "../DATA/" + userName + "Teclados" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
             for (String nombreTeclado : cjtTeclados.getNombreTeclados()) {
-                writer.write(nombreTeclado + 'º' + cjtTeclados.getDistribucioStringSimplificado(nombreTeclado) + "\n");
+                char[][] distribucion = cjtTeclados.getDistribucionTeclado(nombreTeclado);
+                writer.write(nombreTeclado + 'º' + convertirDistribucionAString(distribucion) + "\n");
             }
             writer.close();
         } catch (Exception e) {
@@ -93,5 +94,18 @@ public class GestorFicherosTeclados {
             }
         }
         return distribucion;
+    }
+
+
+    private String convertirDistribucionAString(char[][] distribucion) {
+        StringBuilder s = new StringBuilder();
+        //guarda la distribucion por filas
+        for (char[] fila : distribucion) {
+            for (char caracter : fila) {
+                s.append(caracter);
+            }
+            s.append("◘");
+        }
+        return s.toString();
     }
 }

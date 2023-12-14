@@ -169,41 +169,7 @@ public class CjtTeclados {
         return conjunto.get(nombreTeclado).getDistribucion();   
     }
     
-    /**
-     * Devuelve el número de teclados en el conjunto
-     * 
-     * @return entero con el tamaño
-     */
-    public int totalTeclados() {
-        return conjunto.size();
-    }
-    
     public void clearCjtTeclados() {
         conjunto.clear();
-    }
-
-    /**
-     * Devuelve la distribución de un teclado en formato String
-     * 
-     * @param nombre nombre del teclado
-     * @return String que representa la distribución
-     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
-     */
-    public String getDistribucioString(String nombre) throws NombreTecladoNoValidoExcepcion {
-        if (nombre.trim().isEmpty())
-            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-        else if (!existeTeclado(nombre))
-            throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
-        return conjunto.get(nombre).toString();
-    }
-    
-    /**
-     * Devuelve la distribución de un teclado en formato String simplificado
-     * 
-     * @param nombre nombre del teclado
-     * @return String que representa la distribución
-     */
-    public String getDistribucioStringSimplificado(String nombre) {
-        return conjunto.get(nombre).toStringSimplificado();
     }
 }
