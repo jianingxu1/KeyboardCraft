@@ -1,10 +1,10 @@
 package persistence;
 
-import domain.CjtTeclados;
 import exceptions.EscrituraIncorrectaFicheroExcepcion;
 import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
+import java.util.*;
 
 public class GestorFicherosTeclados {
 
@@ -19,15 +19,16 @@ public class GestorFicherosTeclados {
      * Guarda los teclados en el fichero de teclados
      * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de teclados no se ha podido escribir correctamente
      * @param cjtTeclados El conjunto de teclados que se quiere guardar
-     * @param userName El nombre del usuario que quiere guardar los teclados
+     * @param username El nombre del usuario que quiere guardar los teclados
      */
-    public void guardarTeclados(CjtTeclados cjtTeclados, String userName) throws EscrituraIncorrectaFicheroExcepcion {
-        if (userName.trim().isEmpty()) return;
+    public void guardarTeclados(String username, HashMap<String, Character[][]> cjtTeclados) throws EscrituraIncorrectaFicheroExcepcion {
+        if (username.trim().isEmpty()) return;
         try {
-            String path = "../DATA/" + userName + "Teclados" + ".prop";
+            String path = "../DATA/" + username + "Teclados" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
-            for (String nombreTeclado : cjtTeclados.getNombreTeclados()) {
-                char[][] distribucion = cjtTeclados.getDistribucionTeclado(nombreTeclado);
+            for (Map.Entry<String, Character[][]> entry : cjtTeclados.entrySet()) {
+                String nombreTeclado = entry.getKey();
+                Character[][] distribucion = entry.getValue();
                 writer.write(nombreTeclado + 'º' + convertirDistribucionAString(distribucion) + "\n");
             }
             writer.close();
@@ -42,17 +43,17 @@ public class GestorFicherosTeclados {
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de teclados no se ha podido leer correctamente
      * @param userName El nombre del usuario que quiere cargar los teclados
      */
-    public CjtTeclados cargarTeclados(String userName) throws LecturaIncorrectaFicheroExcepcion {
-        CjtTeclados cjtTeclados = CjtTeclados.getInstance();
-        String path = "../DATA/" + userName + "Teclados" + ".prop";
+    public HashMap<String, Character[][]> cargarTeclados(String username) throws LecturaIncorrectaFicheroExcepcion {
+        HashMap<String, Character[][]> cjtTeclados = new HashMap<>();
+        String path = "../DATA/" + username + "Teclados" + ".prop";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String elementos[] = linea.split("º");
                 String nombreTeclado = elementos[0];
-                char[][] distribucion = convertirStringADistribucion(elementos[1]);
-                cjtTeclados.crearTeclado(nombreTeclado, distribucion);
+                Character[][] distribucion = convertirStringADistribucion(elementos[1]);
+                cjtTeclados.put(nombreTeclado, distribucion);
             }
             reader.close();
         } catch (Exception e) {
@@ -80,8 +81,8 @@ public class GestorFicherosTeclados {
      * @param distribucionString El string que contiene la distribucion
      * @return La matriz de caracteres que contiene la distribucion
      */
-    private static char[][] convertirStringADistribucion(String distribucionString) {
-        char[][] distribucion = new char[3][10];
+    private static Character[][] convertirStringADistribucion(String distribucionString) {
+        Character[][] distribucion = new Character[3][10];
         int i = 0;
         int j = 0;
         for (int k = 0; k < distribucionString.length(); ++k) {
@@ -97,10 +98,10 @@ public class GestorFicherosTeclados {
     }
 
 
-    private String convertirDistribucionAString(char[][] distribucion) {
+    private String convertirDistribucionAString(Character[][] distribucion) {
         StringBuilder s = new StringBuilder();
         //guarda la distribucion por filas
-        for (char[] fila : distribucion) {
+        for (Character[] fila : distribucion) {
             for (char caracter : fila) {
                 s.append(caracter);
             }

@@ -76,12 +76,12 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
      * @return Matriz de caractéres con la distribución optimizada (no necesariamente la mejor) del teclado
      */
     @Override
-    public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
-        char[][] distribucion;
+    public Character[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
+        Character[][] distribucion;
         if (alfabeto.getCaracteres().size() > 1) {
             this.bigramasConFrecuencia = bigramasConFrecuencia;
             inicializar(alfabeto);
-            distribucion = new char[rows][cols];
+            distribucion = new Character[rows][cols];
             for (Map.Entry<Character, Integer> entry : mejorDistribucion.entrySet()) {
                 char c = entry.getKey();
                 Posicion p = posiciones[entry.getValue()];
@@ -89,7 +89,7 @@ public class AlgoritmoSimulatedAnnealing implements Algoritmo {
             }
         }
         else {
-            distribucion = new char[1][10];
+            distribucion = new Character[1][10];
             distribucion[0][0] = alfabeto.getCaracteres().get(0);
         }
         return distribucion;

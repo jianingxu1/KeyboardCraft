@@ -36,7 +36,7 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      */
     private HashMap<Integer, Integer> mapMejorAsignacion;
 
-    private char[][] distribucion;
+    private Character[][] distribucion;
 
     /**
      * Genera la distribucion optima para el teclado dada una entrada.
@@ -47,7 +47,7 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @return Matriz de caracteres que representa la distribucion optima.
      */
     @Override
-    public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
+    public Character[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {
         this.numInstancias = alfabeto.getCaracteres().size();
 
         if (numInstancias > 1) {
@@ -64,7 +64,7 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
 
             distribucion = convertirMejorDistribucion(caracteres, posiciones, filas, cols);
         } else {
-            distribucion = new char[1][10];
+            distribucion = new Character[1][10];
             distribucion[0][0] = alfabeto.getCaracteres().get(0);
         }
 
@@ -486,8 +486,8 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @param cols       Arreglo de columnas.
      * @return Matriz de caracteres que representa la mejor distribucion.
      */
-    private char[][] convertirMejorDistribucion(char[] caracteres, Posicion[] posiciones, int[] filas, int[] cols) {
-        char[][] distribucion = new char[filas[0]][cols[0]];
+    private Character[][] convertirMejorDistribucion(char[] caracteres, Posicion[] posiciones, int[] filas, int[] cols) {
+        Character[][] distribucion = new Character[filas[0]][cols[0]];
         for (Map.Entry<Integer, Integer> entry : mapMejorAsignacion.entrySet()) {
             int instalacion = entry.getKey();
             int ubicacion = entry.getValue();

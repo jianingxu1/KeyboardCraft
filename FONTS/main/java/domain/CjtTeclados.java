@@ -47,7 +47,7 @@ public class CjtTeclados {
      * @param nombre nombre del teclado
      * @param dist   matriz de caractéres a asignar
      */
-    public void setDistribucionTeclado(String nombre, char[][] dist) {
+    public void setDistribucionTeclado(String nombre, Character[][] dist) {
         conjunto.get(nombre).setDistribucion(dist);
     }
 
@@ -60,7 +60,7 @@ public class CjtTeclados {
      * @throws NombreTecladoDuplicadoExcepcion si el nombre del teclado ya existe 
      * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
-    public void crearTeclado(String nombre, char[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
+    public void crearTeclado(String nombre, Character[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
         if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
         else if (existeTeclado(nombre))
             throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
@@ -102,7 +102,7 @@ public class CjtTeclados {
         else if (!existeTeclado(nombre))
 			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
 
-		char[][] distribucion = getDistribucionTeclado(nombre);
+		Character[][] distribucion = getDistribucionTeclado(nombre);
 		String mensaje = "";
 
 		if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
@@ -161,7 +161,7 @@ public class CjtTeclados {
      * @param nombre nombre del teclado escogido
      * @return matriz de caractéres (char[][]) que representa la distribución
      */
-    public char[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+    public Character[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
         if (nombreTeclado.trim().isEmpty())
             throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
 		else if (!existeTeclado(nombreTeclado))

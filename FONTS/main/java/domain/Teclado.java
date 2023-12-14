@@ -10,10 +10,10 @@ public class Teclado {
 
     /** Atributos **/
     private String nombre;
-    private char[][] distribucion;
+    private Character[][] distribucion;
 
     /** Constructora **/
-    public Teclado(String nombre, char[][] distribucion) {
+    public Teclado(String nombre, Character[][] distribucion) {
         this.nombre = nombre;
         this.distribucion = distribucion;
     }
@@ -48,7 +48,7 @@ public class Teclado {
      *
      * @return distribucion
      */
-    public char[][] getDistribucion() {
+    public Character[][] getDistribucion() {
         return distribucion;
     }
 
@@ -57,7 +57,7 @@ public class Teclado {
      *
      * @param distribucion nueva distribución
      */
-    public void setDistribucion(char[][] distribucion) {
+    public void setDistribucion(Character[][] distribucion) {
         this.distribucion = distribucion;
     }
 

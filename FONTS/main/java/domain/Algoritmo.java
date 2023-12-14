@@ -8,5 +8,5 @@ import java.util.Map;
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public interface Algoritmo {
-    public char[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia);
+    public Character[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia);
 }

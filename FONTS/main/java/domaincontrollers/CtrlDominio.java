@@ -4,8 +4,7 @@ import domain.*;
 import exceptions.*;
 import persistence.*;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Clase CtrlDominio
@@ -26,19 +25,8 @@ public class CtrlDominio {
 	private String username;
 
 	// ----- Constructora -----
-
-	/**
-	 * Crea una instancia de CtrlDominio.
-	 */
+	
 	public CtrlDominio() {
-		inicializarCtrlDominio();
-	}
-
-	/**
-	 * Inicializa el controlador de dominio.
-	 * Se crean instancias nuevas de CjtTeclados, InformacionTeclados
-	 */
-	public void inicializarCtrlDominio() {
 		cjtTeclados = CjtTeclados.getInstance();
 		cjtAlfabetos = CjtAlfabetos.getInstance();
 		cjtUsuarios = CjtUsuarios.getInstance();
@@ -75,7 +63,7 @@ public class CtrlDominio {
 		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
 		Texto text = new Texto(texto);
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(nombreAlfabeto);
-		char[][] distribucion = new char[3][10];
+		Character[][] distribucion = new Character[3][10];
 
 		if (algoritmo.trim().isEmpty())
 			throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
@@ -258,17 +246,30 @@ public class CtrlDominio {
 	 * Guarda los teclados en un fichero
 	 * @throws EscrituraIncorrectaFicheroExcepcion
 	 */
-	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
+	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion, NombreTecladoNoValidoExcepcion {
 		if (username.trim().isEmpty()) return;
-		ctrlPersistencia.guardarTeclados(cjtTeclados, username);
+		HashMap<String, Character[][]> conjunto = new HashMap<>();
+		
+		ArrayList<String> nombreTeclados = cjtTeclados.getNombreTeclados();
+
+		for (String nombreTeclado : nombreTeclados) {
+			Character[][] distribucionTeclado = getDistribucionTeclado(nombreTeclado);
+			conjunto.put(nombreTeclado, distribucionTeclado);
+		}
+		ctrlPersistencia.guardarTeclados(username, conjunto);
 	}
 
 	/**
 	 * Carga los teclados de un fichero
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
-	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
-		cjtTeclados = ctrlPersistencia.cargarTeclados(username);
+	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion, NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion {
+		HashMap<String, Character[][]> conjunto = ctrlPersistencia.cargarTeclados(username);
+		for (Map.Entry<String, Character[][]> entry : conjunto.entrySet()) {
+			String nombreTeclado = entry.getKey();
+			Character[][] distribucion = entry.getValue();
+			cjtTeclados.crearTeclado(nombreTeclado, distribucion);
+		}
 	}	
 
 	/**
@@ -356,7 +357,7 @@ public class CtrlDominio {
 		return cjtTeclados.getNombreTeclados();
 	}
 
-	public char[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+	public Character[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
 		return cjtTeclados.getDistribucionTeclado(nombreTeclado);
 	}
 

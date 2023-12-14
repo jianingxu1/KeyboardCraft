@@ -33,7 +33,6 @@ public class CtrlPresentacion {
 	}
 
 	public void inicializarPresentacion() {
-		ctrlDominio.inicializarCtrlDominio();
 		vistaBienvenida.hacerVisible();
 		try {
 			ctrlDominio.cargarUsuarios();
