@@ -331,40 +331,6 @@ public class CtrlDominio {
 
 	// ----- Getters -----
 
-	/**
-	 * Retorna todos los nombres del conjunto de alfabetos.
-	 * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
-	 * @return String con los nombres de todos los alfabetos.
-	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
-	 */
-	public String consultarCaracteresAlfabeto(String nombreAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
-		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(nombreAlfabeto);
-		String res = "";
-		res += "{";
-		for (int i = 0; i < s.length(); ++i) {
-			if (s.charAt(i) == '\n') {
-				if (i != s.length() - 1)
-					res += ", ";
-				else
-					res += "";
-			} else {
-				res += s.charAt(i);
-			}
-		}
-		res += "}";
-		return res;
-	}
-
-	/**
-	 * Muestra los nombres de los alfabetos creados hasta el momento
-	 * 
-	 * @return String con los nombres de todos los alfabetos
-	 */
-
-	public String getNombresYCaracteresDeAlfabetos() {
-		return cjtAlfabetos.getNombresYCaracteresDeAlfabetos();
-	}
-
 	public ArrayList<String> getNombreAlfabetos() {
 		return cjtAlfabetos.getNombreAlfabetos();
 	}
@@ -386,48 +352,10 @@ public class CtrlDominio {
 	}
 
 	/**
-	 * Consulta si un teclado existe.
-	 * 
-	 * @param nombreTeclado El nombre del teclado que se ha de consultar.
-	 * @return True si el teclado existe, false si no existe.
-	 */
-	public boolean existeTeclado(String nombreTeclado) {
-		return cjtTeclados.existeTeclado(nombreTeclado);
-	}
-
-	/**
-	 * Comprueba si existe un alfabeto en el conjunto de alfabetos.
-	 * 
-	 * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
-	 * @return True si existe el alfabeto, false en caso contrario.
-	 */
-	public boolean existeAlfabeto(String nombreAlfabeto) {
-		return cjtAlfabetos.existeAlfabeto(nombreAlfabeto);
-	}
-
-	/**
 	 * Devuelve el nombre del usuario actual
 	 * @return el nombre del usuario actual
 	 */
 	public String getNombreUsuario() {
 		return username;
 	}
-
-	// ----- Utilidades -----
-
-	/**
-	 * Convierte un ArrayList de Strings en un String.
-	 * 
-	 * @param array ArrayList de Strings.
-	 * @return String de los elementos del ArrayList.
-	 */
-	private String ArrayToString(ArrayList<String> array) {
-		String s = "";
-		for (int i = 0; i < array.size(); ++i) {
-			s += array.get(i);
-			s += "\n";
-		}
-		return s;
-	}
-
 }
