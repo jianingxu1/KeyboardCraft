@@ -236,7 +236,9 @@ public class CtrlDominio {
 	/**
 	 * Cierra la sesión del usuario actual
 	 */
-	public void CerrarSesion() {
+	public void CerrarSesion() throws EscrituraIncorrectaFicheroExcepcion, NombreAlfabetoNoValidoExcepcion, NombreTecladoNoValidoExcepcion {
+		guardarAlfabetos();
+		guardarTeclados();
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();
 		username = "";
