@@ -1,10 +1,10 @@
 package persistence;
 
-import domain.CjtUsuarios;
 import exceptions.EscrituraIncorrectaFicheroExcepcion;
 import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
+import java.util.*;
 
 public class GestorFicherosUsuarios {
 
@@ -19,13 +19,14 @@ public class GestorFicherosUsuarios {
      * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido escribir correctamente
      * @param cjtUsuarios El conjunto de usuarios que se quiere guardar
      */
-    public void guardarUsuarios(CjtUsuarios cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
+    public void guardarUsuarios(HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
         try {
             String path = "../DATA/usuarios.prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
-
-            for (String nombreUsuario : cjtUsuarios.getNombreUsuarios()) {
-                writer.write(nombreUsuario + 'º' + cjtUsuarios.getContraseñaUsuario(nombreUsuario) + "\n");
+            for (Map.Entry<String, String> entry : cjtUsuarios.entrySet()) {
+                String nombreUsuario = entry.getKey();
+                String contrasena = entry.getValue();
+                writer.write(nombreUsuario + 'º' + contrasena + "\n");
             }
             writer.close();
         } catch (Exception e) {
@@ -38,8 +39,8 @@ public class GestorFicherosUsuarios {
      * @return El conjunto de usuarios que se ha cargado
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente
      */
-    public CjtUsuarios cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
-        CjtUsuarios cjtUsuarios = CjtUsuarios.getInstance();
+    public HashMap<String, String> cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
+        HashMap<String, String> cjtUsuarios = new HashMap<>();
         String path = "../DATA/usuarios.prop";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
@@ -48,7 +49,7 @@ public class GestorFicherosUsuarios {
                 String[] elementos = linea.split("º");
                 String nombreUsuario = elementos[0];
                 String contrasena = elementos[1];
-                cjtUsuarios.anadirNuevoUsuario(nombreUsuario, contrasena);
+                cjtUsuarios.put(nombreUsuario, contrasena);
             }
             reader.close();
         } catch (Exception e) {

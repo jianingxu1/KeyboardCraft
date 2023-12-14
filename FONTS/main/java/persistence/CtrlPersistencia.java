@@ -1,8 +1,5 @@
 package persistence;
 
-import domain.CjtAlfabetos;
-import domain.CjtUsuarios;
-
 import exceptions.*;
 import java.util.*;
 
@@ -25,7 +22,7 @@ public class CtrlPersistencia {
      * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido escribir correctamente
      * @param cjtUsuarios El conjunto de usuarios que se quiere guardar
      */
-    public void guardarUsuarios(CjtUsuarios cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
+    public void guardarUsuarios(HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
         gestorFicherosUsuarios.guardarUsuarios(cjtUsuarios);
     }
 
@@ -54,7 +51,7 @@ public class CtrlPersistencia {
      * @return El conjunto de usuarios que se ha cargado
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente
      */
-    public CjtUsuarios cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
+    public HashMap<String, String> cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
         return gestorFicherosUsuarios.cargarUsuarios();
     }
 

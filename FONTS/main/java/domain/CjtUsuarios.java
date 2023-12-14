@@ -1,10 +1,12 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import exceptions.ContrasenaNoValidaExcepcion;
 import exceptions.EscrituraIncorrectaFicheroExcepcion;
 import exceptions.NombreUsuarioNoValidoExcepcion;
+
 /**
  * Clase CjtUsuarios
  * Representa un conjunto de usuarios. Estos se definen por su nombre de usuario
@@ -49,7 +51,7 @@ public class CjtUsuarios {
      * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
      * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
      */
-    public void anadirNuevoUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
+    public void anadirNuevoUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
         if (existeUsuario(user))
             throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " ya existe.");
         Usuario usuario = new Usuario(user, pass);
@@ -150,14 +152,12 @@ public class CjtUsuarios {
      * 
      * @return el conjunto de usuarios
      */
-    public String[] getNombreUsuarios() {
-        String[] usuarios = new String[conjunto.size()];
-        int i = 0;
-        for (String user : conjunto.keySet()) {
-            usuarios[i] = user;
-            ++i;
+    public ArrayList<String> getNombreUsuarios() {
+        ArrayList<String> nombreUsuarios = new ArrayList<>();
+        for (String nombreUsuario : conjunto.keySet()) {
+            nombreUsuarios.add(nombreUsuario);
         }
-        return usuarios;
+        return nombreUsuarios;
     }
 
     /**

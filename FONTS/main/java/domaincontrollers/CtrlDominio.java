@@ -276,16 +276,29 @@ public class CtrlDominio {
 	 * Guarda los usuarios en un fichero
 	 * @throws EscrituraIncorrectaFicheroExcepcion
 	 */
-	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion{
-		ctrlPersistencia.guardarUsuarios(cjtUsuarios);
+	public void guardarUsuarios() throws EscrituraIncorrectaFicheroExcepcion {
+		HashMap<String, String> conjuntoUsuarios = new HashMap<>();
+
+		ArrayList<String> nombreUsuarios = cjtUsuarios.getNombreUsuarios();
+		for (String nombreUsuario : nombreUsuarios) {
+			String contrasena = cjtUsuarios.getContraseñaUsuario(nombreUsuario);
+			conjuntoUsuarios.put(nombreUsuario, contrasena);
+		}
+
+		ctrlPersistencia.guardarUsuarios(conjuntoUsuarios);
 	}
 
 	/**
 	 * carga los usuarios de un fichero
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
-	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion{
-		cjtUsuarios = ctrlPersistencia.cargarUsuarios();
+	public void cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion, NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		HashMap<String, String> conjuntoUsuarios = ctrlPersistencia.cargarUsuarios();
+		for (Map.Entry<String, String> entry : conjuntoUsuarios.entrySet()) {
+			String nombreUsuario = entry.getKey();
+			String contrasena = entry.getValue();
+			cjtUsuarios.anadirNuevoUsuario(nombreUsuario, contrasena);
+		}
 	}
 
 	/**
