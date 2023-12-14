@@ -49,7 +49,7 @@ public class CjtUsuarios {
      * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
      * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
      */
-    public void añadirUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
+    public void anadirNuevoUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
         if (existeUsuario(user))
             throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " ya existe.");
         Usuario usuario = new Usuario(user, pass);

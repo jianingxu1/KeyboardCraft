@@ -51,7 +51,7 @@ public class GestorFicherosAlfabetos {
                 String idAlfabeto = elementos[0];
                 String caracteres = elementos[1];
                 caracteres = caracteres.replace("◘", "\n");
-                cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
+                cjtAlfabetos.anadirNuevoAlfabeto(idAlfabeto, caracteres);
             }
             reader.close();
         } catch (Exception e) {

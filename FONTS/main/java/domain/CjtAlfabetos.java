@@ -44,7 +44,7 @@ public class CjtAlfabetos {
     /** ----- Setters ----- **/
 
     /**
-     * Añade un alfabeto al conjunto de alfabetos ya creados anteriormente.
+     * Anade un alfabeto al conjunto de alfabetos ya creados anteriormente.
      *
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
@@ -52,7 +52,7 @@ public class CjtAlfabetos {
      * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
-    public void añadirAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
+    public void anadirNuevoAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
 
         if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
 

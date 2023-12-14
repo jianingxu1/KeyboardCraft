@@ -48,7 +48,7 @@ public class GestorFicherosUsuarios {
                 String[] elementos = linea.split("º");
                 String nombreUsuario = elementos[0];
                 String contrasena = elementos[1];
-                cjtUsuarios.añadirUsuario(nombreUsuario, contrasena);
+                cjtUsuarios.anadirNuevoUsuario(nombreUsuario, contrasena);
             }
             reader.close();
         } catch (Exception e) {

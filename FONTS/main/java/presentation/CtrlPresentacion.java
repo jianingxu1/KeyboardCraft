@@ -158,7 +158,7 @@ public class CtrlPresentacion {
 	}
 
 	public void crearUsuario(String username, String password) throws Exception {
-		ctrlDominio.añadirUsuario(username, password);
+		ctrlDominio.anadirNuevoUsuario(username, password);
 		FuncCargarDatos();
 	}
 

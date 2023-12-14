@@ -23,7 +23,7 @@ public class CtrlDominio {
 	private CjtAlfabetos cjtAlfabetos;
 	private CjtUsuarios cjtUsuarios;
 	private CtrlPersistencia ctrlPersistencia;
-	private String userName;
+	private String username;
 
 	// ----- Constructora -----
 
@@ -43,7 +43,7 @@ public class CtrlDominio {
 		cjtAlfabetos = CjtAlfabetos.getInstance();
 		cjtUsuarios = CjtUsuarios.getInstance();
 		ctrlPersistencia = new CtrlPersistencia();
-		userName = "";
+		username = "";
 	}
 
 	// ----- Métodos públicos -----
@@ -55,7 +55,7 @@ public class CtrlDominio {
 	 * usuario. El alfabeto ya existe.
 	 *
 	 * @param nombreTeclado Nombre del teclado.
-	 * @param idAlfabeto    El ID del alfabeto asociado con el teclado.
+	 * @param nombreAlfabeto    El ID del alfabeto asociado con el teclado.
 	 * @param texto         Información adicional para la generación de la
 	 *                      distribución del teclado.
 	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en
@@ -68,13 +68,13 @@ public class CtrlDominio {
 	 * @throws FrecuenciaIncorrectaExcepcion Si la frecuencia de las palabras no es correcta.
 	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
-	public void creaTeclado(String nombreTeclado, String idAlfabeto, String texto, String listaPalabras, String algoritmo)
+	public void creaTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras, String algoritmo)
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
 			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
 		// Informacion necesaria para poder crear el teclado
 		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
 		Texto text = new Texto(texto);
-		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(idAlfabeto);
+		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(nombreAlfabeto);
 		char[][] distribucion = new char[3][10];
 
 		if (algoritmo.trim().isEmpty())
@@ -129,29 +129,27 @@ public class CtrlDominio {
 	}
 
 	/**
-	 * Añadir nuevo alfabeto
+	 * Anadir nuevo alfabeto
 	 * 
-	 * @param idAlfabeto ID del alfabeto que se va a añadir.
-	 * @param caracteres String que representa caracteres.
+	 * @param nombreAlfabeto el nombre del alfabeto que se va a anadir.
+	 * @param caracteresAlfabeto String que representa caracteres.
 	 * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
-	public void añadirAlfabeto(String idAlfabeto, String caracteres)
+	public void anadirNuevoAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
 			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-
-		cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
+		cjtAlfabetos.anadirNuevoAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
 
 	/**
 	 * Eliminar alfabeto
 	 * 
-	 * @param idAlfabeto ID del alfabeto que se va a eliminar.
+	 * @param nombreAlfabeto nombre del alfabeto que se va a eliminar.
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 */
-	public void eliminarAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
-
-		cjtAlfabetos.eliminarAlfabeto(idAlfabeto);
+	public void eliminarAlfabeto(String nombreAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
+		cjtAlfabetos.eliminarAlfabeto(nombreAlfabeto);
 	}
 
 	/**
@@ -161,24 +159,23 @@ public class CtrlDominio {
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
-	public void modificarAlfabeto(String idAlfabeto, String alfabeto)
+	public void modificarAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
 			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-
-		cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
+		cjtAlfabetos.modificarAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
 
 	/**
 	 * añaide un usuario al conjunto de usuarios
 	 * 
 	 * @param nombreUsuario el nombre del usuario que se quiere añadir
-	 * @param contraseña la contraseña del usuario que se quiere añadir
+	 * @param contrasena la contraseña del usuario que se quiere añadir
 	 * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
 	 * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
 	 * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
 	 */
-	public void añadirUsuario(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
-		cjtUsuarios.añadirUsuario(nombreUsuario, contraseña);
-		userName = nombreUsuario;
+	public void anadirNuevoUsuario(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion, EscrituraIncorrectaFicheroExcepcion {
+		cjtUsuarios.anadirNuevoUsuario(nombreUsuario, contrasena);
+		username = nombreUsuario;
 	}
 
 	/**
@@ -220,32 +217,32 @@ public class CtrlDominio {
 	/**
 	 * Inicia sesión con un usuario
 	 * @param nombreUsuario
-	 * @param contraseña
+	 * @param contrasena
 	 * @return
 	 * @throws NombreUsuarioNoValidoExcepcion
 	 * @throws ContrasenaNoValidaExcepcion
 	 */
-	public boolean IniciarSesion(String nombreUsuario, String contraseña)
+	public boolean IniciarSesion(String nombreUsuario, String contrasena)
 			throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 
-		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contraseña);
+		boolean usuarioIdentificado = cjtUsuarios.correctPass(nombreUsuario, contrasena);
 		if (!usuarioIdentificado)
 			throw new ContrasenaNoValidaExcepcion("La contraseña no es correcta.");
 		else
-			userName = nombreUsuario;
+			username = nombreUsuario;
 		return usuarioIdentificado;
 	}
 
 	/**
 	 * Comprueba si la contraseña de un usuario es correcta
 	 * @param nombreUsuario
-	 * @param contraseña
+	 * @param contrasena
 	 * @return
 	 * @throws NombreUsuarioNoValidoExcepcion
 	 * @throws ContrasenaNoValidaExcepcion
 	 */
-	public boolean contraseñaCorrecta(String nombreUsuario, String contraseña) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
-		return cjtUsuarios.correctPass(nombreUsuario, contraseña);
+	public boolean contraseñaCorrecta(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		return cjtUsuarios.correctPass(nombreUsuario, contrasena);
 	}
 
 	/**
@@ -254,7 +251,7 @@ public class CtrlDominio {
 	public void CerrarSesion() {
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();
-		userName = "";
+		username = "";
 	}
 
 	/**
@@ -262,8 +259,8 @@ public class CtrlDominio {
 	 * @throws EscrituraIncorrectaFicheroExcepcion
 	 */
 	public void guardarTeclados() throws EscrituraIncorrectaFicheroExcepcion{
-		if (userName.trim().isEmpty()) return;
-		ctrlPersistencia.guardarTeclados(cjtTeclados, userName);
+		if (username.trim().isEmpty()) return;
+		ctrlPersistencia.guardarTeclados(cjtTeclados, username);
 	}
 
 	/**
@@ -271,7 +268,7 @@ public class CtrlDominio {
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
 	public void cargarTeclados() throws LecturaIncorrectaFicheroExcepcion{
-		cjtTeclados = ctrlPersistencia.cargarTeclados(userName);
+		cjtTeclados = ctrlPersistencia.cargarTeclados(username);
 	}	
 
 	/**
@@ -295,8 +292,8 @@ public class CtrlDominio {
 	 * @throws EscrituraIncorrectaFicheroExcepcion
 	 */
 	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
-		if (userName.trim().isEmpty()) return;
-		ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, userName);
+		if (username.trim().isEmpty()) return;
+		ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, username);
 	}
 
 	/**
@@ -304,19 +301,19 @@ public class CtrlDominio {
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
 	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
-		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(userName);
+		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(username);
 	}
 
 	// ----- Getters -----
 
 	/**
 	 * Retorna todos los nombres del conjunto de alfabetos.
-	 * @param idAlfabeto ID del alfabeto que se quiere consultar.
+	 * @param nombreAlfabeto ID del alfabeto que se quiere consultar.
 	 * @return String con los nombres de todos los alfabetos.
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 */
-	public String consultarCaracteresAlfabeto(String idAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
-		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto);
+	public String consultarCaracteresAlfabeto(String nombreAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
+		String s = cjtAlfabetos.getAlfabetoCaracteresEnString(nombreAlfabeto);
 		String res = "";
 		res += "{";
 		for (int i = 0; i < s.length(); ++i) {
@@ -388,7 +385,7 @@ public class CtrlDominio {
 	 * @return el nombre del usuario actual
 	 */
 	public String getNombreUsuario() {
-		return userName;
+		return username;
 	}
 
 	// ----- Utilidades -----

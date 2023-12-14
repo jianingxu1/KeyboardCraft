@@ -24,7 +24,7 @@ public class TestCjtAlfabeto {
     }
 
     @Test
-    public void testAñadirAlfabeto() {
+    public void anadirNuevoAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
         ArrayList<Character> caracteres = new ArrayList<Character>();
@@ -35,7 +35,7 @@ public class TestCjtAlfabeto {
         String alf = "abc";
 
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
             assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
             assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
@@ -52,7 +52,7 @@ public class TestCjtAlfabeto {
         String alf = "abc";
 
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
             cjtAlfabetos.eliminarAlfabeto("Ingles");
             assertTrue(cjtAlfabetos.getAlfabetos().isEmpty());
@@ -72,7 +72,7 @@ public class TestCjtAlfabeto {
 
         try {
             String alf = "abc";
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             ArrayList<Character> caracteres2 = new ArrayList<Character>();
             caracteres2.add('R');
             caracteres2.add('G');
@@ -95,7 +95,7 @@ public class TestCjtAlfabeto {
 
         String alf = "abc";
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             cjtAlfabetos.cambiarNombre("Ingles", "Español");
             assertEquals("Español", cjtAlfabetos.getAlfabeto("Español").getNombre());
             assertFalse("Ingles" == cjtAlfabetos.getAlfabeto("Español").getNombre());
@@ -116,7 +116,7 @@ public class TestCjtAlfabeto {
         String alf = "abc";
 
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
             assertEquals(caracteres, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
         } catch (Exception e) {
@@ -136,7 +136,7 @@ public class TestCjtAlfabeto {
         String alf = "abc";
 
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             assertEquals(caracteres, cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -156,14 +156,14 @@ public class TestCjtAlfabeto {
         try {
             String alf = "abc";
 
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             ArrayList<Character> caracteres2 = new ArrayList<Character>();
             caracteres2.add('R');
             caracteres2.add('G');
             caracteres2.add('B');
 
             String alf2 = "RGB";
-            cjtAlfabetos.añadirAlfabeto("RGB", alf2);
+            cjtAlfabetos.anadirNuevoAlfabeto("RGB", alf2);
 
             assertFalse(cjtAlfabetos.getAlfabetos().isEmpty());
             assertEquals("Ingles", cjtAlfabetos.getAlfabeto("Ingles").getNombre());
@@ -188,14 +188,14 @@ public class TestCjtAlfabeto {
         try {
             String alf = "abc";
 
-            cjtAlfabetos.añadirAlfabeto("Ingles", alf);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
             ArrayList<Character> caracteres2 = new ArrayList<Character>();
             caracteres2.add('R');
             caracteres2.add('G');
             caracteres2.add('B');
 
             String alf2 = "RGB";
-            cjtAlfabetos.añadirAlfabeto("RGB", alf2);
+            cjtAlfabetos.anadirNuevoAlfabeto("RGB", alf2);
 
             assertTrue(cjtAlfabetos.existeAlfabeto("RGB"));
             assertTrue(cjtAlfabetos.existeAlfabeto("Ingles"));
@@ -206,12 +206,12 @@ public class TestCjtAlfabeto {
     }
 
     @Test
-    public void testExcepcionesAñadirAlfabeto() {
+    public void testExcepcionesAnadirNuevoAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
-            añadirAlfabeto("Ingles", "abc", cjtAlfabetos);
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", "abc");
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", "abc");
         } catch (NombreAlfabetoDuplicadoExcepcion e) {
             assertEquals("El alfabeto " + "Ingles" + " ya existe en el conjunto de alfabetos.", e.getMessage());
         } catch (NombreAlfabetoNoValidoExcepcion e) {
@@ -221,26 +221,12 @@ public class TestCjtAlfabeto {
         }
     }
 
-    public void añadirAlfabeto(String idAlfabeto, String caracteres, CjtAlfabetos cjtAlfabetos)
-            throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-        if (idAlfabeto.trim().isEmpty())
-            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-
-        if (cjtAlfabetos.existeAlfabeto(idAlfabeto))
-            throw new NombreAlfabetoDuplicadoExcepcion(idAlfabeto);
-
-        if (caracteres.trim().isEmpty())
-            throw new NoHayCaracteresExcepcion();
-
-        cjtAlfabetos.añadirAlfabeto(idAlfabeto, caracteres);
-    }
-
     @Test
-    public void testExcepsionesModificarAlfabeto() {
+    public void testExcepcionesModificarAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", "abc");
             modificarAlfabeto("Ingles", "abcd", cjtAlfabetos);
         } catch (NombreAlfabetoNoValidoExcepcion e) {
             assertEquals("El alfabeto \"Ingles\" no existe.", e.getMessage());
@@ -263,11 +249,11 @@ public class TestCjtAlfabeto {
     }
 
     @Test
-    public void testExcepsionesEliminarAlfabeto() {
+    public void testExcepcionesEliminarAlfabeto() {
         CjtAlfabetos cjtAlfabetos;
         cjtAlfabetos = new CjtAlfabetos();
         try {
-            cjtAlfabetos.añadirAlfabeto("Ingles", "abc");
+            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", "abc");
             eliminarAlfabeto("Ingles", cjtAlfabetos);
             eliminarAlfabeto("Ingles", cjtAlfabetos);
             fail("No se ha lanzado la excepcion");

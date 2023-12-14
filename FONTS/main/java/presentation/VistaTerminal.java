@@ -138,7 +138,7 @@ public class VistaTerminal {
             String contrasena = input.nextLine();
     
             try {
-                controladorDominio.añadirUsuario(nombreUsuario, contrasena);
+                controladorDominio.anadirNuevoUsuario(nombreUsuario, contrasena);
                 cancelarOperacion = true;
                 System.out.println("¡Se ha registrado el usuario \"" + nombreUsuario + "\" con éxito!");
                 FuncCargarDatos();
@@ -728,7 +728,7 @@ public class VistaTerminal {
         while (!cancelarOperacion) {
             try {
                 // Intentar anadir el alfabeto
-                controladorDominio.añadirAlfabeto(nombreAlfabeto, caracteresAlfabeto);
+                controladorDominio.anadirNuevoAlfabeto(nombreAlfabeto, caracteresAlfabeto);
                 cancelarOperacion = true;
                 System.out.println("¡Se ha creado el alfabeto \"" + nombreAlfabeto + "\" con éxito!");
     
