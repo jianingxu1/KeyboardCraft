@@ -6,24 +6,28 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Gestiona la lectura y escritura de archivos relacionados con alfabetos para un usuario específico.
+ */
 public class GestorFicherosAlfabetos {
 
-    /*
-     * Constructora de la clase GestorFicherosAlfabetos
-    */
+    /**
+     * Constructor por defecto para el gestor de archivos de alfabetos.
+     */
     public GestorFicherosAlfabetos() {
     }
 
-    /*
-     * Guarda los alfabetos en el fichero de alfabetos
-     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido escribir correctamente
-     * @param cjtAlfabetos El conjunto de alfabetos que se quiere guardar
-     * @param userName El nombre del usuario que quiere guardar los alfabetos
+    /**
+     * Guarda los alfabetos para un usuario dado.
+     *
+     * @param username           El nombre de usuario para asociar los alfabetos.
+     * @param conjuntoAlfabetos  La colección de alfabetos a guardar.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si hay un error al escribir en el archivo de alfabetos.
      */
-    public void guardarAlfabetos(String userName, HashMap<String, ArrayList<Character> > conjuntoAlfabetos) throws EscrituraIncorrectaFicheroExcepcion {
-        if (userName.trim().isEmpty()) return;
+    public void guardarAlfabetos(String username, HashMap<String, ArrayList<Character> > conjuntoAlfabetos) throws EscrituraIncorrectaFicheroExcepcion {
+        if (username.trim().isEmpty()) return;
         try {
-            String path = "../DATA/" + userName + "Alfabetos" + ".prop";
+            String path = "../DATA/" + username + "Alfabetos" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
 
             for (Map.Entry<String, ArrayList<Character>> entry : conjuntoAlfabetos.entrySet()) {
@@ -38,15 +42,16 @@ public class GestorFicherosAlfabetos {
         }
     }
 
-    /*
-     * Carga los alfabetos del fichero de alfabetos
-     * @return El conjunto de alfabetos que se ha cargado
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido leer correctamente
-     * @param userName El nombre del usuario que quiere cargar los alfabetos
+    /**
+     * Carga los alfabetos para un usuario específico.
+     *
+     * @param username El nombre de usuario.
+     * @return Un HashMap con los alfabetos cargados.
+     * @throws LecturaIncorrectaFicheroExcepcion Si hay un error al leer el archivo de alfabetos.
      */
-    public HashMap<String, String> cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
+    public HashMap<String, String> cargarAlfabetos(String username) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, String> conjuntoAlfabetos = new HashMap<>();
-        String path = "../DATA/" + userName + "Alfabetos" + ".prop";
+        String path = "../DATA/" + username + "Alfabetos" + ".prop";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String linea;
@@ -68,41 +73,21 @@ public class GestorFicherosAlfabetos {
         return conjuntoAlfabetos;
     }
 
-    /*
-     * Elimina los alfabetos del usuario
-     * @param userName El nombre del usuario que quiere eliminar los alfabetos
+    /**
+     * Elimina los alfabetos de un usuario.
+     *
+     * @param username El nombre de usuario.
      */
-    public void eliminarAlfabetosDeUsuario(String userName) {
-        File fileAlfabetos = new File("../DATA/" + userName + "Alfabetos" + ".prop");
+    public void eliminarAlfabetosDeUsuario(String username) {
+        File fileAlfabetos = new File("../DATA/" + username + "Alfabetos" + ".prop");
         fileAlfabetos.delete();
     }
 
-    /*
-     * Convierte un string en una matriz de caracteres
-     * @param distribucionString El string que contiene la distribucion
-     * @return La matriz de caracteres que contiene la distribucion
-     */
-	private static char[][] convertirStringADistribucion(String distribucionString){
-		char[][] distribucion = new char[3][10];
-		int i = 0;
-		int j = 0;
-		for (int k = 0; k < distribucionString.length(); ++k) {
-			if (distribucionString.charAt(k) == '◘') {
-				i++;
-				j = 0;
-			} else {
-				distribucion[i][j] = distribucionString.charAt(k);
-				j++;
-			}
-		}
-		return distribucion;
-	}  
-
     /**
-     * Convertir vector de chars en String
-     * 
-     * @param caracteres vector que contiene los characteres.
-     * @return String que representa la cadena de chars.
+     * Convierte una lista de caracteres en una cadena de texto.
+     *
+     * @param caracteres La lista de caracteres a convertir.
+     * @return La cadena resultante.
      */
     private String caracteresAString(ArrayList<Character> caracteres) {
         String s = "";
@@ -113,6 +98,12 @@ public class GestorFicherosAlfabetos {
         return s;
     }
 
+    /**
+     * Convierte una cadena de texto en una lista de caracteres.
+     *
+     * @param caracteresString La cadena de caracteres a convertir.
+     * @return La lista de caracteres resultante.
+     */
     private ArrayList<Character> stringAListaCaracteres(String caracteresString) {
         ArrayList<Character> listaCaracteres = new ArrayList<>();
             for (char c : caracteresString.toCharArray()) {
