@@ -48,7 +48,7 @@ public class Teclado {
      *
      * @return distribucion
      */
-    public char[][] getTeclado() {
+    public char[][] getDistribucion() {
         return distribucion;
     }
 

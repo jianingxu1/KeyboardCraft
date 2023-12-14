@@ -39,7 +39,17 @@ public class CjtTeclados {
 
     /** Métodos públicos **/
 
-    /** ----- Setters ----- **/
+    /** ----- Modificadoras ----- **/
+
+    /**
+     * Asigna nueva distribución de teclas a un teclado
+     * 
+     * @param nombre nombre del teclado
+     * @param dist   matriz de caractéres a asignar
+     */
+    public void setDistribucionTeclado(String nombre, char[][] dist) {
+        conjunto.get(nombre).setDistribucion(dist);
+    }
 
     /**
      * Crea un teclado nuevo y lo guarda en el conjunto
@@ -53,7 +63,7 @@ public class CjtTeclados {
     public void crearTeclado(String nombre, char[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
         if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
         else if (existeTeclado(nombre))
-        throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
+            throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
         Teclado teclado = new Teclado(nombre, mat);
         conjunto.put(nombre, teclado);
     }
@@ -86,14 +96,13 @@ public class CjtTeclados {
      */
 
     public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
-        
         if (nombre.trim().isEmpty())
         throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
         
         else if (!existeTeclado(nombre))
 			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
 
-		char[][] distribucion = getTeclado(nombre);
+		char[][] distribucion = getDistribucionTeclado(nombre);
 		String mensaje = "";
 
 		if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
@@ -114,15 +123,6 @@ public class CjtTeclados {
         conjunto.get(nombre).intercambiarTeclas(i1, j1, i2, j2);
     }
 
-    /**
-     * Asigna nueva distribución de teclas a un teclado
-     * 
-     * @param nombre nombre del teclado
-     * @param dist   matriz de caractéres a asignar
-     */
-    public void setDistribucionTeclado(String nombre, char[][] dist) {
-        conjunto.get(nombre).setDistribucion(dist);
-    }
 
     // ** ----- Getters ----- **/
 
@@ -135,18 +135,6 @@ public class CjtTeclados {
 
     public boolean existeTeclado(String nombre) {
         return conjunto.containsKey(nombre);
-    }
-
-    /**
-     * Deuvelve la matriz de caractéres que representa la distribución de teclas de
-     * un teclado
-     * 
-     * @param nombre nombre del teclado escogido
-     * @return matriz de caractéres (char[][]) que representa la distribución
-     */
-
-    public char[][] getTeclado(String nombre) {
-        return conjunto.get(nombre).getTeclado();
     }
 
     /**
@@ -167,13 +155,31 @@ public class CjtTeclados {
     }
 
     /**
-     * Devuelve el objeto Teclado del conjunto de teclados.
+     * Deuvelve la matriz de caractéres que representa la distribución de teclas de
+     * un teclado
      * 
-     * @param nombre El nombre del teclado que se ha de consultar.
-     * @return Teclado del conjunto de teclados.
+     * @param nombre nombre del teclado escogido
+     * @return matriz de caractéres (char[][]) que representa la distribución
      */
-    public Teclado getTecladoObjeto(String nombre) {
-        return conjunto.get(nombre);
+    public char[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+        if (nombreTeclado.trim().isEmpty())
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+		else if (!existeTeclado(nombreTeclado))
+            throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
+        return conjunto.get(nombreTeclado).getDistribucion();   
+    }
+    
+    /**
+     * Devuelve el número de teclados en el conjunto
+     * 
+     * @return entero con el tamaño
+     */
+    public int totalTeclados() {
+        return conjunto.size();
+    }
+    
+    public void clearCjtTeclados() {
+        conjunto.clear();
     }
 
     /**
@@ -184,13 +190,13 @@ public class CjtTeclados {
      * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
     public String getDistribucioString(String nombre) throws NombreTecladoNoValidoExcepcion {
-		if (nombre.trim().isEmpty())
-			throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (!existeTeclado(nombre))
-			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
+        if (nombre.trim().isEmpty())
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+        else if (!existeTeclado(nombre))
+            throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
         return conjunto.get(nombre).toString();
     }
-
+    
     /**
      * Devuelve la distribución de un teclado en formato String simplificado
      * 
@@ -199,18 +205,5 @@ public class CjtTeclados {
      */
     public String getDistribucioStringSimplificado(String nombre) {
         return conjunto.get(nombre).toStringSimplificado();
-    }
-
-    /**
-     * Devuelve el número de teclados en el conjunto
-     * 
-     * @return entero con el tamaño
-     */
-    public int totalTeclados() {
-        return conjunto.size();
-    }
-
-    public void clearCjtTeclados() {
-        conjunto.clear();
     }
 }

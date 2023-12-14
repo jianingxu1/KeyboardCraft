@@ -338,7 +338,6 @@ public class CtrlDominio {
 
 	public String getNombresYCaracteresDeAlfabetos() {
 		return cjtAlfabetos.getNombresYCaracteresDeAlfabetos();
-
 	}
 
 	public ArrayList<String> getNombreAlfabetos() {
@@ -364,8 +363,18 @@ public class CtrlDominio {
 	 * Devuelve el nombre de todos los teclados del conjunto de teclados.
 	 * @return String con los nombres de todos los teclados.
 	 */
+	// ELIMINAR
 	public String consultarNombresTeclados() {
 		return ArrayToString(cjtTeclados.getNombreTeclados());
+	}
+
+	// UTILIZAR ESTE
+	public ArrayList<String> getNombreTeclados() {
+		return cjtTeclados.getNombreTeclados();
+	}
+
+	public char[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+		return cjtTeclados.getDistribucionTeclado(nombreTeclado);
 	}
 
 	/**
