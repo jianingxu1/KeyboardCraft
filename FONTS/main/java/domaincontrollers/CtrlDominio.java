@@ -161,7 +161,7 @@ public class CtrlDominio {
 	 */
 	public void modificarAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
 			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		cjtAlfabetos.modificarAlfabeto(nombreAlfabeto, caracteresAlfabeto);
+		cjtAlfabetos.modificarCaracteresAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
 
 	/**
@@ -336,9 +336,17 @@ public class CtrlDominio {
 	 * @return String con los nombres de todos los alfabetos
 	 */
 
-	public String consultarNombresDeAlfabetos() {
+	public String getNombresYCaracteresDeAlfabetos() {
 		return cjtAlfabetos.getNombresYCaracteresDeAlfabetos();
 
+	}
+
+	public ArrayList<String> getNombreAlfabetos() {
+		return cjtAlfabetos.getNombreAlfabetos();
+	}
+
+	public ArrayList<Character> getCaracteresDeAlfabeto(String nombreAlfabeto) throws NombreAlfabetoNoValidoExcepcion {
+		return cjtAlfabetos.getCaracteresDeAlfabeto(nombreAlfabeto);
 	}
 
 	/**

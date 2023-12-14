@@ -38,17 +38,6 @@ public class TestAlfabeto {
     }
 
     @Test
-    public void testCambiarNombreAlfabeto() {
-        String a = "Catalan";
-        String b = "Español";
-        Alfabeto alfabeto;
-        alfabeto = new Alfabeto(a);
-        alfabeto.cambiarNombre(b);
-        assertEquals("Español", alfabeto.getNombre());
-        assertFalse("Catalan" == alfabeto.getNombre());
-    }
-
-    @Test
     public void testModificarAlfabeto() {
         String a = "Ingles";
         ArrayList<Character> caracteres = new ArrayList<Character>();
@@ -67,7 +56,7 @@ public class TestAlfabeto {
 
         String alf2 = "RGB";
 
-        alfabeto.modificarAlfabeto(alf2);
+        alfabeto.modificarCaracteres(alf2);
         assertEquals(caracteres2, alfabeto.getCaracteres());
         assertFalse(caracteres == alfabeto.getCaracteres());
     }

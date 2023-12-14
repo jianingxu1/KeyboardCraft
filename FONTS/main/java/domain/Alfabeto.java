@@ -13,20 +13,11 @@ public class Alfabeto {
 
     /** Nombre e Identificador del alfabeto en cuestion */
     private String nombre;
+
     /** Los caracteres que contiene el alfabeto */
     private ArrayList<Character> caracteres;
 
     /** ----- Constructoras ----- **/
-
-    /**
-     * Crea un alfabeto.
-     *
-     * @param nombre El nombre del alfabeto.
-     */
-    public Alfabeto(String nombre) {
-        this.nombre = nombre;
-        this.caracteres = new ArrayList<Character>();
-    }
 
     /**
      * Crea un alfabeto.
@@ -44,20 +35,11 @@ public class Alfabeto {
     /** ----- Modificadoras ----- **/
 
     /**
-     * Cambia el nombre del alfabeto.
-     *
-     * @param nombre El nombre del alfabeto.
-     */
-    public void cambiarNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
      * Modifica los caracteres del alfabeto.
      *
      * @param chars Los nuevos caracteres del alfabeto.
      */
-    public void modificarAlfabeto(String chars) {
+    public void modificarCaracteres(String chars) {
         this.caracteres = toArray(chars);
     }
 
@@ -99,7 +81,7 @@ public class Alfabeto {
      * @return ArrayList<Character> que contiene los caracteres.
      */
 
-    public ArrayList<Character> toArray(String charsS) {
+    private ArrayList<Character> toArray(String charsS) {
         ArrayList<Character> caracteres = new ArrayList<Character>();
 
         String chars = charsS.replaceAll("\\s", "");

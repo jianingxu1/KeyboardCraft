@@ -79,29 +79,13 @@ public class TestCjtAlfabeto {
             caracteres2.add('B');
             String alf2 = "RGB";
 
-            cjtAlfabetos.modificarAlfabeto("Ingles", alf2);
+            cjtAlfabetos.modificarCaracteresAlfabeto("Ingles", alf2);
             assertEquals(caracteres2, cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
             assertFalse(caracteres == cjtAlfabetos.getAlfabeto("Ingles").getCaracteres());
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
 
-    }
-
-    @Test
-    public void testCambiarNombre() {
-        CjtAlfabetos cjtAlfabetos;
-        cjtAlfabetos = new CjtAlfabetos();
-
-        String alf = "abc";
-        try {
-            cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
-            cjtAlfabetos.cambiarNombre("Ingles", "Español");
-            assertEquals("Español", cjtAlfabetos.getAlfabeto("Español").getNombre());
-            assertFalse("Ingles" == cjtAlfabetos.getAlfabeto("Español").getNombre());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
     }
 
     @Test
@@ -137,7 +121,7 @@ public class TestCjtAlfabeto {
 
         try {
             cjtAlfabetos.anadirNuevoAlfabeto("Ingles", alf);
-            assertEquals(caracteres, cjtAlfabetos.getAlfabetoCaracteres("Ingles"));
+            assertEquals(caracteres, cjtAlfabetos.getCaracteresDeAlfabeto("Ingles"));
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -245,7 +229,7 @@ public class TestCjtAlfabeto {
             throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + idAlfabeto + "\" no existe.");
         if (alfabeto.trim().isEmpty())
             throw new NoHayCaracteresExcepcion();
-        cjtAlfabetos.modificarAlfabeto(idAlfabeto, alfabeto);
+        cjtAlfabetos.modificarCaracteresAlfabeto(idAlfabeto, alfabeto);
     }
 
     @Test

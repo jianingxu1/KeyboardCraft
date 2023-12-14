@@ -82,19 +82,6 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Cambia el nombre de un alfabeto.
-     *
-     * @param nombre      El nombre del alfabeto.
-     * @param nuevoNombre El nuevo nombre del alfabeto.
-     */
-    public void cambiarNombre(String nombre, String nuevoNombre) {
-        alfabetos.get(nombre).cambiarNombre(nuevoNombre);
-        Alfabeto alfabeto = alfabetos.get(nombre);
-        alfabetos.remove(nombre);
-        alfabetos.put(nuevoNombre, alfabeto);
-    }
-
-    /**
      * Modifica los caracteres de un alfabeto.
      *
      * @param nombre     El nombre del alfabeto.
@@ -102,7 +89,7 @@ public class CjtAlfabetos {
      * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
-    public void modificarAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion{
+    public void modificarCaracteresAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion{
         if (nombre.trim().isEmpty())
         throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
         
@@ -110,7 +97,7 @@ public class CjtAlfabetos {
         throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
 
         else if (caracteres.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
-        alfabetos.get(nombre).modificarAlfabeto(caracteres);
+        alfabetos.get(nombre).modificarCaracteres(caracteres);
     }
 
     /** ----- Getters ----- **/
@@ -128,16 +115,6 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna la estructura donde se almacena el alfabeto con el nombre
-     * especificado.
-     *
-     * @param nombre El nombre del alfabeto.
-     */
-    public ArrayList<Character> getAlfabetoCaracteres(String nombre) {
-        return alfabetos.get(nombre).getCaracteres();
-    }
-
-    /**
      * Retorna los caracteres del alfabeto en formato String
      *
      * @param nombre El nombre del alfabeto.
@@ -147,29 +124,6 @@ public class CjtAlfabetos {
         if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
         else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion(nombre);
         return alfabetos.get(nombre).getCaracteresStringFormat();
-    }
-
-    /**
-     * Retorna la estructura donde se almacena el alfabeto de todos los alfabetos
-     * del conjunto.
-     */
-    public ArrayList<ArrayList<Character>> getAlfabetos() {
-        ArrayList<ArrayList<Character>> estructuras = new ArrayList<ArrayList<Character>>();
-        for (Alfabeto alfabeto : alfabetos.values()) {
-            estructuras.add(alfabeto.getCaracteres());
-        }
-        return estructuras;
-    }
-
-    /**
-     * Retorna los caracteres de todos los alfabetos del conjunto en formato String
-     */
-    public String getAlfabetosEnString() {
-        String s = "";
-        for (Alfabeto alfabeto : alfabetos.values()) {
-            s += alfabeto.getNombre() + " | " + alfabeto.getCaracteresStringFormat() + "\n";
-        }
-        return s;
     }
 
     /**
@@ -199,17 +153,6 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna los nombres de los alfabetos
-     */
-    public String consultarAlfabetos() {
-        String s = "";
-        for (Alfabeto alfabeto : alfabetos.values()) {
-            s += alfabeto.getNombre() + "\n";
-        }
-        return s;
-    }
-
-    /**
      * Limpia el conjunto de alfabetos
      */
     public void clearCjtAlfabetos() {
@@ -219,13 +162,22 @@ public class CjtAlfabetos {
     /**
      * Retorna los nombres de los alfabetos
      */
-    public String[] getNombreAlfabetos() {
-        String s[] = new String[alfabetos.size()];
-        int i = 0;
-        for (Alfabeto alfabeto : alfabetos.values()) {            
-            s[i] = alfabeto.getNombre();
-            ++i;
+    public ArrayList<String> getNombreAlfabetos() {
+        ArrayList<String> nombres = new ArrayList<>();
+        for (Alfabeto alfabeto : alfabetos.values()) {   
+            nombres.add(alfabeto.getNombre());
         }
-        return s;
+        return nombres;
+    }
+
+    /**
+     * Retorna la estructura donde se almacena el alfabeto con el nombre
+     * especificado.
+     *
+     * @param nombre El nombre del alfabeto.
+     */
+    public ArrayList<Character> getCaracteresDeAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
+        if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion(nombre);
+        return alfabetos.get(nombre).getCaracteres();
     }
 }

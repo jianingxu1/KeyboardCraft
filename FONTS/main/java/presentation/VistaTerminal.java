@@ -433,7 +433,7 @@ public class VistaTerminal {
      * Función que mediante unos parámetros recibidos como input, genera y guarda un teclado
      */
     void FuncCreacionTeclado() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        String alfabetos = controladorDominio.getNombresYCaracteresDeAlfabetos();
     
         if (alfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. La creación de teclado requiere de un alfabeto.");
@@ -445,7 +445,7 @@ public class VistaTerminal {
         System.out.println("Introduce el nombre del nuevo teclado:");
         String nombreTeclado = input.nextLine();
     
-        System.out.println("Alfabetos actuales:\n" + controladorDominio.consultarNombresDeAlfabetos());
+        System.out.println("Alfabetos actuales:\n" + controladorDominio.getNombresYCaracteresDeAlfabetos());
         System.out.println("Introduce el nombre del alfabeto a utilizar:");
         String idAlfabeto = input.nextLine();
     
@@ -688,7 +688,7 @@ public class VistaTerminal {
      */
 
     void FuncMostrarAlfabetos() {
-        String alfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        String alfabetos = controladorDominio.getNombresYCaracteresDeAlfabetos();
         if (alfabetos.isEmpty())
             System.out.println("No tienes ningún alfabeto creado.\n");
         else {
@@ -765,7 +765,7 @@ public class VistaTerminal {
 
      void FuncModificarAlfabeto() {
         // Consultar alfabetos existentes
-        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        String nombresAlfabetos = controladorDominio.getNombresYCaracteresDeAlfabetos();
         if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder modificar, crea uno antes.");
             return;
@@ -817,7 +817,7 @@ public class VistaTerminal {
 
      void FuncBorrarAlfabeto() {
         // Consultar alfabetos existentes
-        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        String nombresAlfabetos = controladorDominio.getNombresYCaracteresDeAlfabetos();
         if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado. Para poder borrar, crea uno antes.");
             return;
@@ -855,7 +855,7 @@ public class VistaTerminal {
      */
 
      void FuncMostrarCaracteresAlfabeto() {
-        String nombresAlfabetos = controladorDominio.consultarNombresDeAlfabetos();
+        String nombresAlfabetos = controladorDominio.getNombresYCaracteresDeAlfabetos();
         
         if (nombresAlfabetos.isEmpty()) {
             System.out.println("No tienes ningún alfabeto creado.");
