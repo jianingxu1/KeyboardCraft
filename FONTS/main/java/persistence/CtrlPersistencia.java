@@ -34,9 +34,9 @@ public class CtrlPersistencia {
      * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido escribir correctamente
      * @param cjtAlfabetos El conjunto de alfabetos que se quiere guardar
      */
-    public void guardarAlfabetos(CjtAlfabetos cjtAlfabetos, String userName)
+    public void guardarAlfabetos(String userName, HashMap<String, ArrayList<Character>> conjuntoAlfabetos)
             throws EscrituraIncorrectaFicheroExcepcion {
-        gestorFicherosAlfabetos.guardarAlfabetos(cjtAlfabetos, userName);
+        gestorFicherosAlfabetos.guardarAlfabetos(userName, conjuntoAlfabetos);
     }
 
     /*
@@ -64,7 +64,7 @@ public class CtrlPersistencia {
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido leer correctamente
      * @param userName El nombre del usuario que quiere cargar los alfabetos
      */
-    public CjtAlfabetos cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
+    public HashMap<String, String> cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
         return gestorFicherosAlfabetos.cargarAlfabetos(userName);
     }
 

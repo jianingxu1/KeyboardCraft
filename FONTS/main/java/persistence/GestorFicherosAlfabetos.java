@@ -1,10 +1,10 @@
 package persistence;
 
-import domain.CjtAlfabetos;
 import exceptions.EscrituraIncorrectaFicheroExcepcion;
 import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
+import java.util.*;
 
 public class GestorFicherosAlfabetos {
 
@@ -20,13 +20,17 @@ public class GestorFicherosAlfabetos {
      * @param cjtAlfabetos El conjunto de alfabetos que se quiere guardar
      * @param userName El nombre del usuario que quiere guardar los alfabetos
      */
-    public void guardarAlfabetos(CjtAlfabetos cjtAlfabetos, String userName) throws EscrituraIncorrectaFicheroExcepcion {
+    public void guardarAlfabetos(String userName, HashMap<String, ArrayList<Character> > conjuntoAlfabetos) throws EscrituraIncorrectaFicheroExcepcion {
         if (userName.trim().isEmpty()) return;
         try {
             String path = "../DATA/" + userName + "Alfabetos" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
-            for (String idAlfabeto : cjtAlfabetos.getNombreAlfabetos()) {
-                writer.write(idAlfabeto + 'º' + cjtAlfabetos.getAlfabetoCaracteresEnString(idAlfabeto).replaceAll("\\s", "◘") + "\n");
+
+            for (Map.Entry<String, ArrayList<Character>> entry : conjuntoAlfabetos.entrySet()) {
+                String nombreAlfabeto = entry.getKey();
+                ArrayList<Character> caracteresAlfabeto = entry.getValue();
+                String caracteresString = caracteresAString(caracteresAlfabeto).replaceAll("\\s", "◘");
+                writer.write(nombreAlfabeto + 'º' + caracteresString + "\n");
             }
             writer.close();
         } catch (Exception e) {
@@ -40,18 +44,17 @@ public class GestorFicherosAlfabetos {
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de alfabetos no se ha podido leer correctamente
      * @param userName El nombre del usuario que quiere cargar los alfabetos
      */
-    public CjtAlfabetos cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
-        CjtAlfabetos cjtAlfabetos = CjtAlfabetos.getInstance();
+    public HashMap<String, String> cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
+        HashMap<String, String> conjuntoAlfabetos = new HashMap<>();
         String path = "../DATA/" + userName + "Alfabetos" + ".prop";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String elementos[] = linea.split("º");
-                String idAlfabeto = elementos[0];
-                String caracteres = elementos[1];
-                caracteres = caracteres.replace("◘", "\n");
-                cjtAlfabetos.anadirNuevoAlfabeto(idAlfabeto, caracteres);
+                String nombreAlfabeto = elementos[0];
+                String caracteres = elementos[1].replace("◘", "");
+                conjuntoAlfabetos.put(nombreAlfabeto, caracteres);
             }
             reader.close();
         } catch (Exception e) {
@@ -62,7 +65,7 @@ public class GestorFicherosAlfabetos {
                 throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de alfabetos " + ex.getMessage());
             }
         }
-        return cjtAlfabetos;
+        return conjuntoAlfabetos;
     }
 
     /*
@@ -94,4 +97,27 @@ public class GestorFicherosAlfabetos {
 		}
 		return distribucion;
 	}  
+
+    /**
+     * Convertir vector de chars en String
+     * 
+     * @param caracteres vector que contiene los characteres.
+     * @return String que representa la cadena de chars.
+     */
+    private String caracteresAString(ArrayList<Character> caracteres) {
+        String s = "";
+        for (int i = 0; i < caracteres.size(); ++i) {
+            s += caracteres.get(i);
+            s += "\n";
+        }
+        return s;
+    }
+
+    private ArrayList<Character> stringAListaCaracteres(String caracteresString) {
+        ArrayList<Character> listaCaracteres = new ArrayList<>();
+            for (char c : caracteresString.toCharArray()) {
+            listaCaracteres.add(c);
+        }
+        return listaCaracteres;
+    }
 }

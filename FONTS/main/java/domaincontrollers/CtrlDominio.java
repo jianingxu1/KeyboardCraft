@@ -292,17 +292,28 @@ public class CtrlDominio {
 	 * Guarda los alfabetos en un fichero
 	 * @throws EscrituraIncorrectaFicheroExcepcion
 	 */
-	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion{
+	public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion, NombreAlfabetoNoValidoExcepcion {
 		if (username.trim().isEmpty()) return;
-		ctrlPersistencia.guardarAlfabetos(cjtAlfabetos, username);
+		ArrayList<String> nombreAlfabetos = cjtAlfabetos.getNombreAlfabetos();
+		HashMap<String, ArrayList<Character>> conjuntoAlfabetos = new HashMap<>();
+		for (String nombreAlfabeto : nombreAlfabetos) {
+			ArrayList<Character> listaCaracteres = cjtAlfabetos.getCaracteresDeAlfabeto(nombreAlfabeto);
+			conjuntoAlfabetos.put(nombreAlfabeto, listaCaracteres);
+		}
+		ctrlPersistencia.guardarAlfabetos(username, conjuntoAlfabetos);
 	}
 
 	/**
 	 * Carga los alfabetos de un fichero
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
-	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion{
-		cjtAlfabetos = ctrlPersistencia.cargarAlfabetos(username);
+	public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion, NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion {
+		HashMap<String, String> conjuntoAlfabetos = ctrlPersistencia.cargarAlfabetos(username);
+		for (Map.Entry<String, String> entry : conjuntoAlfabetos.entrySet()) {
+			String nombreAlfabeto = entry.getKey();
+			String caracteres = entry.getValue();
+			cjtAlfabetos.anadirNuevoAlfabeto(nombreAlfabeto, caracteres);
+		}
 	}
 
 	// ----- Getters -----
