@@ -6,23 +6,28 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Clase que gestiona la escritura, lectura y eliminacion de teclados en ficheros.
+ */
 public class GestorFicherosTeclados {
 
-    /*
-     * Constructora de la clase CtrlFicherosTeclados
+    /**
+     * Constructor de la clase GestorFicherosTeclados.
      */
-
     public GestorFicherosTeclados() {
     }
 
-    /*
-     * Guarda los teclados en el fichero de teclados
-     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de teclados no se ha podido escribir correctamente
-     * @param cjtTeclados El conjunto de teclados que se quiere guardar
-     * @param username El nombre del usuario que quiere guardar los teclados
+    /**
+     * Guarda los teclados en un fichero asociado a un usuario.
+     *
+     * @param username    Nombre de usuario.
+     * @param cjtTeclados HashMap que contiene los teclados a guardar.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error al escribir en el fichero.
      */
-    public void guardarTeclados(String username, HashMap<String, Character[][]> cjtTeclados) throws EscrituraIncorrectaFicheroExcepcion {
-        if (username.trim().isEmpty()) return;
+    public void guardarTeclados(String username, HashMap<String, Character[][]> cjtTeclados)
+            throws EscrituraIncorrectaFicheroExcepcion {
+        if (username.trim().isEmpty())
+            return;
         try {
             String path = "../DATA/" + username + "Teclados" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
@@ -33,15 +38,17 @@ public class GestorFicherosTeclados {
             }
             writer.close();
         } catch (Exception e) {
-            throw new EscrituraIncorrectaFicheroExcepcion("Error al escribir en el fichero de teclados " + e.getMessage());
+            throw new EscrituraIncorrectaFicheroExcepcion(
+                    "Error al escribir en el fichero de teclados " + e.getMessage());
         }
     }
 
-    /*
-     * Carga los teclados del fichero de teclados
-     * @return El conjunto de teclados que se ha cargado
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de teclados no se ha podido leer correctamente
-     * @param userName El nombre del usuario que quiere cargar los teclados
+    /**
+     * Carga los teclados desde el fichero asociado a un usuario.
+     *
+     * @param username Nombre de usuario.
+     * @return HashMap que contiene los teclados cargados.
+     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error al leer el fichero.
      */
     public HashMap<String, Character[][]> cargarTeclados(String username) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, Character[][]> cjtTeclados = new HashMap<>();
@@ -67,19 +74,21 @@ public class GestorFicherosTeclados {
         return cjtTeclados;
     }
 
-    /*
-     * Elimina el fichero de teclados de un usuario
-     * @param userName El nombre del usuario que quiere eliminar sus teclados
+    /**
+     * Elimina los teclados asociados a un usuario.
+     *
+     * @param userName Nombre de usuario.
      */
     public void eliminarTecladosDeUsuario(String userName) {
         File fileTeclados = new File("../DATA/" + userName + "Teclados" + ".prop");
         fileTeclados.delete();
     }
 
-    /*
-     * Convierte un string en una matriz de caracteres
-     * @param distribucionString El string que contiene la distribucion
-     * @return La matriz de caracteres que contiene la distribucion
+    /**
+     * Convierte una cadena de caracteres en una distribución de teclado.
+     *
+     * @param distribucionString Cadena de caracteres que representa la distribución de teclado.
+     * @return Distribución de teclado en forma de matriz de caracteres.
      */
     private static Character[][] convertirStringADistribucion(String distribucionString) {
         Character[][] distribucion = new Character[3][10];
@@ -97,10 +106,15 @@ public class GestorFicherosTeclados {
         return distribucion;
     }
 
-
+    /**
+     * Convierte una distribución de teclado en una cadena de caracteres.
+     *
+     * @param distribucion Distribución de teclado en forma de matriz de caracteres.
+     * @return Cadena de caracteres que representa la distribución de teclado.
+     */
     private String convertirDistribucionAString(Character[][] distribucion) {
         StringBuilder s = new StringBuilder();
-        //guarda la distribucion por filas
+        // guarda la distribucion por filas
         for (Character[] fila : distribucion) {
             for (char caracter : fila) {
                 s.append(caracter);
