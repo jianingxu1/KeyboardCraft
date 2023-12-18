@@ -47,7 +47,7 @@ public class VistaCrearCuenta extends JFrame {
 
     private void inicializar_frameVista() {
         this.setTitle("Generador de teclados");
-        this.setMinimumSize(new Dimension(500, 300));
+        this.setMinimumSize(new Dimension(500,350));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
 

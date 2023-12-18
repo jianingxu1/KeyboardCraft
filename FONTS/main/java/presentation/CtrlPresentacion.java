@@ -13,8 +13,7 @@ public class CtrlPresentacion {
 	/** Atributos **/
 	private CtrlDominio ctrlDominio;
 
-	private VistaInterfazTitulo vistaBienvenida;
-	private VistaIniciarSesion vistaIniciarSesion;
+	private VistaBienvenida vistaBienvenida;
 	private VistaCrearCuenta vistaCrearCuenta;
 	private VistaMenuPrincipal vistaMenuPrincipal;
 
@@ -29,7 +28,7 @@ public class CtrlPresentacion {
 
 	public CtrlPresentacion() {
 		ctrlDominio = new CtrlDominio();
-		vistaBienvenida = new VistaInterfazTitulo(this);
+		vistaBienvenida = new VistaBienvenida(this);
 	}
 
 	public void inicializarPresentacion() {
@@ -42,37 +41,31 @@ public class CtrlPresentacion {
 	}
 
 	/** Métodos de sincronizacion entre vistas **/
-
-	public void syncVistaBienvenida_a_IniciarSesion() {
-		vistaBienvenida.desactivar();
-		if (vistaIniciarSesion == null)
-			vistaIniciarSesion = new VistaIniciarSesion(this);
-		vistaIniciarSesion.hacerVisible();
-	}
-
-	public void syncVistaIniciarSesion_a_Bienvenida() {
-		vistaIniciarSesion.hacerInvisible();
-		vistaBienvenida.activar();
-	}
-
 	public void syncVistaBienvenida_a_CrearCuenta() {
-		vistaBienvenida.desactivar();
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
+		vistaBienvenida.hacerInvisible();
 		if (vistaCrearCuenta == null)
 			vistaCrearCuenta = new VistaCrearCuenta(this);
 		vistaCrearCuenta.hacerVisible();
 	}
 
 	public void syncVistaCrearCuenta_a_Bienvenida() {
+		if (vistaCrearCuenta == null)
+			vistaCrearCuenta = new VistaCrearCuenta(this);
 		vistaCrearCuenta.hacerInvisible();
-		vistaBienvenida.activar();
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
+		vistaBienvenida.hacerVisible();
 	}
 
-	public void syncVistaIniciarSesion_a_MenuPrincipal() {
-		vistaIniciarSesion.hacerInvisible();
+	public void syncVistaBienvenida_a_MenuPrincipal() {
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
+		vistaBienvenida.hacerInvisible();
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerVisible();
-		vistaBienvenida.hacerInvisible();
 	}
 
 	public void syncVistaMenuPrincipal_a_Bienvenida() {
