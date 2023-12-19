@@ -88,7 +88,6 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        labelTitulo = new javax.swing.JLabel();
         panelCard = new javax.swing.JPanel();
         panelModificar = new javax.swing.JPanel();
         labelTeclado = new javax.swing.JLabel();
@@ -100,6 +99,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         labelCaracter1 = new javax.swing.JLabel();
         labelCaracter2 = new javax.swing.JLabel();
         btnIntercambiarTeclas = new javax.swing.JButton();
+        labelTituloModificar = new javax.swing.JLabel();
         panelCrear = new javax.swing.JPanel();
         labelNombreTeclado = new javax.swing.JLabel();
         fieldNombreTeclado = new javax.swing.JTextField();
@@ -114,19 +114,17 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         btnCrearTeclado = new javax.swing.JButton();
         labelAlgoritmo = new javax.swing.JLabel();
         comboboxAlgoritmo = new javax.swing.JComboBox<>();
+        labelTituloCrear = new javax.swing.JLabel();
         menubarAcciones = new javax.swing.JMenuBar();
+        menuVolver = new javax.swing.JMenu();
         menuCrear = new javax.swing.JMenu();
         menuModificar = new javax.swing.JMenu();
-        menuVolver = new javax.swing.JMenu();
 
         jLabel2.setText("Intercambiar teclas:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("KeyboardCraft - Gestión de teclados");
         setMinimumSize(new java.awt.Dimension(500, 400));
-
-        labelTitulo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        labelTitulo.setText("Gestión de teclados");
 
         panelCard.setLayout(new java.awt.CardLayout());
 
@@ -138,15 +136,18 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
             }
         });
 
+        panelTeclas.setBackground(new java.awt.Color(240, 240, 240));
+        panelTeclas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout panelTeclasLayout = new javax.swing.GroupLayout(panelTeclas);
         panelTeclas.setLayout(panelTeclasLayout);
         panelTeclasLayout.setHorizontalGroup(
             panelTeclasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGap(0, 592, Short.MAX_VALUE)
         );
         panelTeclasLayout.setVerticalGroup(
             panelTeclasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
+            .addGap(0, 142, Short.MAX_VALUE)
         );
 
         btnEliminarTeclado.setText("Eliminar teclado");
@@ -171,21 +172,16 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
             }
         });
 
+        labelTituloModificar.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        labelTituloModificar.setText("Modificación de teclado");
+
         javax.swing.GroupLayout panelModificarLayout = new javax.swing.GroupLayout(panelModificar);
         panelModificar.setLayout(panelModificarLayout);
         panelModificarLayout.setHorizontalGroup(
             panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelModificarLayout.createSequentialGroup()
-                .addContainerGap(58, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addComponent(labelTeclado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboboxTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(235, 235, 235))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addComponent(panelTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
                         .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnIntercambiarTeclas)
@@ -198,20 +194,35 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fieldCaracter2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldCaracter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(57, 57, 57)
-                        .addComponent(btnEliminarTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(157, 157, 157))))
+                        .addGap(48, 48, 48)
+                        .addComponent(btnEliminarTeclado)
+                        .addGap(109, 109, 109))
+                    .addComponent(panelTeclas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelModificarLayout.createSequentialGroup()
+                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelModificarLayout.createSequentialGroup()
+                                .addGap(188, 188, 188)
+                                .addComponent(labelTeclado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboboxTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelModificarLayout.createSequentialGroup()
+                                .addGap(199, 199, 199)
+                                .addComponent(labelTituloModificar)))
+                        .addGap(200, 200, 200)))
+                .addGap(49, 49, 49))
         );
         panelModificarLayout.setVerticalGroup(
             panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelModificarLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
+                .addComponent(labelTituloModificar)
+                .addGap(18, 18, 18)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTeclado)
                     .addComponent(comboboxTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldCaracter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCaracter1))
@@ -221,9 +232,9 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                     .addComponent(fieldCaracter2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIntercambiarTeclas)
-                    .addComponent(btnEliminarTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(btnIntercambiarTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         panelCard.add(panelModificar, "cardModificar");
@@ -261,6 +272,9 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
 
         comboboxAlgoritmo.setMaximumRowCount(10);
 
+        labelTituloCrear.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        labelTituloCrear.setText("Creación de teclado");
+
         javax.swing.GroupLayout panelCrearLayout = new javax.swing.GroupLayout(panelCrear);
         panelCrear.setLayout(panelCrearLayout);
         panelCrearLayout.setHorizontalGroup(
@@ -269,61 +283,80 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 .addContainerGap(226, Short.MAX_VALUE)
                 .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrearLayout.createSequentialGroup()
-                        .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnCrearTeclado)
+                        .addGap(283, 283, 283))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrearLayout.createSequentialGroup()
+                        .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelCrearLayout.createSequentialGroup()
-                                .addComponent(labelAlgoritmo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboboxAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane2)
-                                .addComponent(jScrollPane1)
                                 .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelPalabrasConFrecuencia)
-                                    .addComponent(labelTexto)
+                                    .addComponent(labelNombreTeclado)
+                                    .addComponent(labelAlfabeto))
+                                .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(panelCrearLayout.createSequentialGroup()
-                                        .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelNombreTeclado)
-                                            .addComponent(labelAlfabeto))
-                                        .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(panelCrearLayout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(fieldNombreTeclado))
-                                            .addGroup(panelCrearLayout.createSequentialGroup()
-                                                .addGap(11, 11, 11)
-                                                .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fieldNombreTeclado))
+                                    .addGroup(panelCrearLayout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelCrearLayout.createSequentialGroup()
+                                    .addComponent(labelAlgoritmo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(comboboxAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane2)
+                                    .addGroup(panelCrearLayout.createSequentialGroup()
+                                        .addComponent(labelTexto)
+                                        .addGap(229, 229, 229)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane1)
+                                    .addGroup(panelCrearLayout.createSequentialGroup()
+                                        .addComponent(labelPalabrasConFrecuencia)
+                                        .addGap(63, 63, 63)))))
                         .addGap(207, 207, 207))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrearLayout.createSequentialGroup()
-                        .addComponent(btnCrearTeclado)
-                        .addGap(283, 283, 283))))
+                        .addComponent(labelTituloCrear)
+                        .addGap(267, 267, 267))))
         );
         panelCrearLayout.setVerticalGroup(
             panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCrearLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addComponent(labelTituloCrear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNombreTeclado)
                     .addComponent(fieldNombreTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAlfabeto)
                     .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAlgoritmo)
                     .addComponent(comboboxAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelTexto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPalabrasConFrecuencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearTeclado)
-                .addContainerGap())
+                .addComponent(btnCrearTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         panelCard.add(panelCrear, "cardCrear");
+
+        menuVolver.setText("<- Ir a menú principal");
+        menuVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuVolverMouseClicked(evt);
+            }
+        });
+        menubarAcciones.add(menuVolver);
 
         menuCrear.setText("Crear teclado");
         menuCrear.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -341,14 +374,6 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         });
         menubarAcciones.add(menuModificar);
 
-        menuVolver.setText("Ir a menú principal");
-        menuVolver.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuVolverMouseClicked(evt);
-            }
-        });
-        menubarAcciones.add(menuVolver);
-
         setJMenuBar(menubarAcciones);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -356,22 +381,14 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelTitulo)
-                .addGap(275, 275, 275))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>     
 
     private void btnEliminarTecladoActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         String nombreTeclado = (String) comboboxTeclado.getSelectedItem();
@@ -533,7 +550,8 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
     private javax.swing.JLabel labelPalabrasConFrecuencia;
     private javax.swing.JLabel labelTeclado;
     private javax.swing.JLabel labelTexto;
-    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel labelTituloCrear;
+    private javax.swing.JLabel labelTituloModificar;
     private javax.swing.JMenu menuCrear;
     private javax.swing.JMenu menuModificar;
     private javax.swing.JMenu menuVolver;
