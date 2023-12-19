@@ -180,6 +180,10 @@ public class CtrlPresentacion {
 		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
 	}
 
+	public Character[][] getDistribucionTeclado(String nombreTeclado) throws Exception {
+		return ctrlDominio.getDistribucionTeclado(nombreTeclado);
+	}
+
 	private void cargarDatosUsuario() {
 		boolean completaCarga = false;
 		while (!completaCarga) {

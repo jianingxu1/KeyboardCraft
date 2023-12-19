@@ -61,7 +61,7 @@ public class CjtTeclados {
      * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
      */
     public void crearTeclado(String nombre, Character[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
-        if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
+        if (nombre == null || nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
         else if (existeTeclado(nombre))
             throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
         Teclado teclado = new Teclado(nombre, mat);
@@ -96,8 +96,8 @@ public class CjtTeclados {
      */
 
     public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
-        if (nombre.trim().isEmpty())
-        throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+        if (nombre == null || nombre.trim().isEmpty())
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
         
         else if (!existeTeclado(nombre))
 			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
@@ -162,7 +162,7 @@ public class CjtTeclados {
      * @return matriz de caractéres (char[][]) que representa la distribución
      */
     public Character[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
-        if (nombreTeclado.trim().isEmpty())
+        if (nombreTeclado == null || nombreTeclado.trim().isEmpty())
             throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
 		else if (!existeTeclado(nombreTeclado))
             throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
