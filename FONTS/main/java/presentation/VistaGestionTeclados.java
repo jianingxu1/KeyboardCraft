@@ -378,6 +378,9 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         try {
             iCtrlPresentacion.eliminarTeclado(nombreTeclado);
             actualizarNombreTecladosComboBox();
+            panelTeclas.removeAll();
+            fieldCaracter1.setText("");
+            fieldCaracter2.setText("");
             JOptionPane.showMessageDialog(this, "¡Se ha eliminado el teclado " + nombreTeclado + " con éxito!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -414,8 +417,6 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
     }                                      
 
     private void menuVolverMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        resetCardModificarTeclado();
-        resetCardCrearTeclado();
         iCtrlPresentacion.syncVistaGestionTeclados_a_MenuPrincipal();
     }                                       
 
