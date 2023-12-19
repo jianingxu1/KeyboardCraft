@@ -1,6 +1,8 @@
 package presentation;
 import domaincontrollers.CtrlDominio;
+
 import java.lang.Exception;
+import java.util.*;
 
 /**
  * Clase CtrlPresentacion
@@ -147,18 +149,38 @@ public class CtrlPresentacion {
 
 	public void iniciarSesion(String Username, String Password) throws Exception {
 		ctrlDominio.IniciarSesion(Username,Password);
+		cargarDatosUsuario();
 	}
 
 	public void crearUsuario(String username, String password) throws Exception {
 		ctrlDominio.anadirNuevoUsuario(username, password);
-		FuncCargarDatos();
 	}
 
 	public boolean existeUsuario(String Username) {
 		return ctrlDominio.existeUsuario(Username);
 	}
 
-	private void FuncCargarDatos() {
+	public void eliminarTeclado(String nombreTeclado) throws Exception {
+		ctrlDominio.eliminarTeclado(nombreTeclado);
+	}
+
+	public ArrayList<String> getNombreTeclados() {
+		return ctrlDominio.getNombreTeclados();
+	}
+
+	public ArrayList<String> getNombreAlfabetos() {
+		return ctrlDominio.getNombreAlfabetos();
+	}
+
+	public ArrayList<String> getNombreAlgoritmos() {
+		return ctrlDominio.getNombreAlgoritmos();
+	}
+
+	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia, String nombreAlgoritmo) throws Exception {
+		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
+	}
+
+	private void cargarDatosUsuario() {
 		boolean completaCarga = false;
 		while (!completaCarga) {
 			try {

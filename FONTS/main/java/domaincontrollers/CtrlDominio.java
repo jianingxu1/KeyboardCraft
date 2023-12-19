@@ -56,22 +56,25 @@ public class CtrlDominio {
 	 * @throws FrecuenciaIncorrectaExcepcion Si la frecuencia de las palabras no es correcta.
 	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
-	public void creaTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras, String algoritmo)
+	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras, String algoritmo)
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
 			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
 		// Informacion necesaria para poder crear el teclado
-		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
-		Texto text = new Texto(texto);
+		if (cjtTeclados.existeTeclado(nombreTeclado))
+			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe. Introduce otro nombre.");
+
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(nombreAlfabeto);
-		Character[][] distribucion = new Character[3][10];
 
-		if (algoritmo.trim().isEmpty())
-			throw new TipoAlgoritmoIncorrectoExcepcion("El algoritmo no puede ser vacio.");
-
+		if (algoritmo == null || algoritmo.trim().isEmpty()) 
+			throw new TipoAlgoritmoIncorrectoExcepcion("No has seleccionado ningún algoritmo. Selecciona uno.");
 		else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))
 			throw new TipoAlgoritmoIncorrectoExcepcion(
 					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
 
+		Texto text = new Texto(texto);
+		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
+
+		Character[][] distribucion = new Character[3][10];
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
 		if (algoritmo.equals("B&B")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
@@ -88,6 +91,13 @@ public class CtrlDominio {
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}
 
+	public ArrayList<String> getNombreAlgoritmos() {
+		ArrayList<String> algoritmos = new ArrayList<>();
+		algoritmos.add("B&B");
+		algoritmos.add("SA");
+		return algoritmos;
+	}
+
 	/**
 	 * Elimina el teclado del conjunto de teclados y su respectiva información.
 	 *
@@ -95,7 +105,7 @@ public class CtrlDominio {
 	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 */
 
-	public void borrarTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
+	public void eliminarTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
 		cjtTeclados.eliminarTeclado(nombreTeclado);
 	}
 

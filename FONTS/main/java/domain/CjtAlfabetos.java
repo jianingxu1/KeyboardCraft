@@ -109,7 +109,7 @@ public class CjtAlfabetos {
      * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
      */
     public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion{
-        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+        if (nombre == null || nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
         else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
         return alfabetos.get(nombre);
     }

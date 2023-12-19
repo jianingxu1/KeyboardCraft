@@ -76,7 +76,7 @@ public class CjtTeclados {
      */
 
     public void eliminarTeclado(String nombre) throws NombreTecladoNoValidoExcepcion{
-        if (nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
+        if (nombre == null || nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
 
         else if (!existeTeclado(nombre)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
         conjunto.remove(nombre);
