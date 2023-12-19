@@ -152,6 +152,10 @@ public class CtrlPresentacion {
 		cargarDatosUsuario();
 	}
 
+	public void cerrarSesion() throws Exception {
+		ctrlDominio.cerrarSesion();
+	}
+
 	public void crearUsuario(String username, String password) throws Exception {
 		ctrlDominio.anadirNuevoUsuario(username, password);
 	}

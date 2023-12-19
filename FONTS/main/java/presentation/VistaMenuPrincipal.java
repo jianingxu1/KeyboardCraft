@@ -132,7 +132,7 @@ public class VistaMenuPrincipal extends JFrame {
 
     public void actionPerformed_btnLogout(ActionEvent event) {
         try {
-            iCtrlPresentacion.guardarDatos();
+            iCtrlPresentacion.cerrarSesion();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
