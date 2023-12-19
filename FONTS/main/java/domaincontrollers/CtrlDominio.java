@@ -331,6 +331,46 @@ public class CtrlDominio {
 		}
 	}
 
+	//Funciones de importacion y visualizacion de textos y listas de palabras
+
+	/**
+	 * Visualiza los textos que se pueden importar
+	 * @return una lista con los nombres de los textos que se pueden importar
+	 */
+
+	public ArrayList<String> visualizarTextos() {
+		return ctrlPersistencia.visualizarTextos();
+	}
+
+	/**
+	 * Visualiza las listas de palabras que se pueden importar
+	 * @return una lista con los nombres de las listas de palabras que se pueden importar
+	 */
+
+	public ArrayList<String> visualizarListasPalabras() {
+		return ctrlPersistencia.visualizarListasDePalabras();
+	}
+
+	/**
+	 * Importa un texto
+	 * @param nombreTexto el nombre del texto que se quiere importar
+	 * @return el texto importado
+	 * @throws LecturaIncorrectaFicheroExcepcion
+	 */
+	public String importarTexto(String nombreTexto) throws LecturaIncorrectaFicheroExcepcion {
+		return ctrlPersistencia.cargarTexto(nombreTexto);
+	}
+
+	/**
+	 * Importa una lista de palabras
+	 * @param nombreListaPalabras el nombre de la lista de palabras que se quiere importar
+	 * @return la lista de palabras importada
+	 * @throws LecturaIncorrectaFicheroExcepcion
+	 */
+	public String importarListaPalabras(String nombreListaPalabras) throws LecturaIncorrectaFicheroExcepcion {
+		return ctrlPersistencia.cargarListaDePalabras(nombreListaPalabras);
+	}
+	
 	// ----- Getters -----
 
 	public ArrayList<String> getNombreAlfabetos() {
