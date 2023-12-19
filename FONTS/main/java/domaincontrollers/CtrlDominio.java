@@ -135,9 +135,9 @@ public class CtrlDominio {
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
-	public void anadirNuevoAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
+	public void crearAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
 			throws NombreAlfabetoDuplicadoExcepcion, NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
-		cjtAlfabetos.anadirNuevoAlfabeto(nombreAlfabeto, caracteresAlfabeto);
+		cjtAlfabetos.crearAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class CtrlDominio {
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
-	public void modificarAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
+	public void modificarCaracteresAlfabeto(String nombreAlfabeto, String caracteresAlfabeto)
 			throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
 		cjtAlfabetos.modificarCaracteresAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
@@ -337,7 +337,7 @@ public class CtrlDominio {
 		for (Map.Entry<String, String> entry : conjuntoAlfabetos.entrySet()) {
 			String nombreAlfabeto = entry.getKey();
 			String caracteres = entry.getValue();
-			cjtAlfabetos.anadirNuevoAlfabeto(nombreAlfabeto, caracteres);
+			cjtAlfabetos.crearAlfabeto(nombreAlfabeto, caracteres);
 		}
 	}
 

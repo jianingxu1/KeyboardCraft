@@ -184,6 +184,22 @@ public class CtrlPresentacion {
 		return ctrlDominio.getDistribucionTeclado(nombreTeclado);
 	}
 
+	public void crearAlfabeto(String nombreAlfabeto, String caracteresAlfabeto) throws Exception {
+		ctrlDominio.crearAlfabeto(nombreAlfabeto, caracteresAlfabeto);
+	}
+	
+	public void eliminarAlfabeto(String nombreAlfabeto) throws Exception {
+		ctrlDominio.eliminarAlfabeto(nombreAlfabeto);
+	}
+
+	public void modificarCaracteresAlfabeto(String nombreAlfabeto, String caracteresAlfabeto) throws Exception {
+		ctrlDominio.modificarCaracteresAlfabeto(nombreAlfabeto, caracteresAlfabeto);
+	}
+
+	public ArrayList<Character> getCaracteresDeAlfabeto(String nombreAlfabeto) throws Exception {
+		return ctrlDominio.getCaracteresDeAlfabeto(nombreAlfabeto);
+	}
+
 	private void cargarDatosUsuario() {
 		boolean completaCarga = false;
 		while (!completaCarga) {

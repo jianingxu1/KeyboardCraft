@@ -52,8 +52,7 @@ public class CjtAlfabetos {
      * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
-    public void anadirNuevoAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
-
+    public void crearAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
         if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
 
         else if (existeAlfabeto(nombre))
