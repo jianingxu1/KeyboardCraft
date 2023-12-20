@@ -535,7 +535,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                     buttonSize.height = 30;
                     button.setPreferredSize(buttonSize);
                     button.setMaximumSize(buttonSize);
-            
+                    button.setMargin(new Insets(5, 5, 5, 5));
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
