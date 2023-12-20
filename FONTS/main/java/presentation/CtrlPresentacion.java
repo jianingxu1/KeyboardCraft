@@ -223,6 +223,14 @@ public class CtrlPresentacion {
 		ctrlDominio.guardarUsuarios();
 	}
 
+	public String importarTexto(String filePath) throws Exception {
+		return ctrlDominio.importarTexto(filePath);
+	}
+	
+	public String importarListaPalabras(String filePath) throws Exception {
+		return ctrlDominio.importarListaPalabras(filePath);
+	}
+
 	public void cerrarPrograma() throws Exception {
 		System.exit(0);
 	}
