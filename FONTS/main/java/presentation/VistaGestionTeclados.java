@@ -464,12 +464,23 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         try {
             Character[][] distribucion = iCtrlPresentacion.getDistribucionTeclado(nombreTeclado);
             int rows = distribucion.length;
+            // Quitar las teclas del teclado anterior del panel
             panelTeclas.removeAll();
+            // Poner las teclas del teclado actual en el panel como botones
             panelTeclas.setLayout(new GridLayout(rows, distribucion[0].length));
             for (int i = 0; i < rows; ++i) {
                 int cols = distribucion[i].length;
                 for (int j = 0; j < cols; ++j) {
-                    JButton button = new JButton(distribucion[i][j].toString());
+                    JButton button = new JButton();
+                    if (distribucion[i][j] == null) button.setText(" ");
+                    else button.setText(distribucion[i][j].toString());
+            
+                    // Tamano del button
+                    Dimension buttonSize = button.getPreferredSize();
+                    buttonSize.width = 30;
+                    buttonSize.height = 30;
+                    button.setPreferredSize(buttonSize);
+            
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {

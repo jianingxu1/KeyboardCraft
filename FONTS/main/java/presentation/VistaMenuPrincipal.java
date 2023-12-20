@@ -133,10 +133,10 @@ public class VistaMenuPrincipal extends JFrame {
     public void actionPerformed_btnLogout(ActionEvent event) {
         try {
             iCtrlPresentacion.cerrarSesion();
+            iCtrlPresentacion.syncVistaMenuPrincipal_a_Bienvenida();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        iCtrlPresentacion.syncVistaMenuPrincipal_a_Bienvenida();
     }
 
     {

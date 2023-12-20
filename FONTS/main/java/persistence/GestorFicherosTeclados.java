@@ -116,8 +116,9 @@ public class GestorFicherosTeclados {
         StringBuilder s = new StringBuilder();
         // guarda la distribucion por filas
         for (Character[] fila : distribucion) {
-            for (char caracter : fila) {
-                s.append(caracter);
+            for (int i = 0; i < fila.length; ++i) {
+                if (fila[i] == null) s.append(" ");
+                else s.append(fila[i]);
             }
             s.append("◘");
         }
