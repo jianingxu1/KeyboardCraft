@@ -46,7 +46,7 @@ public class VistaGestionPerfil extends JFrame {
 
     private void inicializar_frameVista() {
         this.setTitle("Gestión de perfil");
-        this.setMinimumSize(new Dimension(700, 500));
+        this.setMinimumSize(new Dimension(600, 450));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
 

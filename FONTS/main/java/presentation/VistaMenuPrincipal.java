@@ -48,7 +48,7 @@ public class VistaMenuPrincipal extends JFrame {
 
     private void inicializar_frameVista() {
         this.setTitle("Generador de teclados");
-        this.setMinimumSize(new Dimension(700, 400));
+        this.setMinimumSize(new Dimension(600, 450));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
 
