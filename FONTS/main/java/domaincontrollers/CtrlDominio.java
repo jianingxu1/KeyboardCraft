@@ -348,8 +348,8 @@ public class CtrlDominio {
 	 * @return una lista con los nombres de los textos que se pueden importar
 	 */
 
-	public ArrayList<String> visualizarTextos() {
-		return ctrlPersistencia.visualizarTextos();
+	public ArrayList<String> visualizarTextos(String pathFolderTextos) {
+		return ctrlPersistencia.visualizar(pathFolderTextos);
 	}
 
 	/**
@@ -357,28 +357,33 @@ public class CtrlDominio {
 	 * @return una lista con los nombres de las listas de palabras que se pueden importar
 	 */
 
-	public ArrayList<String> visualizarListasPalabras() {
-		return ctrlPersistencia.visualizarListasDePalabras();
+	public ArrayList<String> visualizarListasPalabras(String pathFolderListaDePalabras) {
+		return ctrlPersistencia.visualizar(pathFolderListaDePalabras);
 	}
 
 	/**
 	 * Importa un texto
-	 * @param nombreTexto el nombre del texto que se quiere importar
+	 * @param pathFileTexto el path donde se encuentra el texto que se quiere importar
 	 * @return el texto importado
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
-	public String importarTexto(String nombreTexto) throws LecturaIncorrectaFicheroExcepcion {
-		return ctrlPersistencia.cargarTexto(nombreTexto);
+	public String importarTexto(String pathFileTexto) throws LecturaIncorrectaFicheroExcepcion{
+		String texto =  ctrlPersistencia.cargar(pathFileTexto);
+		Texto text = new Texto(texto);
+		return text.getTexto();
 	}
 
 	/**
 	 * Importa una lista de palabras
-	 * @param nombreListaPalabras el nombre de la lista de palabras que se quiere importar
+	 * @param pathFileListaDePalabras el pach donde se cuentra la lista de palabras que se quiere importar
 	 * @return la lista de palabras importada
 	 * @throws LecturaIncorrectaFicheroExcepcion
 	 */
-	public String importarListaPalabras(String nombreListaPalabras) throws LecturaIncorrectaFicheroExcepcion {
-		return ctrlPersistencia.cargarListaDePalabras(nombreListaPalabras);
+	public String importarListaPalabras(String pathFileListaDePalabras) throws LecturaIncorrectaFicheroExcepcion, FrecuenciaIncorrectaExcepcion{
+		String lista = ctrlPersistencia.cargar(pathFileListaDePalabras);
+		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(lista);
+		return palabras.toString();
+
 	}
 	
 	// ----- Getters -----

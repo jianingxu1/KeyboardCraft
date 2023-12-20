@@ -7,9 +7,7 @@ public class CtrlPersistencia {
     private GestorFicherosTeclados gestorFicherosTeclados;
     private GestorFicherosUsuarios gestorFicherosUsuarios;
     private GestorFicherosAlfabetos gestorFicherosAlfabetos;
-    private CargarYVisualizarTextos cargadorTextos;
-    private CargarYVisualizarListaDePalabras cargadorListas;
-
+    private CargarYVisualizar importador;
     /*
      * Constructora de la clase CtrlPersistencia
      */
@@ -17,8 +15,7 @@ public class CtrlPersistencia {
         gestorFicherosAlfabetos = new GestorFicherosAlfabetos();
         gestorFicherosTeclados = new GestorFicherosTeclados();
         gestorFicherosUsuarios = new GestorFicherosUsuarios();
-        cargadorTextos = new CargarYVisualizarTextos();
-        cargadorListas = new CargarYVisualizarListaDePalabras();
+        importador = new CargarYVisualizar();
     }
 
     /*
@@ -90,37 +87,23 @@ public class CtrlPersistencia {
 
     }
 
-    /*
-     * visualiza los textos existentes en el sistema para poder importarlos
+    /**
+     * Carga el contenido del fichero que se le pasa por parámetro.
+     * @param pathArchivo
+     * @return
+     * @throws LecturaIncorrectaFicheroExcepcion
      */
-    public ArrayList<String> visualizarTextos() {
-        return cargadorTextos.visualizar();
+    public String cargar(String pathArchivo) throws LecturaIncorrectaFicheroExcepcion {
+        return importador.cargar(pathArchivo);
     }
 
-    /*
-     * Carga el texto que se le pasa por parámetro
-     * @param nombreArchivo El nombre del archivo que se quiere cargar
-     * @return El contenido del archivo como una cadena
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de textos no se ha podido leer correctamente
+    /**
+     * Visualiza los ficheros que hay en la carpeta pathFolder
+     * @param pathFolder
+     * @return
      */
-    public String cargarTexto(String nombreArchivo) throws LecturaIncorrectaFicheroExcepcion{
-        return cargadorTextos.cargar(nombreArchivo);
+    public ArrayList<String> visualizar(String pathFolder) {
+        return importador.visualizar(pathFolder);
     }
 
-    /*
-     * visualiza las listas de palabras existentes en el sistema para poder importarlas
-     */
-    public ArrayList<String> visualizarListasDePalabras() {
-        return cargadorListas.visualizar();
-    }
-
-    /*
-     * Carga la lista que se le pasa por parámetro
-     * @param nombreArchivo El nombre del archivo que se quiere cargar
-     * @return El contenido del archivo como una cadena
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de listas no se ha podido leer correctamente
-     */
-    public String cargarListaDePalabras(String nombreArchivo) throws LecturaIncorrectaFicheroExcepcion {
-        return cargadorListas.cargar(nombreArchivo);
-    }
 }
