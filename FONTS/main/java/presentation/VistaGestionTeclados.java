@@ -15,7 +15,10 @@ import java.util.*;
 public class VistaGestionTeclados extends javax.swing.JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private boolean userSelection = true;
-    
+
+    private JButton firstButton;
+    private JButton secondButton;
+
     /**
      * Creates new form VistaGestionTeclados
      */
@@ -562,7 +565,16 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         }
     }                                              
 
-    private void btnIntercambiarTeclasActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+    private void btnIntercambiarTeclasActionPerformed(java.awt.event.ActionEvent evt) {
+        // ver que los dos tengan una tecla asignada
+        if (!fieldCaracter1.getText().isEmpty() && !fieldCaracter2.getText().isEmpty()) {
+            String aux = firstButton.getText();
+            firstButton.setText(secondButton.getText());
+            secondButton.setText(aux);
+
+            fieldCaracter1.setText("");
+            fieldCaracter2.setText("");
+        }
     }
 
     private void btnEliminarTecladoActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -637,11 +649,14 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                         public void actionPerformed(ActionEvent e) {
                             if (fieldCaracter1.getText().isEmpty()) {
                                 fieldCaracter1.setText(button.getText());
+                                firstButton = button;
                             } else if (fieldCaracter2.getText().isEmpty()) {
                                 fieldCaracter2.setText(button.getText());
+                                secondButton = button;
                             } else {
                                 fieldCaracter1.setText(button.getText());
                                 fieldCaracter2.setText("");
+                                firstButton = button;
                             }
                         }
                     });
