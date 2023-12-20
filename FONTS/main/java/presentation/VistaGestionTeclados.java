@@ -610,6 +610,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
 
     private void resetCardModificarTeclado() {
         actualizarNombreTecladosComboBox();
+        panelTeclas.removeAll();
         fieldCaracter1.setText("");
         fieldCaracter2.setText("");
     }
