@@ -233,6 +233,10 @@ public class VistaBienvenida extends javax.swing.JFrame {
     private void limpiarCamposInput() {
         fieldUsuario.setText("");
         fieldContrasena.setText("");
+        fieldUsuario.revalidate();
+        fieldUsuario.repaint();
+        fieldContrasena.revalidate();
+        fieldContrasena.repaint();
     }
 
     // Variables declaration - do not modify                     

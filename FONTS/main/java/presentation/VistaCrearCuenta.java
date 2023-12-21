@@ -110,6 +110,10 @@ public class VistaCrearCuenta extends JFrame {
     private void limpiarCamposInput() {
         fieldUsuario.setText("");
         fieldContra.setText("");
+        fieldUsuario.revalidate();
+        fieldUsuario.repaint();
+        fieldContra.revalidate();
+        fieldContra.repaint();
     }
 
     {
