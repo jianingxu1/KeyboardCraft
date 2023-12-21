@@ -27,7 +27,7 @@ public class Usuario {
         if (username.trim().isEmpty())
 			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
         this.username = username;
-        modificaContraseña(password);
+        modificaContrasena(password);
     }
 
     /** Métodos públicos **/
@@ -39,7 +39,7 @@ public class Usuario {
      * @param newPass nueva contraseña
      * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
      */
-    public void modificaContraseña(String newPass) throws ContrasenaNoValidaExcepcion {
+    public void modificaContrasena(String newPass) throws ContrasenaNoValidaExcepcion {
 		if (newPass.trim().isEmpty())
 			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
 		else if (newPass.length() < 8)
@@ -61,7 +61,7 @@ public class Usuario {
      * Devuelve la contraseña
      * @return contraseña
      */
-     public String getContraseña() {
+     public String getContrasena() {
         return password;
     }
 }

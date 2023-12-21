@@ -89,7 +89,7 @@ public class CjtUsuarios {
 		else if(!correctPass(user, oldPass)){
 			throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
 		}
-        conjunto.get(user).modificaContraseña(newPass);
+        conjunto.get(user).modificaContrasena(newPass);
     }
 
     /**
@@ -114,7 +114,7 @@ public class CjtUsuarios {
         
         else if (contrasena.length() < 8)
         throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
-        return conjunto.get(nombreUsuario).getContraseña().equals(contrasena);
+        return conjunto.get(nombreUsuario).getContrasena().equals(contrasena);
     }
 
     /**
@@ -143,8 +143,8 @@ public class CjtUsuarios {
      * @param user el nombre del usuario
      * @return la contraseña del usuario
      */
-    public String getContraseñaUsuario(String user) {
-        return conjunto.get(user).getContraseña();
+    public String getContrasenaUsuario(String user) {
+        return conjunto.get(user).getContrasena();
     }
 
     /**

@@ -252,7 +252,7 @@ public class CtrlDominio {
 	 * @throws NombreUsuarioNoValidoExcepcion
 	 * @throws ContrasenaNoValidaExcepcion
 	 */
-	public boolean contraseñaCorrecta(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+	public boolean contrasenaCorrecta(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
 		return cjtUsuarios.correctPass(nombreUsuario, contrasena);
 	}
 
@@ -306,7 +306,7 @@ public class CtrlDominio {
 
 		ArrayList<String> nombreUsuarios = cjtUsuarios.getNombreUsuarios();
 		for (String nombreUsuario : nombreUsuarios) {
-			String contrasena = cjtUsuarios.getContraseñaUsuario(nombreUsuario);
+			String contrasena = cjtUsuarios.getContrasenaUsuario(nombreUsuario);
 			conjuntoUsuarios.put(nombreUsuario, contrasena);
 		}
 
