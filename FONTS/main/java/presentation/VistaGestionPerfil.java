@@ -102,10 +102,21 @@ public class VistaGestionPerfil extends JFrame {
                         }
                     }
                 });
+        cambiarContraseñaButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        try {
+                            actionPerformed_cambiarContraseñaButton(event);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
     }
 
-    void actionPerformed_atrásButton(ActionEvent event) {
-        iCtrlPresentacion.syncVistaGestionPerfil_a_MenuPrincipal();
+    void actionPerformed_cambiarContraseñaButton(ActionEvent event) {
+        iCtrlPresentacion.syncVistaGestionPerfil_a_CambiarContraseña();
     }
 
     void actionPerformed_eliminarCuentaButton(ActionEvent event) throws Exception {
@@ -119,6 +130,10 @@ public class VistaGestionPerfil extends JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
+    }
+
+    void actionPerformed_atrásButton(ActionEvent event) {
+        iCtrlPresentacion.syncVistaGestionPerfil_a_MenuPrincipal();
     }
 
     {

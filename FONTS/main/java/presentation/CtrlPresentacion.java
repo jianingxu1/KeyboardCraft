@@ -26,6 +26,8 @@ public class CtrlPresentacion {
 
 	private VistaConsultarTeclado vistaConsultarTeclado;
 
+	private VistaCambiarContraseña vistaCambiarContraseña;
+
 	/** Constructor y metodos de inicializacion **/
 
 	public CtrlPresentacion() {
@@ -143,6 +145,15 @@ public class CtrlPresentacion {
 		vistaConsultarTeclado.hacerVisible();
 	}
 
+	public void syncVistaGestionPerfil_a_CambiarContraseña() {
+		vistaGestionPerfil.desactivar();
+		vistaGestionPerfil.hacerInvisible();
+		if (vistaCambiarContraseña == null)
+			vistaCambiarContraseña = new VistaCambiarContraseña(this);
+		vistaCambiarContraseña.activar();
+		vistaCambiarContraseña.hacerVisible();
+	}
+
 	public void syncVistaConsultarTeclado_a_GestionTeclados() {
 		vistaConsultarTeclado.hacerInvisible();
 		vistaConsultarTeclado.desactivar();
@@ -150,6 +161,13 @@ public class CtrlPresentacion {
 			vistaGestionTeclados = new VistaGestionTeclados(this);
 		vistaGestionTeclados.activar();
 		vistaGestionTeclados.hacerVisible();
+	}
+
+	public void syncVistaCambiarContraseña_a_GestionPerfil() {
+		vistaCambiarContraseña.hacerInvisible();
+		vistaCambiarContraseña.desactivar();
+		vistaGestionPerfil.hacerVisible();
+		vistaGestionPerfil.activar();
 	}
 
 	/** Llamadas al controlador de dominio **/
@@ -236,6 +254,10 @@ public class CtrlPresentacion {
 	
 	public String importarListaPalabras(String filePath) throws Exception {
 		return ctrlDominio.importarListaPalabras(filePath);
+	}
+
+	public void cambiarContraseña(String oldPass, String newPass) throws Exception {
+		ctrlDominio.modificarContrasenaDesdeInterfaz(oldPass, newPass);
 	}
 
 	public void borrarCuenta() throws Exception {

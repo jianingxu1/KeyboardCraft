@@ -509,7 +509,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         });
         menubarAcciones.add(menuCrear);
 
-        menuModificar.setText("Modificar teclado");
+        menuModificar.setText("Consultar teclado");
         menuModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuModificarMouseClicked(evt);

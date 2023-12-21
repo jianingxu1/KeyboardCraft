@@ -221,6 +221,10 @@ public class CtrlDominio {
 		cjtUsuarios.modificarContrasenaUsuario(nombreUsuario, actualContrasena, nuevaContrasena);
 	}
 
+	public void modificarContrasenaDesdeInterfaz(String actualContrasena, String nuevaContrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+		cjtUsuarios.modificarContrasenaUsuario(username, actualContrasena, nuevaContrasena);
+	}
+
 	/**
 	 * Inicia sesión con un usuario
 	 * @param nombreUsuario

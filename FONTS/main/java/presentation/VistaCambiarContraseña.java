@@ -3,22 +3,21 @@ package presentation;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
-public class VistaCrearCuenta extends JFrame {
+public class VistaCambiarContraseña extends JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private JPanel panelContenidos;
     private JLabel labelLogo;
-    private JLabel labelUsuario;
-    private JTextField fieldUsuario;
-    private JLabel labelContra;
-    private JPasswordField fieldContra;
+    private JLabel labelContraOld;
+    private JPasswordField fieldContraOld;
+    private JLabel labelContraNew;
+    private JPasswordField fieldContraNew;
     private JPanel panelBotones;
-    private JButton btnCrearCuenta;
+    private JButton btnCambiarContraseña;
     private JButton btnVolver;
     private JPanel panelInput;
 
-    public VistaCrearCuenta(CtrlPresentacion pCtrlPresentacion) {
+    public VistaCambiarContraseña(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
@@ -46,7 +45,7 @@ public class VistaCrearCuenta extends JFrame {
     }
 
     private void inicializar_frameVista() {
-        this.setTitle("Generador de teclados");
+        this.setTitle("Cambiar contraseña");
         this.setMinimumSize(new Dimension(500, 350));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
@@ -69,14 +68,14 @@ public class VistaCrearCuenta extends JFrame {
     }
 
     private void performOperationBeforeExit() {
-        iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
+        iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
         dispose();
     }
 
     private void asignar_listenersComponentes() {
-        btnCrearCuenta.addActionListener(new ActionListener() {
+        btnCambiarContraseña.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                actionPerformed_btnCrearCuenta(event);
+                actionPerformed_btnCambiarContraseña(event);
             }
         });
 
@@ -88,15 +87,18 @@ public class VistaCrearCuenta extends JFrame {
 
     }
 
-    private void actionPerformed_btnCrearCuenta(ActionEvent event) {
-        String user = fieldUsuario.getText();
-        char[] passwordChars = fieldContra.getPassword();
-        String password = new String(passwordChars);
+    private void actionPerformed_btnCambiarContraseña(ActionEvent event) {
+
+        char[] passwordOldChars = fieldContraOld.getPassword();
+        String oldPass = new String(passwordOldChars);
+
+        char[] passwordChars = fieldContraNew.getPassword();
+        String newPass = new String(passwordChars);
         try {
-            iCtrlPresentacion.crearUsuario(user, password);
+            iCtrlPresentacion.cambiarContraseña(oldPass, newPass);
             limpiarCamposInput();
-            iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
-            JOptionPane.showMessageDialog(this, "¡Has creado una cuenta nueva!");
+            iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
+            JOptionPane.showMessageDialog(this, "Contraseña modificada correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -104,12 +106,12 @@ public class VistaCrearCuenta extends JFrame {
 
     private void actionPerformed_btnVolver(ActionEvent event) {
         limpiarCamposInput();
-        iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
+        iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
     }
 
     private void limpiarCamposInput() {
-        fieldUsuario.setText("");
-        fieldContra.setText("");
+        fieldContraOld.setText("");
+        fieldContraNew.setText("");
     }
 
     {
@@ -130,7 +132,7 @@ public class VistaCrearCuenta extends JFrame {
         panelContenidos = new JPanel();
         panelContenidos.setLayout(new GridBagLayout());
         labelLogo = new JLabel();
-        labelLogo.setText("Logo");
+        labelLogo.setText("Gestión de perfil");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -147,22 +149,28 @@ public class VistaCrearCuenta extends JFrame {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelContenidos.add(panelBotones, gbc);
-        btnCrearCuenta = new JButton();
-        btnCrearCuenta.setText("Crear Cuenta");
+        btnCambiarContraseña = new JButton();
+        btnCambiarContraseña.setText("Cambiar contraseña");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelBotones.add(btnCrearCuenta, gbc);
+        panelBotones.add(btnCambiarContraseña, gbc);
         btnVolver = new JButton();
         btnVolver.setText("Volver");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelBotones.add(btnVolver, gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelBotones.add(spacer1, gbc);
         panelInput = new JPanel();
         panelInput.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
@@ -172,57 +180,72 @@ public class VistaCrearCuenta extends JFrame {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelContenidos.add(panelInput, gbc);
-        labelContra = new JLabel();
-        labelContra.setText("Contraseña:");
+        labelContraNew = new JLabel();
+        labelContraNew.setText("Contraseña nueva");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
-        panelInput.add(labelContra, gbc);
-        fieldContra = new JPasswordField();
-        fieldContra.setColumns(15);
+        panelInput.add(labelContraNew, gbc);
+        fieldContraNew = new JPasswordField();
+        fieldContraNew.setColumns(15);
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelInput.add(fieldContra, gbc);
-        fieldUsuario = new JTextField();
-        fieldUsuario.setColumns(15);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelInput.add(fieldUsuario, gbc);
-        final JPanel spacer1 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.ipadx = 60;
-        panelInput.add(spacer1, gbc);
+        panelInput.add(fieldContraNew, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipadx = 60;
         panelInput.add(spacer2, gbc);
-        labelUsuario = new JLabel();
-        labelUsuario.setText("Usuario:");
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 60;
+        panelInput.add(spacer3, gbc);
+        labelContraOld = new JLabel();
+        labelContraOld.setText("Contraseña antigua");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
-        panelInput.add(labelUsuario, gbc);
+        panelInput.add(labelContraOld, gbc);
+        fieldContraOld = new JPasswordField();
+        fieldContraOld.setColumns(15);
+        fieldContraOld.setPreferredSize(new Dimension(126, 30));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelInput.add(fieldContraOld, gbc);
+        final JPanel spacer4 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelInput.add(spacer4, gbc);
+        final JPanel spacer5 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelInput.add(spacer5, gbc);
+        final JPanel spacer6 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panelInput.add(spacer6, gbc);
     }
 
     /**
