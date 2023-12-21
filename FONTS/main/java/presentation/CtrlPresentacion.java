@@ -100,6 +100,13 @@ public class CtrlPresentacion {
 		vistaMenuPrincipal.hacerVisible();
 	}
 
+	public void syncVistaGestionPerfil_a_Bienvenida() {
+		vistaGestionPerfil.hacerInvisible();
+		vistaGestionPerfil.desactivar();
+		vistaBienvenida.activar();
+		vistaBienvenida.hacerVisible();
+	}
+
 	public void syncVistaMenuPrincipal_a_GestionPerfil() {
 		vistaMenuPrincipal.desactivar();
 		vistaMenuPrincipal.hacerInvisible();
@@ -229,6 +236,11 @@ public class CtrlPresentacion {
 	
 	public String importarListaPalabras(String filePath) throws Exception {
 		return ctrlDominio.importarListaPalabras(filePath);
+	}
+
+	public void borrarCuenta() throws Exception {
+		ctrlDominio.eliminarUsuarioDesdeInterfaz();
+		syncVistaGestionPerfil_a_Bienvenida();
 	}
 
 	public void cerrarPrograma() throws Exception {

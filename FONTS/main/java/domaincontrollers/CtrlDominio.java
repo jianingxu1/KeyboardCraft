@@ -153,7 +153,8 @@ public class CtrlDominio {
 	/**
 	 * Modificar alfabeto del conjunto de alfabetos.
 	 *
-	 * @param alfabeto String que representa los caracteres modificados.
+	 * @param nombreAlfabeto String que representa los caracteres modificados.
+	 * @param caracteresAlfabeto String con el nuevo conjunto de caracteres
 	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
 	 * @throws NoHayCaracteresExcepcion Si no hay caracteres en el alfabeto.
 	 */
@@ -197,6 +198,14 @@ public class CtrlDominio {
 	public void eliminarUsuario(String nombreUsuario) throws NombreUsuarioNoValidoExcepcion{
 		cjtUsuarios.eliminarUsuario(nombreUsuario);
 		ctrlPersistencia.eliminarUsuario(nombreUsuario);
+	}
+
+	public void eliminarUsuarioDesdeInterfaz() throws NombreUsuarioNoValidoExcepcion {
+		cjtUsuarios.eliminarUsuario(username);
+		ctrlPersistencia.eliminarUsuario(username);
+		cjtTeclados.clearCjtTeclados();
+		cjtAlfabetos.clearCjtAlfabetos();
+		username = "";
 	}
 
 	/**

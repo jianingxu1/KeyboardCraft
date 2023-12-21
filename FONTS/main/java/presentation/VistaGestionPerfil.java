@@ -91,10 +91,34 @@ public class VistaGestionPerfil extends JFrame {
                         actionPerformed_atrásButton(event);
                     }
                 });
+        eliminarCuentaButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        try {
+                            actionPerformed_eliminarCuentaButton(event);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
     }
 
     void actionPerformed_atrásButton(ActionEvent event) {
         iCtrlPresentacion.syncVistaGestionPerfil_a_MenuPrincipal();
+    }
+
+    void actionPerformed_eliminarCuentaButton(ActionEvent event) throws Exception {
+        int result = JOptionPane.showConfirmDialog(this, "¿Estás seguro? El borrado de la cuenta es irreversible.", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                iCtrlPresentacion.borrarCuenta();
+                JOptionPane.showMessageDialog(this, "Cuenta borrada con éxito.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }
 
     {

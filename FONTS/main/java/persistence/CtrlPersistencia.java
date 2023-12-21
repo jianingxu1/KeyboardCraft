@@ -82,9 +82,7 @@ public class CtrlPersistencia {
      */
     public void eliminarUsuario(String nombreUsuario) {
         gestorFicherosTeclados.eliminarTecladosDeUsuario(nombreUsuario);
-
         gestorFicherosAlfabetos.eliminarAlfabetosDeUsuario(nombreUsuario);
-
     }
 
     /**
