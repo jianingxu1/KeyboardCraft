@@ -34,7 +34,7 @@ public class CtrlPersistencia {
      */
     public void guardarAlfabetos(String userName, HashMap<String, ArrayList<Character>> conjuntoAlfabetos)
             throws EscrituraIncorrectaFicheroExcepcion {
-        gestorFicherosAlfabetos.guardarAlfabetos(userName, conjuntoAlfabetos);
+        gestorFicherosAlfabetos.guardar(userName, conjuntoAlfabetos);
     }
 
     /*
@@ -44,7 +44,7 @@ public class CtrlPersistencia {
      * @param userName El nombre del usuario que quiere guardar los teclados
      */
     public void guardarTeclados(String username, HashMap<String, Character[][]> cjtTeclados) throws EscrituraIncorrectaFicheroExcepcion {
-        gestorFicherosTeclados.guardarTeclados(username, cjtTeclados);
+        gestorFicherosTeclados.guardar(username, cjtTeclados);
     }
 
     /*
@@ -63,7 +63,7 @@ public class CtrlPersistencia {
      * @param userName El nombre del usuario que quiere cargar los alfabetos
      */
     public HashMap<String, String> cargarAlfabetos(String userName) throws LecturaIncorrectaFicheroExcepcion {
-        return gestorFicherosAlfabetos.cargarAlfabetos(userName);
+        return gestorFicherosAlfabetos.cargar(userName);
     }
 
     /*
@@ -73,7 +73,7 @@ public class CtrlPersistencia {
      * @param userName El nombre del usuario que quiere cargar los teclados
      */
     public HashMap<String, Character[][]> cargarTeclados(String username) throws LecturaIncorrectaFicheroExcepcion {
-        return gestorFicherosTeclados.cargarTeclados(username);
+        return gestorFicherosTeclados.cargar(username);
     }
 
     /*

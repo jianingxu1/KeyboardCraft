@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Clase que gestiona la escritura, lectura y eliminacion de teclados en ficheros.
  */
-public class GestorFicherosTeclados {
+public class GestorFicherosTeclados implements GestorEstrategia<Character[][], Character[][]>{
 
     /**
      * Constructor de la clase GestorFicherosTeclados.
@@ -24,7 +24,8 @@ public class GestorFicherosTeclados {
      * @param cjtTeclados HashMap que contiene los teclados a guardar.
      * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error al escribir en el fichero.
      */
-    public void guardarTeclados(String username, HashMap<String, Character[][]> cjtTeclados)
+    @Override
+    public void guardar(String username, HashMap<String, Character[][]> cjtTeclados)
             throws EscrituraIncorrectaFicheroExcepcion {
         if (username.trim().isEmpty())
             return;
@@ -50,7 +51,8 @@ public class GestorFicherosTeclados {
      * @return HashMap que contiene los teclados cargados.
      * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error al leer el fichero.
      */
-    public HashMap<String, Character[][]> cargarTeclados(String username) throws LecturaIncorrectaFicheroExcepcion {
+    @Override
+    public HashMap<String, Character[][]> cargar(String username) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, Character[][]> cjtTeclados = new HashMap<>();
         String path = "../DATA/" + username + "Teclados" + ".prop";
         try {

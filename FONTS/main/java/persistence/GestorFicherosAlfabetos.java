@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Gestiona la lectura y escritura de archivos relacionados con alfabetos para un usuario específico.
  */
-public class GestorFicherosAlfabetos {
+public class GestorFicherosAlfabetos implements GestorEstrategia<ArrayList<Character>,String> {
 
     /**
      * Constructor por defecto para el gestor de archivos de alfabetos.
@@ -24,7 +24,8 @@ public class GestorFicherosAlfabetos {
      * @param conjuntoAlfabetos  La colección de alfabetos a guardar.
      * @throws EscrituraIncorrectaFicheroExcepcion Si hay un error al escribir en el archivo de alfabetos.
      */
-    public void guardarAlfabetos(String username, HashMap<String, ArrayList<Character> > conjuntoAlfabetos) throws EscrituraIncorrectaFicheroExcepcion {
+    @Override
+    public void guardar(String username, HashMap<String, ArrayList<Character> > conjuntoAlfabetos) throws EscrituraIncorrectaFicheroExcepcion {
         if (username.trim().isEmpty()) return;
         try {
             String path = "../DATA/" + username + "Alfabetos" + ".prop";
@@ -49,7 +50,8 @@ public class GestorFicherosAlfabetos {
      * @return Un HashMap con los alfabetos cargados.
      * @throws LecturaIncorrectaFicheroExcepcion Si hay un error al leer el archivo de alfabetos.
      */
-    public HashMap<String, String> cargarAlfabetos(String username) throws LecturaIncorrectaFicheroExcepcion {
+    @Override
+    public HashMap<String, String> cargar(String username) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, String> conjuntoAlfabetos = new HashMap<>();
         String path = "../DATA/" + username + "Alfabetos" + ".prop";
         try {
