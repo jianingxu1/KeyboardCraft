@@ -585,6 +585,8 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
             panelTeclas.removeAll();
             fieldCaracter1.setText("");
             fieldCaracter2.setText("");
+            panelTeclas.revalidate();
+            panelTeclas.repaint();
             JOptionPane.showMessageDialog(this, "¡Se ha eliminado el teclado " + nombreTeclado + " con éxito!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
