@@ -132,7 +132,7 @@ public class VistaCambiarContrasena extends JFrame {
         panelContenidos = new JPanel();
         panelContenidos.setLayout(new GridBagLayout());
         labelLogo = new JLabel();
-        labelLogo.setText("Gestión de perfil");
+        labelLogo.setText("Modificación de contraseña");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
