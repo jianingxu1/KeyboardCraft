@@ -6,7 +6,7 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 import java.io.*;
 import java.util.*;
 
-public class GestorFicherosUsuarios {
+public class GestorFicherosUsuarios implements GestorEstrategia<String, String> {
 
     /*
      * Constructora de la clase GestorFicherosUsuarios
@@ -19,8 +19,9 @@ public class GestorFicherosUsuarios {
      * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido escribir correctamente
      * @param cjtUsuarios El conjunto de usuarios que se quiere guardar
      */
-    public void guardarUsuarios(HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
-        try {
+    @Override
+    public void guardar(String useless, HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
+        try {   
             String path = "../DATA/usuarios.prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
             for (Map.Entry<String, String> entry : cjtUsuarios.entrySet()) {
@@ -39,7 +40,8 @@ public class GestorFicherosUsuarios {
      * @return El conjunto de usuarios que se ha cargado
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente
      */
-    public HashMap<String, String> cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
+    @Override
+    public HashMap<String, String> cargar (String useless) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, String> cjtUsuarios = new HashMap<>();
         String path = "../DATA/usuarios.prop";
         try {

@@ -24,7 +24,7 @@ public class CtrlPersistencia {
      * @param cjtUsuarios El conjunto de usuarios que se quiere guardar
      */
     public void guardarUsuarios(HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
-        gestorFicherosUsuarios.guardarUsuarios(cjtUsuarios);
+        gestorFicherosUsuarios.guardar("",cjtUsuarios);
     }
 
     /*
@@ -53,7 +53,7 @@ public class CtrlPersistencia {
      * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente
      */
     public HashMap<String, String> cargarUsuarios() throws LecturaIncorrectaFicheroExcepcion {
-        return gestorFicherosUsuarios.cargarUsuarios();
+        return gestorFicherosUsuarios.cargar("");
     }
 
     /*
