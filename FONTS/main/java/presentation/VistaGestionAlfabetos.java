@@ -415,6 +415,10 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
     private void btnModificarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {
         String nombreAlfabeto = (String) comboboxAlfabeto.getSelectedItem();
         String caracteres = areaCaracteresModificar.getText();
+        if (nombreAlfabeto == null) {
+            JOptionPane.showMessageDialog(this, "No hay ningún alfabeto seleccionado.");
+            return;
+        }
         try {
             iCtrlPresentacion.modificarCaracteresAlfabeto(nombreAlfabeto, caracteres);
             resetCardModificarAlfabeto();
