@@ -229,17 +229,9 @@ public class CtrlPresentacion {
 		return ctrlDominio.getCaracteresDeAlfabeto(nombreAlfabeto);
 	}
 
-	private void cargarDatosUsuario() {
-		boolean completaCarga = false;
-		while (!completaCarga) {
-			try {
-				ctrlDominio.cargarTeclados();
-				ctrlDominio.cargarAlfabetos();
-				completaCarga = true;
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
+	private void cargarDatosUsuario() throws Exception{
+			ctrlDominio.cargarTeclados();
+			ctrlDominio.cargarAlfabetos();
 	}
 
 	public void guardarDatos() throws Exception {
