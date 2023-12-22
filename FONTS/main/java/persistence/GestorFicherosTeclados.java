@@ -4,12 +4,16 @@ import exceptions.EscrituraIncorrectaFicheroExcepcion;
 import exceptions.LecturaIncorrectaFicheroExcepcion;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Clase que gestiona la escritura, lectura y eliminacion de teclados en ficheros.
+ * Clase que gestiona la escritura, lectura y eliminación de teclados en ficheros.
+ * Implementa la interfaz GestorEstrategia.
+ * @author Momin Miah Begum
+ * @author Muhammad Yasin Khokhar
  */
-public class GestorFicherosTeclados implements GestorEstrategia<Character[][], Character[][]>{
+public class GestorFicherosTeclados implements GestorEstrategia<Character[][], Character[][]> {
 
     /**
      * Constructor de la clase GestorFicherosTeclados.
@@ -27,20 +31,24 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
     @Override
     public void guardar(String username, HashMap<String, Character[][]> cjtTeclados)
             throws EscrituraIncorrectaFicheroExcepcion {
-        if (username.trim().isEmpty())
+        if (username.trim().isEmpty()) {
             return;
+        }
+
         try {
             String path = "../DATA/" + username + "Teclados" + ".prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
+
             for (Map.Entry<String, Character[][]> entry : cjtTeclados.entrySet()) {
                 String nombreTeclado = entry.getKey();
                 Character[][] distribucion = entry.getValue();
                 writer.write(nombreTeclado + 'º' + convertirDistribucionAString(distribucion) + "\n");
             }
+
             writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new EscrituraIncorrectaFicheroExcepcion(
-                    "Error al escribir en el fichero de teclados " + e.getMessage());
+                    "Error al escribir en el fichero de teclados: " + e.getMessage());
         }
     }
 
@@ -55,24 +63,30 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
     public HashMap<String, Character[][]> cargar(String username) throws LecturaIncorrectaFicheroExcepcion {
         HashMap<String, Character[][]> cjtTeclados = new HashMap<>();
         String path = "../DATA/" + username + "Teclados" + ".prop";
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String linea;
+
             while ((linea = reader.readLine()) != null) {
                 String elementos[] = linea.split("º");
                 String nombreTeclado = elementos[0];
                 Character[][] distribucion = convertirStringADistribucion(elementos[1]);
                 cjtTeclados.put(nombreTeclado, distribucion);
             }
+
             reader.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             File file = new File(path);
+
             try {
                 file.createNewFile();
-            } catch (Exception ex) {
-                throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de teclados " + ex.getMessage());
+            } catch (IOException ex) {
+                throw new LecturaIncorrectaFicheroExcepcion(
+                        "Error al crear el fichero de teclados: " + ex.getMessage());
             }
         }
+
         return cjtTeclados;
     }
 
@@ -97,7 +111,7 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
         int filas = 0;
         int columnas = 0;
         int longitudFilaActual = 0;
-    
+
         for (int k = 0; k < distribucionString.length(); ++k) {
             if (distribucionString.charAt(k) == '◘') {
                 filas++;
@@ -109,10 +123,10 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
                 longitudFilaActual++;
             }
         }
-    
+
         // Crear la matriz con las dimensiones necesarias
         Character[][] distribucion = new Character[filas][columnas];
-    
+
         // Rellenar la matriz con los caracteres del string
         int i = 0;
         int j = 0;
@@ -125,7 +139,7 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
                 j++;
             }
         }
-    
+
         return distribucion;
     }
 

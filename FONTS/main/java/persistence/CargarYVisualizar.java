@@ -9,13 +9,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Class CarfarYVisualizar
+ * Clase CargarYVisualizar
+ * 
+ * Esta clase proporciona métodos para cargar el contenido de un archivo y visualizar
+ * los archivos en una carpeta.
  * 
  * @author Momin Miah Begum
  */
 public class CargarYVisualizar {
-    // Este método retorna en formato String lo que hay en el fichero
-    // y puede lanzar una excepción LecturaIncorrectaFicheroExcepcion
+
+    /**
+     * Carga el contenido de un archivo en formato String.
+     * 
+     * @param pathFile Ruta del archivo a cargar.
+     * @return Contenido del archivo en formato String.
+     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error durante la lectura del archivo.
+     */
     public String cargar(String pathFile) throws LecturaIncorrectaFicheroExcepcion {
 
         StringBuilder contenido = new StringBuilder();
@@ -23,7 +32,7 @@ public class CargarYVisualizar {
     
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String linea;
-            boolean firstLine = true;  // To avoid adding newline before the first line
+            boolean firstLine = true;  // Para evitar agregar un salto de línea antes de la primera línea
             while ((linea = br.readLine()) != null) {
                 if (!firstLine) {
                     contenido.append("\n");
@@ -40,7 +49,12 @@ public class CargarYVisualizar {
         return contenido.toString();
     }
     
-    // Este método visualiza los ficheros que hay en una carpeta (Textos, Listas De Palabras)
+    /**
+     * Visualiza los archivos en una carpeta y devuelve sus nombres en una lista.
+     * 
+     * @param pathFolder Ruta de la carpeta a visualizar.
+     * @return Lista de nombres de archivos en la carpeta.
+     */
     public ArrayList<String> visualizar(String pathFolder){
 
         ArrayList<String> listaTextos = new ArrayList<>();
