@@ -147,7 +147,7 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         jScrollPane3.setViewportView(areaCaracteresModificar);
 
         labelInfoInputModificar.setForeground(new java.awt.Color(100, 100, 100));
-        labelInfoInputModificar.setText("<html>Si quieres modificar el alfabeto, reemplaza los caracteres que desees. Introducelos <br/> seguidos y sin espacios. Máx. 30 caracteres.</html>");
+        labelInfoInputModificar.setText("<html>Si quieres modificar el alfabeto, reemplaza los caracteres que desees. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
 
         javax.swing.GroupLayout panelModificarLayout = new javax.swing.GroupLayout(panelModificar);
         panelModificar.setLayout(panelModificarLayout);
@@ -224,7 +224,7 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         labelTituloCrear.setText("Creación de alfabeto");
 
         labelInfoInputCrear.setForeground(new java.awt.Color(100, 100, 100));
-        labelInfoInputCrear.setText("<html>Introduce los caracteres seguidos y sin <br/>espacios. Máx. 30 caracteres.</html>");
+        labelInfoInputCrear.setText("<html>Introduce los caracteres. Los repetidos y espacios no se considerarán. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
 
         javax.swing.GroupLayout panelCrearLayout = new javax.swing.GroupLayout(panelCrear);
         panelCrear.setLayout(panelCrearLayout);

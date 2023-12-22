@@ -61,7 +61,13 @@ public class CjtAlfabetos {
         else if (caracteres.trim().isEmpty())
         throw new NoHayCaracteresExcepcion();
 
-        Alfabeto alfabeto = new Alfabeto(nombre, caracteres);
+        Alfabeto alfabeto;
+
+        if (caracteres.trim().length() <= 30) alfabeto = new Alfabeto(nombre, caracteres);
+        else {
+            String subAlf = caracteres.trim().substring(0,30);
+            alfabeto = new Alfabeto(nombre, subAlf);
+        }
         alfabetos.put(nombre, alfabeto);
     }
 
@@ -96,7 +102,12 @@ public class CjtAlfabetos {
         throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
 
         else if (caracteres.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
-        alfabetos.get(nombre).modificarCaracteres(caracteres);
+
+        if (caracteres.trim().length() <= 30) alfabetos.get(nombre).modificarCaracteres(caracteres);
+        else {
+            String subAlf = caracteres.trim().substring(0,30);
+            alfabetos.get(nombre).modificarCaracteres(subAlf);
+        }
     }
 
     /** ----- Getters ----- **/
