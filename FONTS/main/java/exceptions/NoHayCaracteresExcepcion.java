@@ -2,12 +2,13 @@ package exceptions;
 
 /**
  * Clase NoHayCaracteresExcepcion
- * Representa una excepción que se lanza cuando la cadena de caracteres está vacía.
+ * Representa una excepción que se lanza cuando la cadena de caracteres está
+ * vacía.
  * 
  * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
  * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  *
- * Excepción que se lanza cuando la cadena de caracteres está vacía.
+ *         Excepción que se lanza cuando la cadena de caracteres está vacía.
  */
 public class NoHayCaracteresExcepcion extends Exception {
 

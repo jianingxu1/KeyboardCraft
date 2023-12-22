@@ -9,12 +9,12 @@ package exceptions;
  */
 public class CaracteresNoValidosExcepcion extends Exception {
 
-  /**
-   * Constructor de la excepción.
-   *
-   * @param errorMessage Mensaje de error que describe la razón de la excepción.
-   */
-  public CaracteresNoValidosExcepcion(String errorMessage) {
-    super(errorMessage);
-  }
+    /**
+     * Constructor de la excepción.
+     *
+     * @param errorMessage Mensaje de error que describe la razón de la excepción.
+     */
+    public CaracteresNoValidosExcepcion(String errorMessage) {
+        super(errorMessage);
+    }
 }

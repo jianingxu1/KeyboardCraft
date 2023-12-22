@@ -1,4 +1,5 @@
 package exceptions;
+
 /**
  * Clase ContrasenaNoValidaExcepcion
  * Excepción que se lanza cuando la contraseña no es válida.
