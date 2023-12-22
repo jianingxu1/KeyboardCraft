@@ -200,9 +200,9 @@ public class CtrlDominio {
 		ctrlPersistencia.eliminarUsuario(nombreUsuario);
 	}
 
-	public void eliminarUsuarioDesdeInterfaz() throws NombreUsuarioNoValidoExcepcion {
-		cjtUsuarios.eliminarUsuario(username);
-		ctrlPersistencia.eliminarUsuario(username);
+	public void eliminarUsuarioActual() throws NombreUsuarioNoValidoExcepcion {
+		if (username.trim().isEmpty()) return;
+		eliminarUsuario(username);
 		cjtTeclados.clearCjtTeclados();
 		cjtAlfabetos.clearCjtAlfabetos();
 		username = "";

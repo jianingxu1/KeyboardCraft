@@ -308,8 +308,7 @@ public class CtrlPresentacion {
 	}
 
 	public void borrarCuenta() throws Exception {
-		ctrlDominio.eliminarUsuarioDesdeInterfaz();
-		syncVistaGestionPerfil_a_Bienvenida();
+		ctrlDominio.eliminarUsuarioActual();
 	}
 
 	public void cerrarPrograma() throws Exception {

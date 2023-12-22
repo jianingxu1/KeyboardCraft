@@ -126,6 +126,7 @@ public class VistaGestionPerfil extends JFrame {
             try {
                 iCtrlPresentacion.borrarCuenta();
                 JOptionPane.showMessageDialog(this, "Cuenta borrada con éxito.");
+                iCtrlPresentacion.syncVistaGestionPerfil_a_Bienvenida();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
