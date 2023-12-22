@@ -103,10 +103,23 @@ public class VistaCambiarContrasena extends JFrame {
      * @throws Exception
      */
     private void performOperationBeforeExit() {
-        iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
-        dispose();
+        int result = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            // Perform cleanup or other necessary operations before exiting
+            try {
+                iCtrlPresentacion.guardarDatos();
+                this.dispose(); // Close the frame
+                iCtrlPresentacion.cerrarPrograma();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }
 
+    /**
+     * Asigna los listeners para los componentes de la vista.
+     */
     private void asignar_listenersComponentes() {
         btnCambiarContrasena.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -122,6 +135,10 @@ public class VistaCambiarContrasena extends JFrame {
 
     }
 
+    /**
+     * Cambia la contraseña por la nueva cuando se pulsa el botón de cambiar contraseña.
+     * @param event Evento de pulsación del botón.
+     */
     private void actionPerformed_btnCambiarContraseña(ActionEvent event) {
 
         char[] passwordOldChars = fieldContraOld.getPassword();
@@ -139,11 +156,18 @@ public class VistaCambiarContrasena extends JFrame {
         }
     }
 
+    /**
+     * Vuelve a la vista de gestión de perfil cuando se pulsa el botón de volver.
+     * @param event Evento de pulsación del botón.
+     */
     private void actionPerformed_btnVolver(ActionEvent event) {
         limpiarCamposInput();
         iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
     }
 
+    /**
+     * Limpia los campos de input de la vista.
+     */
     private void limpiarCamposInput() {
         fieldContraOld.setText("");
         fieldContraNew.setText("");
