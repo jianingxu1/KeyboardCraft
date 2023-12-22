@@ -579,17 +579,21 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
 
     private void btnEliminarTecladoActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         String nombreTeclado = (String) comboboxTeclado.getSelectedItem();
-        try {
-            iCtrlPresentacion.eliminarTeclado(nombreTeclado);
-            actualizarNombreTecladosComboBox();
-            panelTeclas.removeAll();
-            fieldCaracter1.setText("");
-            fieldCaracter2.setText("");
-            panelTeclas.revalidate();
-            panelTeclas.repaint();
-            JOptionPane.showMessageDialog(this, "¡Se ha eliminado el teclado " + nombreTeclado + " con éxito!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        int result = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar el teclado?", "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                iCtrlPresentacion.eliminarTeclado(nombreTeclado);
+                actualizarNombreTecladosComboBox();
+                panelTeclas.removeAll();
+                fieldCaracter1.setText("");
+                fieldCaracter2.setText("");
+                panelTeclas.revalidate();
+                panelTeclas.repaint();
+                JOptionPane.showMessageDialog(this, "¡Se ha eliminado el teclado " + nombreTeclado + " con éxito!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }                                                  
 
