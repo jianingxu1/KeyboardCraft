@@ -214,6 +214,7 @@ public class VistaBienvenida extends javax.swing.JFrame {
     } 
 
     private void initOthers() {
+        setResizable(false);
         setLocationRelativeTo(null); // Center the window on the screen
         
         // Add a window listener to intercept the window-closing event
