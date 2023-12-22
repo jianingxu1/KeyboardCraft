@@ -93,7 +93,27 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
      * @return Distribución de teclado en forma de matriz de caracteres.
      */
     private static Character[][] convertirStringADistribucion(String distribucionString) {
-        Character[][] distribucion = new Character[3][10];
+        // Contar el número de filas y columnas necesarias
+        int filas = 0;
+        int columnas = 0;
+        int longitudFilaActual = 0;
+    
+        for (int k = 0; k < distribucionString.length(); ++k) {
+            if (distribucionString.charAt(k) == '◘') {
+                filas++;
+                if (longitudFilaActual > columnas) {
+                    columnas = longitudFilaActual;
+                }
+                longitudFilaActual = 0;
+            } else {
+                longitudFilaActual++;
+            }
+        }
+    
+        // Crear la matriz con las dimensiones necesarias
+        Character[][] distribucion = new Character[filas][columnas];
+    
+        // Rellenar la matriz con los caracteres del string
         int i = 0;
         int j = 0;
         for (int k = 0; k < distribucionString.length(); ++k) {
@@ -105,6 +125,7 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
                 j++;
             }
         }
+    
         return distribucion;
     }
 

@@ -644,7 +644,13 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 int cols = distribucion[i].length;
                 for (int j = 0; j < cols; ++j) {
                     JButton button = new JButton();
-                    if (distribucion[i][j] == null) button.setText(" ");
+                    if (distribucion[i][j] == null){
+                        button.setText(" ");
+                        button.setEnabled(false);
+                    }
+                    else if(distribucion[i][j] == ' ') {
+                        button.setEnabled(false);
+                    }
                     else button.setText(distribucion[i][j].toString());
             
                     // Tamano del button
