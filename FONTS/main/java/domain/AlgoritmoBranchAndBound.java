@@ -36,6 +36,9 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      */
     private HashMap<Integer, Integer> mapMejorAsignacion;
 
+    /**
+     * Matriz de caracteres que contiene la distribucion optima generada.
+     */
     private Character[][] distribucion;
 
     /**
