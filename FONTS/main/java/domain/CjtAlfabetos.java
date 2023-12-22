@@ -33,9 +33,7 @@ public class CjtAlfabetos {
     private static CjtAlfabetos singletonObject;
 
     public static CjtAlfabetos getInstance() {
-        if (singletonObject == null)
-            singletonObject = new CjtAlfabetos() {
-            };
+        if (singletonObject == null) singletonObject = new CjtAlfabetos();
         return singletonObject;
     }
 
@@ -52,37 +50,53 @@ public class CjtAlfabetos {
      * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
-    public void crearAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion{
-        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
+    public void crearAlfabeto(String nombre, String caracteres)
+    throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion {
 
-        else if (existeAlfabeto(nombre))
-        throw new NombreAlfabetoDuplicadoExcepcion(nombre);
+        // Validar nombre del alfabeto
+        if (nombre.trim().isEmpty()) {
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacío.");
+        }
 
-        else if (caracteres.trim().isEmpty())
-        throw new NoHayCaracteresExcepcion();
+        // Validar duplicados
+        if (existeAlfabeto(nombre)) {
+            throw new NombreAlfabetoDuplicadoExcepcion(nombre);
+        }
 
+        // Validar caracteres
+        if (caracteres.trim().isEmpty()) {
+            throw new NoHayCaracteresExcepcion();
+        }
+
+        // Crear el alfabeto
         Alfabeto alfabeto;
 
-        if (caracteres.trim().length() <= 30) alfabeto = new Alfabeto(nombre, caracteres);
-        else {
-            String subAlf = caracteres.trim().substring(0,30);
+        if (caracteres.trim().length() <= 30) {
+            alfabeto = new Alfabeto(nombre, caracteres);
+        } else {
+            String subAlf = caracteres.trim().substring(0, 30);
             alfabeto = new Alfabeto(nombre, subAlf);
         }
+
+        // Agregar el alfabeto al conjunto
         alfabetos.put(nombre, alfabeto);
     }
 
     /**
-     * Elimina un alfabeto del conujnto de alfabetos.
+     * Elimina un alfabeto del conjunto de alfabetos.
      *
-     * @param nombre El identificador unico del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+     * @param nombre El identificador único del alfabeto.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
      */
     public void eliminarAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
-        if (nombre.trim().isEmpty())
-        throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-    else if (!existeAlfabeto(nombre))
-        throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+        // Validar nombre del alfabeto
+        if (nombre.trim().isEmpty()) {
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacío.");
+        } else if (!existeAlfabeto(nombre)) {
+            throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+        }
 
+        // Eliminar el alfabeto del conjunto
         alfabetos.remove(nombre);
     }
 
@@ -91,50 +105,69 @@ public class CjtAlfabetos {
      *
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los nuevos caracteres del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
-    public void modificarCaracteresAlfabeto(String nombre, String caracteres) throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion{
-        if (nombre.trim().isEmpty())
-        throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-        
-        else if (!existeAlfabeto(nombre))
-        throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+    public void modificarCaracteresAlfabeto(String nombre, String caracteres)
+            throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
+        // Validar nombre del alfabeto
+        if (nombre.trim().isEmpty()) {
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacío.");
+        } else if (!existeAlfabeto(nombre)) {
+            throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+        }
 
-        else if (caracteres.trim().isEmpty()) throw new NoHayCaracteresExcepcion();
+        // Validar caracteres
+        if (caracteres.trim().isEmpty()) {
+            throw new NoHayCaracteresExcepcion();
+        }
 
-        if (caracteres.trim().length() <= 30) alfabetos.get(nombre).modificarCaracteres(caracteres);
-        else {
-            String subAlf = caracteres.trim().substring(0,30);
-            alfabetos.get(nombre).modificarCaracteres(subAlf);
+        // Modificar los caracteres del alfabeto
+        Alfabeto alfabeto = alfabetos.get(nombre);
+        if (caracteres.trim().length() <= 30) {
+            alfabeto.modificarCaracteres(caracteres);
+        } else {
+            String subAlf = caracteres.trim().substring(0, 30);
+            alfabeto.modificarCaracteres(subAlf);
         }
     }
 
     /** ----- Getters ----- **/
 
     /**
-     * Retorna la instancia alfabeto con el identificador especificado.
+     * Retorna la instancia de un alfabeto con el identificador especificado.
      *
-     * @param nombre El identificador unico del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+     * @param nombre El identificador único del alfabeto.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
      */
-    public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion{
-        if (nombre == null || nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacio.");
-        else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+    public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
+        // Validar nombre del alfabeto
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NombreAlfabetoNoValidoExcepcion("El nombre del alfabeto no puede ser vacío.");
+        } else if (!existeAlfabeto(nombre)) {
+            throw new NombreAlfabetoNoValidoExcepcion("El alfabeto \"" + nombre + "\" no existe.");
+        }
+
         return alfabetos.get(nombre);
     }
 
     /**
-     * Retorna los caracteres del alfabeto en formato String
+     * Retorna los caracteres del alfabeto en formato String.
      *
      * @param nombre El nombre del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
      */
     public String getAlfabetoCaracteresEnString(String nombre) throws NombreAlfabetoNoValidoExcepcion {
-        if (nombre.trim().isEmpty()) throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
-        else if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion(nombre);
+        // Validar nombre del alfabeto
+        if (nombre.trim().isEmpty()) {
+            throw new NombreAlfabetoNoValidoExcepcion("Introduce un nombre de alfabeto válido.");
+        } else if (!existeAlfabeto(nombre)) {
+            throw new NombreAlfabetoNoValidoExcepcion(nombre);
+        }
+
         return alfabetos.get(nombre).getCaracteresStringFormat();
     }
+
 
     /**
      * Retorna true si existe un alfabeto con el nombre especificado, en su defecto
@@ -151,15 +184,15 @@ public class CjtAlfabetos {
      * del conjunto.
      */
     public String getNombresYCaracteresDeAlfabetos() {
-        String s = "";
+        String nombresAlfabetos = "";
         int mapSize = alfabetos.size();
         int count = 0;
         for (Alfabeto alfabeto : alfabetos.values()) {
-            s += alfabeto.getNombre();
+            nombresAlfabetos += alfabeto.getNombre();
             if (++count < mapSize)
-                s += "\n";
+                nombresAlfabetos += "\n";
         }
-        return s;
+        return nombresAlfabetos;
     }
 
     /**
