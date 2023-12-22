@@ -9,7 +9,16 @@ import exceptions.NombreTecladoNoValidoExcepcion;
 
 /**
  * Clase CjtTeclados
- * Representa un conjunto de teclados. Estos se definen por su nombre
+ * Representa un conjunto de teclados. Cada teclado está definido por su nombre y su distribución de teclas.
+ * Esta clase proporciona métodos para gestionar y manipular los teclados en el conjunto.
+ * 
+ * Funcionalidades principales:
+ * - Crear un nuevo teclado en el conjunto.
+ * - Eliminar un teclado existente del conjunto.
+ * - Obtener la distribución de teclas de un teclado específico.
+ * - Intercambiar la posición de teclas en un teclado.
+ * 
+ * Cada teclado tiene un nombre único y una matriz de caracteres que representa la disposición de las teclas.
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
@@ -32,8 +41,7 @@ public class CjtTeclados {
      */
     public static CjtTeclados getInstance() {
         if (singletonObject == null)
-            singletonObject = new CjtTeclados() {
-            };
+            singletonObject = new CjtTeclados();
         return singletonObject;
     }
 
@@ -52,64 +60,67 @@ public class CjtTeclados {
     }
 
     /**
-     * Crea un teclado nuevo y lo guarda en el conjunto
+     * Crea un teclado nuevo y lo guarda en el conjunto.
      * 
-     * @param nombre el nombre del nuevo teclado
-     * @param mat    su matriz de caractéres que representa la distribución de su
-     *               teclado
-     * @throws NombreTecladoDuplicadoExcepcion si el nombre del teclado ya existe 
-     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
+     * @param nombre El nombre del nuevo teclado.
+     * @param mat    La matriz de caracteres que representa la distribución del teclado.
+     * @throws NombreTecladoDuplicadoExcepcion Si el nombre del teclado ya existe.
+     * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es válido.
      */
-    public void crearTeclado(String nombre, Character[][] mat) throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion{
-        if (nombre == null || nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio."); 
-        else if (existeTeclado(nombre))
-            throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombre + " ya existe.");
+    public void crearTeclado(String nombre, Character[][] mat)
+            throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion {
+        // Validar nombre del teclado
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacío.");
+        } else if (existeTeclado(nombre)) {
+            throw new NombreTecladoDuplicadoExcepcion("El teclado \"" + nombre + "\" ya existe.");
+        }
+
+        // Crear y almacenar el nuevo teclado en el conjunto
         Teclado teclado = new Teclado(nombre, mat);
         conjunto.put(nombre, teclado);
     }
 
     /**
-     * Borra un teclado del conjunto
+     * Borra un teclado del conjunto.
      * 
-     * @param nombre el nombre del teclado a borrar
-     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
+     * @param nombre El nombre del teclado a borrar.
+     * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es válido.
      */
+    public void eliminarTeclado(String nombre) throws NombreTecladoNoValidoExcepcion {
+        // Validar nombre del teclado
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacío.");
+        } else if (!existeTeclado(nombre)) {
+            throw new NombreTecladoNoValidoExcepcion("El teclado \"" + nombre + "\" no existe.");
+        }
 
-    public void eliminarTeclado(String nombre) throws NombreTecladoNoValidoExcepcion{
-        if (nombre == null || nombre.trim().isEmpty()) throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-
-        else if (!existeTeclado(nombre)) throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
+        // Eliminar el teclado del conjunto
         conjunto.remove(nombre);
     }
 
-    public void intercambiarTeclasTeclado(String nombre, char caracter1, char caracter2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion, Exception {
-        if (nombre == null || nombre.trim().isEmpty())
-            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-        
-        else if (!existeTeclado(nombre))
-			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
+    /**
+     * Intercambia la posición (i,j) de dos teclas del teclado.
+     *
+     * @param nombre     El nombre del teclado.
+     * @param caracter1  El primer carácter a intercambiar.
+     * @param caracter2  El segundo carácter a intercambiar.
+     * @throws NombreTecladoNoValidoExcepcion     Si el nombre del teclado no es válido.
+     * @throws IndiceTeclaFueraDeRangoExcepcion    Si alguno de los caracteres no existe en el teclado.
+     * @throws Exception                          Otro tipo de excepción que podría ocurrir durante el intercambio de teclas.
+     */
+    public void intercambiarTeclasTeclado(String nombre, char caracter1, char caracter2)
+            throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion, Exception {
+        // Validar nombre del teclado
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacío.");
+        } else if (!existeTeclado(nombre)) {
+            throw new NombreTecladoNoValidoExcepcion("El teclado \"" + nombre + "\" no existe.");
+        }
 
-		// Character[][] distribucion = getDistribucionTeclado(nombre);
-		// String mensaje = "";
-
-		// if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
-		// 		|| i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-		// 	if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length) {
-		// 		mensaje += "La posicion de la primera tecla " + i1 + " " + j1 + " no es correcta";
-		// 	}
-		// 	if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-		// 		if (mensaje.isEmpty())
-		// 			mensaje += "La posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-		// 		else {
-		// 			mensaje += " y la posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-		// 		}
-		// 	}
-
-		// 	throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
-		// }
+        // Realizar el intercambio de teclas en el teclado correspondiente
         conjunto.get(nombre).intercambiarTeclas(caracter1, caracter2);
     }
-
 
     // ** ----- Getters ----- **/
 
@@ -142,20 +153,27 @@ public class CjtTeclados {
     }
 
     /**
-     * Deuvelve la matriz de caractéres que representa la distribución de teclas de
-     * un teclado
-     * 
-     * @param nombre nombre del teclado escogido
-     * @return matriz de caractéres (char[][]) que representa la distribución
+     * Devuelve la matriz de caracteres que representa la distribución de teclas de un teclado.
+     *
+     * @param nombreTeclado El nombre del teclado escogido.
+     * @return Matriz de caracteres (char[][]) que representa la distribución.
+     * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es válido.
      */
     public Character[][] getDistribucionTeclado(String nombreTeclado) throws NombreTecladoNoValidoExcepcion {
-        if (nombreTeclado == null || nombreTeclado.trim().isEmpty())
-            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
-		else if (!existeTeclado(nombreTeclado))
-            throw new NombreTecladoNoValidoExcepcion("El teclado " + nombreTeclado + " no existe.");
-        return conjunto.get(nombreTeclado).getDistribucion();   
+        // Validar nombre del teclado
+        if (nombreTeclado == null || nombreTeclado.trim().isEmpty()) {
+            throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacío.");
+        } else if (!existeTeclado(nombreTeclado)) {
+            throw new NombreTecladoNoValidoExcepcion("El teclado \"" + nombreTeclado + "\" no existe.");
+        }
+
+        // Devolver la matriz de distribución del teclado correspondiente
+        return conjunto.get(nombreTeclado).getDistribucion();
     }
     
+    /**
+     * Limpiar el conjunto de teclados
+     */
     public void clearCjtTeclados() {
         conjunto.clear();
     }

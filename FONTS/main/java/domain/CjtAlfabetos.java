@@ -8,8 +8,11 @@ import exceptions.NombreAlfabetoDuplicadoExcepcion;
 import exceptions.NombreAlfabetoNoValidoExcepcion;
 
 /**
- * Clase PalabrasConFrecuencia
- * Representa una colección de alfabetos que tiene el sistema.
+ * Clase CjtAlfabetos
+ * Representa una colección de alfabetos en el sistema.
+ *
+ * Esta clase gestiona y almacena un conjunto de alfabetos, proporcionando métodos
+ * para crear, modificar, acceder y eliminar alfabetos en la colección.
  *
  * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
  */
