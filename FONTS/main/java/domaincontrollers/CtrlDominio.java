@@ -120,9 +120,9 @@ public class CtrlDominio {
 	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
 	 * @throws IndiceTeclaFueraDeRangoExcepcion Si el indice de la tecla esta fuera de rango.
 	 */
-	public void intercambiarTeclasTeclado(String nombreTeclado, int i1, int j1, int i2, int j2)
-			throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
-		cjtTeclados.intercambiarTeclasTeclado(nombreTeclado, i1, j1, i2, j2);
+	public void intercambiarTeclasTeclado(String nombreTeclado, char caracter1, char caracter2)
+			throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion, Exception {
+		cjtTeclados.intercambiarTeclasTeclado(nombreTeclado, caracter1, caracter2);
 
 	}
 

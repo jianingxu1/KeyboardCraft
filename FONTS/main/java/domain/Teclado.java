@@ -28,10 +28,25 @@ public class Teclado {
      * @param i2 fila tecla 2
      * @param j2 columna tecla 2
      */
-    public void intercambiarTeclas(int i1, int j1, int i2, int j2) {
-        char temp = distribucion[i2][j2];
-        distribucion[i2][j2] = distribucion[i1][j1];
-        distribucion[i1][j1] = temp;
+    public void intercambiarTeclas(char caracter1, char caracter2) throws Exception {
+        if (caracter1 == caracter2)
+            throw new Exception("No puedes intercambiar el mismo caracter");
+        int i1 = -1, j1 = -1, i2 = -1, j2 = -1;
+        for (int i = 0; i < distribucion.length; ++i) {
+            for (int j = 0; j < distribucion[i].length; ++j) {
+                if (distribucion[i][j] == caracter1) {
+                    i1 = i;
+                    j1 = j;
+                } else if (distribucion[i][j] == caracter2) {
+                    i2 = i;
+                    j2 = j;
+                }
+            }
+        }
+        if (i1 == -1 || i2 == -1 || j1 == -1 || j2 == -1)
+            throw new Exception("No se han encontrado los caracteres en el teclado");
+        distribucion[i1][j1] = caracter2;
+        distribucion[i2][j2] = caracter1;
     }
 
     /**

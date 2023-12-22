@@ -82,45 +82,32 @@ public class CjtTeclados {
         conjunto.remove(nombre);
     }
 
-    /**
-     * Intercambia dos teclas de un teclado del conjunto
-     * 
-     * @param nombre el nombre del teclado al que se le intercambian las disposición
-     *               de teclas
-     * @param i1     fila tecla 1
-     * @param j1     col. tecla 1
-     * @param i2     fila tecla 2
-     * @param j2     col. tecla 2
-     * @throws NombreTecladoNoValidoExcepcion si el nombre del teclado no es valido
-     * @throws IndiceTeclaFueraDeRangoExcepcion si el indice de la tecla esta fuera de rango
-     */
-
-    public void intercambiarTeclasTeclado(String nombre, int i1, int j1, int i2, int j2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion {
+    public void intercambiarTeclasTeclado(String nombre, char caracter1, char caracter2) throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion, Exception {
         if (nombre == null || nombre.trim().isEmpty())
             throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacio.");
         
         else if (!existeTeclado(nombre))
 			throw new NombreTecladoNoValidoExcepcion("El teclado " + nombre + " no existe.");
 
-		Character[][] distribucion = getDistribucionTeclado(nombre);
-		String mensaje = "";
+		// Character[][] distribucion = getDistribucionTeclado(nombre);
+		// String mensaje = "";
 
-		if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
-				|| i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-			if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length) {
-				mensaje += "La posicion de la primera tecla " + i1 + " " + j1 + " no es correcta";
-			}
-			if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
-				if (mensaje.isEmpty())
-					mensaje += "La posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-				else {
-					mensaje += " y la posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
-				}
-			}
+		// if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length || i2 < 0
+		// 		|| i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
+		// 	if (i1 < 0 || i1 >= distribucion.length || j1 < 0 || j1 >= distribucion[0].length) {
+		// 		mensaje += "La posicion de la primera tecla " + i1 + " " + j1 + " no es correcta";
+		// 	}
+		// 	if (i2 < 0 || i2 >= distribucion.length || j2 < 0 || j2 >= distribucion[0].length) {
+		// 		if (mensaje.isEmpty())
+		// 			mensaje += "La posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
+		// 		else {
+		// 			mensaje += " y la posicion de la segunda tecla " + i2 + " " + j2 + " no es correcta";
+		// 		}
+		// 	}
 
-			throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
-		}
-        conjunto.get(nombre).intercambiarTeclas(i1, j1, i2, j2);
+		// 	throw new IndiceTeclaFueraDeRangoExcepcion(mensaje);
+		// }
+        conjunto.get(nombre).intercambiarTeclas(caracter1, caracter2);
     }
 
 

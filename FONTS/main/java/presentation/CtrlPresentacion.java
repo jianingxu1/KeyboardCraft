@@ -264,6 +264,10 @@ public class CtrlPresentacion {
 		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
 	}
 
+	public void intercambiarTeclasTeclado(String nombreTeclado, char tecla1, char tecla2) throws Exception {
+		ctrlDominio.intercambiarTeclasTeclado(nombreTeclado, tecla1, tecla2);
+	}
+
 	public Character[][] getDistribucionTeclado(String nombreTeclado) throws Exception {
 		return ctrlDominio.getDistribucionTeclado(nombreTeclado);
 	}

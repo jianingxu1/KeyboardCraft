@@ -15,9 +15,7 @@ import java.util.*;
 public class VistaGestionTeclados extends javax.swing.JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private boolean userSelection = true;
-
-    private JButton firstButton;
-    private JButton secondButton;
+    private ArrayList<JButton> teclasBtn = new ArrayList<JButton>();
 
     /**
      * Creates new form VistaGestionTeclados
@@ -566,14 +564,37 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
     }                                              
 
     private void btnIntercambiarTeclasActionPerformed(java.awt.event.ActionEvent evt) {
-        // ver que los dos tengan una tecla asignada
-        if (!fieldCaracter1.getText().isEmpty() && !fieldCaracter2.getText().isEmpty()) {
-            String aux = firstButton.getText();
-            firstButton.setText(secondButton.getText());
-            secondButton.setText(aux);
+        String input1 = fieldCaracter1.getText();
+        String input2 = fieldCaracter2.getText();
 
+        if (input1 == null || input2 == null || input1.trim().isEmpty() || input2.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar o introducir dos teclas para intercambiar.");
+            return;
+        }
+        if (input1.length() > 1 || input2.length() > 1) {
+            JOptionPane.showMessageDialog(this, "Introduce solo un carácter.");
+            return;
+        }
+        char caracter1 = input1.charAt(0);
+        char caracter2 = input2.charAt(0);
+        try {
+            iCtrlPresentacion.intercambiarTeclasTeclado((String) comboboxTeclado.getSelectedItem(), caracter1, caracter2);
+            // Intercambiar las teclas en el panel
+            for (JButton tecla : teclasBtn) {
+                if (tecla.getText().equals(input1)) {
+                    tecla.setText(input2);
+                } else if (tecla.getText().equals(input2)) {
+                    tecla.setText(input1);
+                }
+            }
+            panelTeclas.revalidate();
+            panelTeclas.repaint();
+            // Limpiar los campos de texto
             fieldCaracter1.setText("");
             fieldCaracter2.setText("");
+            JOptionPane.showMessageDialog(this, "¡Se ha intercambiado la posición de las teclas " + caracter1 + " y " + caracter2 + " con éxito!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -635,15 +656,19 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         String nombreTeclado = (String) comboboxTeclado.getSelectedItem();
         try {
             Character[][] distribucion = iCtrlPresentacion.getDistribucionTeclado(nombreTeclado);
-            int rows = distribucion.length;
+            
             // Quitar las teclas del teclado anterior del panel
             panelTeclas.removeAll();
+            teclasBtn.clear();
+
             // Poner las teclas del teclado actual en el panel como botones
-            panelTeclas.setLayout(new GridLayout(rows, distribucion[0].length));
+            int rows = distribucion.length;
+            int cols = distribucion[0].length;
+            panelTeclas.setLayout(new GridLayout(rows, cols));
             for (int i = 0; i < rows; ++i) {
-                int cols = distribucion[i].length;
                 for (int j = 0; j < cols; ++j) {
                     JButton button = new JButton();
+                    teclasBtn.add(button);
                     if (distribucion[i][j] == null){
                         button.setText(" ");
                         button.setEnabled(false);
@@ -665,14 +690,11 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                         public void actionPerformed(ActionEvent e) {
                             if (fieldCaracter1.getText().isEmpty()) {
                                 fieldCaracter1.setText(button.getText());
-                                firstButton = button;
                             } else if (fieldCaracter2.getText().isEmpty()) {
                                 fieldCaracter2.setText(button.getText());
-                                secondButton = button;
                             } else {
                                 fieldCaracter1.setText(button.getText());
                                 fieldCaracter2.setText("");
-                                firstButton = button;
                             }
                         }
                     });
