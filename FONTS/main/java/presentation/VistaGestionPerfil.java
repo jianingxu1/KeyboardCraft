@@ -45,7 +45,7 @@ public class VistaGestionPerfil extends JFrame {
     }
 
     private void inicializar_frameVista() {
-        this.setTitle("Gestión de perfil");
+        this.setTitle("KeyboardCraft - Gestión de perfil");
         this.setMinimumSize(new Dimension(600, 450));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
@@ -222,6 +222,7 @@ public class VistaGestionPerfil extends JFrame {
         labelGestionPerfil.setHorizontalAlignment(0);
         labelGestionPerfil.setHorizontalTextPosition(0);
         labelGestionPerfil.setText("Gestión de perfil");
+        labelGestionPerfil.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;

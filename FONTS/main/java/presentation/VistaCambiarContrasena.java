@@ -45,8 +45,8 @@ public class VistaCambiarContrasena extends JFrame {
     }
 
     private void inicializar_frameVista() {
-        this.setTitle("Cambiar contraseña");
-        this.setMinimumSize(new Dimension(500, 350));
+        this.setTitle("KeyboardCraft - Cambiar contraseña");
+        this.setMinimumSize(new Dimension(600, 450));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
 
@@ -133,6 +133,7 @@ public class VistaCambiarContrasena extends JFrame {
         panelContenidos.setLayout(new GridBagLayout());
         labelLogo = new JLabel();
         labelLogo.setText("Modificación de contraseña");
+        labelLogo.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -151,6 +152,7 @@ public class VistaCambiarContrasena extends JFrame {
         panelContenidos.add(panelBotones, gbc);
         btnCambiarContrasena = new JButton();
         btnCambiarContrasena.setText("Cambiar contraseña");
+        btnCambiarContrasena.setPreferredSize(new Dimension(btnCambiarContrasena.getPreferredSize().width, 50));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -159,6 +161,7 @@ public class VistaCambiarContrasena extends JFrame {
         panelBotones.add(btnCambiarContrasena, gbc);
         btnVolver = new JButton();
         btnVolver.setText("Volver");
+        btnVolver.setPreferredSize(new Dimension(btnVolver.getPreferredSize().width, 50));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -181,7 +184,7 @@ public class VistaCambiarContrasena extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelContenidos.add(panelInput, gbc);
         labelContraNew = new JLabel();
-        labelContraNew.setText("Contraseña nueva");
+        labelContraNew.setText("Contraseña nueva:");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -211,7 +214,7 @@ public class VistaCambiarContrasena extends JFrame {
         gbc.ipadx = 60;
         panelInput.add(spacer3, gbc);
         labelContraOld = new JLabel();
-        labelContraOld.setText("Contraseña antigua");
+        labelContraOld.setText("Contraseña antigua:");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
