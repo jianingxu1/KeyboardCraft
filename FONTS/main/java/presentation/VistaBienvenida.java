@@ -215,7 +215,7 @@ public class VistaBienvenida extends javax.swing.JFrame {
 
     private void initOthers() {
         setLocationRelativeTo(null); // Center the window on the screen
-
+        
         // Add a window listener to intercept the window-closing event
         addWindowListener(new WindowAdapter() {
             @Override
@@ -227,6 +227,19 @@ public class VistaBienvenida extends javax.swing.JFrame {
                 }
             }
         });
+
+        // Replace "path/to/your/image.png" with the path to your image file
+        ImageIcon originalIcon = new ImageIcon("../FONTS/main/java/presentation/Logo.png");
+        Image originalImage = originalIcon.getImage();
+
+        // Define maximum width and height
+        int maxWidth = 150;
+        int maxHeight = 90;
+
+        // Resize the image while maintaining aspect ratio
+        Image scaledImage = originalImage.getScaledInstance(maxWidth, maxHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        labelLogo.setIcon(scaledIcon);
     }
 
     private void limpiarCamposInput() {
