@@ -587,8 +587,8 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                     tecla.setText(input1);
                 }
             }
-            panelTeclas.revalidate();
-            panelTeclas.repaint();
+            // panelTeclas.revalidate();
+            // panelTeclas.repaint();
             // Limpiar los campos de texto
             fieldCaracter1.setText("");
             fieldCaracter2.setText("");
@@ -669,11 +669,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 for (int j = 0; j < cols; ++j) {
                     JButton button = new JButton();
                     teclasBtn.add(button);
-                    if (distribucion[i][j] == null){
-                        button.setText(" ");
-                        button.setEnabled(false);
-                    }
-                    else if(distribucion[i][j] == ' ') {
+                    if (distribucion[i][j] == null || distribucion[i][j] == ' '){
                         button.setEnabled(false);
                     }
                     else button.setText(distribucion[i][j].toString());
