@@ -7,13 +7,17 @@ package exceptions;
  * 
  * @author Muhammad Yasin Khokhar (muhammad.yasin.khokhar@estudiantat.upc.edu)
  * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
- */
-
-/**
+ *
  * Excepción que se lanza cuando se intenta crear un alfabeto con un nombre que
  * ya existe en el sistema.
  */
 public class NombreAlfabetoDuplicadoExcepcion extends Exception {
+
+    /**
+     * Constructor de la excepción.
+     * 
+     * @param errorMessage Mensaje de error que indica el nombre duplicado del alfabeto.
+     */
     public NombreAlfabetoDuplicadoExcepcion(String errorMessage) {
         super("El alfabeto " + errorMessage + " ya existe en el conjunto de alfabetos.");
     }

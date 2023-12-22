@@ -39,37 +39,37 @@ public class CtrlDominio {
 	// ----- Modificadoras -----
 
 	/**
-	 * Crea un teclado, con un texto y una lista de palabras que nos proporciona el
-	 * usuario. El alfabeto ya existe.
+	 * Crea un teclado con una distribución generada por un algoritmo específico.
 	 *
-	 * @param nombreTeclado Nombre del teclado.
-	 * @param nombreAlfabeto    El ID del alfabeto asociado con el teclado.
-	 * @param texto         Información adicional para la generación de la
-	 *                      distribución del teclado.
-	 * @param listaPalabras Texto que contiene las palabras que se desean incluir en
-	 *                      la distribución del teclado.
-	 * @param algoritmo     Un string que representa el algoritmo utilizado para la
-	 *                      creación del teclado.
-	 * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
-	 * @throws NombreTecladoDuplicadoExcepcion Si el nombre del teclado ya existe.
-	 * @throws TipoAlgoritmoIncorrectoExcepcion Si el tipo de algoritmo no es correcto.
-	 * @throws FrecuenciaIncorrectaExcepcion Si la frecuencia de las palabras no es correcta.
-	 * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es valido.
+	 * @param nombreTeclado             Nombre del teclado.
+	 * @param nombreAlfabeto            El ID del alfabeto asociado con el teclado.
+	 * @param texto                     Información adicional para la generación de la
+	 *                                  distribución del teclado.
+	 * @param listaPalabras             Texto que contiene las palabras que se desean incluir en
+	 *                                  la distribución del teclado.
+	 * @param algoritmo                 Un string que representa el algoritmo utilizado para la
+	 *                                  creación del teclado (B&B o SA).
+	 * @throws NombreAlfabetoNoValidoExcepcion          Si el nombre del alfabeto no es valido.
+	 * @throws NombreTecladoDuplicadoExcepcion          Si el nombre del teclado ya existe.
+	 * @throws TipoAlgoritmoIncorrectoExcepcion         Si el tipo de algoritmo no es correcto.
+	 * @throws FrecuenciaIncorrectaExcepcion           Si la frecuencia de las palabras no es correcta.
+	 * @throws NombreTecladoNoValidoExcepcion           Si el nombre del teclado no es valido.
+	 * @throws NumeroCaracteresExcesivoParaBBExcepcion  Si el número de caracteres es excesivo para Branch and Bound.
 	 */
-	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras, String algoritmo)
-			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
-			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion, NumeroCaracteresExcesivoParaBranchAndBoundExcepcion {
-		// Informacion necesaria para poder crear el teclado
-		if (cjtTeclados.existeTeclado(nombreTeclado))
+	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras,
+			String algoritmo) throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion,
+			TipoAlgoritmoIncorrectoExcepcion, FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion,
+			NumeroCaracteresExcesivoParaBranchAndBoundExcepcion {
+		// Verificar si el teclado ya existe
+		if (cjtTeclados.existeTeclado(nombreTeclado)) {
 			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe. Introduce otro nombre.");
+		}
 
+		// Obtener el alfabeto asociado al teclado
 		Alfabeto alfabeto = cjtAlfabetos.getAlfabeto(nombreAlfabeto);
 
-		if (algoritmo == null || algoritmo.trim().isEmpty()) 
-			throw new TipoAlgoritmoIncorrectoExcepcion("No has seleccionado ningún algoritmo. Selecciona uno.");
-		else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA"))
-			throw new TipoAlgoritmoIncorrectoExcepcion(
-					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
+		// Validar el tipo de algoritmo
+		validarTipoAlgoritmo(algoritmo);
 
 		Texto text = new Texto(texto);
 		PalabrasConFrecuencia palabras = new PalabrasConFrecuencia(listaPalabras);
@@ -77,25 +77,44 @@ public class CtrlDominio {
 		Character[][] distribucion = new Character[3][10];
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
 		if (algoritmo.equals("B&B")) {
+			//Ya que para mas de 12 caracteres el algoritmo tarda mucho
 			final int MAX_CARACTERES_BB = 12;
 			if (alfabeto.getCaracteres().size() > MAX_CARACTERES_BB) {
 				throw new NumeroCaracteresExcesivoParaBranchAndBoundExcepcion(
 					"El algoritmo Branch and Bound tarda muchísimo en generar distribuciones para alfabetos con más de " + MAX_CARACTERES_BB + " caracteres. Selecciona otro alfabeto con menos tamaño o cambia de algoritmo.");
 			}
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
-			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,
-					text);
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,text);
 			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
+
 		} else if (algoritmo.equals("SA")) {
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoSimulatedAnnealing());
-			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,
-					text);
+			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,text);
 			distribucion = gdt.generarDistribucion(alfabeto, bigramasConFrecuencia);
 		}
 		// Se añade el teclado con la distribucion generada
 		cjtTeclados.crearTeclado(nombreTeclado, distribucion);
 	}
 
+	/**
+	 * Valida si el tipo de algoritmo es correcto (B&B o SA).
+	 *
+	 * @param algoritmo Tipo de algoritmo a validar.
+	 * @throws TipoAlgoritmoIncorrectoExcepcion Si el tipo de algoritmo no es correcto.
+	 */
+	private void validarTipoAlgoritmo(String algoritmo) throws TipoAlgoritmoIncorrectoExcepcion {
+		if (algoritmo == null || algoritmo.trim().isEmpty()) {
+			throw new TipoAlgoritmoIncorrectoExcepcion("No has seleccionado ningún algoritmo. Selecciona uno.");
+		} else if (!algoritmo.equals("B&B") && !algoritmo.equals("SA")) {
+			throw new TipoAlgoritmoIncorrectoExcepcion(
+					"El tipo de algoritmo \"" + algoritmo + "\" no es correcto, debe ser B&B o SA.");
+		}
+	}
+
+	/**
+	 * Retorna los algoritmos disponibles para la generación de teclados.
+	 * @return
+	 */
 	public ArrayList<String> getNombreAlgoritmos() {
 		ArrayList<String> algoritmos = new ArrayList<>();
 		algoritmos.add("B&B");
