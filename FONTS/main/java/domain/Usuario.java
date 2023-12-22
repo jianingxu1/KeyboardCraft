@@ -42,8 +42,8 @@ public class Usuario {
     public void modificaContrasena(String newPass) throws ContrasenaNoValidaExcepcion {
 		if (newPass.trim().isEmpty())
 			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
-		else if (newPass.length() < 8)
-			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
+		else if (newPass.length() < 4)
+			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 4 caracteres.");
         this.password = newPass;
     }
 

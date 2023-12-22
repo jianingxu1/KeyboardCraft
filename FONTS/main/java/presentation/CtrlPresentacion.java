@@ -189,7 +189,7 @@ public class CtrlPresentacion {
 		vistaConsultarTeclado.hacerVisible();
 	}
 
-	public void syncVistaGestionPerfil_a_CambiarContraseña() {
+	public void syncVistaGestionPerfil_a_CambiarContrasena() {
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
 		vistaGestionPerfil.desactivar();
@@ -213,7 +213,7 @@ public class CtrlPresentacion {
 		vistaGestionTeclados.hacerVisible();
 	}
 
-	public void syncVistaCambiarContraseña_a_GestionPerfil() {
+	public void syncVistaCambiarContrasena_a_GestionPerfil() {
 		if (vistaCambiarContrasena == null)
 			vistaCambiarContrasena = new VistaCambiarContrasena(this);
 		vistaCambiarContrasena.hacerInvisible();
@@ -303,8 +303,8 @@ public class CtrlPresentacion {
 		return ctrlDominio.importarListaPalabras(filePath);
 	}
 
-	public void cambiarContraseña(String oldPass, String newPass) throws Exception {
-		ctrlDominio.modificarContrasenaDesdeInterfaz(oldPass, newPass);
+	public void cambiarContrasena(String oldPass, String newPass) throws Exception {
+		ctrlDominio.modificarContrasenaUsuarioActual(oldPass, newPass);
 	}
 
 	public void borrarCuenta() throws Exception {

@@ -68,7 +68,7 @@ public class VistaCambiarContrasena extends JFrame {
     }
 
     private void performOperationBeforeExit() {
-        iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
+        iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
         dispose();
     }
 
@@ -95,9 +95,9 @@ public class VistaCambiarContrasena extends JFrame {
         char[] passwordChars = fieldContraNew.getPassword();
         String newPass = new String(passwordChars);
         try {
-            iCtrlPresentacion.cambiarContraseña(oldPass, newPass);
+            iCtrlPresentacion.cambiarContrasena(oldPass, newPass);
             limpiarCamposInput();
-            iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
+            iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
             JOptionPane.showMessageDialog(this, "Contraseña modificada correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -106,7 +106,7 @@ public class VistaCambiarContrasena extends JFrame {
 
     private void actionPerformed_btnVolver(ActionEvent event) {
         limpiarCamposInput();
-        iCtrlPresentacion.syncVistaCambiarContraseña_a_GestionPerfil();
+        iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
     }
 
     private void limpiarCamposInput() {

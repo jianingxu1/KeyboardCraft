@@ -102,19 +102,15 @@ public class CjtUsuarios {
      * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
      */
     public boolean correctPass(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
-    
         if (nombreUsuario.trim().isEmpty())
-        throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-        
-        else if (!existeUsuario(nombreUsuario))
-        throw new NombreUsuarioNoValidoExcepcion("El usuario " + nombreUsuario + " no existe.");
-        
+            throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
         else if (contrasena.trim().isEmpty())
-        throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
-        
-        else if (contrasena.length() < 8)
-        throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 8 caracteres.");
-        return conjunto.get(nombreUsuario).getContrasena().equals(contrasena);
+            throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+        if (!existeUsuario(nombreUsuario))
+            throw new NombreUsuarioNoValidoExcepcion("El usuario y/o la contraseña son incorrectos.");
+        else if (!conjunto.get(nombreUsuario).getContrasena().equals(contrasena))
+            throw new ContrasenaNoValidaExcepcion("La contraseña es incorrecta.");
+        return true;
     }
 
     /**

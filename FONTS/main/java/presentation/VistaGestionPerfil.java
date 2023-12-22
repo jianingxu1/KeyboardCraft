@@ -12,8 +12,8 @@ public class VistaGestionPerfil extends JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private JPanel panelBotones;
     private JButton eliminarCuentaButton;
-    private JButton cambiarContraseñaButton;
-    private JButton atrásButton;
+    private JButton cambiarContrasenaButton;
+    private JButton atrasButton;
     private JLabel labelGestionPerfil;
     private JPanel panelContenidos;
 
@@ -84,7 +84,7 @@ public class VistaGestionPerfil extends JFrame {
     }
 
     private void asignar_listenersComponentes() {
-        atrásButton.addActionListener(
+        atrasButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
@@ -102,12 +102,12 @@ public class VistaGestionPerfil extends JFrame {
                         }
                     }
                 });
-        cambiarContraseñaButton.addActionListener(
+        cambiarContrasenaButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         try {
-                            actionPerformed_cambiarContraseñaButton(event);
+                            actionPerformed_cambiarContrasenaButton(event);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -115,8 +115,8 @@ public class VistaGestionPerfil extends JFrame {
                 });
     }
 
-    void actionPerformed_cambiarContraseñaButton(ActionEvent event) {
-        iCtrlPresentacion.syncVistaGestionPerfil_a_CambiarContraseña();
+    void actionPerformed_cambiarContrasenaButton(ActionEvent event) {
+        iCtrlPresentacion.syncVistaGestionPerfil_a_CambiarContrasena();
     }
 
     void actionPerformed_eliminarCuentaButton(ActionEvent event) throws Exception {
@@ -175,14 +175,14 @@ public class VistaGestionPerfil extends JFrame {
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.VERTICAL;
         panelBotones.add(spacer1, gbc);
-        atrásButton = new JButton();
-        atrásButton.setHorizontalTextPosition(0);
-        atrásButton.setPreferredSize(new Dimension(70, 30));
-        atrásButton.setText("Atrás");
+        atrasButton = new JButton();
+        atrasButton.setHorizontalTextPosition(0);
+        atrasButton.setPreferredSize(new Dimension(70, 30));
+        atrasButton.setText("Atrás");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 6;
-        panelBotones.add(atrásButton, gbc);
+        panelBotones.add(atrasButton, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -210,14 +210,14 @@ public class VistaGestionPerfil extends JFrame {
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelBotones.add(eliminarCuentaButton, gbc);
-        cambiarContraseñaButton = new JButton();
-        cambiarContraseñaButton.setPreferredSize(new Dimension(250, 60));
-        cambiarContraseñaButton.setText("Cambiar contraseña");
+        cambiarContrasenaButton = new JButton();
+        cambiarContrasenaButton.setPreferredSize(new Dimension(250, 60));
+        cambiarContrasenaButton.setText("Cambiar contraseña");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelBotones.add(cambiarContraseñaButton, gbc);
+        panelBotones.add(cambiarContrasenaButton, gbc);
         labelGestionPerfil = new JLabel();
         labelGestionPerfil.setHorizontalAlignment(0);
         labelGestionPerfil.setHorizontalTextPosition(0);
