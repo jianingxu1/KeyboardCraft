@@ -58,7 +58,7 @@ public class CtrlDominio {
 	 */
 	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String listaPalabras, String algoritmo)
 			throws NombreAlfabetoNoValidoExcepcion, NombreTecladoDuplicadoExcepcion, TipoAlgoritmoIncorrectoExcepcion,
-			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion {
+			FrecuenciaIncorrectaExcepcion, NombreTecladoNoValidoExcepcion, NumeroCaracteresExcesivoParaBranchAndBoundExcepcion {
 		// Informacion necesaria para poder crear el teclado
 		if (cjtTeclados.existeTeclado(nombreTeclado))
 			throw new NombreTecladoDuplicadoExcepcion("El teclado " + nombreTeclado + " ya existe. Introduce otro nombre.");
@@ -77,6 +77,11 @@ public class CtrlDominio {
 		Character[][] distribucion = new Character[3][10];
 		// El algoritmo genera una distribucion dependiendo del algoritmo elejido
 		if (algoritmo.equals("B&B")) {
+			final int MAX_CARACTERES_BB = 12;
+			if (alfabeto.getCaracteres().size() > MAX_CARACTERES_BB) {
+				throw new NumeroCaracteresExcesivoParaBranchAndBoundExcepcion(
+					"El algoritmo Branch and Bound tarda muchísimo en generar distribuciones para alfabetos con más de " + MAX_CARACTERES_BB + " caracteres. Selecciona otro alfabeto con menos tamaño o cambia de algoritmo.");
+			}
 			GeneradorDistribucionTeclado gdt = new GeneradorDistribucionTeclado(new AlgoritmoBranchAndBound());
 			Map<String, Integer> bigramasConFrecuencia = new CalculadoraBigramasConFrecuencia().ejecutar(alfabeto, palabras,
 					text);
