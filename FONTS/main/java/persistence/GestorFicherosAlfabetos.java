@@ -115,18 +115,5 @@ public class GestorFicherosAlfabetos implements GestorEstrategia<ArrayList<Chara
         }
         return s.toString();
     }
-
-    /**
-     * Convierte una cadena de texto en una lista de caracteres.
-     *
-     * @param caracteresString La cadena de caracteres a convertir.
-     * @return La lista de caracteres resultante.
-     */
-    private ArrayList<Character> stringAListaCaracteres(String caracteresString) {
-        ArrayList<Character> listaCaracteres = new ArrayList<>();
-        for (char c : caracteresString.toCharArray()) {
-            listaCaracteres.add(c);
-        }
-        return listaCaracteres;
-    }
+    
 }

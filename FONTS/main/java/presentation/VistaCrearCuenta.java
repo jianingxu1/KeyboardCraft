@@ -192,20 +192,6 @@ public class VistaCrearCuenta extends JFrame {
         pack();
     }// </editor-fold>    
 
-    private void actionPerformed_btnCrearCuenta(ActionEvent event) {
-        String user = fieldUsuario.getText();
-        char[] passwordChars = fieldContrasena.getPassword();
-        String password = new String(passwordChars);
-        try {
-            iCtrlPresentacion.crearUsuario(user, password);
-            limpiarCamposInput();
-            iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
-            JOptionPane.showMessageDialog(this, "¡Has creado una cuenta nueva!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
-
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {                                          
         limpiarCamposInput();
         iCtrlPresentacion.syncVistaCrearCuenta_a_Bienvenida();
