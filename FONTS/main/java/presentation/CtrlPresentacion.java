@@ -262,6 +262,7 @@ public class CtrlPresentacion {
 
 	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia, String nombreAlgoritmo) throws Exception {
 		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
+		ctrlDominio.guardarTeclados();
 	}
 
 	public void intercambiarTeclasTeclado(String nombreTeclado, char tecla1, char tecla2) throws Exception {
