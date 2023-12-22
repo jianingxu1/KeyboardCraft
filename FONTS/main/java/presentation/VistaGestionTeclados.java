@@ -152,7 +152,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
             }
         });
 
-        labelTituloCrear.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
+        labelTituloCrear.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         labelTituloCrear.setText("Creación de teclado");
 
         btnCargarLista.setText("Cargar lista");
@@ -245,12 +245,12 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 .addGroup(panelInputCrearTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInputCrearTextoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(panelInputCrearTextoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputCrearTextoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCargarTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(20, 20, 20)))
                 .addComponent(labelInfoInputTexto))
         );
 
@@ -342,17 +342,17 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 .addComponent(panelInputCrearLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCrearTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         panelCard.add(panelCrear, "cardCrear");
 
-        labelTituloModificar.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
-        labelTituloModificar.setText("Modificación de teclado");
+        labelTituloModificar.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        labelTituloModificar.setText("Consulta de teclado");
 
         panelTeclas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelTeclas.setPreferredSize(new java.awt.Dimension(320, 150));
-        panelTeclas.setLayout(new java.awt.GridLayout());
+        panelTeclas.setLayout(new java.awt.GridLayout(1, 0));
 
         comboboxTeclado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -395,18 +395,18 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
                 .addContainerGap(80, Short.MAX_VALUE)
                 .addGroup(panelInputModificarTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputModificarTopLayout.createSequentialGroup()
-                        .addComponent(labelTituloModificar)
-                        .addGap(197, 197, 197))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputModificarTopLayout.createSequentialGroup()
                         .addComponent(panelContainerTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74))))
+                        .addGap(74, 74, 74))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputModificarTopLayout.createSequentialGroup()
+                        .addComponent(labelTituloModificar)
+                        .addGap(211, 211, 211))))
         );
         panelInputModificarTopLayout.setVerticalGroup(
             panelInputModificarTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInputModificarTopLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(labelTituloModificar)
                 .addGap(18, 18, 18)
+                .addComponent(labelTituloModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(panelContainerTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -437,7 +437,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         panelInputModificarBotLayout.setHorizontalGroup(
             panelInputModificarBotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInputModificarBotLayout.createSequentialGroup()
-                .addComponent(btnIntercambiarTeclas, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnIntercambiarTeclas)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminarTeclado))
             .addGroup(panelInputModificarBotLayout.createSequentialGroup()
@@ -507,7 +507,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         });
         menubarAcciones.add(menuCrear);
 
-        menuModificar.setText("Consultar teclado");
+        menuModificar.setText("Consultar o modificar teclado");
         menuModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuModificarMouseClicked(evt);
@@ -529,7 +529,7 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>          
+    }// </editor-fold>   
 
     private void btnCargarListaActionPerformed(java.awt.event.ActionEvent evt) {                                               
         JFileChooser fileChooser = new JFileChooser();

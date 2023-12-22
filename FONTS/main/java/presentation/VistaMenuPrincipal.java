@@ -215,6 +215,7 @@ public class VistaMenuPrincipal extends JFrame {
         labelTitulo.setHorizontalAlignment(0);
         labelTitulo.setHorizontalTextPosition(0);
         labelTitulo.setText("Menú Principal");
+        labelTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 16));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
