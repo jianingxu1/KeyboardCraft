@@ -7,8 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Clase VistaGestionPerfil
+ * Representa la interfaz gráfica de la vista de bienvenida.
+ * 
+ * @author Ruben Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ */
 public class VistaGestionPerfil extends JFrame {
-
     private CtrlPresentacion iCtrlPresentacion;
     private JPanel panelBotones;
     private JButton eliminarCuentaButton;
@@ -17,33 +22,55 @@ public class VistaGestionPerfil extends JFrame {
     private JLabel labelGestionPerfil;
     private JPanel panelContenidos;
 
+    /**
+     * Constructora de la vista.
+     * @param pCtrlPresentacion Controlador de presentacion.
+     */
     public VistaGestionPerfil(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
 
+    /**
+     * Hace visible la vista.
+     */
     public void hacerVisible() {
         this.pack();
         this.setVisible(true);
     }
 
+    /**
+     * Oculta la vista.
+     */
     public void hacerInvisible() {
         this.setVisible(false);
     }
 
+    /**
+     * Activa la vista.
+     */
     public void activar() {
         this.setEnabled(true);
     }
 
+    /**
+     * Desactiva la vista.
+     */
     public void desactivar() {
         this.setEnabled(false);
     }
 
+    /**
+     * Inicializa los componentes de la vista.
+     */
     private void inicializarComponentes() {
         inicializar_frameVista();
         asignar_listenersComponentes();
     }
 
+    /**
+     * Inicializa el frame de la vista.
+     */
     private void inicializar_frameVista() {
         this.setTitle("KeyboardCraft - Gestión de perfil");
         this.setMinimumSize(new Dimension(600, 450));
@@ -69,6 +96,12 @@ public class VistaGestionPerfil extends JFrame {
         this.setContentPane(panelContenidos);
     }
 
+    /**
+     * Realiza las operaciones de confirmación y guardado de datos antes de cerrar
+     * la aplicacion.
+     * 
+     * @throws Exception
+     */
     private void performOperationBeforeExit() throws Exception {
         int result = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirmation",
                 JOptionPane.YES_NO_OPTION);
@@ -83,12 +116,15 @@ public class VistaGestionPerfil extends JFrame {
         }
     }
 
+    /**
+     * Asigna los listeners a los componentes de la vista.
+     */
     private void asignar_listenersComponentes() {
         atrasButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        actionPerformed_atrásButton(event);
+                        actionPerformed_atrasButton(event);
                     }
                 });
         eliminarCuentaButton.addActionListener(
@@ -115,10 +151,21 @@ public class VistaGestionPerfil extends JFrame {
                 });
     }
 
+    /**
+     * Transiciona de Vista Gestion Perfil a Vista Cambiar Contraseña cuando se
+     * pulsa el botón de cambiar contraseña.
+     * @param evt El ActionEvent desencadenado por el clic en el botón.
+     */
     void actionPerformed_cambiarContrasenaButton(ActionEvent event) {
         iCtrlPresentacion.syncVistaGestionPerfil_a_CambiarContrasena();
     }
 
+
+    /**
+     * Transiciona de Vista Gestion Perfil a Vista Bienvenida cuando se
+     * pulsa el botón de eliminar cuenta.
+     * @param evt El ActionEvent desencadenado por el clic en el botón.
+     */
     void actionPerformed_eliminarCuentaButton(ActionEvent event) throws Exception {
         int result = JOptionPane.showConfirmDialog(this, "¿Estás seguro? El borrado de la cuenta es irreversible.", "Confirmation",
                 JOptionPane.YES_NO_OPTION);
@@ -133,7 +180,12 @@ public class VistaGestionPerfil extends JFrame {
         }
     }
 
-    void actionPerformed_atrásButton(ActionEvent event) {
+    /**
+     * Transiciona de Vista Gestion Perfil a Vista Menu Principal cuando se
+     * pulsa el botón de atras.
+     * @param event El ActionEvent desencadenado por el clic en el botón.
+     */
+    void actionPerformed_atrasButton(ActionEvent event) {
         iCtrlPresentacion.syncVistaGestionPerfil_a_MenuPrincipal();
     }
 

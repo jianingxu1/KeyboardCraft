@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Clase que representa la interfaz de usuario para la gestión de alfabetos.
+ * Clase VistaGestionAlfabetos
+ * Representa la interfaz de usuario para la gestión de alfabetos.
  * Permite consultar, crear, modificar y eliminar alfabetos.
  * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)

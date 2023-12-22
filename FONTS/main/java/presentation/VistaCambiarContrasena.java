@@ -4,6 +4,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Clase VistaCambiarContrasena
+ * Representa la interfaz gráfica de la vista para cambiar la contraseña de un usuario.
+ * 
+ * @author Ruben Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ */
 public class VistaCambiarContrasena extends JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private JPanel panelContenidos;
@@ -17,33 +23,56 @@ public class VistaCambiarContrasena extends JFrame {
     private JButton btnVolver;
     private JPanel panelInput;
 
+    /**
+     * Constructor para inicializar la vista cambiar contraseña.
+     * 
+     * @param pCtrlPresentacion Controlador de la presentacion.
+     */
     public VistaCambiarContrasena(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
 
+    /**
+     * Hace visible la vista.
+     */
     public void hacerVisible() {
         this.pack();
         this.setVisible(true);
     }
 
+    /**
+     * Oculta la vista.
+     */
     public void hacerInvisible() {
         this.setVisible(false);
     }
 
+    /**
+     * Activa la vista.
+     */
     public void activar() {
         this.setEnabled(true);
     }
 
+    /**
+     * Desactiva la vista.
+     */
     public void desactivar() {
         this.setEnabled(false);
     }
 
+    /**
+     * Inicializa los componentes de la vista.
+     */
     private void inicializarComponentes() {
         inicializar_frameVista();
         asignar_listenersComponentes();
     }
 
+    /**
+     * Inicializa el frame de la vista.
+     */
     private void inicializar_frameVista() {
         this.setTitle("KeyboardCraft - Cambiar contraseña");
         this.setMinimumSize(new Dimension(600, 450));
@@ -67,6 +96,12 @@ public class VistaCambiarContrasena extends JFrame {
         this.setContentPane(panelContenidos);
     }
 
+    /**
+     * Realiza las operaciones de confirmación y guardado de datos antes de cerrar
+     * la aplicacion.
+     * 
+     * @throws Exception
+     */
     private void performOperationBeforeExit() {
         iCtrlPresentacion.syncVistaCambiarContrasena_a_GestionPerfil();
         dispose();

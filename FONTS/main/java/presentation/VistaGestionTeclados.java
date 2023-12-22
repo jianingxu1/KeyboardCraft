@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.*;
 
 /**
+ * Clase VistaGestionTeclados
  * Representa la interfaz gráfica para gestionar teclados. Permite crear,
  * modificar y visualizar diferentes disposiciones de teclado.
  * 

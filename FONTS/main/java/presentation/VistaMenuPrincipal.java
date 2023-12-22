@@ -5,7 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
+ * Clase VistaMenuPrincipal
  * Representa la vista del menu principal de la aplicacion.
+ * 
+ * @author Ruben Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
 public class VistaMenuPrincipal extends JFrame {
     /**
