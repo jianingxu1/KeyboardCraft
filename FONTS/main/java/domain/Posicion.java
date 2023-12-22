@@ -24,22 +24,24 @@ public class Posicion {
     /**
      * Constructor de copia de la clase Posicion
      * 
-     * @param p Objeto Posicion a copiar
+     * @param posicion Objeto Posicion a copiar
      */
-    Posicion(Posicion p) {
-        this.fila = p.fila;
-        this.col = p.col;
+    Posicion(Posicion posicion) {
+        this.fila = posicion.fila;
+        this.col = posicion.col;
     }
 
     /**
      * Calcula la distancia euclidiana entre dos Posiciones
      * 
-     * @param p Posicion a la que calcular la distancia
+     * @param posicion Posicion a la que calcular la distancia
      * @return La distancia euclidiana entre las dos Posiciones
      */
-    public double euclidianDistanceTo(Posicion p) {
-        double deltaX = (double) (this.fila - p.fila);
-        double deltaY = (double) (this.col - p.col);
+    public double euclidianDistanceTo(Posicion posicion) {
+        //deltaX = x2 - x1
+        //deltaY = y2 - y1
+        double deltaX = (double) (this.fila - posicion.fila);
+        double deltaY = (double) (this.col - posicion.col);
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 }

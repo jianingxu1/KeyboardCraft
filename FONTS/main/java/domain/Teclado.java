@@ -21,32 +21,48 @@ public class Teclado {
     /** Métodos públicos **/
 
     /**
-     * Intercambia la posición (i,j) de dos teclas del teclado.
+     * Intercambia la posición de dos teclas en la distribución del teclado.
      *
-     * @param i1 fila tecla 1
-     * @param j1 columna tecla 1
-     * @param i2 fila tecla 2
-     * @param j2 columna tecla 2
+     * @param caracter1 Primer caracter a intercambiar.
+     * @param caracter2 Segundo caracter a intercambiar.
+     * @throws Exception Si los caracteres son iguales, no se encuentran en el teclado
+     *                   o hay algún otro problema durante el intercambio.
      */
     public void intercambiarTeclas(char caracter1, char caracter2) throws Exception {
-        if (caracter1 == caracter2)
+        // Verificar si los caracteres son iguales
+        if (caracter1 == caracter2) {
             throw new Exception("No puedes intercambiar el mismo caracter");
-        int i1 = -1, j1 = -1, i2 = -1, j2 = -1;
+        }
+
+        // Buscar las posiciones de los caracteres en la distribución
+        int[] posicionCaracter1 = buscarPosicion(caracter1);
+        int[] posicionCaracter2 = buscarPosicion(caracter2);
+
+        // Verificar si se encontraron las posiciones
+        if (posicionCaracter1 == null || posicionCaracter2 == null) {
+            throw new Exception("No se han encontrado los caracteres en el teclado");
+        }
+
+        // Realizar el intercambio
+        distribucion[posicionCaracter1[0]][posicionCaracter1[1]] = caracter2;
+        distribucion[posicionCaracter2[0]][posicionCaracter2[1]] = caracter1;
+    }
+
+    /**
+     * Busca la posición de un caracter en la distribución del teclado.
+     *
+     * @param caracter Caracter a buscar.
+     * @return Array de dos elementos con la posición [fila, columna] del caracter, o null si no se encuentra.
+     */
+    private int[] buscarPosicion(char caracter) {
         for (int i = 0; i < distribucion.length; ++i) {
             for (int j = 0; j < distribucion[i].length; ++j) {
-                if (distribucion[i][j] == caracter1) {
-                    i1 = i;
-                    j1 = j;
-                } else if (distribucion[i][j] == caracter2) {
-                    i2 = i;
-                    j2 = j;
+                if (distribucion[i][j] == caracter) {
+                    return new int[]{i, j};
                 }
             }
         }
-        if (i1 == -1 || i2 == -1 || j1 == -1 || j2 == -1)
-            throw new Exception("No se han encontrado los caracteres en el teclado");
-        distribucion[i1][j1] = caracter2;
-        distribucion[i2][j2] = caracter1;
+        return null; // Caracter no encontrado
     }
 
     /**
