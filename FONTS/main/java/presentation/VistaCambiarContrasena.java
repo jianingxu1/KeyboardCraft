@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class VistaCambiarContraseña extends JFrame {
+public class VistaCambiarContrasena extends JFrame {
     private CtrlPresentacion iCtrlPresentacion;
     private JPanel panelContenidos;
     private JLabel labelLogo;
@@ -13,11 +13,11 @@ public class VistaCambiarContraseña extends JFrame {
     private JLabel labelContraNew;
     private JPasswordField fieldContraNew;
     private JPanel panelBotones;
-    private JButton btnCambiarContraseña;
+    private JButton btnCambiarContrasena;
     private JButton btnVolver;
     private JPanel panelInput;
 
-    public VistaCambiarContraseña(CtrlPresentacion pCtrlPresentacion) {
+    public VistaCambiarContrasena(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
@@ -73,7 +73,7 @@ public class VistaCambiarContraseña extends JFrame {
     }
 
     private void asignar_listenersComponentes() {
-        btnCambiarContraseña.addActionListener(new ActionListener() {
+        btnCambiarContrasena.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 actionPerformed_btnCambiarContraseña(event);
             }
@@ -149,14 +149,14 @@ public class VistaCambiarContraseña extends JFrame {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelContenidos.add(panelBotones, gbc);
-        btnCambiarContraseña = new JButton();
-        btnCambiarContraseña.setText("Cambiar contraseña");
+        btnCambiarContrasena = new JButton();
+        btnCambiarContrasena.setText("Cambiar contraseña");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelBotones.add(btnCambiarContraseña, gbc);
+        panelBotones.add(btnCambiarContrasena, gbc);
         btnVolver = new JButton();
         btnVolver.setText("Volver");
         gbc = new GridBagConstraints();

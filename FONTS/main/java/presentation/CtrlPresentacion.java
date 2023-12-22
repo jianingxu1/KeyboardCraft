@@ -26,7 +26,7 @@ public class CtrlPresentacion {
 
 	private VistaConsultarTeclado vistaConsultarTeclado;
 
-	private VistaCambiarContraseña vistaCambiarContraseña;
+	private VistaCambiarContrasena vistaCambiarContrasena;
 
 	/** Constructor y metodos de inicializacion **/
 
@@ -195,10 +195,10 @@ public class CtrlPresentacion {
 		vistaGestionPerfil.desactivar();
 		vistaGestionPerfil.hacerInvisible();
 
-		if (vistaCambiarContraseña == null)
-			vistaCambiarContraseña = new VistaCambiarContraseña(this);
-		vistaCambiarContraseña.activar();
-		vistaCambiarContraseña.hacerVisible();
+		if (vistaCambiarContrasena == null)
+			vistaCambiarContrasena = new VistaCambiarContrasena(this);
+		vistaCambiarContrasena.activar();
+		vistaCambiarContrasena.hacerVisible();
 	}
 
 	public void syncVistaConsultarTeclado_a_GestionTeclados() {
@@ -214,10 +214,10 @@ public class CtrlPresentacion {
 	}
 
 	public void syncVistaCambiarContraseña_a_GestionPerfil() {
-		if (vistaCambiarContraseña == null)
-			vistaCambiarContraseña = new VistaCambiarContraseña(this);
-		vistaCambiarContraseña.hacerInvisible();
-		vistaCambiarContraseña.desactivar();
+		if (vistaCambiarContrasena == null)
+			vistaCambiarContrasena = new VistaCambiarContrasena(this);
+		vistaCambiarContrasena.hacerInvisible();
+		vistaCambiarContrasena.desactivar();
 
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
