@@ -579,6 +579,10 @@ public class VistaGestionTeclados extends javax.swing.JFrame {
 
     private void btnEliminarTecladoActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         String nombreTeclado = (String) comboboxTeclado.getSelectedItem();
+        if (nombreTeclado == null) {
+            JOptionPane.showMessageDialog(this, "No hay ningún teclado seleccionado.");
+            return;
+        }
         int result = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar el teclado?", "Confirmación",
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {

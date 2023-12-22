@@ -317,6 +317,10 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
 
     private void btnEliminarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         String nombreAlfabeto = (String) comboboxAlfabeto.getSelectedItem();
+        if (nombreAlfabeto == null) {
+            JOptionPane.showMessageDialog(this, "No hay ningún alfabeto seleccionado.");
+            return;
+        }
         int result = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar el alfabeto?", "Confirmación",
                 JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
