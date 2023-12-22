@@ -1,7 +1,7 @@
 package presentation;
+
 import domaincontrollers.CtrlDominio;
 
-import java.lang.Exception;
 import java.util.*;
 
 /**
@@ -9,6 +9,7 @@ import java.util.*;
  * Representa el controlador de presentacion del programa
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class CtrlPresentacion {
 
@@ -18,14 +19,9 @@ public class CtrlPresentacion {
 	private VistaBienvenida vistaBienvenida;
 	private VistaCrearCuenta vistaCrearCuenta;
 	private VistaMenuPrincipal vistaMenuPrincipal;
-
 	private VistaGestionAlfabetos vistaGestionAlfabetos;
 	private VistaGestionTeclados vistaGestionTeclados;
-
 	private VistaGestionPerfil vistaGestionPerfil;
-
-	private VistaConsultarTeclado vistaConsultarTeclado;
-
 	private VistaCambiarContrasena vistaCambiarContrasena;
 
 	/** Constructor y metodos de inicializacion **/
@@ -36,7 +32,10 @@ public class CtrlPresentacion {
 	}
 
 	public void inicializarPresentacion() {
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerVisible();
+		vistaBienvenida.activar();
 		try {
 			ctrlDominio.cargarUsuarios();
 		} catch (Exception e) {
@@ -45,6 +44,7 @@ public class CtrlPresentacion {
 	}
 
 	/** Métodos de sincronizacion entre vistas **/
+	
 	public void syncVistaBienvenida_a_CrearCuenta() {
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
@@ -177,18 +177,6 @@ public class CtrlPresentacion {
 		vistaMenuPrincipal.hacerVisible();
 	}
 
-	public void syncVistaGestionTeclados_a_ConsultarTeclado() {
-		if (vistaGestionTeclados == null)
-			vistaGestionTeclados = new VistaGestionTeclados(this);
-		vistaGestionTeclados.desactivar();
-		vistaGestionTeclados.hacerInvisible();
-
-		if (vistaConsultarTeclado == null)
-			vistaConsultarTeclado = new VistaConsultarTeclado(this);
-		vistaConsultarTeclado.activar();
-		vistaConsultarTeclado.hacerVisible();
-	}
-
 	public void syncVistaGestionPerfil_a_CambiarContrasena() {
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
@@ -199,18 +187,6 @@ public class CtrlPresentacion {
 			vistaCambiarContrasena = new VistaCambiarContrasena(this);
 		vistaCambiarContrasena.activar();
 		vistaCambiarContrasena.hacerVisible();
-	}
-
-	public void syncVistaConsultarTeclado_a_GestionTeclados() {
-		if (vistaConsultarTeclado == null)
-			vistaConsultarTeclado = new VistaConsultarTeclado(this);
-		vistaConsultarTeclado.hacerInvisible();
-		vistaConsultarTeclado.desactivar();
-
-		if (vistaGestionTeclados == null)
-			vistaGestionTeclados = new VistaGestionTeclados(this);
-		vistaGestionTeclados.activar();
-		vistaGestionTeclados.hacerVisible();
 	}
 
 	public void syncVistaCambiarContrasena_a_GestionPerfil() {
@@ -228,7 +204,7 @@ public class CtrlPresentacion {
 	/** Llamadas al controlador de dominio **/
 
 	public void iniciarSesion(String Username, String Password) throws Exception {
-		ctrlDominio.IniciarSesion(Username,Password);
+		ctrlDominio.IniciarSesion(Username, Password);
 		cargarDatosUsuario();
 	}
 
@@ -260,7 +236,8 @@ public class CtrlPresentacion {
 		return ctrlDominio.getNombreAlgoritmos();
 	}
 
-	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia, String nombreAlgoritmo) throws Exception {
+	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia,
+			String nombreAlgoritmo) throws Exception {
 		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
 		ctrlDominio.guardarTeclados();
 	}
@@ -276,7 +253,7 @@ public class CtrlPresentacion {
 	public void crearAlfabeto(String nombreAlfabeto, String caracteresAlfabeto) throws Exception {
 		ctrlDominio.crearAlfabeto(nombreAlfabeto, caracteresAlfabeto);
 	}
-	
+
 	public void eliminarAlfabeto(String nombreAlfabeto) throws Exception {
 		ctrlDominio.eliminarAlfabeto(nombreAlfabeto);
 	}
@@ -289,9 +266,9 @@ public class CtrlPresentacion {
 		return ctrlDominio.getCaracteresDeAlfabeto(nombreAlfabeto);
 	}
 
-	private void cargarDatosUsuario() throws Exception{
-			ctrlDominio.cargarTeclados();
-			ctrlDominio.cargarAlfabetos();
+	private void cargarDatosUsuario() throws Exception {
+		ctrlDominio.cargarTeclados();
+		ctrlDominio.cargarAlfabetos();
 	}
 
 	public void guardarDatos() throws Exception {
@@ -303,7 +280,7 @@ public class CtrlPresentacion {
 	public String importarTexto(String filePath) throws Exception {
 		return ctrlDominio.importarTexto(filePath);
 	}
-	
+
 	public String importarListaPalabras(String filePath) throws Exception {
 		return ctrlDominio.importarListaPalabras(filePath);
 	}
