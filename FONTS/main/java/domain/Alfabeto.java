@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+
 /**
  * Clase Alfabeto
  * Representa un alfabeto en concreto con sus caracteres.

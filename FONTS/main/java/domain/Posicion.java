@@ -38,8 +38,8 @@ public class Posicion {
      * @return La distancia euclidiana entre las dos Posiciones
      */
     public double euclidianDistanceTo(Posicion posicion) {
-        //deltaX = x2 - x1
-        //deltaY = y2 - y1
+        // deltaX = x2 - x1
+        // deltaY = y2 - y1
         double deltaX = (double) (this.fila - posicion.fila);
         double deltaY = (double) (this.col - posicion.col);
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);

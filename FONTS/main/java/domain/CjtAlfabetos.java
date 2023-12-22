@@ -11,7 +11,8 @@ import exceptions.NombreAlfabetoNoValidoExcepcion;
  * Clase CjtAlfabetos
  * Representa una colección de alfabetos en el sistema.
  *
- * Esta clase gestiona y almacena un conjunto de alfabetos, proporcionando métodos
+ * Esta clase gestiona y almacena un conjunto de alfabetos, proporcionando
+ * métodos
  * para crear, modificar, acceder y eliminar alfabetos en la colección.
  *
  * @author Momin Miah Begum (momin.miah@estudiantat.upc.edu)
@@ -36,7 +37,8 @@ public class CjtAlfabetos {
     private static CjtAlfabetos singletonObject;
 
     public static CjtAlfabetos getInstance() {
-        if (singletonObject == null) singletonObject = new CjtAlfabetos();
+        if (singletonObject == null)
+            singletonObject = new CjtAlfabetos();
         return singletonObject;
     }
 
@@ -49,12 +51,13 @@ public class CjtAlfabetos {
      *
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los caracteres del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es valido.
+     * @throws NombreAlfabetoNoValidoExcepcion  Si el nombre del alfabeto no es
+     *                                          valido.
      * @throws NombreAlfabetoDuplicadoExcepcion Si el nombre del alfabeto ya existe.
      * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
      */
     public void crearAlfabeto(String nombre, String caracteres)
-    throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion {
+            throws NombreAlfabetoNoValidoExcepcion, NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion {
 
         // Validar nombre del alfabeto
         if (nombre.trim().isEmpty()) {
@@ -89,7 +92,8 @@ public class CjtAlfabetos {
      * Elimina un alfabeto del conjunto de alfabetos.
      *
      * @param nombre El identificador único del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
+     *                                         válido.
      */
     public void eliminarAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         // Validar nombre del alfabeto
@@ -108,8 +112,9 @@ public class CjtAlfabetos {
      *
      * @param nombre     El nombre del alfabeto.
      * @param caracteres Los nuevos caracteres del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
-     * @throws NoHayCaracteresExcepcion         Si no hay caracteres en el alfabeto.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
+     *                                         válido.
+     * @throws NoHayCaracteresExcepcion        Si no hay caracteres en el alfabeto.
      */
     public void modificarCaracteresAlfabeto(String nombre, String caracteres)
             throws NombreAlfabetoNoValidoExcepcion, NoHayCaracteresExcepcion {
@@ -141,7 +146,8 @@ public class CjtAlfabetos {
      * Retorna la instancia de un alfabeto con el identificador especificado.
      *
      * @param nombre El identificador único del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
+     *                                         válido.
      */
     public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         // Validar nombre del alfabeto
@@ -158,7 +164,8 @@ public class CjtAlfabetos {
      * Retorna los caracteres del alfabeto en formato String.
      *
      * @param nombre El nombre del alfabeto.
-     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es válido.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
+     *                                         válido.
      */
     public String getAlfabetoCaracteresEnString(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         // Validar nombre del alfabeto
@@ -170,7 +177,6 @@ public class CjtAlfabetos {
 
         return alfabetos.get(nombre).getCaracteresStringFormat();
     }
-
 
     /**
      * Retorna true si existe un alfabeto con el nombre especificado, en su defecto
@@ -210,7 +216,7 @@ public class CjtAlfabetos {
      */
     public ArrayList<String> getNombreAlfabetos() {
         ArrayList<String> nombres = new ArrayList<>();
-        for (Alfabeto alfabeto : alfabetos.values()) {   
+        for (Alfabeto alfabeto : alfabetos.values()) {
             nombres.add(alfabeto.getNombre());
         }
         return nombres;
@@ -223,7 +229,8 @@ public class CjtAlfabetos {
      * @param nombre El nombre del alfabeto.
      */
     public ArrayList<Character> getCaracteresDeAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
-        if (!existeAlfabeto(nombre)) throw new NombreAlfabetoNoValidoExcepcion(nombre);
+        if (!existeAlfabeto(nombre))
+            throw new NombreAlfabetoNoValidoExcepcion(nombre);
         return alfabetos.get(nombre).getCaracteres();
     }
 }

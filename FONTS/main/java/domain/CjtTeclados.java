@@ -9,8 +9,10 @@ import exceptions.NombreTecladoNoValidoExcepcion;
 
 /**
  * Clase CjtTeclados
- * Representa un conjunto de teclados. Cada teclado está definido por su nombre y su distribución de teclas.
- * Esta clase proporciona métodos para gestionar y manipular los teclados en el conjunto.
+ * Representa un conjunto de teclados. Cada teclado está definido por su nombre
+ * y su distribución de teclas.
+ * Esta clase proporciona métodos para gestionar y manipular los teclados en el
+ * conjunto.
  * 
  * Funcionalidades principales:
  * - Crear un nuevo teclado en el conjunto.
@@ -18,7 +20,8 @@ import exceptions.NombreTecladoNoValidoExcepcion;
  * - Obtener la distribución de teclas de un teclado específico.
  * - Intercambiar la posición de teclas en un teclado.
  * 
- * Cada teclado tiene un nombre único y una matriz de caracteres que representa la disposición de las teclas.
+ * Cada teclado tiene un nombre único y una matriz de caracteres que representa
+ * la disposición de las teclas.
  * 
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  */
@@ -63,9 +66,11 @@ public class CjtTeclados {
      * Crea un teclado nuevo y lo guarda en el conjunto.
      * 
      * @param nombre El nombre del nuevo teclado.
-     * @param mat    La matriz de caracteres que representa la distribución del teclado.
+     * @param mat    La matriz de caracteres que representa la distribución del
+     *               teclado.
      * @throws NombreTecladoDuplicadoExcepcion Si el nombre del teclado ya existe.
-     * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es válido.
+     * @throws NombreTecladoNoValidoExcepcion  Si el nombre del teclado no es
+     *                                         válido.
      */
     public void crearTeclado(String nombre, Character[][] mat)
             throws NombreTecladoDuplicadoExcepcion, NombreTecladoNoValidoExcepcion {
@@ -102,11 +107,12 @@ public class CjtTeclados {
     /**
      * Intercambia la posición (i,j) de dos teclas del teclado.
      *
-     * @param nombre     El nombre del teclado.
-     * @param caracter1  El primer carácter a intercambiar.
-     * @param caracter2  El segundo carácter a intercambiar.
-     * @throws NombreTecladoNoValidoExcepcion     Si el nombre del teclado no es válido.
-     * @throws CaracteresNoValidosExcepcion       Si los caracteres proporcionados no son válidos.
+     * @param nombre    El nombre del teclado.
+     * @param caracter1 El primer carácter a intercambiar.
+     * @param caracter2 El segundo carácter a intercambiar.
+     * @throws NombreTecladoNoValidoExcepcion Si el nombre del teclado no es válido.
+     * @throws CaracteresNoValidosExcepcion   Si los caracteres proporcionados no
+     *                                        son válidos.
      */
     public void intercambiarTeclasTeclado(String nombre, char caracter1, char caracter2)
             throws NombreTecladoNoValidoExcepcion, CaracteresNoValidosExcepcion {
@@ -116,7 +122,7 @@ public class CjtTeclados {
         } else if (!existeTeclado(nombre)) {
             throw new NombreTecladoNoValidoExcepcion("El teclado \"" + nombre + "\" no existe.");
         }
-        
+
         // Realizar el intercambio de teclas en el teclado correspondiente
         conjunto.get(nombre).intercambiarTeclas(caracter1, caracter2);
     }
@@ -152,7 +158,8 @@ public class CjtTeclados {
     }
 
     /**
-     * Devuelve la matriz de caracteres que representa la distribución de teclas de un teclado.
+     * Devuelve la matriz de caracteres que representa la distribución de teclas de
+     * un teclado.
      *
      * @param nombreTeclado El nombre del teclado escogido.
      * @return Matriz de caracteres (char[][]) que representa la distribución.
@@ -169,7 +176,7 @@ public class CjtTeclados {
         // Devolver la matriz de distribución del teclado correspondiente
         return conjunto.get(nombreTeclado).getDistribucion();
     }
-    
+
     /**
      * Limpiar el conjunto de teclados
      */

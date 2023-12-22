@@ -18,14 +18,16 @@ public class Usuario {
     /** Constructora **/
     /**
      * Crea un usuario nuevo con su nombre de usuario y contraseña
+     * 
      * @param username nombre de usuario
      * @param password contraseña
      * @throws NombreUsuarioNoValidoExcepcion si el nombre de usuario no es valido
-     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     * @throws ContrasenaNoValidaExcepcion    si la contraseña no es valida
      */
-    public Usuario(String username, String password) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+    public Usuario(String username, String password)
+            throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
         if (username.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+            throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
         this.username = username;
         modificaContrasena(password);
     }
@@ -36,14 +38,15 @@ public class Usuario {
 
     /**
      * Modifica la contraseña del usuario
+     * 
      * @param newPass nueva contraseña
      * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
      */
     public void modificaContrasena(String newPass) throws ContrasenaNoValidaExcepcion {
-		if (newPass.trim().isEmpty())
-			throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
-		else if (newPass.length() < 4)
-			throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 4 caracteres.");
+        if (newPass.trim().isEmpty())
+            throw new ContrasenaNoValidaExcepcion("La contraseña no puede ser vacia.");
+        else if (newPass.length() < 4)
+            throw new ContrasenaNoValidaExcepcion("La contraseña debe tener al menos 4 caracteres.");
         this.password = newPass;
     }
 
@@ -51,6 +54,7 @@ public class Usuario {
 
     /**
      * Devuelve el nombre de usuario
+     * 
      * @return nombre de usuario
      */
     public String getNombre() {
@@ -59,9 +63,10 @@ public class Usuario {
 
     /**
      * Devuelve la contraseña
+     * 
      * @return contraseña
      */
-     public String getContrasena() {
+    public String getContrasena() {
         return password;
     }
 }

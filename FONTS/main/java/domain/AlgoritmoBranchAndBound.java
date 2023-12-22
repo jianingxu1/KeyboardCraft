@@ -489,7 +489,8 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * @param cols       Arreglo de columnas.
      * @return Matriz de caracteres que representa la mejor distribucion.
      */
-    private Character[][] convertirMejorDistribucion(char[] caracteres, Posicion[] posiciones, int[] filas, int[] cols) {
+    private Character[][] convertirMejorDistribucion(char[] caracteres, Posicion[] posiciones, int[] filas,
+            int[] cols) {
         Character[][] distribucion = new Character[filas[0]][cols[0]];
         for (Map.Entry<Integer, Integer> entry : mapMejorAsignacion.entrySet()) {
             int instalacion = entry.getKey();

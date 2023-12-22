@@ -47,11 +47,14 @@ public class CjtUsuarios {
      * 
      * @param user el nombre del nuevo usuario
      * @param pass su contraseña
-     * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
-     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
-     * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el fichero
+     * @throws NombreUsuarioNoValidoExcepcion      si el nombre del usuario no es
+     *                                             valido
+     * @throws ContrasenaNoValidaExcepcion         si la contraseña no es valida
+     * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el
+     *                                             fichero
      */
-    public void anadirNuevoUsuario(String user, String pass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+    public void anadirNuevoUsuario(String user, String pass)
+            throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
         if (existeUsuario(user))
             throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " ya existe.");
         Usuario usuario = new Usuario(user, pass);
@@ -65,30 +68,31 @@ public class CjtUsuarios {
      * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
      */
     public void eliminarUsuario(String user) throws NombreUsuarioNoValidoExcepcion {
-		if (user.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (!existeUsuario(user))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
+        if (user.trim().isEmpty())
+            throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+        else if (!existeUsuario(user))
+            throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
         conjunto.remove(user);
     }
 
     /**
      * Modifica la contraseña de un usuario
      * 
-     * @param user el nombre del usuario a modificar
+     * @param user    el nombre del usuario a modificar
      * @param oldPass la contraseña actual del usuario
      * @param newPass la nueva contraseña del usuario
      * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
-     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     * @throws ContrasenaNoValidaExcepcion    si la contraseña no es valida
      */
-    public void modificarContrasenaUsuario(String user, String oldPass, String newPass) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
-		if (user.trim().isEmpty())
-			throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
-		else if (!existeUsuario(user))
-			throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
-		else if(!correctPass(user, oldPass)){
-			throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
-		}
+    public void modificarContrasenaUsuario(String user, String oldPass, String newPass)
+            throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
+        if (user.trim().isEmpty())
+            throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
+        else if (!existeUsuario(user))
+            throw new NombreUsuarioNoValidoExcepcion("El usuario " + user + " no existe.");
+        else if (!correctPass(user, oldPass)) {
+            throw new ContrasenaNoValidaExcepcion("La contrasena actual no es correcta.");
+        }
         conjunto.get(user).modificaContrasena(newPass);
     }
 
@@ -96,12 +100,13 @@ public class CjtUsuarios {
      * Comprueba si la contraseña de un usuario es correcta
      * 
      * @param nombreUsuario el nombre del usuario
-     * @param contrasena la contraseña del usuario
+     * @param contrasena    la contraseña del usuario
      * @return true si la contraseña es correcta, false en caso contrario
      * @throws NombreUsuarioNoValidoExcepcion si el nombre del usuario no es valido
-     * @throws ContrasenaNoValidaExcepcion si la contraseña no es valida
+     * @throws ContrasenaNoValidaExcepcion    si la contraseña no es valida
      */
-    public boolean correctPass(String nombreUsuario, String contrasena) throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion{
+    public boolean correctPass(String nombreUsuario, String contrasena)
+            throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {
         if (nombreUsuario.trim().isEmpty())
             throw new NombreUsuarioNoValidoExcepcion("El nombre del usuario no puede ser vacío.");
         else if (contrasena.trim().isEmpty())

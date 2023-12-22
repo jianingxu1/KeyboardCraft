@@ -22,7 +22,7 @@ public class CtrlDominio {
     private CjtAlfabetos cjtAlfabetos;
     private CjtUsuarios cjtUsuarios;
     private CtrlPersistencia ctrlPersistencia;
-    
+
     /**
      * El nombre del usuario actual. Si no hay ningún usuario activo, el nombre es
      * una cadena vacía.
