@@ -1,14 +1,12 @@
 package presentation;
 
-import exceptions.ContrasenaNoValidaExcepcion;
-import exceptions.EscrituraIncorrectaFicheroExcepcion;
-import exceptions.NombreUsuarioNoValidoExcepcion;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
+/**
+ * Representa la vista del menu principal de la aplicacion.
+ */
 public class VistaMenuPrincipal extends JFrame {
     CtrlPresentacion iCtrlPresentacion;
     private JPanel panelContenidos;
@@ -19,44 +17,65 @@ public class VistaMenuPrincipal extends JFrame {
     private JPanel panelBotones;
     private JLabel labelTitulo;
 
+    /**
+     * Constructor de la vista del menu principal.
+     * 
+     * @param pCtrlPresentacion El controlador de presentacion asociado a esta
+     *                          vista.
+     */
     public VistaMenuPrincipal(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         inicializarComponentes();
     }
 
+    /**
+     * Hace visible el menu principal.
+     */
     public void hacerVisible() {
         this.pack();
         this.setVisible(true);
     }
 
+    /**
+     * Oculta el menu principal.
+     */
     public void hacerInvisible() {
         this.setVisible(false);
     }
 
+    /**
+     * Activa el menu principal.
+     */
     public void activar() {
         this.setEnabled(true);
     }
 
+    /**
+     * Desactiva el menu principal.
+     */
     public void desactivar() {
         this.setEnabled(false);
     }
 
+    /**
+     * Inicializa los componentes del menu principal.
+     */
     private void inicializarComponentes() {
         inicializar_frameVista();
         asignar_listenersComponentes();
     }
 
+    /**
+     * Inicializa el frame de la vista.
+     */
     private void inicializar_frameVista() {
-        this.setTitle("Generador de teclados");
+        this.setTitle("KeyboardCraft - Menú Principal");
         this.setMinimumSize(new Dimension(600, 450));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(false);
-
-        // Posicion y operaciones por defecto
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        // Add WindowListener to the frame
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -71,6 +90,12 @@ public class VistaMenuPrincipal extends JFrame {
         this.setContentPane(panelContenidos);
     }
 
+    /**
+     * Realiza las operaciones de confirmación y guardado de datos antes de cerrar
+     * la aplicacion.
+     * 
+     * @throws Exception
+     */
     private void performOperationBeforeExit() throws Exception {
         int result = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirmation",
                 JOptionPane.YES_NO_OPTION);
@@ -85,8 +110,10 @@ public class VistaMenuPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Asigna los listeners a los componentes de la vista.
+     */
     private void asignar_listenersComponentes() {
-        // Listeners para los botones
         btnGestionarAlfabetos.addActionListener(
                 new ActionListener() {
                     @Override
@@ -118,19 +145,40 @@ public class VistaMenuPrincipal extends JFrame {
 
     }
 
-    public void actionPerformed_btnGestionarAlfabetos(ActionEvent event) {
+    /**
+     * Transiciona de la vista del menú principal a la gestión de alfabetos.
+     * 
+     * @param event El evento de acción que desencadena esta operación.
+     */
+    private void actionPerformed_btnGestionarAlfabetos(ActionEvent event) {
         iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionAlfabetos();
     }
 
-    public void actionPerformed_btnGestionarTeclados(ActionEvent event) {
+    /**
+     * Transiciona de la vista del menú principal a la gestión de teclados.
+     * 
+     * @param event El evento de acción que desencadena esta operación.
+     */
+    private void actionPerformed_btnGestionarTeclados(ActionEvent event) {
         iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionTeclados();
     }
 
-    public void actionPerformed_btnGestionarPerfil(ActionEvent event) {
+    /**
+     * Transiciona de la vista del menú principal a la gestión de perfil.
+     * 
+     * @param event El evento de acción que desencadena esta operación.
+     */
+    private void actionPerformed_btnGestionarPerfil(ActionEvent event) {
         iCtrlPresentacion.syncVistaMenuPrincipal_a_GestionPerfil();
     }
 
-    public void actionPerformed_btnLogout(ActionEvent event) {
+    /**
+     * Cierra la sesión y transiciona de la vista del menú principal a la gestión de
+     * perfil.
+     * 
+     * @param event El evento de acción que desencadena esta operación.
+     */
+    private void actionPerformed_btnLogout(ActionEvent event) {
         try {
             iCtrlPresentacion.cerrarSesion();
             iCtrlPresentacion.syncVistaMenuPrincipal_a_Bienvenida();
@@ -140,9 +188,9 @@ public class VistaMenuPrincipal extends JFrame {
     }
 
     {
-// GUI initializer generated by IntelliJ IDEA GUI Designer
-// >>> IMPORTANT!! <<<
-// DO NOT EDIT OR ADD ANY CODE HERE!
+        // GUI initializer generated by IntelliJ IDEA GUI Designer
+        // >>> IMPORTANT!! <<<
+        // DO NOT EDIT OR ADD ANY CODE HERE!
         $$$setupUI$$$();
     }
 
