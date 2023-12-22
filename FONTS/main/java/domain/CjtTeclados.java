@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import exceptions.IndiceTeclaFueraDeRangoExcepcion;
+import exceptions.CaracteresNoValidosExcepcion;
 import exceptions.NombreTecladoDuplicadoExcepcion;
 import exceptions.NombreTecladoNoValidoExcepcion;
 
@@ -106,18 +106,17 @@ public class CjtTeclados {
      * @param caracter1  El primer carácter a intercambiar.
      * @param caracter2  El segundo carácter a intercambiar.
      * @throws NombreTecladoNoValidoExcepcion     Si el nombre del teclado no es válido.
-     * @throws IndiceTeclaFueraDeRangoExcepcion    Si alguno de los caracteres no existe en el teclado.
-     * @throws Exception                          Otro tipo de excepción que podría ocurrir durante el intercambio de teclas.
+     * @throws CaracteresNoValidosExcepcion       Si los caracteres proporcionados no son válidos.
      */
     public void intercambiarTeclasTeclado(String nombre, char caracter1, char caracter2)
-            throws NombreTecladoNoValidoExcepcion, IndiceTeclaFueraDeRangoExcepcion, Exception {
+            throws NombreTecladoNoValidoExcepcion, CaracteresNoValidosExcepcion {
         // Validar nombre del teclado
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NombreTecladoNoValidoExcepcion("El nombre del teclado no puede ser vacío.");
         } else if (!existeTeclado(nombre)) {
             throw new NombreTecladoNoValidoExcepcion("El teclado \"" + nombre + "\" no existe.");
         }
-
+        
         // Realizar el intercambio de teclas en el teclado correspondiente
         conjunto.get(nombre).intercambiarTeclas(caracter1, caracter2);
     }

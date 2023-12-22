@@ -1,5 +1,7 @@
 package domain;
 
+import exceptions.CaracteresNoValidosExcepcion;
+
 /**
  * Clase Teclado
  * Representa un teclado con su nombre y distribución de teclas.
@@ -25,13 +27,15 @@ public class Teclado {
      *
      * @param caracter1 Primer caracter a intercambiar.
      * @param caracter2 Segundo caracter a intercambiar.
-     * @throws Exception Si los caracteres son iguales, no se encuentran en el teclado
-     *                   o hay algún otro problema durante el intercambio.
+     * @throws CaracteresNoValidosExcepcion Si los caracteres son iguales, no se
+     *                                      encuentran en el teclado
+     *                                      o hay algún otro problema durante el
+     *                                      intercambio.
      */
-    public void intercambiarTeclas(char caracter1, char caracter2) throws Exception {
+    public void intercambiarTeclas(char caracter1, char caracter2) throws CaracteresNoValidosExcepcion {
         // Verificar si los caracteres son iguales
         if (caracter1 == caracter2) {
-            throw new Exception("No puedes intercambiar el mismo caracter");
+            throw new CaracteresNoValidosExcepcion("No puedes intercambiar el mismo caracter");
         }
 
         // Buscar las posiciones de los caracteres en la distribución
@@ -40,7 +44,7 @@ public class Teclado {
 
         // Verificar si se encontraron las posiciones
         if (posicionCaracter1 == null || posicionCaracter2 == null) {
-            throw new Exception("No se han encontrado los caracteres en el teclado");
+            throw new CaracteresNoValidosExcepcion("No se han encontrado los caracteres en el teclado");
         }
 
         // Realizar el intercambio
@@ -52,13 +56,14 @@ public class Teclado {
      * Busca la posición de un caracter en la distribución del teclado.
      *
      * @param caracter Caracter a buscar.
-     * @return Array de dos elementos con la posición [fila, columna] del caracter, o null si no se encuentra.
+     * @return Array de dos elementos con la posición [fila, columna] del caracter,
+     *         o null si no se encuentra.
      */
     private int[] buscarPosicion(char caracter) {
         for (int i = 0; i < distribucion.length; ++i) {
             for (int j = 0; j < distribucion[i].length; ++j) {
                 if (distribucion[i][j] == caracter) {
-                    return new int[]{i, j};
+                    return new int[] { i, j };
                 }
             }
         }
