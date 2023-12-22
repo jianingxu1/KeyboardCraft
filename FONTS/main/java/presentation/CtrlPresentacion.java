@@ -49,96 +49,140 @@ public class CtrlPresentacion {
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerInvisible();
+		vistaBienvenida.desactivar();
+
 		if (vistaCrearCuenta == null)
 			vistaCrearCuenta = new VistaCrearCuenta(this);
 		vistaCrearCuenta.hacerVisible();
+		vistaCrearCuenta.activar();
 	}
 
 	public void syncVistaCrearCuenta_a_Bienvenida() {
 		if (vistaCrearCuenta == null)
 			vistaCrearCuenta = new VistaCrearCuenta(this);
 		vistaCrearCuenta.hacerInvisible();
+		vistaCrearCuenta.desactivar();
+
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerVisible();
+		vistaBienvenida.activar();
 	}
 
 	public void syncVistaBienvenida_a_MenuPrincipal() {
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerInvisible();
+		vistaBienvenida.desactivar();
+
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerVisible();
+		vistaMenuPrincipal.activar();
 	}
 
 	public void syncVistaMenuPrincipal_a_Bienvenida() {
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerInvisible();
+		vistaMenuPrincipal.desactivar();
+
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerVisible();
 		vistaBienvenida.activar();
 	}
 
 	public void syncVistaGestionAlfabetos_a_MenuPrincipal() {
+		if (vistaGestionAlfabetos == null)
+			vistaGestionAlfabetos = new VistaGestionAlfabetos(this);
 		vistaGestionAlfabetos.hacerInvisible();
 		vistaGestionAlfabetos.desactivar();
-		vistaMenuPrincipal.activar();
+
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerVisible();
+		vistaMenuPrincipal.activar();
 	}
 
 	public void syncVistaMenuPrincipal_a_GestionAlfabetos() {
-		vistaMenuPrincipal.desactivar();
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerInvisible();
-		if (vistaGestionAlfabetos == null) {
+		vistaMenuPrincipal.desactivar();
+
+		if (vistaGestionAlfabetos == null)
 			vistaGestionAlfabetos = new VistaGestionAlfabetos(this);
-		}
-		vistaGestionAlfabetos.activar();
 		vistaGestionAlfabetos.hacerVisible();
+		vistaGestionAlfabetos.activar();
 	}
 
 	public void syncVistaGestionPerfil_a_MenuPrincipal() {
+		if (vistaGestionPerfil == null)
+			vistaGestionPerfil = new VistaGestionPerfil(this);
 		vistaGestionPerfil.hacerInvisible();
 		vistaGestionPerfil.desactivar();
+
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.activar();
 		vistaMenuPrincipal.hacerVisible();
 	}
 
 	public void syncVistaGestionPerfil_a_Bienvenida() {
+		if (vistaGestionPerfil == null)
+			vistaGestionPerfil = new VistaGestionPerfil(this);
 		vistaGestionPerfil.hacerInvisible();
 		vistaGestionPerfil.desactivar();
-		vistaBienvenida.activar();
+
+		if (vistaBienvenida == null)
+			vistaBienvenida = new VistaBienvenida(this);
 		vistaBienvenida.hacerVisible();
+		vistaBienvenida.activar();
 	}
 
 	public void syncVistaMenuPrincipal_a_GestionPerfil() {
-		vistaMenuPrincipal.desactivar();
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerInvisible();
-		if (vistaGestionPerfil == null) {
+		vistaMenuPrincipal.desactivar();
+
+		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
-		}
-		vistaGestionPerfil.activar();
 		vistaGestionPerfil.hacerVisible();
+		vistaGestionPerfil.activar();
 	}
 
 	public void syncVistaMenuPrincipal_a_GestionTeclados() {
-		vistaMenuPrincipal.desactivar();
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.hacerInvisible();
-		if (vistaGestionTeclados == null) {
+		vistaMenuPrincipal.desactivar();
+
+		if (vistaGestionTeclados == null)
 			vistaGestionTeclados = new VistaGestionTeclados(this);
-		}
-		vistaGestionTeclados.activar();
 		vistaGestionTeclados.hacerVisible();
+		vistaGestionTeclados.activar();
 	}
 
 	public void syncVistaGestionTeclados_a_MenuPrincipal() {
+		if (vistaGestionTeclados == null)
+			vistaGestionTeclados = new VistaGestionTeclados(this);
 		vistaGestionTeclados.hacerInvisible();
 		vistaGestionTeclados.desactivar();
+
+		if (vistaMenuPrincipal == null)
+			vistaMenuPrincipal = new VistaMenuPrincipal(this);
 		vistaMenuPrincipal.activar();
 		vistaMenuPrincipal.hacerVisible();
 	}
 
 	public void syncVistaGestionTeclados_a_ConsultarTeclado() {
+		if (vistaGestionTeclados == null)
+			vistaGestionTeclados = new VistaGestionTeclados(this);
 		vistaGestionTeclados.desactivar();
 		vistaGestionTeclados.hacerInvisible();
+
 		if (vistaConsultarTeclado == null)
 			vistaConsultarTeclado = new VistaConsultarTeclado(this);
 		vistaConsultarTeclado.activar();
@@ -146,8 +190,11 @@ public class CtrlPresentacion {
 	}
 
 	public void syncVistaGestionPerfil_a_CambiarContraseña() {
+		if (vistaGestionPerfil == null)
+			vistaGestionPerfil = new VistaGestionPerfil(this);
 		vistaGestionPerfil.desactivar();
 		vistaGestionPerfil.hacerInvisible();
+
 		if (vistaCambiarContraseña == null)
 			vistaCambiarContraseña = new VistaCambiarContraseña(this);
 		vistaCambiarContraseña.activar();
@@ -155,8 +202,11 @@ public class CtrlPresentacion {
 	}
 
 	public void syncVistaConsultarTeclado_a_GestionTeclados() {
+		if (vistaConsultarTeclado == null)
+			vistaConsultarTeclado = new VistaConsultarTeclado(this);
 		vistaConsultarTeclado.hacerInvisible();
 		vistaConsultarTeclado.desactivar();
+
 		if (vistaGestionTeclados == null)
 			vistaGestionTeclados = new VistaGestionTeclados(this);
 		vistaGestionTeclados.activar();
@@ -164,8 +214,13 @@ public class CtrlPresentacion {
 	}
 
 	public void syncVistaCambiarContraseña_a_GestionPerfil() {
+		if (vistaCambiarContraseña == null)
+			vistaCambiarContraseña = new VistaCambiarContraseña(this);
 		vistaCambiarContraseña.hacerInvisible();
 		vistaCambiarContraseña.desactivar();
+
+		if (vistaGestionPerfil == null)
+			vistaGestionPerfil = new VistaGestionPerfil(this);
 		vistaGestionPerfil.hacerVisible();
 		vistaGestionPerfil.activar();
 	}
