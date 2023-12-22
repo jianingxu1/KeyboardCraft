@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Clase que gestiona la escritura, lectura y eliminación de teclados en ficheros.
+ * Clase que gestiona la escritura, lectura y eliminación de teclados en
+ * ficheros.
  * Implementa la interfaz GestorEstrategia.
+ * 
  * @author Momin Miah Begum
  * @author Muhammad Yasin Khokhar
  */
@@ -26,7 +28,8 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
      *
      * @param username    Nombre de usuario.
      * @param cjtTeclados HashMap que contiene los teclados a guardar.
-     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error al escribir en el fichero.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error al escribir en
+     *                                             el fichero.
      */
     @Override
     public void guardar(String username, HashMap<String, Character[][]> cjtTeclados)
@@ -57,7 +60,8 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
      *
      * @param username Nombre de usuario.
      * @return HashMap que contiene los teclados cargados.
-     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error al leer el fichero.
+     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error al leer el
+     *                                           fichero.
      */
     @Override
     public HashMap<String, Character[][]> cargar(String username) throws LecturaIncorrectaFicheroExcepcion {
@@ -103,7 +107,8 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
     /**
      * Convierte una cadena de caracteres en una distribución de teclado.
      *
-     * @param distribucionString Cadena de caracteres que representa la distribución de teclado.
+     * @param distribucionString Cadena de caracteres que representa la distribución
+     *                           de teclado.
      * @return Distribución de teclado en forma de matriz de caracteres.
      */
     private static Character[][] convertirStringADistribucion(String distribucionString) {
@@ -154,8 +159,10 @@ public class GestorFicherosTeclados implements GestorEstrategia<Character[][], C
         // guarda la distribucion por filas
         for (Character[] fila : distribucion) {
             for (int i = 0; i < fila.length; ++i) {
-                if (fila[i] == null) s.append(" ");
-                else s.append(fila[i]);
+                if (fila[i] == null)
+                    s.append(" ");
+                else
+                    s.append(fila[i]);
             }
             s.append("◘");
         }

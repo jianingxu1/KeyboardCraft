@@ -17,7 +17,8 @@ public interface GestorEstrategia<T, U> {
      *
      * @param username Nombre de usuario.
      * @param datos    Datos a guardar.
-     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error durante la escritura del fichero.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error durante la
+     *                                             escritura del fichero.
      */
     void guardar(String username, HashMap<String, T> datos) throws EscrituraIncorrectaFicheroExcepcion;
 
@@ -26,7 +27,8 @@ public interface GestorEstrategia<T, U> {
      *
      * @param username Nombre de usuario.
      * @return Datos cargados.
-     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error durante la lectura del fichero.
+     * @throws LecturaIncorrectaFicheroExcepcion Si ocurre un error durante la
+     *                                           lectura del fichero.
      */
     HashMap<String, U> cargar(String username) throws LecturaIncorrectaFicheroExcepcion;
 }

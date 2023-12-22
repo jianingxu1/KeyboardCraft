@@ -9,8 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gestiona la lectura y escritura de archivos relacionados con alfabetos para un usuario específico.
+ * Gestiona la lectura y escritura de archivos relacionados con alfabetos para
+ * un usuario específico.
  * Implementa la interfaz GestorEstrategia.
+ * 
  * @author Momin Miah Begum
  * @author Muhammad Yasin Khokhar
  */
@@ -27,7 +29,8 @@ public class GestorFicherosAlfabetos implements GestorEstrategia<ArrayList<Chara
      *
      * @param username          El nombre de usuario para asociar los alfabetos.
      * @param conjuntoAlfabetos La colección de alfabetos a guardar.
-     * @throws EscrituraIncorrectaFicheroExcepcion Si hay un error al escribir en el archivo de alfabetos.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si hay un error al escribir en el
+     *                                             archivo de alfabetos.
      */
     @Override
     public void guardar(String username, HashMap<String, ArrayList<Character>> conjuntoAlfabetos)
@@ -59,7 +62,8 @@ public class GestorFicherosAlfabetos implements GestorEstrategia<ArrayList<Chara
      *
      * @param username El nombre de usuario.
      * @return Un HashMap con los alfabetos cargados.
-     * @throws LecturaIncorrectaFicheroExcepcion Si hay un error al leer el archivo de alfabetos.
+     * @throws LecturaIncorrectaFicheroExcepcion Si hay un error al leer el archivo
+     *                                           de alfabetos.
      */
     @Override
     public HashMap<String, String> cargar(String username) throws LecturaIncorrectaFicheroExcepcion {
@@ -115,5 +119,5 @@ public class GestorFicherosAlfabetos implements GestorEstrategia<ArrayList<Chara
         }
         return s.toString();
     }
-    
+
 }

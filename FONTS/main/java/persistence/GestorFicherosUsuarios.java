@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * Clase que gestiona la escritura y lectura de usuarios en un fichero.
  * Implementa la interfaz GestorEstrategia.
+ * 
  * @author Momin Miah Begum
  * @author Muhammad Yasin Khokhar
  */
@@ -24,12 +25,14 @@ public class GestorFicherosUsuarios implements GestorEstrategia<String, String> 
     /**
      * Guarda los usuarios en el fichero de usuarios
      *
-     * @param useless    Parámetro no utilizado.
+     * @param useless     Parámetro no utilizado.
      * @param cjtUsuarios El conjunto de usuarios que se quiere guardar.
-     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido escribir correctamente.
+     * @throws EscrituraIncorrectaFicheroExcepcion Si el fichero de usuarios no se
+     *                                             ha podido escribir correctamente.
      */
     @Override
-    public void guardar(String useless, HashMap<String, String> cjtUsuarios) throws EscrituraIncorrectaFicheroExcepcion {
+    public void guardar(String useless, HashMap<String, String> cjtUsuarios)
+            throws EscrituraIncorrectaFicheroExcepcion {
         try {
             String path = "../DATA/usuarios.prop";
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
@@ -42,7 +45,8 @@ public class GestorFicherosUsuarios implements GestorEstrategia<String, String> 
 
             writer.close();
         } catch (IOException e) {
-            throw new EscrituraIncorrectaFicheroExcepcion("Error al escribir en el fichero de usuarios: " + e.getMessage());
+            throw new EscrituraIncorrectaFicheroExcepcion(
+                    "Error al escribir en el fichero de usuarios: " + e.getMessage());
         }
     }
 
@@ -51,7 +55,8 @@ public class GestorFicherosUsuarios implements GestorEstrategia<String, String> 
      *
      * @param useless Parámetro no utilizado.
      * @return El conjunto de usuarios que se ha cargado.
-     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha podido leer correctamente.
+     * @throws LecturaIncorrectaFicheroExcepcion Si el fichero de usuarios no se ha
+     *                                           podido leer correctamente.
      */
     @Override
     public HashMap<String, String> cargar(String useless) throws LecturaIncorrectaFicheroExcepcion {
@@ -76,7 +81,8 @@ public class GestorFicherosUsuarios implements GestorEstrategia<String, String> 
             try {
                 file.createNewFile();
             } catch (IOException ex) {
-                throw new LecturaIncorrectaFicheroExcepcion("Error al crear el fichero de usuarios: " + ex.getMessage());
+                throw new LecturaIncorrectaFicheroExcepcion(
+                        "Error al crear el fichero de usuarios: " + ex.getMessage());
             }
 
             throw new LecturaIncorrectaFicheroExcepcion("Error al leer el fichero de usuarios: " + e.getMessage() +
