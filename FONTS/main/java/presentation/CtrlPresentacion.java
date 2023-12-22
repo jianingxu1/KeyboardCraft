@@ -51,7 +51,7 @@ public class CtrlPresentacion {
 	}
 
 	/** Métodos de sincronizacion entre vistas **/
-	
+
 	/**
 	 * Sincroniza la vista de bienvenida con la vista de crear cuenta
 	 */
@@ -249,103 +249,109 @@ public class CtrlPresentacion {
 
 	/** Llamadas al controlador de dominio **/
 
+	/**
+	 * Inicia sesión para el usuario con el nombre de usuario y contraseña
+	 * proporcionados.
+	 *
+	 * @param username Nombre de usuario para iniciar sesión.
+	 * @param password Contraseña asociada al nombre de usuario.
+	 * @throws Exception Si ocurre algún error durante el proceso de inicio de
+	 *                   sesión.
+	 */
+	public void iniciarSesion(String username, String password) throws Exception {
+		ctrlDominio.IniciarSesion(username, password);
+		cargarDatosUsuario();
+	}
 
-    /**
-     * Inicia sesión para el usuario con el nombre de usuario y contraseña proporcionados.
-     *
-     * @param username Nombre de usuario para iniciar sesión.
-     * @param password Contraseña asociada al nombre de usuario.
-     * @throws Exception Si ocurre algún error durante el proceso de inicio de sesión.
-     */
-    public void iniciarSesion(String username, String password) throws Exception {
-        ctrlDominio.IniciarSesion(username, password);
-        cargarDatosUsuario();
-    }
+	/**
+	 * Cierra la sesión del usuario actual.
+	 *
+	 * @throws Exception Si ocurre algún error durante el proceso de cierre de
+	 *                   sesión.
+	 */
+	public void cerrarSesion() throws Exception {
+		ctrlDominio.cerrarSesion();
+	}
 
-    /**
-     * Cierra la sesión del usuario actual.
-     *
-     * @throws Exception Si ocurre algún error durante el proceso de cierre de sesión.
-     */
-    public void cerrarSesion() throws Exception {
-        ctrlDominio.cerrarSesion();
-    }
+	/**
+	 * Crea un nuevo usuario con el nombre de usuario y contraseña proporcionados.
+	 *
+	 * @param username Nombre de usuario para el nuevo usuario.
+	 * @param password Contraseña asociada al nuevo usuario.
+	 * @throws Exception Si ocurre algún error durante la creación del nuevo
+	 *                   usuario.
+	 */
+	public void crearUsuario(String username, String password) throws Exception {
+		ctrlDominio.anadirNuevoUsuario(username, password);
+	}
 
-    /**
-     * Crea un nuevo usuario con el nombre de usuario y contraseña proporcionados.
-     *
-     * @param username Nombre de usuario para el nuevo usuario.
-     * @param password Contraseña asociada al nuevo usuario.
-     * @throws Exception Si ocurre algún error durante la creación del nuevo usuario.
-     */
-    public void crearUsuario(String username, String password) throws Exception {
-        ctrlDominio.anadirNuevoUsuario(username, password);
-    }
+	/**
+	 * Verifica si un usuario con el nombre de usuario proporcionado existe.
+	 *
+	 * @param username Nombre de usuario a verificar.
+	 * @return True si el usuario existe, false de lo contrario.
+	 */
+	public boolean existeUsuario(String username) {
+		return ctrlDominio.existeUsuario(username);
+	}
 
-    /**
-     * Verifica si un usuario con el nombre de usuario proporcionado existe.
-     *
-     * @param username Nombre de usuario a verificar.
-     * @return True si el usuario existe, false de lo contrario.
-     */
-    public boolean existeUsuario(String username) {
-        return ctrlDominio.existeUsuario(username);
-    }
+	// ... (otros métodos de la clase)
 
-    // ... (otros métodos de la clase)
+	/**
+	 * Elimina un teclado asociado al usuario actual.
+	 *
+	 * @param nombreTeclado Nombre del teclado a eliminar.
+	 * @throws Exception Si ocurre algún error durante el proceso de eliminación del
+	 *                   teclado.
+	 */
+	public void eliminarTeclado(String nombreTeclado) throws Exception {
+		ctrlDominio.eliminarTeclado(nombreTeclado);
+	}
 
-    /**
-     * Elimina un teclado asociado al usuario actual.
-     *
-     * @param nombreTeclado Nombre del teclado a eliminar.
-     * @throws Exception Si ocurre algún error durante el proceso de eliminación del teclado.
-     */
-    public void eliminarTeclado(String nombreTeclado) throws Exception {
-        ctrlDominio.eliminarTeclado(nombreTeclado);
-    }
+	/**
+	 * Obtiene la lista de nombres de los teclados asociados al usuario actual.
+	 *
+	 * @return Lista de nombres de teclados.
+	 */
+	public ArrayList<String> getNombreTeclados() {
+		return ctrlDominio.getNombreTeclados();
+	}
 
-    /**
-     * Obtiene la lista de nombres de los teclados asociados al usuario actual.
-     *
-     * @return Lista de nombres de teclados.
-     */
-    public ArrayList<String> getNombreTeclados() {
-        return ctrlDominio.getNombreTeclados();
-    }
+	/**
+	 * Obtiene la lista de nombres de los alfabetos asociados al usuario actual.
+	 *
+	 * @return Lista de nombres de alfabetos.
+	 */
+	public ArrayList<String> getNombreAlfabetos() {
+		return ctrlDominio.getNombreAlfabetos();
+	}
 
-    /**
-     * Obtiene la lista de nombres de los alfabetos asociados al usuario actual.
-     *
-     * @return Lista de nombres de alfabetos.
-     */
-    public ArrayList<String> getNombreAlfabetos() {
-        return ctrlDominio.getNombreAlfabetos();
-    }
+	/**
+	 * Obtiene la lista de nombres de los algoritmos asociados al usuario actual.
+	 *
+	 * @return Lista de nombres de algoritmos.
+	 */
+	public ArrayList<String> getNombreAlgoritmos() {
+		return ctrlDominio.getNombreAlgoritmos();
+	}
 
-    /**
-     * Obtiene la lista de nombres de los algoritmos asociados al usuario actual.
-     *
-     * @return Lista de nombres de algoritmos.
-     */
-    public ArrayList<String> getNombreAlgoritmos() {
-        return ctrlDominio.getNombreAlgoritmos();
-    }
-
-    /**
-     * Crea un nuevo teclado con los parámetros proporcionados y lo asocia al usuario actual.
-     *
-     * @param nombreTeclado           Nombre del nuevo teclado.
-     * @param nombreAlfabeto          Nombre del alfabeto asociado al teclado.
-     * @param texto                   Texto asociado al teclado.
-     * @param palabrasConFrecuencia   Palabras con frecuencia asociadas al teclado.
-     * @param nombreAlgoritmo         Nombre del algoritmo asociado al teclado.
-     * @throws Exception Si ocurre algún error durante la creación del nuevo teclado.
-     */
-    public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia,
-            String nombreAlgoritmo) throws Exception {
-        ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
-        ctrlDominio.guardarTeclados();
-    }
+	/**
+	 * Crea un nuevo teclado con los parámetros proporcionados y lo asocia al
+	 * usuario actual.
+	 *
+	 * @param nombreTeclado         Nombre del nuevo teclado.
+	 * @param nombreAlfabeto        Nombre del alfabeto asociado al teclado.
+	 * @param texto                 Texto asociado al teclado.
+	 * @param palabrasConFrecuencia Palabras con frecuencia asociadas al teclado.
+	 * @param nombreAlgoritmo       Nombre del algoritmo asociado al teclado.
+	 * @throws Exception Si ocurre algún error durante la creación del nuevo
+	 *                   teclado.
+	 */
+	public void crearTeclado(String nombreTeclado, String nombreAlfabeto, String texto, String palabrasConFrecuencia,
+			String nombreAlgoritmo) throws Exception {
+		ctrlDominio.crearTeclado(nombreTeclado, nombreAlfabeto, texto, palabrasConFrecuencia, nombreAlgoritmo);
+		ctrlDominio.guardarTeclados();
+	}
 
 	/**
 	 * Intercambia dos teclas en el teclado especificado por nombre.
@@ -353,7 +359,8 @@ public class CtrlPresentacion {
 	 * @param nombreTeclado Nombre del teclado en el cual realizar el intercambio.
 	 * @param tecla1        Primera tecla a intercambiar.
 	 * @param tecla2        Segunda tecla a intercambiar.
-	 * @throws Exception Si ocurre algún error durante el proceso de intercambio de teclas.
+	 * @throws Exception Si ocurre algún error durante el proceso de intercambio de
+	 *                   teclas.
 	 */
 	public void intercambiarTeclasTeclado(String nombreTeclado, char tecla1, char tecla2) throws Exception {
 		ctrlDominio.intercambiarTeclasTeclado(nombreTeclado, tecla1, tecla2);
@@ -364,7 +371,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param nombreTeclado Nombre del teclado del cual obtener la distribución.
 	 * @return Matriz de caracteres que representa la distribución del teclado.
-	 * @throws Exception Si ocurre algún error durante el proceso de obtención de la distribución del teclado.
+	 * @throws Exception Si ocurre algún error durante el proceso de obtención de la
+	 *                   distribución del teclado.
 	 */
 	public Character[][] getDistribucionTeclado(String nombreTeclado) throws Exception {
 		return ctrlDominio.getDistribucionTeclado(nombreTeclado);
@@ -375,7 +383,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param nombreAlfabeto     Nombre del nuevo alfabeto.
 	 * @param caracteresAlfabeto Caracteres asociados al nuevo alfabeto.
-	 * @throws Exception Si ocurre algún error durante el proceso de creación del nuevo alfabeto.
+	 * @throws Exception Si ocurre algún error durante el proceso de creación del
+	 *                   nuevo alfabeto.
 	 */
 	public void crearAlfabeto(String nombreAlfabeto, String caracteresAlfabeto) throws Exception {
 		ctrlDominio.crearAlfabeto(nombreAlfabeto, caracteresAlfabeto);
@@ -385,7 +394,8 @@ public class CtrlPresentacion {
 	 * Elimina el alfabeto especificado por nombre.
 	 *
 	 * @param nombreAlfabeto Nombre del alfabeto a eliminar.
-	 * @throws Exception Si ocurre algún error durante el proceso de eliminación del alfabeto.
+	 * @throws Exception Si ocurre algún error durante el proceso de eliminación del
+	 *                   alfabeto.
 	 */
 	public void eliminarAlfabeto(String nombreAlfabeto) throws Exception {
 		ctrlDominio.eliminarAlfabeto(nombreAlfabeto);
@@ -394,9 +404,10 @@ public class CtrlPresentacion {
 	/**
 	 * Modifica los caracteres del alfabeto especificado por nombre.
 	 *
-	 * @param nombreAlfabeto      Nombre del alfabeto a modificar.
+	 * @param nombreAlfabeto     Nombre del alfabeto a modificar.
 	 * @param caracteresAlfabeto Nuevos caracteres asociados al alfabeto.
-	 * @throws Exception Si ocurre algún error durante el proceso de modificación de caracteres del alfabeto.
+	 * @throws Exception Si ocurre algún error durante el proceso de modificación de
+	 *                   caracteres del alfabeto.
 	 */
 	public void modificarCaracteresAlfabeto(String nombreAlfabeto, String caracteresAlfabeto) throws Exception {
 		ctrlDominio.modificarCaracteresAlfabeto(nombreAlfabeto, caracteresAlfabeto);
@@ -407,7 +418,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param nombreAlfabeto Nombre del alfabeto del cual obtener los caracteres.
 	 * @return Lista de caracteres asociados al alfabeto.
-	 * @throws Exception Si ocurre algún error durante el proceso de obtención de caracteres del alfabeto.
+	 * @throws Exception Si ocurre algún error durante el proceso de obtención de
+	 *                   caracteres del alfabeto.
 	 */
 	public ArrayList<Character> getCaracteresDeAlfabeto(String nombreAlfabeto) throws Exception {
 		return ctrlDominio.getCaracteresDeAlfabeto(nombreAlfabeto);
@@ -416,7 +428,8 @@ public class CtrlPresentacion {
 	/**
 	 * Carga los teclados y alfabetos asociados al usuario actual.
 	 *
-	 * @throws Exception Si ocurre algún error durante el proceso de carga de datos del usuario.
+	 * @throws Exception Si ocurre algún error durante el proceso de carga de datos
+	 *                   del usuario.
 	 */
 	private void cargarDatosUsuario() throws Exception {
 		ctrlDominio.cargarTeclados();
@@ -426,7 +439,8 @@ public class CtrlPresentacion {
 	/**
 	 * Guarda los teclados, alfabetos y usuarios asociados al usuario actual.
 	 *
-	 * @throws Exception Si ocurre algún error durante el proceso de guardado de datos.
+	 * @throws Exception Si ocurre algún error durante el proceso de guardado de
+	 *                   datos.
 	 */
 	public void guardarDatos() throws Exception {
 		ctrlDominio.guardarTeclados();
@@ -439,7 +453,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param filePath Ruta del archivo desde el cual importar el texto.
 	 * @return Texto importado.
-	 * @throws Exception Si ocurre algún error durante el proceso de importación de texto.
+	 * @throws Exception Si ocurre algún error durante el proceso de importación de
+	 *                   texto.
 	 */
 	public String importarTexto(String filePath) throws Exception {
 		return ctrlDominio.importarTexto(filePath);
@@ -450,7 +465,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param filePath Ruta del archivo desde el cual importar la lista de palabras.
 	 * @return Lista de palabras importada.
-	 * @throws Exception Si ocurre algún error durante el proceso de importación de la lista de palabras.
+	 * @throws Exception Si ocurre algún error durante el proceso de importación de
+	 *                   la lista de palabras.
 	 */
 	public String importarListaPalabras(String filePath) throws Exception {
 		return ctrlDominio.importarListaPalabras(filePath);
@@ -461,7 +477,8 @@ public class CtrlPresentacion {
 	 *
 	 * @param oldPass Contraseña actual del usuario.
 	 * @param newPass Nueva contraseña para el usuario.
-	 * @throws Exception Si ocurre algún error durante el proceso de cambio de contraseña.
+	 * @throws Exception Si ocurre algún error durante el proceso de cambio de
+	 *                   contraseña.
 	 */
 	public void cambiarContrasena(String oldPass, String newPass) throws Exception {
 		ctrlDominio.modificarContrasenaUsuarioActual(oldPass, newPass);
@@ -470,7 +487,8 @@ public class CtrlPresentacion {
 	/**
 	 * Elimina la cuenta del usuario actual.
 	 *
-	 * @throws Exception Si ocurre algún error durante el proceso de eliminación de la cuenta.
+	 * @throws Exception Si ocurre algún error durante el proceso de eliminación de
+	 *                   la cuenta.
 	 */
 	public void borrarCuenta() throws Exception {
 		ctrlDominio.eliminarUsuarioActual();
@@ -479,7 +497,8 @@ public class CtrlPresentacion {
 	/**
 	 * Cierra el programa.
 	 *
-	 * @throws Exception Si ocurre algún error durante el proceso de cierre del programa.
+	 * @throws Exception Si ocurre algún error durante el proceso de cierre del
+	 *                   programa.
 	 */
 	public void cerrarPrograma() throws Exception {
 		System.exit(0);

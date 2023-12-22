@@ -8,6 +8,7 @@ import java.util.*;
 /**
  * Clase que representa la interfaz de usuario para la gestión de alfabetos.
  * Permite consultar, crear, modificar y eliminar alfabetos.
+ * 
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class VistaGestionAlfabetos extends javax.swing.JFrame {
@@ -37,7 +38,7 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
 
     /**
      * Hace visible la vista de gestion de alfabetos.
-     */    
+     */
     public void hacerVisible() {
         pack();
         setVisible(true);
@@ -59,7 +60,7 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         setEnabled(true);
     }
 
-     /**
+    /**
      * Desactiva la vista de gestion de alfabetos.
      */
     public void desactivar() {
@@ -105,12 +106,12 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
             iCtrlPresentacion.cerrarPrograma();
         }
     }
-    
+
     /**
      * Inicializa los componentes de la interfaz.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         panelCard = new javax.swing.JPanel();
@@ -176,57 +177,80 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         jScrollPane3.setViewportView(areaCaracteresModificar);
 
         labelInfoInputModificar.setForeground(new java.awt.Color(100, 100, 100));
-        labelInfoInputModificar.setText("<html>Si quieres modificar el alfabeto, reemplaza los caracteres que desees. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
+        labelInfoInputModificar.setText(
+                "<html>Si quieres modificar el alfabeto, reemplaza los caracteres que desees. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
 
         javax.swing.GroupLayout panelModificarLayout = new javax.swing.GroupLayout(panelModificar);
         panelModificar.setLayout(panelModificarLayout);
         panelModificarLayout.setHorizontalGroup(
-            panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addComponent(btnModificarAlfabeto)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminarAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCaracteresModificar)
-                            .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelInfoInputModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addComponent(labelAlfabeto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))
-                    .addGroup(panelModificarLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(labelTituloCrear1)))
-                .addGap(129, 129, 129))
-        );
+                panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout
+                                .createSequentialGroup()
+                                .addContainerGap(137, Short.MAX_VALUE)
+                                .addGroup(panelModificarLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                panelModificarLayout.createSequentialGroup()
+                                                        .addComponent(btnModificarAlfabeto)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(btnEliminarAlfabeto,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 158,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout
+                                                .createSequentialGroup()
+                                                .addGroup(panelModificarLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(labelCaracteresModificar)
+                                                        .addGroup(panelModificarLayout
+                                                                .createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                        false)
+                                                                .addComponent(jScrollPane3,
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(labelInfoInputModificar,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 286,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(25, 25, 25))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout
+                                                .createSequentialGroup()
+                                                .addComponent(labelAlfabeto)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(65, 65, 65))
+                                        .addGroup(panelModificarLayout.createSequentialGroup()
+                                                .addGap(76, 76, 76)
+                                                .addComponent(labelTituloCrear1)))
+                                .addGap(129, 129, 129)));
         panelModificarLayout.setVerticalGroup(
-            panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelModificarLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(labelTituloCrear1)
-                .addGap(34, 34, 34)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelAlfabeto)
-                    .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(labelCaracteresModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelInfoInputModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModificarAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarAlfabeto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
+                panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelModificarLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(labelTituloCrear1)
+                                .addGap(34, 34, 34)
+                                .addGroup(panelModificarLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(labelAlfabeto)
+                                        .addComponent(comboboxAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(labelCaracteresModificar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 69,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelInfoInputModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 71,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelModificarLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnModificarAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 53,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnEliminarAlfabeto, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE, 53,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(62, Short.MAX_VALUE)));
 
         panelCard.add(panelModificar, "cardModificar");
         panelModificar.getAccessibleContext().setAccessibleName("");
@@ -253,53 +277,69 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         labelTituloCrear.setText("Creación de alfabeto");
 
         labelInfoInputCrear.setForeground(new java.awt.Color(100, 100, 100));
-        labelInfoInputCrear.setText("<html>Introduce los caracteres. Los repetidos y espacios no se considerarán. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
+        labelInfoInputCrear.setText(
+                "<html>Introduce los caracteres. Los repetidos y espacios no se considerarán. Máx 30 caractéres distintos (si escribes más, se descartarán).</html>");
 
         javax.swing.GroupLayout panelCrearLayout = new javax.swing.GroupLayout(panelCrear);
         panelCrear.setLayout(panelCrearLayout);
         panelCrearLayout.setHorizontalGroup(
-            panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCrearLayout.createSequentialGroup()
-                .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCrearLayout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane2)
-                            .addGroup(panelCrearLayout.createSequentialGroup()
-                                .addComponent(labelCaracteres)
-                                .addGap(130, 130, 130))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelCrearLayout.createSequentialGroup()
-                                .addComponent(labelNombreAlfabeto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fieldNombreAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelInfoInputCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelCrearLayout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(labelTituloCrear))
-                    .addGroup(panelCrearLayout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(btnCrearAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(163, Short.MAX_VALUE))
-        );
+                panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                .addGroup(panelCrearLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                                .addGap(159, 159, 159)
+                                                .addGroup(panelCrearLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                false)
+                                                        .addComponent(jScrollPane2)
+                                                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                                                .addComponent(labelCaracteres)
+                                                                .addGap(130, 130, 130))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                panelCrearLayout.createSequentialGroup()
+                                                                        .addComponent(labelNombreAlfabeto)
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                        .addComponent(fieldNombreAlfabeto,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(labelInfoInputCrear,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 274,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                                .addGap(218, 218, 218)
+                                                .addComponent(labelTituloCrear))
+                                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                                .addGap(221, 221, 221)
+                                                .addComponent(btnCrearAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(163, Short.MAX_VALUE)));
         panelCrearLayout.setVerticalGroup(
-            panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCrearLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(labelTituloCrear)
-                .addGap(36, 36, 36)
-                .addGroup(panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNombreAlfabeto)
-                    .addComponent(fieldNombreAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(labelCaracteres)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelInfoInputCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCrearAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
+                panelCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelCrearLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(labelTituloCrear)
+                                .addGap(36, 36, 36)
+                                .addGroup(panelCrearLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(labelNombreAlfabeto)
+                                        .addComponent(fieldNombreAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(labelCaracteres)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelInfoInputCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 77,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCrearAlfabeto, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(51, Short.MAX_VALUE)));
 
         panelCard.add(panelCrear, "cardCrear");
 
@@ -332,22 +372,24 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelCard, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                Short.MAX_VALUE));
 
         pack();
-    }// </editor-fold> 
+    }// </editor-fold>
 
     /**
      * Acción ejecutada al hacer clic en el botón "Eliminar Alfabeto". Elimina el
      * alfabeto seleccionado.
      */
-    private void btnEliminarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+    private void btnEliminarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {
         String nombreAlfabeto = (String) comboboxAlfabeto.getSelectedItem();
         if (nombreAlfabeto == null) {
             JOptionPane.showMessageDialog(this, "No hay ningún alfabeto seleccionado.");
@@ -364,13 +406,13 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
-    }                                                   
+    }
 
     /**
      * Acción ejecutada al hacer clic en el botón "Modificar Alfabeto". Modifica
      * el alfabeto seleccionado con los datos proporcionados.
      */
-    private void btnModificarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+    private void btnModificarAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {
         String nombreAlfabeto = (String) comboboxAlfabeto.getSelectedItem();
         String caracteres = areaCaracteresModificar.getText();
         try {
@@ -380,13 +422,13 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }                                                    
+    }
 
     /**
      * Acción ejecutada al hacer clic en el botón "Crear Alfabeto". Crea un nuevo
      * alfabeto con los datos proporcionados.
      */
-    private void btnCrearAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+    private void btnCrearAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {
         String nombreAlfabeto = fieldNombreAlfabeto.getText();
         String caracteres = areaCaracteresCrear.getText();
         try {
@@ -396,33 +438,36 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }                                                
+    }
 
     /**
-     * Acción ejecutada al hacer clic en el menú "Modificar". Muestra el panel de "Modificar
+     * Acción ejecutada al hacer clic en el menú "Modificar". Muestra el panel de
+     * "Modificar
      * Alfabeto".
      */
-    private void menuModificarMouseClicked(java.awt.event.MouseEvent evt) {                                           
+    private void menuModificarMouseClicked(java.awt.event.MouseEvent evt) {
         resetCardModificarAlfabeto();
         mostrarCardModificarAlfabeto();
-    }                                          
+    }
 
     /**
      * Acción ejecutada al hacer clic en el menú "Crear". Muestra el panel de "Crear
      * Teclado".
      */
-    private void menuCrearMouseClicked(java.awt.event.MouseEvent evt) {                                       
+    private void menuCrearMouseClicked(java.awt.event.MouseEvent evt) {
         resetCardCrearAlfabeto();
         mostrarCardCrearAlfabeto();
-    }                                      
+    }
 
     /**
      * Acción ejecutada al seleccionar un elemento del combo box. Muestra los
      * caracteres del alfabeto seleccionado.
+     * 
      * @param evt Evento de selección de un elemento del combo box.
      */
-    private void comboboxAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        if (!userSelection) return;
+    private void comboboxAlfabetoActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!userSelection)
+            return;
         String nombreAlfabeto = (String) comboboxAlfabeto.getSelectedItem();
         try {
             ArrayList<Character> listaCaracteres = iCtrlPresentacion.getCaracteresDeAlfabeto(nombreAlfabeto);
@@ -435,21 +480,21 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }                                                
+    }
 
     /**
      * Acción ejecutada al hacer clic en el menú "Volver". Regresa al menú principal
      * desde la vista de gestión de alfabetos.
      */
-    private void menuVolverMouseClicked(java.awt.event.MouseEvent evt) {                                        
+    private void menuVolverMouseClicked(java.awt.event.MouseEvent evt) {
         iCtrlPresentacion.syncVistaGestionAlfabetos_a_MenuPrincipal();
-    }                                       
+    }
 
     /**
      * Muestra el panel "Crear Alfabeto" en la vista.
      */
     private void mostrarCardCrearAlfabeto() {
-        CardLayout cardLayout = (CardLayout)(panelCard.getLayout());
+        CardLayout cardLayout = (CardLayout) (panelCard.getLayout());
         cardLayout.show(panelCard, "cardCrear");
     }
 
@@ -457,7 +502,7 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
      * Muestra el panel "Consultar o modificar Alfabeto" en la vista.
      */
     private void mostrarCardModificarAlfabeto() {
-        CardLayout cardLayout = (CardLayout)(panelCard.getLayout());
+        CardLayout cardLayout = (CardLayout) (panelCard.getLayout());
         cardLayout.show(panelCard, "cardModificar");
     }
 
@@ -491,126 +536,127 @@ public class VistaGestionAlfabetos extends javax.swing.JFrame {
         areaCaracteresModificar.setText("");
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify
     /**
      * Área de texto para ingresar caracteres al crear un alfabeto.
      */
     private JTextArea areaCaracteresCrear;
-    
+
     /**
      * Área de texto para ingresar caracteres al modificar un alfabeto.
      */
     private JTextArea areaCaracteresModificar;
-    
+
     /**
      * Botón para crear un alfabeto.
      */
     private JButton btnCrearAlfabeto;
-    
+
     /**
      * Botón para eliminar un alfabeto.
      */
     private JButton btnEliminarAlfabeto;
-    
+
     /**
      * Botón para modificar un alfabeto.
      */
     private JButton btnModificarAlfabeto;
-    
+
     /**
      * Cuadro desplegable para seleccionar un alfabeto.
      */
     private JComboBox<String> comboboxAlfabeto;
-    
+
     /**
      * Campo de texto para ingresar el nombre de un alfabeto.
      */
     private JTextField fieldNombreAlfabeto;
-    
+
     /**
      * Barra de desplazamiento para el área de caracteres al crear un alfabeto.
      */
     private JScrollPane jScrollPane2;
-    
+
     /**
      * Barra de desplazamiento para el área de caracteres al modificar un alfabeto.
      */
     private JScrollPane jScrollPane3;
-    
+
     /**
      * Etiqueta que representa el texto "Alfabeto".
      */
     private JLabel labelAlfabeto;
-    
+
     /**
      * Etiqueta que representa el texto "Caracteres".
      */
     private JLabel labelCaracteres;
-    
+
     /**
      * Etiqueta que representa el texto "Caracteres del alfabeto seleccionado".
      */
     private JLabel labelCaracteresModificar;
-    
+
     /**
      * Etiqueta de información para la entrada de caracteres al crear un alfabeto.
      */
     private JLabel labelInfoInputCrear;
-    
+
     /**
-     * Etiqueta de información para la entrada de caracteres al modificar un alfabeto.
+     * Etiqueta de información para la entrada de caracteres al modificar un
+     * alfabeto.
      */
     private JLabel labelInfoInputModificar;
-    
+
     /**
      * Etiqueta que representa el texto "Nombre del alfabeto".
      */
     private JLabel labelNombreAlfabeto;
-    
+
     /**
      * Etiqueta que representa el título "Creación de alfabeto".
      */
     private JLabel labelTituloCrear;
-    
+
     /**
      * Etiqueta que representa el título "Consulta de alfabeto".
      */
     private JLabel labelTituloCrear1;
-    
+
     /**
      * Menú de opciones para crear un alfabeto.
      */
     private JMenu menuCrear;
-    
+
     /**
      * Menú de opciones para consultar o modificar un alfabeto.
      */
     private JMenu menuModificar;
-    
+
     /**
      * Menú de opciones para volver al menú principal.
      */
     private JMenu menuVolver;
-    
+
     /**
      * Barra de menú para las acciones de la ventana.
      */
     private JMenuBar menubarAcciones;
-    
+
     /**
      * Panel principal que contiene las tarjetas de creación y modificación.
      */
     private JPanel panelCard;
-    
+
     /**
      * Panel para la creación de alfabetos.
      */
     private JPanel panelCrear;
-    
+
     /**
      * Panel para la modificación de alfabetos.
      */
     private JPanel panelModificar;
 
-    // End of variables declaration                   
+    // End of variables declaration
 }
