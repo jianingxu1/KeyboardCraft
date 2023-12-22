@@ -8,13 +8,44 @@ import javax.swing.*;
  * Representa la vista del menu principal de la aplicacion.
  */
 public class VistaMenuPrincipal extends JFrame {
+    /**
+     * Controlador de presentación asociado a esta vista.
+     */
     CtrlPresentacion iCtrlPresentacion;
+
+    /**
+     * Panel que contiene los elementos visuales del menú principal.
+     */
     private JPanel panelContenidos;
+
+    /**
+     * Botón para transicionar a gestionar los teclados en el menú principal.
+     */
     private JButton btnGestionarTeclados;
+
+    /**
+     * Botón para transicionar a gestionar los alfabetos en el menú principal.
+     */
     private JButton btnGestionarAlfabetos;
+
+    /**
+     * Botón para transicionar a gestionar el perfil en el menú principal.
+     */
     private JButton btnGestionarPerfil;
+
+    /**
+     * Botón para cerrar sesión en el menú principal.
+     */
     private JButton btnLogOut;
+
+    /**
+     * Panel que contiene los botones del menú principal.
+     */
     private JPanel panelBotones;
+
+    /**
+     * Etiqueta de título del menú principal.
+     */
     private JLabel labelTitulo;
 
     /**
