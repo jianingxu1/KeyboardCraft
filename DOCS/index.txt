@@ -7,4 +7,7 @@ En la carpeta DOCS encontraras un fichero LaTeX en formato .pdf con toda la docu
 
 Ademas de otros documentos como:
 	- Javadoc: con la información de cada clase implementada
-	- Imagenes de las relaciones entre clases
+	- Imagenes de los diagramas UML sobre las relaciones entre clases
+	- Manual de usuario: explica como utilizar la aplicacion
+	- Juego de pruebas: trata varios casos extremos para cada funcionalidad
+	de la aplicacion
