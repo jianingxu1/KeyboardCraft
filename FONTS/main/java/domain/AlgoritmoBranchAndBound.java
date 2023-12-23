@@ -45,7 +45,8 @@ public class AlgoritmoBranchAndBound implements Algoritmo {
      * Genera la distribucion optima para el teclado dada una entrada.
      * 
      * @param alfabeto Alfabeto a utilizar.
-     * @param bigramasConFrecuencia Mapa con todos los bigramas posibles y sus frecuencias
+     * @param palabras Palabras con sus frecuencias.
+     * @param texto    Texto para analizar.
      * @return Matriz de caracteres que representa la distribucion optima.
      */
     @Override
