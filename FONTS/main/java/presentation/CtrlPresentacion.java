@@ -11,7 +11,7 @@ import java.util.*;
  * @author Rubén Catalán Rua (ruben.catalan@estudiantat.upc.edu)
  * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
-public class CtrlPresentacion {
+public class CtrlPresentacion implements SyncViews {
 
 	/** Atributos **/
 	private CtrlDominio ctrlDominio;
@@ -55,6 +55,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de bienvenida con la vista de crear cuenta
 	 */
+	@Override
 	public void syncVistaBienvenida_a_CrearCuenta() {
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
@@ -70,6 +71,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de crear cuenta con la vista de bienvenida
 	 */
+	@Override
 	public void syncVistaCrearCuenta_a_Bienvenida() {
 		if (vistaCrearCuenta == null)
 			vistaCrearCuenta = new VistaCrearCuenta(this);
@@ -85,6 +87,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de bienvenida con la vista de menu principal
 	 */
+	@Override
 	public void syncVistaBienvenida_a_MenuPrincipal() {
 		if (vistaBienvenida == null)
 			vistaBienvenida = new VistaBienvenida(this);
@@ -100,6 +103,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de menu principal con la vista de bienvenida
 	 */
+	@Override
 	public void syncVistaMenuPrincipal_a_Bienvenida() {
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
@@ -115,6 +119,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de menu principal con la vista de gestion de alfabetos
 	 */
+	@Override
 	public void syncVistaGestionAlfabetos_a_MenuPrincipal() {
 		if (vistaGestionAlfabetos == null)
 			vistaGestionAlfabetos = new VistaGestionAlfabetos(this);
@@ -130,6 +135,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de gestion de alfabetos con la vista de menu principal
 	 */
+	@Override
 	public void syncVistaMenuPrincipal_a_GestionAlfabetos() {
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
@@ -145,6 +151,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de gestion de perfil con la vista de menu principal
 	 */
+	@Override
 	public void syncVistaGestionPerfil_a_MenuPrincipal() {
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
@@ -160,6 +167,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de gestion de perfil con la vista de bienvenida
 	 */
+	@Override
 	public void syncVistaGestionPerfil_a_Bienvenida() {
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
@@ -175,6 +183,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la de menu principal con la vista de gestion de perfil
 	 */
+	@Override
 	public void syncVistaMenuPrincipal_a_GestionPerfil() {
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
@@ -190,6 +199,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de menu principal con la vista de gestion de teclados
 	 */
+	@Override
 	public void syncVistaMenuPrincipal_a_GestionTeclados() {
 		if (vistaMenuPrincipal == null)
 			vistaMenuPrincipal = new VistaMenuPrincipal(this);
@@ -205,6 +215,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de gestion de teclados con la vista de menu principal
 	 */
+	@Override
 	public void syncVistaGestionTeclados_a_MenuPrincipal() {
 		if (vistaGestionTeclados == null)
 			vistaGestionTeclados = new VistaGestionTeclados(this);
@@ -220,6 +231,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de gestion perfil a la vista de cambiar contrasena
 	 */
+	@Override
 	public void syncVistaGestionPerfil_a_CambiarContrasena() {
 		if (vistaGestionPerfil == null)
 			vistaGestionPerfil = new VistaGestionPerfil(this);
@@ -235,6 +247,7 @@ public class CtrlPresentacion {
 	/**
 	 * Sincroniza la vista de cambiar contrasena a la vista de gestion perfil
 	 */
+	@Override
 	public void syncVistaCambiarContrasena_a_GestionPerfil() {
 		if (vistaCambiarContrasena == null)
 			vistaCambiarContrasena = new VistaCambiarContrasena(this);
