@@ -62,7 +62,7 @@ public class Teclado {
     private int[] buscarPosicion(char caracter) {
         for (int i = 0; i < distribucion.length; ++i) {
             for (int j = 0; j < distribucion[i].length; ++j) {
-                if (distribucion[i][j] == caracter) {
+                if (distribucion[i][j] != null && distribucion[i][j] == caracter) {
                     return new int[] { i, j };
                 }
             }
