@@ -1,0 +1,1 @@
+barco 100 gallina 200 perro 700 monumento 200

@@ -1,0 +1,1 @@
+mesa 100 silla 200 puerta 300 pilar 230 suelo 100 maquina 40 hola 1000
