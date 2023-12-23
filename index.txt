@@ -9,6 +9,11 @@ En esta primera entrega, encontraras tres carpetas con toda la informacion, codi
 	+ ED + algoritmos utilizados
 	+ Relacion clases/miembro
 
+	- El manual de usuario
+	- Los juegos de prueba
+	- El diagrama de clases UML
+	- entre otros mas
+
 - FONTS: contiene todos los archivos .java del proyecto. Estos se separan entre "main". Siendo main la carpeta con el codigo que se ejecutara en el driver.
 
 - EXE: contiene el esqueleto Gradle utilizado durante el proyecto. Es en este directorio donde podras ejecutar las diferentes funcionalidades del programa:
