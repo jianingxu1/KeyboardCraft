@@ -9,8 +9,7 @@ En esta primera entrega, encontraras tres carpetas con toda la informacion, codi
 	+ ED + algoritmos utilizados
 	+ Relacion clases/miembro
 
-- FONTS: contiene todos los archivos .java del proyecto. Estos se separan entre "main" y "test". Siendo main la carpeta con el codigo que se ejecutara en el driver y test todo el codigo de prueba del correcto funcionamiento de las clases.
+- FONTS: contiene todos los archivos .java del proyecto. Estos se separan entre "main". Siendo main la carpeta con el codigo que se ejecutara en el driver.
 
 - EXE: contiene el esqueleto Gradle utilizado durante el proyecto. Es en este directorio donde podras ejecutar las diferentes funcionalidades del programa:
-	+ Con el comando './gradlew run --console=plain' podras ejecutar el Driver, que mostrara una vista por terminal del programa sobre la cual trabajar (NOTA: si esta opcion falla, ejecuta primero './gradlew clean')
-	+ El comando './gradlew test' ejecutara todos los tests utilizados para probar la funcionalidad del programa. Si quieres volver a probar tests ya realizados, utiliza './gradlew test --rerun-tasks'
+	+ Con el comando './gradlew run --console=plain' podras ejecutar la aplicacion (NOTA: si esta opcion falla, ejecuta primero './gradlew clean')
