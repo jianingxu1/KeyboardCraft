@@ -15,6 +15,11 @@ public class Teclado {
     private Character[][] distribucion;
 
     /** Constructora **/
+    /**
+     * Crea un teclado con su nombre y distribución de teclas.
+     * @param nombre Nombre del teclado.
+     * @param distribucion Matriz que contiene la distribución de teclas.
+     */
     public Teclado(String nombre, Character[][] distribucion) {
         this.nombre = nombre;
         this.distribucion = distribucion;

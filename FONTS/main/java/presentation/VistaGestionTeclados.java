@@ -12,7 +12,7 @@ import java.util.*;
  * Representa la interfaz gráfica para gestionar teclados. Permite crear,
  * modificar y visualizar diferentes disposiciones de teclado.
  * 
- * @autor Jianing Xu (jianing.xu@estudiantat.upc.edu)
+ * @author Jianing Xu (jianing.xu@estudiantat.upc.edu)
  */
 public class VistaGestionTeclados extends javax.swing.JFrame {
     /**

@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Gestiona la lectura y escritura de archivos relacionados con alfabetos para
+ * Clase GestorFicherosAlfabetos
+ * Clase que gestiona la lectura y escritura de archivos relacionados con alfabetos para
  * un usuario específico.
  * Implementa la interfaz GestorEstrategia.
  * 

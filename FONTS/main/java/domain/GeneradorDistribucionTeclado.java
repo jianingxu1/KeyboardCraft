@@ -25,9 +25,8 @@ public class GeneradorDistribucionTeclado {
      * Genera una distribucion de caracteres en una matriz según el algoritmo
      * proporcionado
      * 
-     * @param alf      Alfabeto a utilizar
-     * @param palabras Palabras con su frecuencia
-     * @param texto    Texto a analizar
+     * @param alfabeto      Alfabeto a utilizar
+     * @param bigramasConFrecuencia Mapa de bigramas con su frecuencia
      * @return La distribucion de caracteres en una matriz generada por el algoritmo
      */
     public Character[][] generarDistribucion(Alfabeto alfabeto, Map<String, Integer> bigramasConFrecuencia) {

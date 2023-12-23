@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Clase GestorFicherosUsuarios
  * Clase que gestiona la escritura y lectura de usuarios en un fichero.
  * Implementa la interfaz GestorEstrategia.
  * 

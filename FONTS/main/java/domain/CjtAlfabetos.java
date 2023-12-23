@@ -148,6 +148,7 @@ public class CjtAlfabetos {
      * @param nombre El identificador único del alfabeto.
      * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
      *                                         válido.
+     * @return La instancia del alfabeto.
      */
     public Alfabeto getAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         // Validar nombre del alfabeto
@@ -166,6 +167,7 @@ public class CjtAlfabetos {
      * @param nombre El nombre del alfabeto.
      * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
      *                                         válido.
+     * @return Los caracteres del alfabeto en formato String.
      */
     public String getAlfabetoCaracteresEnString(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         // Validar nombre del alfabeto
@@ -179,29 +181,13 @@ public class CjtAlfabetos {
     }
 
     /**
-     * Retorna true si existe un alfabeto con el nombre especificado, en su defecto
-     * retorna false.
+     * Comprueba si existe el alfabeto dado el nombre.
      *
      * @param nombre El nombre del alfabeto.
+     * @return True si existe un alfabeto con el nombre especificado, en su defecto
      */
-    public Boolean existeAlfabeto(String nombre) {
+    private Boolean existeAlfabeto(String nombre) {
         return alfabetos.containsKey(nombre);
-    }
-
-    /**
-     * Retorna el alfabeto del formato {nombre | caracteres} de todos los alfabetos
-     * del conjunto.
-     */
-    public String getNombresYCaracteresDeAlfabetos() {
-        String nombresAlfabetos = "";
-        int mapSize = alfabetos.size();
-        int count = 0;
-        for (Alfabeto alfabeto : alfabetos.values()) {
-            nombresAlfabetos += alfabeto.getNombre();
-            if (++count < mapSize)
-                nombresAlfabetos += "\n";
-        }
-        return nombresAlfabetos;
     }
 
     /**
@@ -213,6 +199,7 @@ public class CjtAlfabetos {
 
     /**
      * Retorna los nombres de los alfabetos
+     * @return Retorna los nombres de los alfabetos en una lista
      */
     public ArrayList<String> getNombreAlfabetos() {
         ArrayList<String> nombres = new ArrayList<>();
@@ -227,6 +214,9 @@ public class CjtAlfabetos {
      * especificado.
      *
      * @param nombre El nombre del alfabeto.
+     * @throws NombreAlfabetoNoValidoExcepcion Si el nombre del alfabeto no es
+     *                                        válido.
+     * @return ArrayList con los caracteres del alfabeto.
      */
     public ArrayList<Character> getCaracteresDeAlfabeto(String nombre) throws NombreAlfabetoNoValidoExcepcion {
         if (!existeAlfabeto(nombre))

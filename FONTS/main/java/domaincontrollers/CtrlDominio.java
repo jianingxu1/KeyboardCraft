@@ -54,7 +54,7 @@ public class CtrlDominio {
      *                       en
      *                       la distribución del teclado.
      * @param algoritmo      Un string que representa el algoritmo utilizado para la
-     *                       creación del teclado (B&B o SA).
+     *                       creación del teclado (Branch and Bound o Simulated Annealing).
      * @throws NombreAlfabetoNoValidoExcepcion         Si el nombre del alfabeto no
      *                                                 es valido.
      * @throws NombreTecladoDuplicadoExcepcion         Si el nombre del teclado ya
@@ -65,7 +65,7 @@ public class CtrlDominio {
      *                                                 palabras no es correcta.
      * @throws NombreTecladoNoValidoExcepcion          Si el nombre del teclado no
      *                                                 es valido.
-     * @throws NumeroCaracteresExcesivoParaBBExcepcion Si el número de caracteres es
+     * @throws NumeroCaracteresExcesivoParaBranchAndBoundExcepcion Si el número de caracteres es
      *                                                 excesivo para Branch and
      *                                                 Bound.
      */
@@ -135,7 +135,7 @@ public class CtrlDominio {
     /**
      * Retorna los algoritmos disponibles para la generación de teclados.
      *
-     * @return ArrayList con los nombres de los algoritmos disponibles (B&B, SA).
+     * @return ArrayList con los nombres de los algoritmos disponibles.
      */
     public ArrayList<String> getNombreAlgoritmos() {
         ArrayList<String> algoritmos = new ArrayList<>();
@@ -439,7 +439,10 @@ public class CtrlDominio {
     /**
      * Guarda los alfabetos en un fichero
      * 
-     * @throws EscrituraIncorrectaFicheroExcepcion
+     * @throws EscrituraIncorrectaFicheroExcepcion Si ocurre un error al escribir en
+     *                                            el archivo.
+     * @throws NombreAlfabetoNoValidoExcepcion     Si se encuentra un nombre de
+     *                                           alfabeto no válido al guardar.
      */
     public void guardarAlfabetos() throws EscrituraIncorrectaFicheroExcepcion, NombreAlfabetoNoValidoExcepcion {
         if (username.trim().isEmpty())
@@ -456,10 +459,14 @@ public class CtrlDominio {
     /**
      * Carga los alfabetos de un archivo.
      *
-     * @throws EscrituraIncorrectaFicheroExcepcion Si hay un error al escribir en el
-     *                                             archivo.
+     * @throws LecturaIncorrectaFicheroExcepcion  Si ocurre un error al leer el
+     *                                           archivo.
      * @throws NombreAlfabetoNoValidoExcepcion     Si se encuentra un nombre de
      *                                             alfabeto no válido al guardar.
+     * @throws NombreAlfabetoDuplicadoExcepcion    Si se encuentra un nombre de
+     *                                            alfabeto duplicado al guardar.
+     * @throws NoHayCaracteresExcepcion            Si no hay caracteres en el
+     *                                            alfabeto.
      */
     public void cargarAlfabetos() throws LecturaIncorrectaFicheroExcepcion, NombreAlfabetoNoValidoExcepcion,
             NombreAlfabetoDuplicadoExcepcion, NoHayCaracteresExcepcion {

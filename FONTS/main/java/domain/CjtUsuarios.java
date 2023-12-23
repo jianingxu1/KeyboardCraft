@@ -50,8 +50,6 @@ public class CjtUsuarios {
      * @throws NombreUsuarioNoValidoExcepcion      si el nombre del usuario no es
      *                                             valido
      * @throws ContrasenaNoValidaExcepcion         si la contraseña no es valida
-     * @throws EscrituraIncorrectaFicheroExcepcion si no se puede escribir en el
-     *                                             fichero
      */
     public void anadirNuevoUsuario(String user, String pass)
             throws NombreUsuarioNoValidoExcepcion, ContrasenaNoValidaExcepcion {

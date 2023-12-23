@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Clase GestorFicherosTeclados
  * Clase que gestiona la escritura, lectura y eliminación de teclados en
  * ficheros.
  * Implementa la interfaz GestorEstrategia.

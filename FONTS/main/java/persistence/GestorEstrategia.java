@@ -6,6 +6,7 @@ import exceptions.LecturaIncorrectaFicheroExcepcion;
 import java.util.HashMap;
 
 /**
+ * Interfaz GestorEstrategia
  * Interfaz para la estrategia de escritura y lectura de datos.
  *
  * @param <T> Tipo de datos a escribir en el fichero.
